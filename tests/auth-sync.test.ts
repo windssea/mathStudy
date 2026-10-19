@@ -89,6 +89,21 @@ function attempt(value: string, assisted = false, offset = 0): LearningEvent {
   };
 }
 describe('account authentication and private D1 learning records', () => {
+  it('forwards refreshed session cookies to the browser during ordinary account checks', async () => {
+    const a = device();
+    await a.register();
+    database.sqlite
+      .prepare('UPDATE session SET expiresAt=?,updatedAt=?')
+      .run(Date.now() + 3 * 86400000, Date.now() - 4 * 86400000);
+    const response = await a.call('/api/v1/account');
+    expect(response.status).toBe(200);
+    expect(response.headers.getSetCookie().join(';')).toContain('mathstudy.session_token');
+    expect(
+      new Date(
+        String(database.sqlite.prepare('SELECT expiresAt FROM session').get()!.expiresAt),
+      ).getTime(),
+    ).toBeGreaterThan(Date.now() + 6 * 86400000);
+  });
   it('limits repeated login attempts by IP and rejects invalid registration fields', async () => {
     const a = device('192.0.2.90');
     const statuses: number[] = [];

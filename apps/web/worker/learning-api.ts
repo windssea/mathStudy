@@ -6,7 +6,9 @@ import type { WorkerEnvironment } from './environment';
 
 export const learningApi = new Hono<WorkerEnvironment>();
 learningApi.use('*', async (c, next) => {
-  const user = await sessionUser(c.env, c.req.raw);
+  const user = await sessionUser(c.env, c.req.raw, (cookie) =>
+    c.header('Set-Cookie', cookie, { append: true }),
+  );
   if (!user)
     return c.json(
       {

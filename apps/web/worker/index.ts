@@ -90,7 +90,12 @@ app.on(['GET', 'POST'], '/api/auth/*', async (c) => {
 });
 app.get('/api/v1/account', async (c) =>
   c.json({
-    data: { user: await sessionUser(c.env ?? {}, c.req.raw), available: !!c.env?.AUTH_SECRET },
+    data: {
+      user: await sessionUser(c.env ?? {}, c.req.raw, (cookie) =>
+        c.header('Set-Cookie', cookie, { append: true }),
+      ),
+      available: !!c.env?.AUTH_SECRET,
+    },
     requestId: c.get('requestId'),
   }),
 );
@@ -229,7 +234,9 @@ app.post('/api/v1/questions/:id/check', async (c) => {
   const correct = Object.keys(question.expected).every((key) =>
     sameAnswer(parsed.data.answers[key], question.expected[key]),
   );
-  const user = await sessionUser(c.env ?? {}, c.req.raw);
+  const user = await sessionUser(c.env ?? {}, c.req.raw, (cookie) =>
+    c.header('Set-Cookie', cookie, { append: true }),
+  );
   if (user) {
     if (c.req.header('X-MathStudy-Account') !== user.id)
       return c.json(

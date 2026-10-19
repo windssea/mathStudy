@@ -70,10 +70,16 @@ export function getAuth(env: { DB?: ContentDatabase; AUTH_SECRET?: string }, url
 export async function sessionUser(
   env: { DB?: ContentDatabase; AUTH_SECRET?: string },
   request: Request,
+  setCookie?: (value: string) => void,
 ) {
   if (!request.headers.get('cookie')?.includes('mathstudy')) return null;
-  const result = await getAuth(env, request.url).api.getSession({ headers: request.headers });
-  return result?.user
-    ? { id: result.user.id, name: result.user.name, email: result.user.email }
+  const result = await getAuth(env, request.url).api.getSession({
+    headers: request.headers,
+    returnHeaders: true,
+  });
+  for (const cookie of result.headers.getSetCookie()) setCookie?.(cookie);
+  const session = result.response;
+  return session?.user
+    ? { id: session.user.id, name: session.user.name, email: session.user.email }
     : null;
 }
