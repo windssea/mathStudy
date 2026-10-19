@@ -1,5 +1,7 @@
 # 数趣 MathStudy
 
+在线访问：[数学学习平台](https://mathstudy.windssea526.workers.dev)。`main` 分支通过 Cloudflare Workers Builds 自动验证、同步 D1 并部署。
+
 以《苏教版数学四年级上册（2026 年第 1 版）》为主线的数学学习平台。已实现教材首页、全册目录、第一单元 5 课、第二单元 7 课及“周长与面积的变化”活动，共 13 个学习课节，以及覆盖六个单元的 69 道原创分层题。
 
 ## 启动
@@ -45,7 +47,7 @@ pnpm build                # 构建 Worker 和客户端
 | `packages/contracts`           | 教材、题型、场景和提交契约                     |
 | `packages/math-core`           | 整数除法、试商、竖式、几何量、枚举与答案规范化 |
 | `packages/animation-engine`    | 可重放的分组/竖式/测量/铺格步骤                |
-| `packages/content`             | 服务端原创题库、D1 发布内容来源                       |
+| `packages/content`             | 服务端原创题库、D1 发布内容来源                |
 | `content/textbooks`            | 版次隔离的教材目录与第一、二单元课程           |
 | `packages/database/migrations` | Cloudflare D1 表结构迁移                       |
 | `tests`                        | 数学性质、内容覆盖、API 与组件测试             |

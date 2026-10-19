@@ -9,6 +9,7 @@
 | GitHub | https://github.com/windssea/mathStudy |
 | 发布分支 | `main` |
 | Worker | `mathstudy` |
+| 在线地址 | https://mathstudy.windssea526.workers.dev |
 | D1 | `mathstudy-prod-db` |
 | D1 绑定变量 | `DB` |
 | Wrangler 配置 | `apps/web/wrangler.jsonc` |
@@ -38,7 +39,7 @@ pnpm build
 pnpm run deploy:cloudflare
 ```
 
-部署命令按顺序执行远程 D1 迁移、同步当前发布内容、上传构建后的 Worker 和静态资源。必须先构建成功；前面的命令失败时部署链会停止。生产读取的 D1 不完整时健康检查会失败，不会悄悄退回示例数据。
+部署命令按顺序执行远程 D1 迁移、同步当前发布内容、上传构建后的 Worker 和静态资源，最后执行线上冒烟检查。必须先构建成功；前面的命令失败时部署链会停止。生产读取的 D1 不完整时健康检查会失败，不会悄悄退回示例数据。也可单独执行 `pnpm smoke` 重查线上 D1、内容哈希、首页、第二单元课节与题库、判题和 SPA 深链接。
 
 原始 PDF 未加入仓库，所以 CI 使用显式的 `--skip-source` 跳过 PDF 文件哈希，仍校验课节、题目、图解协议和教材目录。持有 PDF 的本机可执行不带参数的 `pnpm content:validate` 完成全部检查。
 
@@ -55,7 +56,7 @@ pnpm run deploy:cloudflare
 | `PNPM_VERSION` | `11.23.0` |
 | 非生产分支自动构建 | 关闭，避免预览写入生产 D1 |
 
-构建身份需要当前 Worker 部署权限及当前 D1 的读写权限。凭据仅保存在 Cloudflare 或平台凭据存储中，不写入 Git。
+已连接仓库和 `main`，复用账号已有的构建令牌，不新增令牌，也未修改其权限。构建身份需要当前 Worker 部署权限及当前 D1 的读写权限。凭据仅保存在 Cloudflare 或平台凭据存储中，不写入 Git。
 
 ## 内容版本与回滚
 
