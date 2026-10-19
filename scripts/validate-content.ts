@@ -1,5 +1,6 @@
 import { textbook, lessons, questions } from '@mathstudy/content';
 import { lessonSchema, visualSchema } from '@mathstudy/contracts';
+import { arithmeticScenes, calculationFrames } from '@mathstudy/animation-engine';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 
@@ -17,7 +18,13 @@ for (const question of questions) {
     issues.push(`Missing explanation: ${question.id}`);
 }
 for (const lesson of lessons) {
+  const demo = lesson.demo;
   if (!lessonSchema.safeParse(lesson).success) issues.push(`Invalid lesson: ${lesson.id}`);
+  if (
+    'exampleId' in demo &&
+    !arithmeticScenes.some((scene) => scene.id === demo.exampleId && scene.kind === demo.kind)
+  )
+    issues.push(`Missing arithmetic scene: ${lesson.id}`);
   const node = textbook.catalog.find((n) => n.id === lesson.unitId);
   const summary = node?.lessons.find((l) => l.id === lesson.id);
   if (
@@ -31,6 +38,29 @@ for (const lesson of lessons) {
     if (!question) issues.push(`Missing question ${id} in ${lesson.id}`);
     else if (question.unitId !== (lesson.unitId === 'A01' ? 'U02' : lesson.unitId))
       issues.push(`Wrong-unit question ${id} in ${lesson.id}`);
+  }
+}
+for (const scene of arithmeticScenes) {
+  try {
+    const frames = calculationFrames(scene.expression);
+    const result = frames.at(-1)!.root;
+    if (result.kind !== 'number') issues.push(`Incomplete expression: ${scene.id}`);
+    for (const choice of scene.problem?.choices.filter((choice) => choice.valid) ?? []) {
+      const alternative = calculationFrames(choice.expression).at(-1)!.root;
+      if (
+        alternative.kind !== 'number' ||
+        result.kind !== 'number' ||
+        alternative.value !== result.value
+      )
+        issues.push(`Invalid alternative: ${scene.id}`);
+    }
+    if (
+      scene.problem &&
+      scene.problem.parts.reduce((sum, part) => sum + part.value, 0) !== scene.problem.total
+    )
+      issues.push(`Quantity bar mismatch: ${scene.id}`);
+  } catch {
+    issues.push(`Invalid arithmetic scene: ${scene.id}`);
   }
 }
 for (const summary of textbook.catalog.flatMap((n) => n.lessons))

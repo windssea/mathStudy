@@ -36,7 +36,7 @@ const privateRecords = await fetch(new URL('/api/v1/me/progress', origin), {
 });
 assert.equal(privateRecords.status, 401);
 const home = await api('/home');
-assert.equal(home.availableLessons, 17);
+assert.equal(home.availableLessons, 20);
 assert.equal(home.questionCount, 69);
 const lesson = await api(`/textbooks/${editionId}/lessons/U02-L05`);
 assert.equal((lesson.lesson as { id: string }).id, 'U02-L05');
@@ -50,6 +50,24 @@ for (const id of ['U03-L01', 'U03-L02', 'U03-L03', 'U03-L04']) {
 }
 const thirdBank = await api('/questions?unit=U03');
 assert.equal(thirdBank.total, 9);
+for (const id of ['U04-L01', 'U04-L02', 'U04-L03']) {
+  const fourth = await api(`/textbooks/${editionId}/lessons/${id}`);
+  assert.equal((fourth.lesson as { id: string }).id, id);
+  assert.equal((fourth.questions as unknown[]).length, 3);
+  assert.ok(!JSON.stringify(fourth).includes('"expected"'));
+}
+assert.equal((await api('/questions?unit=U04')).total, 9);
+for (const [questionId, value] of [
+  ['u4-03', '7'],
+  ['u4-07', '6'],
+]) {
+  const result = await api(`/questions/${questionId}/check`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Origin: origin.origin },
+    body: JSON.stringify({ answers: { value } }),
+  });
+  assert.equal(result.correct, true);
+}
 const thirdGrade = await api('/questions/u3-07/check', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json', Origin: origin.origin },
@@ -71,12 +89,12 @@ const grade = await api('/questions/u2-08/check', {
   body: JSON.stringify({ answers: { value: '132' } }),
 });
 assert.equal(grade.correct, true);
-const deepLink = await fetch(new URL(`/books/${editionId}/lessons/U02-L05`, origin), {
+const deepLink = await fetch(new URL(`/books/${editionId}/lessons/U04-L03`, origin), {
   signal: AbortSignal.timeout(15000),
 });
 assert.equal(deepLink.status, 200);
 assert.ok(deepLink.headers.get('content-type')?.includes('text/html'));
 assert.ok((await deepLink.text()).includes('id="root"'));
 console.log(
-  `Smoke checks passed: ${origin.origin} (D1, current content hash, units two/three, bank grading, registration closed, SPA deep link)`,
+  `Smoke checks passed: ${origin.origin} (D1, current content hash, units two/three/four, bank grading, registration closed, SPA deep link)`,
 );

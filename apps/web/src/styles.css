@@ -4298,3 +4298,320 @@ select {
     flex-basis: 100%;
   }
 }
+/* Unit four: large operation targets and complete equations for PC and tablets. */
+.arithmetic-player {
+  padding: 24px;
+  min-width: 0;
+}
+.arithmetic-heading {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.arithmetic-heading h2 {
+  margin: 8px 0 0;
+  font-size: 22px;
+}
+.source-label {
+  font-size: 12px;
+  color: var(--muted);
+  padding-top: 8px;
+}
+.arithmetic-selector {
+  display: grid;
+  gap: 8px;
+  font-weight: 600;
+}
+.arithmetic-player select {
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--ink);
+  background: white;
+  max-width: 100%;
+}
+.arithmetic-stage {
+  margin-top: 20px;
+  padding: 24px;
+  border-radius: 14px;
+  background: #f7f9ff;
+  border: 1px solid var(--border);
+}
+.arithmetic-stage h3 {
+  margin: 0 0 16px;
+  font-size: 17px;
+}
+.arithmetic-instruction,
+.scope-legend {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+.expression-workbench {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 24px 0;
+  font-size: clamp(24px, 2.4vw, 32px);
+  font-variant-numeric: tabular-nums;
+}
+.expression-operator {
+  min-width: 44px;
+  min-height: 48px;
+  border: 1px solid #cbd5ee;
+  border-radius: 10px;
+  background: white;
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+}
+.expression-operator:hover:not(:disabled) {
+  background: var(--blue-soft);
+  border-color: var(--blue);
+}
+.expression-operator:focus-visible,
+.arithmetic-player button:focus-visible,
+.arithmetic-player select:focus-visible,
+.arithmetic-player input:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}
+.expression-operator:disabled {
+  opacity: 0.65;
+  cursor: default;
+}
+.expression-bracket {
+  color: #97651d;
+  font-weight: 700;
+}
+.expression-bracket[data-depth='2'] {
+  color: #3563e9;
+}
+.calculation-trace {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0;
+}
+.calculation-trace li {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+  padding: 12px;
+  border-radius: 10px;
+  overflow-wrap: anywhere;
+}
+.calculation-trace li > span {
+  min-width: 28px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.calculation-trace strong {
+  font-size: 19px;
+  font-variant-numeric: tabular-nums;
+}
+.calculation-trace p {
+  margin: 5px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+.calculation-trace .current {
+  background: white;
+  border: 1px solid var(--border);
+}
+.arithmetic-reason {
+  min-height: 68px;
+  padding: 16px;
+  border-left: 3px solid var(--blue);
+  background: var(--blue-soft);
+  line-height: 1.85;
+  margin-top: 18px;
+}
+.arithmetic-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  padding-top: 20px;
+}
+.arithmetic-controls .button,
+.arithmetic-actions .button {
+  min-height: 44px;
+}
+.arithmetic-controls > label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+.arithmetic-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.arithmetic-actions [aria-pressed='true'] {
+  color: var(--blue);
+  border-color: var(--blue);
+  background: var(--blue-soft);
+}
+.arithmetic-timeline {
+  flex: 1 0 100%;
+  flex-wrap: wrap;
+}
+.arithmetic-timeline input {
+  width: 100%;
+  min-height: 44px;
+  accent-color: var(--blue);
+  cursor: pointer;
+}
+.arithmetic-timeline span {
+  margin-left: auto;
+  color: var(--muted);
+}
+.arithmetic-problem {
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  line-height: 1.9;
+}
+.arithmetic-problem p {
+  margin-top: 0;
+}
+.arithmetic-problem ul {
+  padding-left: 20px;
+}
+.arithmetic-problem strong {
+  color: var(--blue);
+}
+.relation-analysis {
+  margin-top: 20px;
+}
+.relation-chain {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.relation-chain li {
+  display: flex;
+  gap: 12px;
+  padding: 14px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.relation-chain li > span {
+  color: var(--blue);
+  background: var(--blue-soft);
+  border-radius: 50%;
+  min-width: 28px;
+  height: 28px;
+  text-align: center;
+  line-height: 28px;
+}
+.relation-chain p {
+  margin: 5px 0 0;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.expression-choices {
+  border: 0;
+  margin: 20px 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+.expression-choices legend {
+  padding: 0 0 10px;
+  font-size: 14px;
+}
+.expression-choices button {
+  justify-content: start;
+  text-align: left;
+  min-height: 44px;
+  overflow-wrap: anywhere;
+  border: 1px solid #cbd5ee;
+  border-radius: 10px;
+  background: white;
+}
+.expression-choices button:hover {
+  border-color: var(--blue);
+  background: var(--blue-soft);
+}
+.quantity-summary {
+  margin-top: 20px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.arithmetic-bar {
+  display: flex;
+  height: 38px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #cbd5ee;
+}
+.arithmetic-bar span {
+  opacity: 0.42;
+  border-right: 2px solid white;
+}
+.arithmetic-bar .revealed {
+  opacity: 1;
+}
+.arithmetic-player [data-part='0'] {
+  background: #3563e9;
+}
+.arithmetic-player [data-part='1'] {
+  background: #c38b2c;
+}
+.arithmetic-player [data-part='2'] {
+  background: #4c9679;
+}
+.quantity-summary ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 0;
+}
+.quantity-summary i {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 6px;
+  border-radius: 2px;
+}
+.bracket-comparison {
+  margin-top: 18px;
+  font-size: 14px;
+  line-height: 1.9;
+}
+.bracket-comparison summary {
+  cursor: pointer;
+  min-height: 44px;
+  padding: 10px 0;
+  color: var(--blue);
+}
+.arithmetic-static {
+  margin-top: 20px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+  line-height: 1.8;
+}
+.arithmetic-static li {
+  margin-bottom: 16px;
+}
+@media (min-width: 768px) and (max-width: 1100px) {
+  .arithmetic-player {
+    padding: 18px;
+  }
+  .arithmetic-stage {
+    padding: 18px;
+  }
+  .arithmetic-heading {
+    flex-wrap: wrap;
+  }
+}

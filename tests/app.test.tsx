@@ -13,6 +13,30 @@ afterEach(() => {
   vi.unstubAllGlobals();
   vi.restoreAllMocks();
 });
+it('connects fourth-unit bracket exploration, grading and completion to the shared learning flow', async () => {
+  window.history.replaceState({}, '', '/books/sj-math-g4-upper-2026-v1/lessons/U04-L02');
+  vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
+  vi.stubGlobal('fetch', (input: string, init?: RequestInit) =>
+    app.request(new URL(input, 'http://localhost').href, init),
+  );
+  render(<App />);
+  await screen.findByRole('heading', { name: '小括号与中括号' });
+  expect(screen.getByRole('heading', { name: '第四单元的探索路线' })).toBeTruthy();
+  fireEvent.change(screen.getByRole('slider', { name: /演示步骤/ }), { target: { value: '3' } });
+  fireEvent.click(screen.getByRole('tab', { name: /自己试一试/ }));
+  const articles = screen.getAllByRole('article');
+  for (const [index, value] of ['7', '9', '8'].entries()) {
+    fireEvent.change(articles[index].querySelector('input')!, { target: { value } });
+    fireEvent.submit(articles[index].querySelector('form')!);
+  }
+  await waitFor(() =>
+    expect(screen.getAllByText('答对了！再看看思路，理解为什么。')).toHaveLength(3),
+  );
+  fireEvent.click(screen.getByRole('button', { name: '完成本课' }));
+  expect(screen.getByRole('link', { name: '继续下一课' }).getAttribute('href')).toContain(
+    'U04-L03',
+  );
+}, 15000);
 it('connects third-unit exploration, existing exercises and course completion', async () => {
   window.history.replaceState({}, '', '/books/sj-math-g4-upper-2026-v1/lessons/U03-L03');
   vi.spyOn(window, 'scrollTo').mockImplementation(() => {});

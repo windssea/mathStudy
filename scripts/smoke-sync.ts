@@ -13,6 +13,11 @@ const username = process.env.MATHSTUDY_ACCOUNT_USERNAME ?? 'admin',
   password = process.env.MATHSTUDY_ACCOUNT_PASSWORD;
 assert.ok(password, 'Set MATHSTUDY_ACCOUNT_PASSWORD in the operator environment.');
 const write = process.argv.includes('--write');
+const unitIndex = process.argv.indexOf('--unit');
+const unit = unitIndex < 0 ? 'U03' : process.argv[unitIndex + 1];
+assert.ok(unit === 'U03' || unit === 'U04', 'Use --unit U03 or U04.');
+const questionId = unit === 'U04' ? 'u4-07' : 'u3-07';
+const correctValue = unit === 'U04' ? '6' : '80';
 const device = () => {
   const cookies = new Map<string, string>();
   let id = '';
@@ -63,37 +68,37 @@ await b.login();
 const initial = await a.sync();
 assert.deepEqual((await b.sync()).snapshot, initial.snapshot);
 if (write) {
-  const initialCount = initial.snapshot.answers['u3-07']?.attemptCount ?? 0;
+  const initialCount = initial.snapshot.answers[questionId]?.attemptCount ?? 0;
   const stamp = Date.now();
   const event = (value: string, offset: number): LearningEvent => ({
     id: crypto.randomUUID(),
     kind: 'attempt',
-    entityId: 'u3-07',
+    entityId: questionId,
     answers: { value },
     assisted: false,
     occurredAt: new Date(stamp + offset).toISOString(),
   });
   const wrong = event('0', 10),
-    right = event('80', 20);
+    right = event(correctValue, 20);
   const complete = (entityId: string): LearningEvent => ({
     id: crypto.randomUUID(),
     kind: 'complete',
     entityId,
     occurredAt: new Date(stamp).toISOString(),
   });
-  await a.sync([complete('U03-L02'), wrong]);
-  assert.equal((await b.sync()).snapshot.answers['u3-07'].needsReview, true);
-  await b.sync([complete('U03-L03'), right]);
+  await a.sync([complete(`${unit}-L02`), wrong]);
+  assert.equal((await b.sync()).snapshot.answers[questionId].needsReview, true);
+  await b.sync([complete(`${unit}-L03`), right]);
   const result = await a.sync([wrong, right]);
-  assert.ok(result.snapshot.completed.includes('U03-L02'));
-  assert.ok(result.snapshot.completed.includes('U03-L03'));
-  assert.equal(result.snapshot.answers['u3-07'].attemptCount, initialCount + 2);
-  assert.equal(result.snapshot.answers['u3-07'].needsReview, false);
+  assert.ok(result.snapshot.completed.includes(`${unit}-L02`));
+  assert.ok(result.snapshot.completed.includes(`${unit}-L03`));
+  assert.equal(result.snapshot.answers[questionId].attemptCount, initialCount + 2);
+  assert.equal(result.snapshot.answers[questionId].needsReview, false);
 }
 assert.equal((await a.call('/api/auth/sign-out', {})).status, 200);
 assert.equal((await a.call('/api/v1/me/progress')).status, 401);
 assert.equal((await b.call('/api/v1/me/progress')).status, 200);
 assert.equal((await b.call('/api/auth/sign-out', {})).status, 200);
 console.log(
-  `Built-in sync smoke passed: ${origin.origin} (registration closed, two sessions, ${write ? 'third-unit writes/corrections/idempotency' : 'identical account snapshots'}, protected cookies, logout)`,
+  `Built-in sync smoke passed: ${origin.origin} (registration closed, two sessions, ${write ? `${unit} writes/corrections/idempotency` : 'identical account snapshots'}, protected cookies, logout)`,
 );

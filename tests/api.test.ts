@@ -3,13 +3,27 @@ import { app } from '../apps/web/worker';
 import { questions, lessons } from '@mathstudy/content';
 const base = '/api/v1';
 describe('public course and grading API', () => {
+  it('opens three fourth-unit lessons with all nine questions and no answer keys', async () => {
+    const ids: string[] = [];
+    for (const lesson of lessons.filter((item) => item.unitId === 'U04')) {
+      const response = await app.request(
+        `${base}/textbooks/sj-math-g4-upper-2026-v1/lessons/${lesson.id}`,
+      );
+      expect(response.status).toBe(200);
+      const { data } = await response.json();
+      expect(data.questions.map((item: { id: string }) => item.id)).toEqual(lesson.questionIds);
+      expect(JSON.stringify(data)).not.toContain('"expected"');
+      ids.push(...lesson.questionIds);
+    }
+    expect(ids.sort()).toEqual(Array.from({ length: 9 }, (_, index) => `u4-0${index + 1}`));
+  });
   it('serves the configured textbook and release identity', async () => {
     const r = await app.request(`${base}/home`);
     expect(r.status).toBe(200);
     const b = await r.json();
     expect(b.data.textbook.id).toBe('sj-math-g4-upper-2026-v1');
     expect(b.data.questionCount).toBe(69);
-    expect(b.data.availableLessons).toBe(17);
+    expect(b.data.availableLessons).toBe(20);
     expect(b.requestId).toBeTruthy();
   });
   it('serves all second-unit lessons and the activity with their existing public bank questions', async () => {
@@ -40,7 +54,7 @@ describe('public course and grading API', () => {
   it('does not mix editions or open planned lessons', async () => {
     expect((await app.request(`${base}/textbooks/not-this-book/lessons/U01-L01`)).status).toBe(404);
     expect(
-      (await app.request(`${base}/textbooks/sj-math-g4-upper-2026-v1/lessons/U04-L01`)).status,
+      (await app.request(`${base}/textbooks/sj-math-g4-upper-2026-v1/lessons/U05-L01`)).status,
     ).toBe(404);
   });
   it('filters questions without leaking answer keys', async () => {

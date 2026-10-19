@@ -102,3 +102,5 @@ export function groupFrames(n: number, d: number): Frame[] {
   ];
 }
 export { quantityFrames, type QuantityFrame } from './quantities';
+export { calculationFrames, type CalculationFrame } from './expressions';
+export { arithmeticScenes, type ArithmeticScene } from './arithmetic-scenes';

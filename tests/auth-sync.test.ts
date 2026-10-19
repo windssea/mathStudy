@@ -85,6 +85,28 @@ function attempt(value: string, assisted = false, offset = 0): LearningEvent {
   };
 }
 describe('account authentication and private D1 learning records', () => {
+  it('syncs fourth-unit completion and wrong-answer correction across two sessions without losing earlier units', async () => {
+    const a = device(),
+      b = device('192.0.2.2');
+    await a.provision();
+    await b.login();
+    const completed = ['U03-L02', 'U04-L01', 'U04-L02', 'U04-L03'].map((id) =>
+      event('complete', id),
+    );
+    const wrong = { ...attempt('0', false, 10), entityId: 'u4-07' };
+    const right = { ...attempt('6', false, 20), entityId: 'u4-07' };
+    await a.sync([...completed, wrong]);
+    expect((await b.sync()).snapshot.answers['u4-07'].needsReview).toBe(true);
+    await b.sync([right]);
+    const result = await a.sync([wrong, right]);
+    expect(result.snapshot.completed.sort()).toEqual(['U03-L02', 'U04-L01', 'U04-L02', 'U04-L03']);
+    expect(result.snapshot.answers['u4-07']).toMatchObject({
+      attemptCount: 2,
+      wrongCount: 1,
+      needsReview: false,
+      source: 'verified',
+    });
+  });
   it('closes registration and email login, preserves provisioning, and rejects disabled built-in sessions', async () => {
     const a = device();
     expect(
