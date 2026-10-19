@@ -9,6 +9,32 @@ afterEach(() => {
   vi.unstubAllGlobals();
   vi.restoreAllMocks();
 });
+it('connects third-unit exploration, existing exercises and course completion', async () => {
+  window.history.replaceState({}, '', '/books/sj-math-g4-upper-2026-v1/lessons/U03-L03');
+  vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
+  vi.stubGlobal('fetch', (input: string, init?: RequestInit) =>
+    app.request(new URL(input, 'http://localhost').href, init),
+  );
+  render(<App />);
+  await screen.findByRole('heading', { name: '速度、时间与路程' });
+  expect(screen.getByRole('heading', { name: '第三单元的探索路线' })).toBeTruthy();
+  fireEvent.click(screen.getByRole('button', { name: '查看静态步骤' }));
+  fireEvent.click(screen.getByRole('tab', { name: /自己试一试/ }));
+  const articles = screen.getAllByRole('article');
+  fireEvent.change(articles[0].querySelector('input')!, { target: { value: '280' } });
+  fireEvent.submit(articles[0].querySelector('form')!);
+  fireEvent.click(screen.getByLabelText(/路程 ÷ 速度/));
+  fireEvent.submit(articles[1].querySelector('form')!);
+  fireEvent.change(articles[2].querySelector('input')!, { target: { value: '180' } });
+  fireEvent.submit(articles[2].querySelector('form')!);
+  await waitFor(() =>
+    expect(screen.getAllByText('答对了！再看看思路，理解为什么。')).toHaveLength(3),
+  );
+  fireEvent.click(screen.getByRole('button', { name: '完成本课' }));
+  expect(screen.getByRole('link', { name: '继续下一课' }).getAttribute('href')).toContain(
+    'U03-L04',
+  );
+});
 it('connects the homepage, catalog, first lesson, and visual question explanations to the real API', async () => {
   window.history.replaceState({}, '', '/');
   vi.spyOn(window, 'scrollTo').mockImplementation(() => {});

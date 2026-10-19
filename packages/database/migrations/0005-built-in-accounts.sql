@@ -1,0 +1,5 @@
+CREATE TABLE built_in_accounts (
+  username TEXT PRIMARY KEY COLLATE NOCASE,
+  user_id TEXT NOT NULL UNIQUE REFERENCES user(id) ON DELETE CASCADE,
+  enabled INTEGER NOT NULL DEFAULT 1 CHECK(enabled IN (0,1))
+);

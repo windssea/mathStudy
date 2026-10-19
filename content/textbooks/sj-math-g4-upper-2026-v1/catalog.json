@@ -5,7 +5,7 @@
   "publisher": "江苏凤凰教育出版社",
   "grade": 4,
   "volume": "upper",
-  "releaseId": "preview-2026-10-u02-r1",
+  "releaseId": "preview-2026-10-u03-r1",
   "catalog": [
     {
       "id": "U01",
@@ -169,7 +169,7 @@
           "pages": [45, 47],
           "summary": "等份组、关系卡片、逆运算",
           "minutes": 15,
-          "available": false
+          "available": true
         },
         {
           "id": "U03-L02",
@@ -178,7 +178,7 @@
           "pages": [48, 49],
           "summary": "购物数量表、未知量切换",
           "minutes": 15,
-          "available": false
+          "available": true
         },
         {
           "id": "U03-L03",
@@ -187,7 +187,7 @@
           "pages": [50, 53],
           "summary": "同尺度路线、分段计时、填表",
           "minutes": 15,
-          "available": false
+          "available": true
         },
         {
           "id": "U03-L04",
@@ -196,7 +196,7 @@
           "pages": [54, 56],
           "summary": "条件筛选、表格整理、一题多问",
           "minutes": 15,
-          "available": false
+          "available": true
         }
       ]
     },

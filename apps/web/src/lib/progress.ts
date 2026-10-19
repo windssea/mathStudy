@@ -33,7 +33,7 @@ const key = `mathstudy:${editionId}:${releaseId}`,
   legacyKey = `mathstudy:${editionId}:preview-2026-10-u01-r1`;
 const prefix = `mathstudy:v2:${editionId}:`,
   sessionSignal = 'mathstudy:account-change';
-const validLesson = (id: string) => /^(U01-L0[1-5]|U02-L0[1-7]|A01-L01)$/.test(id);
+const validLesson = (id: string) => /^(U01-L0[1-5]|U02-L0[1-7]|U03-L0[1-4]|A01-L01)$/.test(id);
 const listeners = new Set<() => void>(),
   scopes = new Map<string, Scope>();
 let storageAvailable = true,
@@ -157,7 +157,12 @@ function migrateLegacy() {
   const guest = load('guest');
   if (read(`${prefix}guest:legacy-migrated`)) return;
   try {
-    const raw = JSON.parse(read(key) ?? read(legacyKey) ?? 'null');
+    const raw = JSON.parse(
+      read(key) ??
+        read(`mathstudy:${editionId}:preview-2026-10-u02-r1`) ??
+        read(legacyKey) ??
+        'null',
+    );
     if (
       raw?.version === 1 &&
       Array.isArray(raw.completed) &&
@@ -417,31 +422,23 @@ export async function refreshAccount() {
     }
   }
 }
-export async function authenticate(
-  mode: 'login' | 'register',
-  email: string,
-  password: string,
-  name?: string,
-) {
-  const response = await fetch(`/api/auth/${mode === 'register' ? 'sign-up' : 'sign-in'}/email`, {
+export async function authenticate(username: string, password: string) {
+  const response = await fetch('/api/auth/sign-in/username', {
     method: 'POST',
     credentials: 'same-origin',
     signal: AbortSignal.timeout(15000),
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      email: email.trim().toLowerCase(),
+      username: username.trim().toLowerCase(),
       password,
-      ...(mode === 'register' ? { name: name?.trim() } : {}),
     }),
   });
   if (!response.ok) {
     const result = (await response.json().catch(() => ({}))) as { code?: string };
     const errors: Record<string, string> = {
-      INVALID_EMAIL_OR_PASSWORD: '邮箱或密码不正确。',
-      USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL: '这个邮箱已注册，请直接登录。',
-      USER_ALREADY_EXISTS: '这个邮箱已注册，请直接登录。',
-      PASSWORD_TOO_SHORT: '密码至少需要10个字符。',
-      INVALID_EMAIL: '请输入有效的邮箱地址。',
+      INVALID_EMAIL_OR_PASSWORD: '账号或密码不正确。',
+      INVALID_LOGIN: '请输入有效的账号和密码。',
+      REGISTRATION_CLOSED: '仅支持内置账号登录，不开放注册。',
     };
     throw new Error(
       response.status === 429

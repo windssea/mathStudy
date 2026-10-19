@@ -2,9 +2,12 @@ import { lessonSchema, releaseId, type Textbook, type QuestionPublic } from '@ma
 import catalog from '../../../content/textbooks/sj-math-g4-upper-2026-v1/catalog.json';
 import lessonData from '../../../content/textbooks/sj-math-g4-upper-2026-v1/lessons.json';
 import unit2Data from '../../../content/textbooks/sj-math-g4-upper-2026-v1/unit2-lessons.json';
+import unit3Data from '../../../content/textbooks/sj-math-g4-upper-2026-v1/unit3-lessons.json';
 import { questions } from './questions';
 
-export const lessons = [...lessonData, ...unit2Data].map((lesson) => lessonSchema.parse(lesson));
+export const lessons = [...lessonData, ...unit2Data, ...unit3Data].map((lesson) =>
+  lessonSchema.parse(lesson),
+);
 const byId = new Map(lessons.map((l) => [l.id, l]));
 export const textbook: Textbook = {
   ...catalog,

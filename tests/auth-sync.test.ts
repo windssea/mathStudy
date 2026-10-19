@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { app } from '../apps/web/worker';
+import { builtInAccountSeed } from '../apps/web/worker/builtin-provision';
 import { testDatabase } from './helpers/d1';
 import { editionId, type LearningEvent } from '@mathstudy/contracts';
 
@@ -40,20 +41,15 @@ function device(ip = '192.0.2.1') {
       }
       return response;
     },
-    async register(email = 'one@example.invalid') {
-      const response = await this.call('/api/auth/sign-up/email', {
-        email,
-        password: 'Test-only-password-2026!',
-        name: '学习测试',
-      });
-      expect(response.status, await response.clone().text()).toBe(200);
-      const body = await response.json();
-      userId = body.user.id;
+    async provision(email = 'one@example.invalid') {
+      const username = email.split('@')[0];
+      database.sqlite.exec(await builtInAccountSeed(username, 'Test-only-password-2026!'));
+      await this.login(email);
       return userId;
     },
     async login(email = 'one@example.invalid') {
-      const response = await this.call('/api/auth/sign-in/email', {
-        email,
+      const response = await this.call('/api/auth/sign-in/username', {
+        username: email.split('@')[0],
         password: 'Test-only-password-2026!',
       });
       expect(response.status, await response.clone().text()).toBe(200);
@@ -89,9 +85,65 @@ function attempt(value: string, assisted = false, offset = 0): LearningEvent {
   };
 }
 describe('account authentication and private D1 learning records', () => {
+  it('closes registration and email login, preserves provisioning, and rejects disabled built-in sessions', async () => {
+    const a = device();
+    expect(
+      (
+        await a.call('/api/auth/sign-up/email', {
+          email: 'new@example.invalid',
+          password: 'Test-only-password-2026!',
+          name: '新用户',
+        })
+      ).status,
+    ).toBe(403);
+    expect(database.sqlite.prepare('SELECT count(*) AS n FROM user').get()!.n).toBe(0);
+    const id = await a.provision();
+    database.sqlite.exec(await builtInAccountSeed('one', 'Another-test-password-2026!'));
+    await device('192.0.2.9').login();
+    expect(
+      (
+        await a.call('/api/auth/sign-in/email', {
+          email: 'one@mathstudy.internal',
+          password: 'Test-only-password-2026!',
+        })
+      ).status,
+    ).toBe(403);
+    database.sqlite.prepare('UPDATE built_in_accounts SET enabled=0 WHERE user_id=?').run(id);
+    expect((await a.call('/api/v1/me/progress')).status).toBe(401);
+    expect(
+      (
+        await a.call('/api/auth/sign-in/username', {
+          username: 'one',
+          password: 'Test-only-password-2026!',
+        })
+      ).status,
+    ).toBe(401);
+  });
+  it('syncs all third-unit lesson completions and grades its questions through the same account events', async () => {
+    const a = device(),
+      b = device('192.0.2.2');
+    await a.provision();
+    await b.login();
+    const events: LearningEvent[] = ['U03-L01', 'U03-L02', 'U03-L03', 'U03-L04'].map((id) =>
+      event('complete', id),
+    );
+    events.push(
+      { ...attempt('0', false, 10), entityId: 'u3-07' },
+      { ...attempt('80', false, 20), entityId: 'u3-07' },
+    );
+    await a.sync(events);
+    const data = await b.sync();
+    expect(data.snapshot.completed.sort()).toEqual(['U03-L01', 'U03-L02', 'U03-L03', 'U03-L04']);
+    expect(data.snapshot.answers['u3-07']).toMatchObject({
+      attemptCount: 2,
+      wrongCount: 1,
+      needsReview: false,
+      source: 'verified',
+    });
+  });
   it('forwards refreshed session cookies to the browser during ordinary account checks', async () => {
     const a = device();
-    await a.register();
+    await a.provision();
     database.sqlite
       .prepare('UPDATE session SET expiresAt=?,updatedAt=?')
       .run(Date.now() + 3 * 86400000, Date.now() - 4 * 86400000);
@@ -104,14 +156,14 @@ describe('account authentication and private D1 learning records', () => {
       ).getTime(),
     ).toBeGreaterThan(Date.now() + 6 * 86400000);
   });
-  it('limits repeated login attempts by IP and rejects invalid registration fields', async () => {
+  it('limits repeated username login attempts by IP and rejects public registration', async () => {
     const a = device('192.0.2.90');
     const statuses: number[] = [];
     for (let i = 0; i < 12; i++)
       statuses.push(
         (
-          await a.call('/api/auth/sign-in/email', {
-            email: 'absent@example.invalid',
+          await a.call('/api/auth/sign-in/username', {
+            username: 'absent',
             password: 'Wrong-password-2026!',
           })
         ).status,
@@ -125,11 +177,12 @@ describe('account authentication and private D1 learning records', () => {
           password: 'Test-only-password-2026!',
         })
       ).status,
-    ).toBe(400);
+    ).toBe(403);
   });
   it('rejects tampered and expired sessions and sets protected cookies on HTTPS', async () => {
+    database.sqlite.exec(await builtInAccountSeed('secure', 'Test-only-password-2026!'));
     const response = await app.request(
-      'https://mathstudy.windssea526.workers.dev/api/auth/sign-up/email',
+      'https://mathstudy.windssea526.workers.dev/api/auth/sign-in/username',
       {
         method: 'POST',
         headers: {
@@ -139,7 +192,7 @@ describe('account authentication and private D1 learning records', () => {
         },
         body: JSON.stringify({
           name: '安全验收',
-          email: 'secure@example.invalid',
+          username: 'secure',
           password: 'Test-only-password-2026!',
         }),
       },
@@ -150,7 +203,7 @@ describe('account authentication and private D1 learning records', () => {
     expect(response.headers.getSetCookie().join(';')).toMatch(/HttpOnly/);
     expect(response.headers.getSetCookie().join(';')).toMatch(/SameSite=Lax/);
     const a = device();
-    await a.register();
+    await a.provision();
     const key = [...a.cookies.keys()].find((k) => k.includes('session_token'))!;
     const original = a.cookies.get(key)!;
     a.cookies.set(key, original + 'tampered');
@@ -159,10 +212,10 @@ describe('account authentication and private D1 learning records', () => {
     database.sqlite.prepare('UPDATE session SET expiresAt=?').run(0);
     expect((await a.call('/api/v1/me/progress')).status).toBe(401);
   });
-  it('registers, hashes passwords, signs in a second device and revokes only the signed-out session', async () => {
+  it('provisions hashed passwords, signs in a second device and revokes only the signed-out session', async () => {
     const a = device(),
       b = device('192.0.2.2');
-    const id = await a.register();
+    const id = await a.provision();
     await b.login();
     const account = await a.call('/api/v1/account');
     expect((await account.json()).data.user.id).toBe(id);
@@ -177,7 +230,7 @@ describe('account authentication and private D1 learning records', () => {
   it('merges two devices without losing completions, recent lessons or repeated attempts', async () => {
     const a = device(),
       b = device('192.0.2.2');
-    await a.register();
+    await a.provision();
     await b.login();
     await Promise.all([
       a.sync([event('complete', 'U01-L01'), event('visit', 'U02-L02', 10)]),
@@ -207,7 +260,7 @@ describe('account authentication and private D1 learning records', () => {
   });
   it('regrades uploaded answers, keeps assisted correct answers pending and tracks independent corrections', async () => {
     const a = device();
-    await a.register();
+    await a.provision();
     const bad = attempt('0', false, 10);
     let result = await a.sync([bad]);
     expect(result.snapshot.answers['u2-08'].correct).toBe(false);
@@ -220,8 +273,8 @@ describe('account authentication and private D1 learning records', () => {
   it('isolates accounts and rejects a stale account header, forged scores, invalid content and foreign origins', async () => {
     const a = device(),
       b = device('192.0.2.2');
-    const aId = await a.register();
-    const bId = await b.register('two@example.invalid');
+    const aId = await a.provision();
+    const bId = await b.provision('two@example.invalid');
     await a.sync([event('complete', 'U02-L05')]);
     expect((await b.sync()).snapshot.completed).toEqual([]);
     b.setUser(aId);
@@ -252,7 +305,7 @@ describe('account authentication and private D1 learning records', () => {
   });
   it('imports legacy records with provenance and never inserts them twice', async () => {
     const a = device();
-    await a.register();
+    await a.provision();
     const legacy: LearningEvent = {
       id: 'legacy:device-one:u1-01',
       kind: 'legacy',
@@ -269,7 +322,7 @@ describe('account authentication and private D1 learning records', () => {
   });
   it('records authenticated grading once even if the same event is later retried in the sync queue', async () => {
     const a = device();
-    await a.register();
+    await a.provision();
     const e = attempt('132') as Extract<LearningEvent, { kind: 'attempt' }>;
     const response = await a.call('/api/v1/questions/u2-08/check', {
       answers: e.answers,

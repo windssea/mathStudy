@@ -36,12 +36,33 @@ const privateRecords = await fetch(new URL('/api/v1/me/progress', origin), {
 });
 assert.equal(privateRecords.status, 401);
 const home = await api('/home');
-assert.equal(home.availableLessons, 13);
+assert.equal(home.availableLessons, 17);
 assert.equal(home.questionCount, 69);
 const lesson = await api(`/textbooks/${editionId}/lessons/U02-L05`);
 assert.equal((lesson.lesson as { id: string }).id, 'U02-L05');
 assert.equal((lesson.questions as unknown[]).length, 3);
 assert.ok(!JSON.stringify(lesson).includes('"expected"'));
+for (const id of ['U03-L01', 'U03-L02', 'U03-L03', 'U03-L04']) {
+  const third = await api(`/textbooks/${editionId}/lessons/${id}`);
+  assert.equal((third.lesson as { id: string }).id, id);
+  assert.equal((third.questions as unknown[]).length, 3);
+  assert.ok(!JSON.stringify(third).includes('"expected"'));
+}
+const thirdBank = await api('/questions?unit=U03');
+assert.equal(thirdBank.total, 9);
+const thirdGrade = await api('/questions/u3-07/check', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json', Origin: origin.origin },
+  body: JSON.stringify({ answers: { value: '80' } }),
+});
+assert.equal(thirdGrade.correct, true);
+const registration = await fetch(new URL('/api/auth/sign-up/email', origin), {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json', Origin: origin.origin },
+  body: '{}',
+  signal: AbortSignal.timeout(15000),
+});
+assert.equal(registration.status, 403);
 const bank = await api('/questions?unit=U02');
 assert.equal(bank.total, 18);
 const grade = await api('/questions/u2-08/check', {
@@ -57,5 +78,5 @@ assert.equal(deepLink.status, 200);
 assert.ok(deepLink.headers.get('content-type')?.includes('text/html'));
 assert.ok((await deepLink.text()).includes('id="root"'));
 console.log(
-  `Smoke checks passed: ${origin.origin} (D1, current content hash, homepage, unit-two lesson and bank, grading, SPA deep link)`,
+  `Smoke checks passed: ${origin.origin} (D1, current content hash, units two/three, bank grading, registration closed, SPA deep link)`,
 );

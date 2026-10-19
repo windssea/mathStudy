@@ -70,6 +70,9 @@ Worker 回滚与数据库结构回滚是不同操作；避免删除旧字段和�
 
 检查 `/api/v1/health` 返回 `status: ok`、`storage: d1`、`accountSync: true`、当前 `releaseId` 和 `sourceHash`；再检查首页、课程深链接、第二单元题库及一道题的服务端判题。健康接口同时返回 Cloudflare 版本元数据，可与部署记录对应。
 
-`pnpm exec tsx scripts/smoke-sync.ts --origin https://mathstudy.windssea526.workers.dev` 可手动验收真实 D1 的注册、双会话登录、课节合并、错题订正、重复上传和单会话退出。该检查会创建一个 `@example.invalid` 测试账号并保留其测试数据，不发送邮件；不放进每次自动构建，以免反复创建账号。普通 `pnpm smoke` 不创建账号，只验证账号接口和未登录访问隔离。
+新环境迁移完成后，设置 `MATHSTUDY_ACCOUNT_PASSWORD` 环境变量，再执行 `pnpm exec tsx scripts/provision-account.ts --local` 或 `--remote`，以配置 admin 内置账号；可用 `MATHSTUDY_ACCOUNT_USERNAME` 指定其他账号名。不要在源码或文档记录实际密码。此脚本只新增，不重置已有密码，不放进自动部署。
+
+设置上述账号环境变量后，`pnpm exec tsx scripts/smoke-sync.ts --origin https://mathstudy.windssea526.workers.dev` 可验收真实 D1 内置账号登录、关闭注册、双会话同一快照及单会话退出，默认不写入学习事件。`--write` 会写入第三单元测试记录，仅在明确需要写入时使用。普通 `pnpm smoke` 验证教材、第三单元、判题、关闭注册及未登录隔离，不读取账号密码。
+
 
 自动构建的配置规则参考 [Cloudflare Workers Builds](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/)，迁移机制参考 [Cloudflare D1 Migrations](https://developers.cloudflare.com/d1/reference/migrations/)。

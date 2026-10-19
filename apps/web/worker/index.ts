@@ -9,7 +9,7 @@ import { publicQuestion } from '@mathstudy/content';
 import { loadCourseContent } from './content-repository';
 import { sameAnswer } from '@mathstudy/math-core';
 import { bodyLimit } from 'hono/body-limit';
-import { getAuth, sessionUser } from './auth';
+import { builtInEmail, getAuth, sessionUser } from './auth';
 import { learningApi } from './learning-api';
 import { saveLearningEvents } from './learning-repository';
 import type { WorkerEnvironment } from './environment';
@@ -57,34 +57,44 @@ app.onError((error, c) => {
   );
 });
 app.on(['GET', 'POST'], '/api/auth/*', async (c) => {
-  if (
-    ![
-      '/api/auth/sign-in/email',
-      '/api/auth/sign-up/email',
-      '/api/auth/sign-out',
-      '/api/auth/change-password',
-    ].includes(c.req.path)
-  )
+  if (['/api/auth/sign-up/email', '/api/auth/sign-in/email'].includes(c.req.path))
+    return c.json(
+      { code: 'REGISTRATION_CLOSED', message: '仅支持内置账号登录，不开放注册。' },
+      403,
+    );
+  if (!['/api/auth/sign-in/username', '/api/auth/sign-out'].includes(c.req.path))
     return c.json({ error: { code: 'NOT_FOUND', message: '接口不存在。' } }, 404);
   if (!c.env?.DB || !c.env.AUTH_SECRET)
     return c.json(
       { error: { code: 'AUTH_UNAVAILABLE', message: '登录服务尚未配置，请稍后重试。' } },
       503,
     );
-  if (c.req.method === 'POST' && c.req.path === '/api/auth/sign-up/email') {
+  if (c.req.path === '/api/auth/sign-in/username') {
+    if (c.req.method !== 'POST') return c.json({ code: 'METHOD_NOT_ALLOWED' }, 405);
     const input = (await c.req.raw
       .clone()
       .json()
-      .catch(() => null)) as { name?: unknown; email?: unknown } | null;
+      .catch(() => null)) as { username?: unknown; password?: unknown } | null;
     if (
       !input ||
-      typeof input.name !== 'string' ||
-      !input.name.trim() ||
-      input.name.length > 40 ||
-      typeof input.email !== 'string' ||
-      input.email.length > 254
+      typeof input.username !== 'string' ||
+      !/^[a-z][a-z0-9_-]{2,31}$/.test(input.username.trim().toLowerCase()) ||
+      typeof input.password !== 'string' ||
+      input.password.length > 128
     )
-      return c.json({ code: 'INVALID_REGISTRATION', message: '请检查昵称和邮箱。' }, 400);
+      return c.json({ code: 'INVALID_LOGIN', message: '请输入有效的账号和密码。' }, 400);
+    const email = await builtInEmail(c.env.DB, input.username.trim().toLowerCase());
+    const url = new URL(c.req.url);
+    url.pathname = '/api/auth/sign-in/email';
+    const headers = new Headers(c.req.raw.headers);
+    headers.delete('content-length');
+    return getAuth(c.env, c.req.url).handler(
+      new Request(url, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ email, password: input.password }),
+      }),
+    );
   }
   return getAuth(c.env, c.req.url).handler(c.req.raw);
 });

@@ -13,6 +13,7 @@ import {
 import { Icon, Loading, ErrorState } from '../components/ui';
 import DemoPlayer from '../components/DemoPlayer';
 import GeometryLessonPlayer from '../components/GeometryLessonPlayer';
+import QuantityLessonPlayer from '../components/QuantityLessonPlayer';
 import QuestionRunner from '../components/QuestionRunner';
 
 export default function LessonPage() {
@@ -103,6 +104,8 @@ function LessonContent({ lesson, questions }: { lesson: Lesson; questions: Quest
           >
             {'dividend' in lesson.demo ? (
               <DemoPlayer demo={lesson.demo} onExplored={onExplored} />
+            ) : 'unitValue' in lesson.demo ? (
+              <QuantityLessonPlayer demo={lesson.demo} onExplored={onExplored} />
             ) : (
               <GeometryLessonPlayer demo={lesson.demo} onExplored={onExplored} />
             )}

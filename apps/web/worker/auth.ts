@@ -13,7 +13,12 @@ export function authOptions(
     basePath: '/api/auth',
     secret,
     database,
-    emailAndPassword: { enabled: true, minPasswordLength: 10, maxPasswordLength: 128 },
+    emailAndPassword: {
+      enabled: true,
+      disableSignUp: true,
+      minPasswordLength: 10,
+      maxPasswordLength: 128,
+    },
     session: {
       expiresIn: 60 * 60 * 24 * 7,
       updateAge: 60 * 60 * 24,
@@ -79,7 +84,24 @@ export async function sessionUser(
   });
   for (const cookie of result.headers.getSetCookie()) setCookie?.(cookie);
   const session = result.response;
-  return session?.user
+  if (!session?.user || !env.DB) return null;
+  const allowed = await env.DB.batch<{ username: string }>([
+    env.DB.prepare('SELECT username FROM built_in_accounts WHERE user_id=? AND enabled=1').bind(
+      session.user.id,
+    ),
+  ]);
+  return allowed[0]?.results[0]
     ? { id: session.user.id, name: session.user.name, email: session.user.email }
     : null;
+}
+
+export async function builtInEmail(db: ContentDatabase, username: string) {
+  const result = await db.batch<{ email: string }>([
+    db
+      .prepare(
+        'SELECT u.email FROM built_in_accounts b JOIN user u ON u.id=b.user_id WHERE b.username=? AND b.enabled=1',
+      )
+      .bind(username),
+  ]);
+  return result[0]?.results[0]?.email ?? 'not-an-enabled-account@mathstudy.internal';
 }

@@ -101,3 +101,4 @@ export function groupFrames(n: number, d: number): Frame[] {
     },
   ];
 }
+export { quantityFrames, type QuantityFrame } from './quantities';

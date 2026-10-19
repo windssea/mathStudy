@@ -26,10 +26,10 @@ describe('textbook-driven content', () => {
       ),
     ).toEqual(Array.from({ length: 114 }, (_, i) => i + 1));
     expect(textbook.catalog.flatMap((n) => n.lessons)).toHaveLength(35);
-    expect(textbook.catalog.flatMap((n) => n.lessons).filter((l) => l.available)).toHaveLength(13);
+    expect(textbook.catalog.flatMap((n) => n.lessons).filter((l) => l.available)).toHaveLength(17);
   });
   it('validates all open lessons and question references', () => {
-    expect(lessons).toHaveLength(13);
+    expect(lessons).toHaveLength(17);
     for (const l of lessons) {
       expect(lessonSchema.safeParse(l).success).toBe(true);
       expect(l.questionIds).toHaveLength(3);

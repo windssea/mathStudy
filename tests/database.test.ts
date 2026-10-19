@@ -47,7 +47,7 @@ describe('Cloudflare D1 content integration', () => {
     expect(content.source).toBe('d1');
     expect(content.sourceHash).toBe(seed.sourceHash);
     expect(content.textbook.id).toBe(editionId);
-    expect(content.lessons).toHaveLength(13);
+    expect(content.lessons).toHaveLength(17);
     expect(content.questions).toHaveLength(69);
     expect(sqlite.prepare('PRAGMA foreign_key_check').all()).toEqual([]);
     expect(

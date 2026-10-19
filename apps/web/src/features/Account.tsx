@@ -15,10 +15,8 @@ export default function Account() {
   const account = useAccount(),
     navigate = useNavigate(),
     [params] = useSearchParams();
-  const [mode, setMode] = useState<'login' | 'register'>('login');
-  const [email, setEmail] = useState(''),
-    [password, setPassword] = useState(''),
-    [name, setName] = useState('');
+  const [username, setUsername] = useState(''),
+    [password, setPassword] = useState('');
   const [visible, setVisible] = useState(false),
     [busy, setBusy] = useState(false),
     [error, setError] = useState(''),
@@ -39,7 +37,7 @@ export default function Account() {
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     await run(async () => {
-      await authenticate(mode, email, password, name);
+      await authenticate(username, password);
       setPassword('');
       const target = params.get('returnTo');
       if (target?.startsWith('/') && !target.startsWith('//') && !target.startsWith('/account'))
@@ -51,8 +49,8 @@ export default function Account() {
       <div className="page-heading">
         <div>
           <div className="eyebrow">把学习足迹，留在自己的账号里</div>
-          <h1>{account.user ? '我的账号' : '登录与同步'}</h1>
-          <p>在其他设备登录同一个账号，继续学习、查看答题记录和错题。</p>
+          <h1>{account.user ? '我的账号' : '账号登录'}</h1>
+          <p>使用内置账号登录，在其他设备继续学习、查看答题记录和错题。</p>
         </div>
       </div>
       {account.user ? (
@@ -60,7 +58,7 @@ export default function Account() {
           <section className="panel account-panel">
             <span className="account-avatar">{account.user.name.slice(0, 1)}</span>
             <h2>{account.user.name}</h2>
-            <p>{account.user.email}</p>
+            <p>内置学习账号</p>
             <p className="sync-status" role="status">
               {progressMessage()}
             </p>
@@ -103,10 +101,10 @@ export default function Account() {
             <h2>合并本机学习记录</h2>
             <p>
               本机游客记录包含 {guest.lessons} 个已完成课节、{guest.questions}{' '}
-              道练习。请确认这些是你的记录，再合并到当前账号。
+              道练习。请确认这些是当前账号的记录，再合并。
             </p>
             <p className="account-note">
-              账号之间的记录分别保存。合并不会覆盖云端已有学习，也不会删除本机原记录。旧版没有原始答案的条目标为“本机导入”。
+              同一个内置账号在不同设备共享记录。合并不会删除本机原记录；旧版没有原始答案的条目标为“本机导入”。
             </p>
             <button
               className="button secondary"
@@ -124,52 +122,20 @@ export default function Account() {
         </div>
       ) : (
         <section className="panel account-panel account-form-panel">
-          <div className="account-tabs" role="tablist" aria-label="账号操作">
-            <button
-              role="tab"
-              aria-selected={mode === 'login'}
-              onClick={() => {
-                setMode('login');
-                setError('');
-              }}
-            >
-              登录
-            </button>
-            <button
-              role="tab"
-              aria-selected={mode === 'register'}
-              onClick={() => {
-                setMode('register');
-                setError('');
-              }}
-            >
-              注册账号
-            </button>
-          </div>
+          <h2>登录学习空间</h2>
+          <p className="account-note">仅使用已配置的内置账号，不开放注册。</p>
           <form onSubmit={submit}>
-            {mode === 'register' && (
-              <label>
-                学习昵称
-                <input
-                  required
-                  maxLength={40}
-                  autoComplete="nickname"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="如：小小探索家"
-                />
-              </label>
-            )}
             <label>
-              邮箱
+              账号
               <input
                 required
-                type="email"
-                maxLength={254}
+                maxLength={32}
                 autoComplete="username"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="用于登录的邮箱"
+                autoCapitalize="none"
+                spellCheck={false}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="请输入内置账号"
               />
             </label>
             <label>
@@ -178,12 +144,10 @@ export default function Account() {
                 <input
                   required
                   type={visible ? 'text' : 'password'}
-                  minLength={10}
                   maxLength={128}
-                  autoComplete={mode === 'register' ? 'new-password' : 'current-password'}
+                  autoComplete="current-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  aria-describedby="password-note"
                   aria-label="密码"
                 />
                 <button type="button" aria-pressed={visible} onClick={() => setVisible(!visible)}>
@@ -191,11 +155,8 @@ export default function Account() {
                 </button>
               </span>
             </label>
-            <p id="password-note" className="account-note">
-              密码至少 10 个字符。当前不发送验证或找回邮件，请保存好登录信息。
-            </p>
             <button className="button primary" type="submit" disabled={busy || !account.ready}>
-              {busy ? '正在处理…' : mode === 'login' ? '登录并同步' : '注册并开始学习'}
+              {busy ? '正在处理…' : '登录并同步'}
               <Icon name="ArrowRight" size={17} />
             </button>
           </form>
