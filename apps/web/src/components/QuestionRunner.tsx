@@ -2,7 +2,15 @@ import { useState } from 'react';
 import type { QuestionPublic, Explanation, Grade } from '@mathstudy/contracts';
 import { difficultyLabels, typeLabels } from '@mathstudy/contracts';
 import { request } from '../lib/api';
-import { recordAnswer, isStorageAvailable } from '../lib/progress';
+import {
+  recordAnswer,
+  recordAssistance,
+  makeLearningEvent,
+  currentLearningOwner,
+  currentAccountHeaders,
+  useAccount,
+  progressMessage,
+} from '../lib/progress';
 import { Icon } from './ui';
 import VisualExplanation from './VisualExplanation';
 
@@ -20,18 +28,33 @@ export default function QuestionRunner({
   const [grade, setGrade] = useState<Grade>();
   const [explanation, setExplanation] = useState<Explanation>();
   const [revealed, setRevealed] = useState(false);
+  const [usedHint, setUsedHint] = useState(false);
+  useAccount();
   async function submit(event: React.FormEvent) {
     event.preventDefault();
     setBusy(true);
     setError('');
+    const owner = currentLearningOwner();
+    const eventData = makeLearningEvent(
+      'attempt',
+      q.id,
+      answers,
+      revealed || usedHint || !!explanation,
+    );
     try {
       const g = await request<Grade>(`/questions/${q.id}/check`, {
         method: 'POST',
-        body: JSON.stringify({ answers }),
+        headers: currentAccountHeaders(),
+        body: JSON.stringify({
+          answers,
+          attemptId: eventData.id,
+          occurredAt: eventData.occurredAt,
+          assisted: eventData.assisted,
+        }),
       });
       setGrade(g);
       setExplanation(g.explanation);
-      recordAnswer(q.id, g.correct, revealed || hint || !!explanation);
+      recordAnswer(q.id, g.correct, eventData.assisted, eventData, owner);
       onAttempt?.(q.id);
     } catch (e) {
       setError((e as Error).message);
@@ -40,13 +63,14 @@ export default function QuestionRunner({
     }
   }
   async function reveal() {
+    const owner = currentLearningOwner();
     setBusy(true);
     setError('');
     try {
       const e = await request<Explanation>(`/questions/${q.id}/explanation`, { method: 'POST' });
       setExplanation(e);
       setRevealed(true);
-      recordAnswer(q.id, false, true);
+      recordAssistance(q.id, owner);
       onAttempt?.(q.id);
     } catch (e) {
       setError((e as Error).message);
@@ -126,7 +150,13 @@ export default function QuestionRunner({
             type="button"
             className="button subtle"
             aria-expanded={hint}
-            onClick={() => setHint(!hint)}
+            onClick={() => {
+              if (!hint && !usedHint) {
+                setUsedHint(true);
+                recordAssistance(q.id);
+              }
+              setHint(!hint);
+            }}
           >
             <Icon name="Lightbulb" size={17} />
             {hint ? '收起提示' : '给我一个提示'}
@@ -162,6 +192,21 @@ export default function QuestionRunner({
       )}
       {explanation && (
         <section className="answer-explanation">
+          <button
+            className="button secondary"
+            onClick={() => {
+              setAnswers({});
+              setHint(false);
+              setUsedHint(false);
+              setGrade(undefined);
+              setExplanation(undefined);
+              setRevealed(false);
+              setError('');
+            }}
+          >
+            重新独立作答
+            <Icon name="RotateCcw" size={17} />
+          </button>
           <h4>
             <Icon name="Search" size={18} />
             思路分析
@@ -189,10 +234,8 @@ export default function QuestionRunner({
             </p>
           </div>
           <p className="save-note">
-            {isStorageAvailable()
-              ? '练习记录保存在当前设备。'
-              : '当前浏览器无法保存记录，本次结果仅在页面内保留。'}
-            {(revealed || hint) && ' 使用提示或查看讲解后，不计作独立做对。'}
+            {progressMessage()}
+            {(revealed || usedHint) && ' 使用提示或查看讲解后，不计作首次独立做对。'}
           </p>
         </section>
       )}

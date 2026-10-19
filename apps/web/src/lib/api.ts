@@ -1,13 +1,26 @@
 import { useEffect, useState } from 'react';
 import type { ApiEnvelope } from '@mathstudy/contracts';
+export class ApiError extends Error {
+  constructor(
+    message: string,
+    readonly status: number,
+  ) {
+    super(message);
+  }
+}
 
 export async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(`/api/v1${path}`, {
+    credentials: 'same-origin',
     ...init,
+    signal: init?.signal
+      ? AbortSignal.any([init.signal, AbortSignal.timeout(15000)])
+      : AbortSignal.timeout(15000),
     headers: { 'Content-Type': 'application/json', ...init?.headers },
   });
   const body = (await response.json()) as ApiEnvelope<T> & { error?: { message: string } };
-  if (!response.ok) throw new Error(body.error?.message ?? '暂时无法加载，请稍后重试。');
+  if (!response.ok)
+    throw new ApiError(body.error?.message ?? '暂时无法加载，请稍后重试。', response.status);
   return body.data;
 }
 export function useRemote<T>(path: string) {

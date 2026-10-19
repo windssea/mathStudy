@@ -27,6 +27,14 @@ assert.equal(health.status, 'ok');
 assert.equal(health.storage, 'd1');
 assert.equal(health.releaseId, releaseId);
 assert.equal(health.sourceHash, buildContentSeed().sourceHash);
+assert.equal(health.accountSync, true);
+const account = await api('/account');
+assert.equal(account.available, true);
+assert.equal(account.user, null);
+const privateRecords = await fetch(new URL('/api/v1/me/progress', origin), {
+  signal: AbortSignal.timeout(15000),
+});
+assert.equal(privateRecords.status, 401);
 const home = await api('/home');
 assert.equal(home.availableLessons, 13);
 assert.equal(home.questionCount, 69);

@@ -8,7 +8,7 @@
     "node": ">=24.0.0 <25"
   },
   "scripts": {
-    "dev": "pnpm db:prepare && pnpm --filter @mathstudy/web dev",
+    "dev": "tsx scripts/prepare-dev.ts && pnpm db:prepare && pnpm --filter @mathstudy/web dev",
     "db:migrate:local": "pnpm --filter @mathstudy/web exec wrangler d1 migrations apply mathstudy-prod-db --local",
     "db:migrate:remote": "pnpm --filter @mathstudy/web exec wrangler d1 migrations apply mathstudy-prod-db --remote",
     "db:seed:local": "tsx scripts/generate-seed.ts && pnpm --filter @mathstudy/web exec wrangler d1 execute mathstudy-prod-db --local --file ../../tmp/d1/seed.sql --yes",

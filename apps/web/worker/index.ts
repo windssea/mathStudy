@@ -6,16 +6,15 @@ import {
   questionTypeSchema,
 } from '@mathstudy/contracts';
 import { publicQuestion } from '@mathstudy/content';
-import { loadCourseContent, type ContentDatabase, type CourseContent } from './content-repository';
+import { loadCourseContent } from './content-repository';
 import { sameAnswer } from '@mathstudy/math-core';
+import { bodyLimit } from 'hono/body-limit';
+import { getAuth, sessionUser } from './auth';
+import { learningApi } from './learning-api';
+import { saveLearningEvents } from './learning-repository';
+import type { WorkerEnvironment } from './environment';
 
-const app = new Hono<{
-  Bindings: {
-    DB?: ContentDatabase;
-    CF_VERSION_METADATA?: { id: string; tag?: string; timestamp: string };
-  };
-  Variables: { requestId: string; content: CourseContent };
-}>();
+const app = new Hono<WorkerEnvironment>();
 app.use('/api/*', async (c, next) => {
   c.set('requestId', crypto.randomUUID());
   c.header('Cache-Control', 'no-store');
@@ -33,6 +32,20 @@ app.use('/api/*', async (c, next) => {
   }
   await next();
 });
+app.use(
+  '/api/*',
+  bodyLimit({
+    maxSize: 160 * 1024,
+    onError: (c) =>
+      c.json(
+        {
+          error: { code: 'TOO_LARGE', message: '一次同步的数据过多，请分批重试。' },
+          requestId: c.get('requestId'),
+        },
+        413,
+      ),
+  }),
+);
 app.onError((error, c) => {
   console.error('request_failed', c.get('requestId'), error.message);
   return c.json(
@@ -43,10 +56,49 @@ app.onError((error, c) => {
     500,
   );
 });
+app.on(['GET', 'POST'], '/api/auth/*', async (c) => {
+  if (
+    ![
+      '/api/auth/sign-in/email',
+      '/api/auth/sign-up/email',
+      '/api/auth/sign-out',
+      '/api/auth/change-password',
+    ].includes(c.req.path)
+  )
+    return c.json({ error: { code: 'NOT_FOUND', message: '接口不存在。' } }, 404);
+  if (!c.env?.DB || !c.env.AUTH_SECRET)
+    return c.json(
+      { error: { code: 'AUTH_UNAVAILABLE', message: '登录服务尚未配置，请稍后重试。' } },
+      503,
+    );
+  if (c.req.method === 'POST' && c.req.path === '/api/auth/sign-up/email') {
+    const input = (await c.req.raw
+      .clone()
+      .json()
+      .catch(() => null)) as { name?: unknown; email?: unknown } | null;
+    if (
+      !input ||
+      typeof input.name !== 'string' ||
+      !input.name.trim() ||
+      input.name.length > 40 ||
+      typeof input.email !== 'string' ||
+      input.email.length > 254
+    )
+      return c.json({ code: 'INVALID_REGISTRATION', message: '请检查昵称和邮箱。' }, 400);
+  }
+  return getAuth(c.env, c.req.url).handler(c.req.raw);
+});
+app.get('/api/v1/account', async (c) =>
+  c.json({
+    data: { user: await sessionUser(c.env ?? {}, c.req.raw), available: !!c.env?.AUTH_SECRET },
+    requestId: c.get('requestId'),
+  }),
+);
 app.use('/api/v1/*', async (c, next) => {
   c.set('content', await loadCourseContent(c.env?.DB));
   await next();
 });
+app.route('/api/v1/me', learningApi);
 const envelope = <T>(data: T, requestId: string) => ({ data, requestId });
 app.get('/api/v1/health', (c) => {
   const content = c.get('content');
@@ -58,6 +110,7 @@ app.get('/api/v1/health', (c) => {
         storage: content.source,
         sourceHash: content.sourceHash,
         deployment: c.env?.CF_VERSION_METADATA,
+        accountSync: !!c.env?.AUTH_SECRET,
       },
       c.get('requestId'),
     ),
@@ -176,6 +229,24 @@ app.post('/api/v1/questions/:id/check', async (c) => {
   const correct = Object.keys(question.expected).every((key) =>
     sameAnswer(parsed.data.answers[key], question.expected[key]),
   );
+  const user = await sessionUser(c.env ?? {}, c.req.raw);
+  if (user) {
+    if (c.req.header('X-MathStudy-Account') !== user.id)
+      return c.json(
+        { error: { code: 'ACCOUNT_CHANGED', message: '登录账号已变化，请刷新后重试。' } },
+        409,
+      );
+    await saveLearningEvents(c.env.DB!, user.id, c.get('content'), [
+      {
+        kind: 'attempt',
+        id: parsed.data.attemptId ?? crypto.randomUUID(),
+        entityId: question.id,
+        occurredAt: parsed.data.occurredAt ?? new Date().toISOString(),
+        answers: parsed.data.answers,
+        assisted: parsed.data.assisted ?? false,
+      },
+    ]);
+  }
   return c.json(
     envelope(
       {

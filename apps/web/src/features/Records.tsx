@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import { useCourse } from '../app/course';
 import { useRemote } from '../lib/api';
-import { useProgress, isStorageAvailable } from '../lib/progress';
+import { useProgress, useAccount, progressMessage, synchronize } from '../lib/progress';
 import type { QuestionPublic } from '@mathstudy/contracts';
 import { Icon, Loading, ErrorState, ProgressRing } from '../components/ui';
 
@@ -10,20 +11,37 @@ export default function Records() {
     progress = useProgress();
   const remote = useRemote<{ items: QuestionPublic[] }>('/questions');
   const attempted = Object.entries(progress.answers);
+  const account = useAccount();
+  const [reviewFilter, setReviewFilter] = useState<'pending' | 'resolved' | 'all'>('pending');
   const independent = attempted.filter(([, a]) => a.independentCorrect).length;
-  const review = attempted.filter(([, a]) => !a.correct || a.revealed);
+  const notebook = attempted.filter(([, a]) => a.everWrong || a.needsReview);
+  const review = notebook.filter(
+    ([, a]) =>
+      reviewFilter === 'all' || (reviewFilter === 'pending' ? a.needsReview : !a.needsReview),
+  );
   return (
     <>
       <div className="page-heading">
         <div>
           <div className="eyebrow">不和别人比，只看自己的收获</div>
           <h1>我的学习记录</h1>
-          <p>
-            {isStorageAvailable()
-              ? '这些记录保存在当前设备，换浏览器或清除数据后不会同步。'
-              : '当前浏览器无法持久保存记录，页面关闭后记录可能丢失。'}
-          </p>
+          <p>{progressMessage()}</p>
         </div>
+      </div>
+      <div className="records-sync-bar">
+        <Link className="text-link" to="/account">
+          {account.user ? `${account.user.name} · 账号与同步` : '登录，跨设备同步记录'}
+          <Icon name="ArrowRight" size={16} />
+        </Link>
+        {account.user && (
+          <button
+            className="button secondary small-button"
+            disabled={account.syncing}
+            onClick={() => void synchronize().catch(() => {})}
+          >
+            立即同步{account.pending > 0 && `（${account.pending} 条待同步）`}
+          </button>
+        )}
       </div>
       <section className="record-summary panel">
         <ProgressRing value={progress.completed.length} total={availableLessons} />
@@ -73,8 +91,25 @@ export default function Records() {
         <section className="panel records-panel">
           <h2>
             <Icon name="RotateCcw" />
-            值得再想一想的题
+            错题与复习
           </h2>
+          <div className="notebook-filters" role="group" aria-label="错题状态">
+            {(
+              [
+                ['pending', '待复习'],
+                ['resolved', '已掌握'],
+                ['all', '全部'],
+              ] as const
+            ).map(([value, label]) => (
+              <button
+                key={value}
+                aria-pressed={reviewFilter === value}
+                onClick={() => setReviewFilter(value)}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
           {remote.loading ? (
             <Loading />
           ) : remote.error ? (
@@ -88,7 +123,12 @@ export default function Records() {
                   <span>
                     {q.title}
                     <small>
-                      {a.revealed ? '看过提示或讲解，再独立试试' : '上次没有做对，再想一想'}
+                      {!a.needsReview
+                        ? '已独立答对，保留复习足迹'
+                        : a.revealed
+                          ? '看过提示或讲解，再独立试试'
+                          : '上次没有做对，再想一想'}
+                      {a.wrongCount > 0 && ` · 错过 ${a.wrongCount} 次`}
                     </small>
                   </span>
                   <Icon name="ChevronRight" size={16} />
@@ -98,8 +138,10 @@ export default function Records() {
           ) : (
             <div className="empty-state compact">
               <Icon name="Lightbulb" size={32} />
-              <h3>把每次尝试变成收获</h3>
-              <p>做错的题和使用过提示的题，会留在这里方便复习。</p>
+              <h3>
+                {reviewFilter === 'resolved' ? '独立订正后，会留在这里' : '把每次尝试变成收获'}
+              </h3>
+              <p>做错或看过提示的题进入待复习；重新独立答对后转入已掌握。</p>
               <Link to="/questions" className="text-link">
                 去题库练一练
                 <Icon name="ArrowRight" size={16} />
@@ -108,6 +150,57 @@ export default function Records() {
           )}
         </section>
       </div>
+      <section className="panel records-panel answer-history">
+        <h2>
+          <Icon name="ListChecks" />
+          最近答题记录
+        </h2>
+        <p className="account-note">
+          显示最近 100 条作答；“本机导入”表示旧版没有保留原始答案的历史结论。
+        </p>
+        {progress.history.length ? (
+          <ol>
+            {progress.history.map((a) => {
+              const q = remote.data?.items.find((q) => q.id === a.questionId);
+              return (
+                <li key={a.id}>
+                  <Link to={`/questions/${a.questionId}`}>
+                    <div>
+                      <strong>{q?.title ?? a.questionId}</strong>
+                      <span className={`chip ${a.correct ? 'blue' : 'neutral'}`}>
+                        {a.correct ? '答对' : '待订正'}
+                        {a.assisted ? ' · 用过提示' : ''}
+                      </span>
+                    </div>
+                    <p>
+                      {a.source === 'imported'
+                        ? '旧版记录，未保存原始答案'
+                        : q?.options
+                          ? (q.options[Number(a.answers.value)] ?? a.answers.value)
+                          : (q?.fields
+                              .map((f) => `${f.label}：${a.answers[f.key] ?? '—'}${f.suffix ?? ''}`)
+                              .join('，') ?? Object.values(a.answers).join('，'))}
+                    </p>
+                    <small>
+                      {new Date(a.date).toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })} ·{' '}
+                      {a.source === 'verified'
+                        ? '服务端已判分'
+                        : a.source === 'imported'
+                          ? '本机导入'
+                          : '本机记录'}
+                    </small>
+                  </Link>
+                </li>
+              );
+            })}
+          </ol>
+        ) : (
+          <div className="empty-state compact">
+            <h3>还没有作答记录</h3>
+            <p>在课节或题库中提交答案后，就会记录每一次尝试。</p>
+          </div>
+        )}
+      </section>
     </>
   );
 }

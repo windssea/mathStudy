@@ -282,6 +282,7 @@ input[type='range'] {
   gap: 22px;
 }
 .local-label {
+  white-space: nowrap;
   font-size: 12px;
   color: var(--muted);
   display: flex;
@@ -1549,6 +1550,202 @@ input[type='range'] {
   }
   .unit-tile {
     transition: none;
+  }
+}
+.account-link {
+  color: #2453c6;
+  font-size: 13px;
+  font-weight: 600;
+  max-width: 130px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 12px 4px;
+}
+.account-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.account-panel {
+  padding: 30px;
+}
+.account-panel h2 {
+  font-size: 21px;
+  margin-bottom: 12px;
+}
+.account-panel p {
+  line-height: 1.9;
+  color: #586d8b;
+  overflow-wrap: anywhere;
+  margin: 12px 0;
+}
+.account-panel .account-note,
+.account-note {
+  color: #63718a;
+  font-size: 13px;
+  line-height: 1.9;
+  margin: 12px 0 18px;
+}
+.account-avatar {
+  display: grid;
+  place-items: center;
+  height: 48px;
+  width: 48px;
+  background: #e6eeff;
+  color: #2453c6;
+  border-radius: 14px;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+.account-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 24px 0;
+}
+.account-panel .sync-status {
+  color: #2453c6;
+  padding: 12px;
+  background: #eef4ff;
+  border-radius: 8px;
+}
+.account-form-panel {
+  max-width: 520px;
+  margin: 0 auto;
+}
+.account-tabs {
+  display: flex;
+  gap: 24px;
+  border-bottom: 1px solid #dce4f2;
+  margin-bottom: 24px;
+}
+.account-tabs button {
+  min-height: 44px;
+  padding: 10px 4px;
+  color: #63718a;
+  font-weight: 600;
+}
+.account-tabs button[aria-selected='true'] {
+  color: #2453c6;
+  border-bottom: 2px solid #3563e9;
+}
+.account-form-panel form > label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 18px 0;
+  font-size: 14px;
+  font-weight: 550;
+}
+.account-form-panel input {
+  border: 1px solid #bccce4;
+  background: white;
+  border-radius: 7px;
+  min-height: 48px;
+  padding: 12px;
+  width: 100%;
+  font-size: 16px;
+  min-width: 0;
+}
+.password-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.password-field input {
+  flex: 1;
+}
+.password-field button {
+  flex-shrink: 0;
+  min-height: 44px;
+  padding: 10px;
+  border-radius: 6px;
+  background: #f0f4fb;
+  color: #2453c6;
+  font-size: 13px;
+}
+.account-form-panel form > .button {
+  width: 100%;
+  margin: 8px 0;
+}
+.account-feedback {
+  max-width: 800px;
+  margin: 20px auto;
+  line-height: 1.9;
+}
+.records-sync-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0 0 24px;
+}
+.notebook-filters {
+  display: flex;
+  gap: 8px;
+  margin: 18px 0;
+}
+.notebook-filters button {
+  min-height: 44px;
+  padding: 9px 15px;
+  border-radius: 6px;
+  border: 1px solid #d5deed;
+  color: #526782;
+}
+.notebook-filters button[aria-pressed='true'] {
+  color: #2453c6;
+  background: #eaf0ff;
+  border-color: #8da8e5;
+}
+.answer-history {
+  margin-top: 24px;
+}
+.answer-history ol {
+  list-style: none;
+  padding: 0;
+}
+.answer-history li {
+  border-top: 1px solid #e5ebf4;
+  padding: 18px 0;
+}
+.answer-history li a {
+  display: block;
+}
+.answer-history li a > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.answer-history p {
+  margin: 10px 0;
+  line-height: 1.8;
+  color: #526782;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+.answer-history small {
+  color: #63718a;
+  font-size: 12px;
+}
+@media (max-width: 760px) {
+  .account-grid {
+    grid-template-columns: 1fr;
+  }
+  .account-panel {
+    padding: 22px;
+  }
+}
+@media (max-width: 480px) {
+  .account-link {
+    max-width: 95px;
+    font-size: 12px;
+  }
+  .account-panel {
+    padding: 18px;
   }
 }
 .demo-options {
@@ -3197,6 +3394,13 @@ select {
   }
   .breadcrumb {
     font-size: 10px;
+  }
+  .breadcrumb-home,
+  .breadcrumb > svg {
+    display: none;
+  }
+  .breadcrumb b {
+    white-space: nowrap;
   }
   .page-heading h1 {
     font-size: 24px;

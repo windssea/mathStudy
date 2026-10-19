@@ -3,7 +3,13 @@ import { Link, useParams } from 'react-router-dom';
 import type { Lesson, QuestionPublic } from '@mathstudy/contracts';
 import { useCourse } from '../app/course';
 import { useRemote } from '../lib/api';
-import { visitLesson, completeLesson, useProgress, isStorageAvailable } from '../lib/progress';
+import {
+  visitLesson,
+  completeLesson,
+  useProgress,
+  useAccount,
+  progressMessage,
+} from '../lib/progress';
 import { Icon, Loading, ErrorState } from '../components/ui';
 import DemoPlayer from '../components/DemoPlayer';
 import GeometryLessonPlayer from '../components/GeometryLessonPlayer';
@@ -28,6 +34,7 @@ export default function LessonPage() {
 function LessonContent({ lesson, questions }: { lesson: Lesson; questions: QuestionPublic[] }) {
   const { textbook: book } = useCourse();
   const progress = useProgress();
+  useAccount();
   const [tab, setTab] = useState<'explore' | 'practice'>('explore');
   const [explored, setExplored] = useState(false);
   const [attempted, setAttempted] = useState<string[]>([]);
@@ -153,9 +160,7 @@ function LessonContent({ lesson, questions }: { lesson: Lesson; questions: Quest
                   </span>
                   <h2>这一课，又多懂了一点</h2>
                   <p>
-                    {isStorageAvailable()
-                      ? '完成记录已保存在当前设备。'
-                      : '当前浏览器未能保存完成记录。'}
+                    {progressMessage()}
                     你可以继续探索下一课。
                   </p>
                   <Link

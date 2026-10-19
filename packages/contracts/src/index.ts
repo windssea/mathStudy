@@ -1,4 +1,5 @@
 import { z } from 'zod';
+export * from './learning';
 
 export const editionId = 'sj-math-g4-upper-2026-v1';
 export const releaseId = 'preview-2026-10-u02-r1';
@@ -112,7 +113,12 @@ export interface Question extends QuestionPublic {
   explanation: Explanation;
 }
 export const submissionSchema = z
-  .object({ answers: z.record(z.string(), z.string().max(80)) })
+  .object({
+    answers: z.record(z.string(), z.string().max(80)),
+    attemptId: z.uuid().optional(),
+    occurredAt: z.iso.datetime().optional(),
+    assisted: z.boolean().optional(),
+  })
   .strict();
 export interface Grade {
   correct: boolean;

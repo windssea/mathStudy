@@ -1,6 +1,6 @@
 # Git 与 Cloudflare 部署
 
-本项目采用 GitHub 管理源码、Cloudflare Workers 托管前端静态资源与 Hono API、Cloudflare D1 保存发布后的教材目录、课程与题库。当前不依赖其他云数据库。
+本项目采用 GitHub 管理源码、Cloudflare Workers 托管前端静态资源与 Hono API、Cloudflare D1 保存教材目录、课程、题库，以及账号、会话、学习事件。当前不依赖其他云数据库。
 
 ## 资源与分支
 
@@ -25,7 +25,9 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-`pnpm dev` 自动迁移并同步本地 D1，然后启动开发服务。默认使用 Wrangler 的本地 D1 模拟，不读写生产数据库。新增课程或题库内容后，可执行 `pnpm db:prepare` 同步本地内容。
+`pnpm dev` 自动生成独立的开发登录密钥到被 Git 忽略的 `apps/web/.dev.vars`，迁移并同步本地 D1，然后启动开发服务。默认使用 Wrangler 的本地 D1 模拟，不读写生产数据库。新增课程或题库内容后，可执行 `pnpm db:prepare` 同步本地内容。
+
+生产 Worker 已配置 `AUTH_SECRET`。在新建独立环境时，用密码生成器生成至少 32 字符的随机密钥，再通过 `pnpm --filter @mathstudy/web exec wrangler secret put AUTH_SECRET` 的交互输入保存。它用于会话签名，和 `CLOUDFLARE_API_TOKEN` 是不同凭据，不能复用。日常部署保留已有 Secret，无需重复设置。更换该密钥会使已有会话失效；不要将生产密钥复制到本机或仓库。
 
 ## 部署流程
 
@@ -62,10 +64,12 @@ pnpm run deploy:cloudflare
 
 课程和题目按 `releaseId` 隔离保存。重复同步当前内容使用 UPSERT，保留其他发布版本；不清空数据库。删除内容或需要保留旧版本时应先更新 `packages/contracts/src/index.ts` 的 `releaseId`，再发布对应内容。向后兼容的数据库迁移应先于新版 Worker 生效。
 
-Worker 回滚与数据库结构回滚是不同操作；避免删除旧字段和旧内容，让旧 Worker 仍可读取其发布版本。当前学习进度仍保存在浏览器，尚未实现登录账号及跨设备同步；这次 D1 接入的是教材与题库发布数据。
+Worker 回滚与数据库结构回滚是不同操作；避免删除旧字段和旧内容，让旧 Worker 仍可读取其发布版本。0003/0004 迁移新增账号、会话及学习事件，不修改已有教材或学习记录。内容同步脚本只更新内容表，不清空账号或学习事件。学习记录按账号和教材版次隔离，不因同一教材的内容发布版本升级而重置。
 
 ## 上线检查
 
-检查 `/api/v1/health` 返回 `status: ok`、`storage: d1`、当前 `releaseId` 和 `sourceHash`；再检查首页、课程深链接、第二单元题库及一道题的服务端判题。健康接口同时返回 Cloudflare 版本元数据，可与部署记录对应。
+检查 `/api/v1/health` 返回 `status: ok`、`storage: d1`、`accountSync: true`、当前 `releaseId` 和 `sourceHash`；再检查首页、课程深链接、第二单元题库及一道题的服务端判题。健康接口同时返回 Cloudflare 版本元数据，可与部署记录对应。
+
+`pnpm exec tsx scripts/smoke-sync.ts --origin https://mathstudy.windssea526.workers.dev` 可手动验收真实 D1 的注册、双会话登录、课节合并、错题订正、重复上传和单会话退出。该检查会创建一个 `@example.invalid` 测试账号并保留其测试数据，不发送邮件；不放进每次自动构建，以免反复创建账号。普通 `pnpm smoke` 不创建账号，只验证账号接口和未登录访问隔离。
 
 自动构建的配置规则参考 [Cloudflare Workers Builds](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/)，迁移机制参考 [Cloudflare D1 Migrations](https://developers.cloudflare.com/d1/reference/migrations/)。
