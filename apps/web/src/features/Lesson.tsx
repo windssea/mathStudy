@@ -15,6 +15,7 @@ import DemoPlayer from '../components/DemoPlayer';
 import GeometryLessonPlayer from '../components/GeometryLessonPlayer';
 import QuantityLessonPlayer from '../components/QuantityLessonPlayer';
 import ArithmeticLessonPlayer from '../components/ArithmeticLessonPlayer';
+import LargeNumberLessonPlayer from '../components/LargeNumberLessonPlayer';
 import QuestionRunner from '../components/QuestionRunner';
 
 export default function LessonPage() {
@@ -109,6 +110,8 @@ function LessonContent({ lesson, questions }: { lesson: Lesson; questions: Quest
               <QuantityLessonPlayer demo={lesson.demo} onExplored={onExplored} />
             ) : 'exampleId' in lesson.demo ? (
               <ArithmeticLessonPlayer demo={lesson.demo} onExplored={onExplored} />
+            ) : 'initialNumber' in lesson.demo ? (
+              <LargeNumberLessonPlayer demo={lesson.demo} onExplored={onExplored} />
             ) : (
               <GeometryLessonPlayer demo={lesson.demo} onExplored={onExplored} />
             )}

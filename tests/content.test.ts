@@ -26,10 +26,10 @@ describe('textbook-driven content', () => {
       ),
     ).toEqual(Array.from({ length: 114 }, (_, i) => i + 1));
     expect(textbook.catalog.flatMap((n) => n.lessons)).toHaveLength(35);
-    expect(textbook.catalog.flatMap((n) => n.lessons).filter((l) => l.available)).toHaveLength(20);
+    expect(textbook.catalog.flatMap((n) => n.lessons).filter((l) => l.available)).toHaveLength(27);
   });
   it('validates all open lessons and question references', () => {
-    expect(lessons).toHaveLength(20);
+    expect(lessons).toHaveLength(27);
     for (const l of lessons) {
       expect(lessonSchema.safeParse(l).success).toBe(true);
       expect(l.questionIds).toHaveLength(3);
@@ -40,8 +40,8 @@ describe('textbook-driven content', () => {
     }
   });
   it('covers all six units, every difficulty, fill-ins and applications', () => {
-    expect(questions).toHaveLength(69);
-    expect(new Set(questions.map((q) => q.id)).size).toBe(69);
+    expect(questions).toHaveLength(78);
+    expect(new Set(questions.map((q) => q.id)).size).toBe(78);
     for (const unit of textbook.catalog.filter((n) => n.kind === 'unit')) {
       const group = questions.filter((q) => q.unitId === unit.id);
       expect(group.length).toBeGreaterThanOrEqual(9);

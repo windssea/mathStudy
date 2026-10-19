@@ -2,7 +2,7 @@ import { z } from 'zod';
 export * from './learning';
 
 export const editionId = 'sj-math-g4-upper-2026-v1';
-export const releaseId = 'preview-2026-10-u04-r1';
+export const releaseId = 'preview-2026-10-u05-r1';
 export const difficultySchema = z.enum(['basic', 'advanced', 'challenge']);
 export type Difficulty = z.infer<typeof difficultySchema>;
 export const questionTypeSchema = z.enum(['fill', 'application', 'choice']);
@@ -40,11 +40,25 @@ export const arithmeticDemoSchema = z.object({
   exampleId: z.string().min(1),
 });
 export type ArithmeticDemo = z.infer<typeof arithmeticDemoSchema>;
+export const largeNumberDemoSchema = z.object({
+  kind: z.enum([
+    'countingUnits',
+    'largeReading',
+    'numberClasses',
+    'decimalSystem',
+    'roundingNumbers',
+    'numberEncoding',
+    'largeReview',
+  ]),
+  initialNumber: z.number().int().min(0).max(999999999999),
+});
+export type LargeNumberDemo = z.infer<typeof largeNumberDemoSchema>;
 export const demoSchema = z.discriminatedUnion('kind', [
   divisionDemoSchema,
   geometryDemoSchema,
   quantityDemoSchema,
   arithmeticDemoSchema,
+  largeNumberDemoSchema,
 ]);
 export type Demo = z.infer<typeof demoSchema>;
 export const lessonSchema = z.object({

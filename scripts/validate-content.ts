@@ -1,6 +1,12 @@
 import { textbook, lessons, questions } from '@mathstudy/content';
 import { lessonSchema, visualSchema } from '@mathstudy/contracts';
-import { arithmeticScenes, calculationFrames } from '@mathstudy/animation-engine';
+import {
+  arithmeticScenes,
+  calculationFrames,
+  countingFrames,
+  readingFrames,
+  approximationFrames,
+} from '@mathstudy/animation-engine';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 
@@ -20,6 +26,16 @@ for (const question of questions) {
 for (const lesson of lessons) {
   const demo = lesson.demo;
   if (!lessonSchema.safeParse(lesson).success) issues.push(`Invalid lesson: ${lesson.id}`);
+  if ('initialNumber' in demo) {
+    try {
+      if (demo.kind === 'countingUnits' || demo.kind === 'decimalSystem')
+        countingFrames(demo.initialNumber, demo.kind === 'decimalSystem' ? 4 : 0);
+      else if (demo.kind === 'roundingNumbers') approximationFrames(demo.initialNumber, 4, 'round');
+      else readingFrames(demo.initialNumber);
+    } catch {
+      issues.push(`Invalid large number demo: ${lesson.id}`);
+    }
+  }
   if (
     'exampleId' in demo &&
     !arithmeticScenes.some((scene) => scene.id === demo.exampleId && scene.kind === demo.kind)

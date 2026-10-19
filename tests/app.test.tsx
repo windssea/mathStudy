@@ -13,6 +13,34 @@ afterEach(() => {
   vi.unstubAllGlobals();
   vi.restoreAllMocks();
 });
+it('connects fifth-unit reading exploration, fill-in/choice grading and completion', async () => {
+  window.history.replaceState({}, '', '/books/sj-math-g4-upper-2026-v1/lessons/U05-L02');
+  vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
+  vi.stubGlobal('fetch', (input: string, init?: RequestInit) =>
+    app.request(new URL(input, 'http://localhost').href, init),
+  );
+  render(<App />);
+  await screen.findByRole('heading', { name: '万级数的读写与比较' });
+  expect(screen.getByRole('heading', { name: '第五单元的探索路线' })).toBeTruthy();
+  fireEvent.change(screen.getByRole('slider', { name: '演示步骤' }), {
+    target: { value: screen.getByRole('slider').getAttribute('max') },
+  });
+  fireEvent.click(screen.getByRole('tab', { name: /自己试一试/ }));
+  const articles = screen.getAllByRole('article');
+  fireEvent.click(screen.getByRole('radio', { name: /78900000/ }));
+  fireEvent.submit(articles[0].querySelector('form')!);
+  fireEvent.click(screen.getByRole('radio', { name: /三百万八千零七/ }));
+  fireEvent.submit(articles[1].querySelector('form')!);
+  fireEvent.change(articles[2].querySelector('input')!, { target: { value: '20022000' } });
+  fireEvent.submit(articles[2].querySelector('form')!);
+  await waitFor(() =>
+    expect(screen.getAllByText('答对了！再看看思路，理解为什么。')).toHaveLength(3),
+  );
+  fireEvent.click(screen.getByRole('button', { name: '完成本课' }));
+  expect(screen.getByRole('link', { name: '继续下一课' }).getAttribute('href')).toContain(
+    'U05-L03',
+  );
+}, 15000);
 it('connects fourth-unit bracket exploration, grading and completion to the shared learning flow', async () => {
   window.history.replaceState({}, '', '/books/sj-math-g4-upper-2026-v1/lessons/U04-L02');
   vi.spyOn(window, 'scrollTo').mockImplementation(() => {});

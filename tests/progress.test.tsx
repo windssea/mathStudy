@@ -6,6 +6,22 @@ afterEach(() => {
   cleanup();
   localStorage.clear();
 });
+it('retains fourth-unit legacy records and persists fifth-unit completion in the new release', async () => {
+  vi.resetModules();
+  localStorage.setItem(
+    `mathstudy:${editionId}:preview-2026-10-u04-r1`,
+    JSON.stringify({ version: 1, completed: ['U04-L03'], lastLessonId: 'U04-L03', answers: {} }),
+  );
+  const { useProgress, visitLesson, completeLesson } = await import('../apps/web/src/lib/progress');
+  const state = renderHook(() => useProgress());
+  expect(state.result.current.completed).toEqual(['U04-L03']);
+  act(() => {
+    visitLesson('U05-L07');
+    completeLesson('U05-L07');
+  });
+  expect(state.result.current.completed).toEqual(['U04-L03', 'U05-L07']);
+  expect(state.result.current.lastLessonId).toBe('U05-L07');
+});
 it('retains third-unit legacy records and accepts fourth-unit progress after the release changes', async () => {
   vi.resetModules();
   const old = `mathstudy:${editionId}:preview-2026-10-u03-r1`;

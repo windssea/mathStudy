@@ -15,9 +15,9 @@ assert.ok(password, 'Set MATHSTUDY_ACCOUNT_PASSWORD in the operator environment.
 const write = process.argv.includes('--write');
 const unitIndex = process.argv.indexOf('--unit');
 const unit = unitIndex < 0 ? 'U03' : process.argv[unitIndex + 1];
-assert.ok(unit === 'U03' || unit === 'U04', 'Use --unit U03 or U04.');
-const questionId = unit === 'U04' ? 'u4-07' : 'u3-07';
-const correctValue = unit === 'U04' ? '6' : '80';
+assert.ok(['U03', 'U04', 'U05'].includes(unit), 'Use --unit U03, U04 or U05.');
+const questionId = unit === 'U05' ? 'u5-07' : unit === 'U04' ? 'u4-07' : 'u3-07';
+const correctValue = unit === 'U05' ? '355000' : unit === 'U04' ? '6' : '80';
 const device = () => {
   const cookies = new Map<string, string>();
   let id = '';

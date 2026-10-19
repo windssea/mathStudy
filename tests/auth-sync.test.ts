@@ -85,6 +85,36 @@ function attempt(value: string, assisted = false, offset = 0): LearningEvent {
   };
 }
 describe('account authentication and private D1 learning records', () => {
+  it('syncs seven fifth-unit lessons, rounding corrections and new encoding answers across devices', async () => {
+    const a = device(),
+      b = device('192.0.2.2');
+    await a.provision();
+    await b.login();
+    const completions = Array.from({ length: 7 }, (_, index) =>
+      event('complete', `U05-L0${index + 1}`),
+    );
+    const wrong = { ...attempt('360000', false, 10), entityId: 'u5-07' };
+    const right = { ...attempt('355000', false, 20), entityId: 'u5-07' };
+    const encoding = { ...attempt('30', false, 30), entityId: 'u5-16' };
+    await a.sync([event('complete', 'U04-L03'), ...completions, wrong]);
+    expect((await b.sync()).snapshot.answers['u5-07'].needsReview).toBe(true);
+    await b.sync([right, encoding]);
+    const result = await a.sync([wrong, right, encoding]);
+    expect(result.snapshot.completed).toContain('U04-L03');
+    for (const completion of completions)
+      expect(result.snapshot.completed).toContain(completion.entityId);
+    expect(result.snapshot.answers['u5-07']).toMatchObject({
+      attemptCount: 2,
+      wrongCount: 1,
+      needsReview: false,
+      source: 'verified',
+    });
+    expect(result.snapshot.answers['u5-16']).toMatchObject({
+      attemptCount: 1,
+      needsReview: false,
+      source: 'verified',
+    });
+  });
   it('syncs fourth-unit completion and wrong-answer correction across two sessions without losing earlier units', async () => {
     const a = device(),
       b = device('192.0.2.2');

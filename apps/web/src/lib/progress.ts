@@ -34,7 +34,7 @@ const key = `mathstudy:${editionId}:${releaseId}`,
 const prefix = `mathstudy:v2:${editionId}:`,
   sessionSignal = 'mathstudy:account-change';
 const validLesson = (id: string) =>
-  /^(U01-L0[1-5]|U02-L0[1-7]|U03-L0[1-4]|U04-L0[1-3]|A01-L01)$/.test(id);
+  /^(U01-L0[1-5]|U02-L0[1-7]|U03-L0[1-4]|U04-L0[1-3]|U05-L0[1-7]|A01-L01)$/.test(id);
 const listeners = new Set<() => void>(),
   scopes = new Map<string, Scope>();
 let storageAvailable = true,
@@ -160,6 +160,7 @@ function migrateLegacy() {
   try {
     const raw = JSON.parse(
       read(key) ??
+        read(`mathstudy:${editionId}:preview-2026-10-u04-r1`) ??
         read(`mathstudy:${editionId}:preview-2026-10-u03-r1`) ??
         read(`mathstudy:${editionId}:preview-2026-10-u02-r1`) ??
         read(legacyKey) ??

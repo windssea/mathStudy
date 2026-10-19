@@ -3,6 +3,27 @@ import { app } from '../apps/web/worker';
 import { questions, lessons } from '@mathstudy/content';
 const base = '/api/v1';
 describe('public course and grading API', () => {
+  it('opens all seven fifth-unit lessons and covers every bank question with no private grading keys', async () => {
+    const ids = new Set<string>();
+    const fifth = lessons.filter((item) => item.unitId === 'U05');
+    expect(fifth).toHaveLength(7);
+    for (const lesson of fifth) {
+      const response = await app.request(
+        `${base}/textbooks/sj-math-g4-upper-2026-v1/lessons/${lesson.id}`,
+      );
+      expect(response.status).toBe(200);
+      const { data } = await response.json();
+      expect(data.questions.map((item: { id: string }) => item.id)).toEqual(lesson.questionIds);
+      expect(JSON.stringify(data)).not.toContain('"expected"');
+      lesson.questionIds.forEach((id) => ids.add(id));
+    }
+    expect([...ids].sort()).toEqual(
+      questions
+        .filter((q) => q.unitId === 'U05')
+        .map((q) => q.id)
+        .sort(),
+    );
+  });
   it('opens three fourth-unit lessons with all nine questions and no answer keys', async () => {
     const ids: string[] = [];
     for (const lesson of lessons.filter((item) => item.unitId === 'U04')) {
@@ -22,8 +43,8 @@ describe('public course and grading API', () => {
     expect(r.status).toBe(200);
     const b = await r.json();
     expect(b.data.textbook.id).toBe('sj-math-g4-upper-2026-v1');
-    expect(b.data.questionCount).toBe(69);
-    expect(b.data.availableLessons).toBe(20);
+    expect(b.data.questionCount).toBe(78);
+    expect(b.data.availableLessons).toBe(27);
     expect(b.requestId).toBeTruthy();
   });
   it('serves all second-unit lessons and the activity with their existing public bank questions', async () => {
@@ -54,7 +75,7 @@ describe('public course and grading API', () => {
   it('does not mix editions or open planned lessons', async () => {
     expect((await app.request(`${base}/textbooks/not-this-book/lessons/U01-L01`)).status).toBe(404);
     expect(
-      (await app.request(`${base}/textbooks/sj-math-g4-upper-2026-v1/lessons/U05-L01`)).status,
+      (await app.request(`${base}/textbooks/sj-math-g4-upper-2026-v1/lessons/U06-L01`)).status,
     ).toBe(404);
   });
   it('filters questions without leaking answer keys', async () => {
