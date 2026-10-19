@@ -1,0 +1,436 @@
+{
+  "id": "sj-math-g4-upper-2026-v1",
+  "title": "苏教版数学四年级上册",
+  "editionLabel": "2026年7月第1版",
+  "publisher": "江苏凤凰教育出版社",
+  "grade": 4,
+  "volume": "upper",
+  "releaseId": "preview-2026-10-u02-r1",
+  "catalog": [
+    {
+      "id": "U01",
+      "kind": "unit",
+      "title": "两、三位数除以两位数",
+      "sortOrder": 1,
+      "printedRange": [1, 16],
+      "pdfRange": [9, 24],
+      "lessons": [
+        {
+          "id": "U01-L01",
+          "unitId": "U01",
+          "title": "整十数除法与分组意义",
+          "pages": [2, 3],
+          "summary": "把一大堆物品分成一样多的几组，理解商与余数。",
+          "minutes": 12,
+          "available": true
+        },
+        {
+          "id": "U01-L02",
+          "unitId": "U01",
+          "title": "两位数除法的试商与调商",
+          "pages": [4, 7],
+          "summary": "把除数看成接近的整十数，试一试，再调整。",
+          "minutes": 15,
+          "available": true
+        },
+        {
+          "id": "U01-L03",
+          "unitId": "U01",
+          "title": "商是两位数的竖式",
+          "pages": [8, 9],
+          "summary": "让每一步都对齐数位，学会商、乘、减、落。",
+          "minutes": 15,
+          "available": true
+        },
+        {
+          "id": "U01-L04",
+          "unitId": "U01",
+          "title": "连除与实际问题",
+          "pages": [10, 12],
+          "summary": "整理条件，把“两次平均分”画出来。",
+          "minutes": 12,
+          "available": true
+        },
+        {
+          "id": "U01-L05",
+          "unitId": "U01",
+          "title": "单元整理与应用",
+          "pages": [13, 16],
+          "summary": "把算法和生活连起来，用验算发现错误。",
+          "minutes": 15,
+          "available": true
+        }
+      ]
+    },
+    {
+      "id": "U02",
+      "kind": "unit",
+      "title": "周长与面积",
+      "sortOrder": 2,
+      "printedRange": [17, 41],
+      "pdfRange": [25, 49],
+      "lessons": [
+        {
+          "id": "U02-L01",
+          "unitId": "U02",
+          "title": "区分周长和面积",
+          "pages": [18, 19],
+          "summary": "沿着边线描一圈，再把里面涂满，分清两种不同的量。",
+          "minutes": 12,
+          "available": true
+        },
+        {
+          "id": "U02-L02",
+          "unitId": "U02",
+          "title": "周长测量与边线展开",
+          "pages": [20, 22],
+          "summary": "逐边测量，把每条边首尾相接展开，看看总长度为什么不变。",
+          "minutes": 15,
+          "available": true
+        },
+        {
+          "id": "U02-L03",
+          "unitId": "U02",
+          "title": "长方形与正方形周长",
+          "pages": [23, 26],
+          "summary": "从四条边相加，发现相对的边一样长，再归纳计算公式。",
+          "minutes": 15,
+          "available": true
+        },
+        {
+          "id": "U02-L04",
+          "unitId": "U02",
+          "title": "铺方格与统一面积单位",
+          "pages": [27, 29],
+          "summary": "同一个面，用大小不同的方格去铺，为什么格数不同？",
+          "minutes": 15,
+          "available": true
+        },
+        {
+          "id": "U02-L05",
+          "unitId": "U02",
+          "title": "长方形与正方形面积",
+          "pages": [30, 33],
+          "summary": "沿着长铺一排、沿着宽铺多排，把数方格的过程变成面积公式。",
+          "minutes": 15,
+          "available": true
+        },
+        {
+          "id": "U02-L06",
+          "unitId": "U02",
+          "title": "平方分米、平方米与进率",
+          "pages": [34, 36],
+          "summary": "把大正方形分成10行10列，看见面积单位之间为什么相差100倍。",
+          "minutes": 15,
+          "available": true
+        },
+        {
+          "id": "U02-L07",
+          "unitId": "U02",
+          "title": "估测与单元复习",
+          "pages": [37, 41],
+          "summary": "先估计教室的长和宽，再与示例测量值比较，用方格复核面积。",
+          "minutes": 15,
+          "available": true
+        }
+      ]
+    },
+    {
+      "id": "A01",
+      "kind": "activity",
+      "title": "周长与面积的变化",
+      "sortOrder": 3,
+      "printedRange": [42, 43],
+      "pdfRange": [50, 51],
+      "lessons": [
+        {
+          "id": "A01-L01",
+          "unitId": "A01",
+          "title": "周长与面积的变化",
+          "pages": [42, 43],
+          "summary": "换一种拼法，保持周长或面积不变，记录不同长宽下的结果。",
+          "minutes": 18,
+          "available": true
+        }
+      ]
+    },
+    {
+      "id": "U03",
+      "kind": "unit",
+      "title": "乘法数量关系",
+      "sortOrder": 4,
+      "printedRange": [44, 56],
+      "pdfRange": [52, 64],
+      "lessons": [
+        {
+          "id": "U03-L01",
+          "unitId": "U03",
+          "title": "乘法意义与乘除互逆",
+          "pages": [45, 47],
+          "summary": "等份组、关系卡片、逆运算",
+          "minutes": 15,
+          "available": false
+        },
+        {
+          "id": "U03-L02",
+          "unitId": "U03",
+          "title": "单价、数量与总价",
+          "pages": [48, 49],
+          "summary": "购物数量表、未知量切换",
+          "minutes": 15,
+          "available": false
+        },
+        {
+          "id": "U03-L03",
+          "unitId": "U03",
+          "title": "速度、时间与路程",
+          "pages": [50, 53],
+          "summary": "同尺度路线、分段计时、填表",
+          "minutes": 15,
+          "available": false
+        },
+        {
+          "id": "U03-L04",
+          "unitId": "U03",
+          "title": "整理条件与解决问题",
+          "pages": [54, 56],
+          "summary": "条件筛选、表格整理、一题多问",
+          "minutes": 15,
+          "available": false
+        }
+      ]
+    },
+    {
+      "id": "U04",
+      "kind": "unit",
+      "title": "混合运算与数量关系（二）",
+      "sortOrder": 5,
+      "printedRange": [57, 63],
+      "pdfRange": [65, 71],
+      "lessons": [
+        {
+          "id": "U04-L01",
+          "unitId": "U04",
+          "title": "无括号三步混合运算",
+          "pages": [58, 59],
+          "summary": "表达式树、下一步选择",
+          "minutes": 15,
+          "available": false
+        },
+        {
+          "id": "U04-L02",
+          "unitId": "U04",
+          "title": "小括号与中括号",
+          "pages": [60, 61],
+          "summary": "括号分组、逐层展开",
+          "minutes": 15,
+          "available": false
+        },
+        {
+          "id": "U04-L03",
+          "unitId": "U04",
+          "title": "综合应用与纠错",
+          "pages": [62, 63],
+          "summary": "关系图与算式对应",
+          "minutes": 15,
+          "available": false
+        }
+      ]
+    },
+    {
+      "id": "A02",
+      "kind": "activity",
+      "title": "制订旅游计划",
+      "sortOrder": 6,
+      "printedRange": [64, 66],
+      "pdfRange": [72, 74],
+      "lessons": [
+        {
+          "id": "A02-L01",
+          "unitId": "A02",
+          "title": "制订旅游计划",
+          "pages": [64, 66],
+          "summary": "情境预算表、路线与时间卡",
+          "minutes": 15,
+          "available": false
+        }
+      ]
+    },
+    {
+      "id": "U05",
+      "kind": "unit",
+      "title": "多位数的认识",
+      "sortOrder": 7,
+      "printedRange": [67, 88],
+      "pdfRange": [75, 96],
+      "lessons": [
+        {
+          "id": "U05-L01",
+          "unitId": "U05",
+          "title": "一万有多大",
+          "pages": [68, 70],
+          "summary": "计数器、满十进一",
+          "minutes": 15,
+          "available": false
+        },
+        {
+          "id": "U05-L02",
+          "unitId": "U05",
+          "title": "万级数的读写与比较",
+          "pages": [71, 73],
+          "summary": "数位表、数字拖放、分级读数",
+          "minutes": 15,
+          "available": false
+        },
+        {
+          "id": "U05-L03",
+          "unitId": "U05",
+          "title": "亿级数与数级",
+          "pages": [74, 76],
+          "summary": "个级、万级、亿级分组",
+          "minutes": 15,
+          "available": false
+        },
+        {
+          "id": "U05-L04",
+          "unitId": "U05",
+          "title": "十进制计数法与自然数",
+          "pages": [77, 79],
+          "summary": "相邻计数单位交换",
+          "minutes": 15,
+          "available": false
+        },
+        {
+          "id": "U05-L05",
+          "unitId": "U05",
+          "title": "近似数与单位改写",
+          "pages": [80, 81],
+          "summary": "数轴、临界点、四舍五入",
+          "minutes": 15,
+          "available": false
+        },
+        {
+          "id": "U05-L06",
+          "unitId": "U05",
+          "title": "数字编码",
+          "pages": [82, 85],
+          "summary": "自编教室或图书编号",
+          "minutes": 15,
+          "available": false
+        },
+        {
+          "id": "U05-L07",
+          "unitId": "U05",
+          "title": "多位数整理与复习",
+          "pages": [86, 88],
+          "summary": "数位卡、读写对照、错题",
+          "minutes": 15,
+          "available": false
+        }
+      ]
+    },
+    {
+      "id": "A03",
+      "kind": "activity",
+      "title": "度量衡的故事",
+      "sortOrder": 8,
+      "printedRange": [89, 93],
+      "pdfRange": [97, 101],
+      "lessons": [
+        {
+          "id": "A03-L01",
+          "unitId": "A03",
+          "title": "度量衡的故事",
+          "pages": [89, 93],
+          "summary": "时间背景、单位分类、成果卡",
+          "minutes": 15,
+          "available": false
+        }
+      ]
+    },
+    {
+      "id": "U06",
+      "kind": "unit",
+      "title": "大数的运算",
+      "sortOrder": 9,
+      "printedRange": [94, 103],
+      "pdfRange": [102, 111],
+      "lessons": [
+        {
+          "id": "U06-L01",
+          "unitId": "U06",
+          "title": "三位数乘两位数",
+          "pages": [95, 97],
+          "summary": "部分积、数位对齐、乘法竖式",
+          "minutes": 15,
+          "available": false
+        },
+        {
+          "id": "U06-L02",
+          "unitId": "U06",
+          "title": "使用计算器选择算法",
+          "pages": [98, 99],
+          "summary": "输入回放、分步存储、估算核对",
+          "minutes": 15,
+          "available": false
+        },
+        {
+          "id": "U06-L03",
+          "unitId": "U06",
+          "title": "用计算器探索规律",
+          "pages": [100, 103],
+          "summary": "成组算式、记录猜想与验证",
+          "minutes": 15,
+          "available": false
+        }
+      ]
+    },
+    {
+      "id": "A04",
+      "kind": "activity",
+      "title": "生活中的大数",
+      "sortOrder": 10,
+      "printedRange": [104, 107],
+      "pdfRange": [112, 115],
+      "lessons": [
+        {
+          "id": "A04-L01",
+          "unitId": "A04",
+          "title": "感受一亿与规模推算",
+          "pages": [104, 107],
+          "summary": "样本测量表、倍数放大",
+          "minutes": 15,
+          "available": false
+        }
+      ]
+    },
+    {
+      "id": "R01",
+      "kind": "review",
+      "title": "期末复习",
+      "sortOrder": 11,
+      "printedRange": [108, 114],
+      "pdfRange": [116, 122],
+      "lessons": [
+        {
+          "id": "R01-L01",
+          "unitId": "R01",
+          "title": "期末回顾与专题复习",
+          "pages": [108, 109],
+          "summary": "三大主题回顾、知识连接",
+          "minutes": 15,
+          "available": false
+        },
+        {
+          "id": "R01-L02",
+          "unitId": "R01",
+          "title": "练习、探索与自我评价",
+          "pages": [110, 114],
+          "summary": "综合练习、开放题评价",
+          "minutes": 15,
+          "available": false
+        }
+      ]
+    }
+  ]
+}

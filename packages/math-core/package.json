@@ -1,0 +1,6 @@
+{
+  "name": "@mathstudy/math-core",
+  "private": true,
+  "type": "module",
+  "exports": "./src/index.ts"
+}

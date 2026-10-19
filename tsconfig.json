@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "@mathstudy/contracts": ["packages/contracts/src/index.ts"],
+      "@mathstudy/math-core": ["packages/math-core/src/index.ts"],
+      "@mathstudy/content": ["packages/content/src/index.ts"],
+      "@mathstudy/animation-engine": ["packages/animation-engine/src/index.ts"]
+    }
+  },
+  "include": ["apps", "packages", "tests", "scripts", "vitest.config.ts"]
+}

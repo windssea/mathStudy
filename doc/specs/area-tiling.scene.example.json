@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0.0",
+  "sceneId": "sj-g4u-u02-l05-area-demo",
+  "templateId": "area-tiling",
+  "templateVersion": "1.0.0",
+  "sourceRefs": [
+    {
+      "editionId": "sj-math-g4-upper-2026-v1",
+      "printedPage": "30",
+      "pdfPage": 38,
+      "locator": "例6，长方形面积推导",
+      "sourceKind": "adapted"
+    }
+  ],
+  "parameters": {"columns": 8, "rows": 5, "unit": "cm"},
+  "controls": [
+    {"parameter": "columns", "kind": "integer", "label": "每排格数", "min": 1, "max": 20, "step": 1},
+    {"parameter": "rows", "kind": "integer", "label": "排数", "min": 1, "max": 15, "step": 1}
+  ],
+  "steps": [
+    {"id": "outline", "action": "outline", "durationMs": 600, "narration": "这个长方形的长是 {{columns}} {{unit}}，宽是 {{rows}} {{unit}}。先观察边和面。"},
+    {"id": "first-row", "action": "fillFirstRow", "durationMs": 1200, "narration": "沿着长摆一排，每排摆 {{columns}} 个单位方格。"},
+    {"id": "all-rows", "action": "fillAllRows", "durationMs": 1600, "narration": "沿着宽摆出 {{rows}} 排。试着算一算，一共有多少个单位方格？"},
+    {"id": "formula", "action": "showFormula", "durationMs": 600, "narration": "一共有 {{columns}} × {{rows}} = {{area}} 个单位方格，面积是 {{area}} {{areaUnit}}。长方形的面积等于长乘宽。"}
+  ],
+  "checkpoints": [
+    {"id": "count-cells", "kind": "integer", "triggerStepId": "all-rows", "prompt": "一共有多少个单位方格？", "expectedVariable": "area"}
+  ],
+  "fallback": {
+    "title": "用单位方格理解长方形面积",
+    "paragraphs": [
+      "每排有 {{columns}} 个单位方格，一共有 {{rows}} 排。",
+      "格子的总数是 {{columns}} × {{rows}} = {{area}}。",
+      "每个格子的面积是 1 {{areaUnit}}，长方形的面积是 {{area}} {{areaUnit}}。"
+    ]
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schemaVersion": "1.0.0",
+  "packageVersion": "0.1.0-draft",
+  "status": "draft",
+  "textbookId": "sj-math-g4-upper",
+  "editionId": "sj-math-g4-upper-2026-v1",
+  "title": "苏教版数学四年级上册",
+  "subject": "mathematics",
+  "grade": 4,
+  "volume": "upper",
+  "publisher": "江苏凤凰教育出版社",
+  "editionLabel": "2026年7月第1版",
+  "isbn": "978-7-5743-2533-3",
+  "source": {
+    "sourceLocalPath": "doc/苏教版数学四年级上册.pdf",
+    "sha256": "5886b093080d68d3a7cfdaf0ce0ca63218d6d5784791a87cdfed9fbd4a53ff75",
+    "pdfPageCount": 131,
+    "copyrightPdfPage": 4,
+    "tocPdfPage": 7,
+    "rightsStatus": "not_assessed",
+    "visibility": "private",
+    "pageMapping": {
+      "mode": "range_to_expand_on_import",
+      "printedStart": 1,
+      "printedEnd": 114,
+      "pdfStart": 9,
+      "pdfEnd": 122,
+      "outsideRangePolicy": "manual_mapping_required"
+    }
+  },
+  "homepage": {
+    "suggestAsInitialDefault": true,
+    "coverMode": "original_title_card",
+    "primaryAction": "continue_or_start",
+    "catalogOrder": "textbook"
+  },
+  "catalog": [
+    {"id": "U01", "kind": "unit", "title": "两、三位数除以两位数", "sortOrder": 1, "printedRange": [1, 16], "pdfRange": [9, 24]},
+    {"id": "U02", "kind": "unit", "title": "周长与面积", "sortOrder": 2, "printedRange": [17, 41], "pdfRange": [25, 49]},
+    {"id": "A01", "kind": "activity", "title": "周长与面积的变化", "sortOrder": 3, "printedRange": [42, 43], "pdfRange": [50, 51]},
+    {"id": "U03", "kind": "unit", "title": "乘法数量关系", "sortOrder": 4, "printedRange": [44, 56], "pdfRange": [52, 64]},
+    {"id": "U04", "kind": "unit", "title": "混合运算与数量关系（二）", "sortOrder": 5, "printedRange": [57, 63], "pdfRange": [65, 71]},
+    {"id": "A02", "kind": "activity", "title": "制订旅游计划", "sortOrder": 6, "printedRange": [64, 66], "pdfRange": [72, 74]},
+    {"id": "U05", "kind": "unit", "title": "多位数的认识", "sortOrder": 7, "printedRange": [67, 88], "pdfRange": [75, 96]},
+    {"id": "A03", "kind": "activity", "title": "度量衡的故事", "sortOrder": 8, "printedRange": [89, 93], "pdfRange": [97, 101]},
+    {"id": "U06", "kind": "unit", "title": "大数的运算", "sortOrder": 9, "printedRange": [94, 103], "pdfRange": [102, 111]},
+    {"id": "A04", "kind": "activity", "title": "生活中的大数", "sortOrder": 10, "printedRange": [104, 107], "pdfRange": [112, 115]},
+    {"id": "R01", "kind": "review", "title": "期末复习", "sortOrder": 11, "printedRange": [108, 114], "pdfRange": [116, 122]}
+  ],
+  "coursePlan": {
+    "status": "proposed_platform_split",
+    "plannedLearningNodeCount": 35,
+    "mappingDocument": "doc/04-首期教材与课程映射.md",
+    "lessonIdsAreEditionScoped": true
+  }
+}

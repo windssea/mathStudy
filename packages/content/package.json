@@ -1,0 +1,9 @@
+{
+  "name": "@mathstudy/content",
+  "private": true,
+  "type": "module",
+  "exports": "./src/index.ts",
+  "dependencies": {
+    "@mathstudy/contracts": "workspace:*"
+  }
+}

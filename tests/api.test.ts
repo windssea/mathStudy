@@ -1,0 +1,101 @@
+import { describe, expect, it } from 'vitest';
+import { app } from '../apps/web/worker';
+import { questions, lessons } from '@mathstudy/content';
+const base = '/api/v1';
+describe('public course and grading API', () => {
+  it('serves the configured textbook and release identity', async () => {
+    const r = await app.request(`${base}/home`);
+    expect(r.status).toBe(200);
+    const b = await r.json();
+    expect(b.data.textbook.id).toBe('sj-math-g4-upper-2026-v1');
+    expect(b.data.questionCount).toBe(69);
+    expect(b.data.availableLessons).toBe(13);
+    expect(b.requestId).toBeTruthy();
+  });
+  it('serves all second-unit lessons and the activity with their existing public bank questions', async () => {
+    for (const lesson of lessons.filter((l) => l.unitId === 'U02' || l.unitId === 'A01')) {
+      const response = await app.request(
+        `${base}/textbooks/sj-math-g4-upper-2026-v1/lessons/${lesson.id}`,
+      );
+      const b = await response.json();
+      expect(response.status).toBe(200);
+      expect(b.data.lesson.id).toBe(lesson.id);
+      expect(b.data.questions.map((q: { id: string }) => q.id)).toEqual(lesson.questionIds);
+      expect(b.data.questions.every((q: { unitId: string }) => q.unitId === 'U02')).toBe(true);
+      expect(JSON.stringify(b.data)).not.toContain('expected');
+    }
+  });
+  it('does not mix editions or open planned lessons', async () => {
+    expect((await app.request(`${base}/textbooks/not-this-book/lessons/U01-L01`)).status).toBe(404);
+    expect(
+      (await app.request(`${base}/textbooks/sj-math-g4-upper-2026-v1/lessons/U03-L01`)).status,
+    ).toBe(404);
+  });
+  it('filters questions without leaking answer keys', async () => {
+    const r = await app.request(`${base}/questions?unit=U02&difficulty=challenge&type=application`);
+    const b = await r.json();
+    expect(b.data.total).toBe(3);
+    for (const q of b.data.items) {
+      expect(q).not.toHaveProperty('expected');
+      expect(q).not.toHaveProperty('explanation');
+    }
+    expect((await app.request(`${base}/questions?difficulty=impossible`)).status).toBe(400);
+  });
+  it('grades every stored answer on the server and returns the matching explanation', async () => {
+    for (const q of questions) {
+      const response = await app.request(`${base}/questions/${q.id}/check`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ answers: q.expected }),
+      });
+      const b = await response.json();
+      expect(response.status, q.id).toBe(200);
+      expect(b.data.correct, q.id).toBe(true);
+      expect(b.data.explanation.answer).toBe(q.explanation.answer);
+    }
+  });
+  it('rejects incomplete, forged extra fields, and malformed submissions', async () => {
+    for (const payload of [
+      { answers: {} },
+      { answers: { quotient: '6' } },
+      { answers: { quotient: '6', remainder: '4', score: '1' } },
+      { answers: { quotient: '6', remainder: '4' }, correct: true },
+    ]) {
+      expect(
+        (
+          await app.request(`${base}/questions/u1-05/check`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          })
+        ).status,
+      ).toBe(400);
+    }
+    expect(
+      (await app.request(`${base}/questions/u1-05/check`, { method: 'POST', body: '{bad' })).status,
+    ).toBe(400);
+  });
+  it('returns an incorrect result and a usable explanation for a wrong answer', async () => {
+    const r = await app.request(`${base}/questions/u1-05/check`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ answers: { quotient: '5', remainder: '32' } }),
+    });
+    const b = await r.json();
+    expect(b.data.correct).toBe(false);
+    expect(b.data.explanation.steps.length).toBeGreaterThan(0);
+  });
+  it('rejects cross-origin writes and keeps API 404 responses in JSON', async () => {
+    expect(
+      (
+        await app.request(`${base}/questions/u1-05/explanation`, {
+          method: 'POST',
+          headers: { Origin: 'https://other.example' },
+        })
+      ).status,
+    ).toBe(403);
+    const r = await app.request(`${base}/missing`);
+    expect(r.status).toBe(404);
+    expect(r.headers.get('Content-Type')).toContain('application/json');
+  });
+});
