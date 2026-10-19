@@ -1,8 +1,12 @@
 // @vitest-environment jsdom
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, configure, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, expect, it, vi } from 'vitest';
 import App from '../apps/web/src/app/App';
 import { app } from '../apps/web/worker';
+
+// Lazy route imports share CPU with the auth/DOM suites in hosted builds.
+// Keep assertions unchanged and wait for their result with a bounded CI budget.
+configure({ asyncUtilTimeout: 5000 });
 
 afterEach(() => {
   cleanup();
