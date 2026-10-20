@@ -158,6 +158,19 @@ function PracticeContent({
         ) : question ? (
           <>
             <div className="practice-progress">
+              <select
+                aria-label="跳转题目"
+                value={index}
+                onChange={(e) => setIndex(Number(e.target.value))}
+              >
+                {ids.map((id, i) => (
+                  <option key={id} value={i}>
+                    第{i + 1}题 ·{' '}
+                    {items.find((q) => q.id === id)?.sources?.find((s) => s.paperId === paper?.id)
+                      ?.number ?? items.find((q) => q.id === id)?.title}
+                  </option>
+                ))}
+              </select>
               <span>
                 第 {index + 1} / {ids.length} 题
               </span>

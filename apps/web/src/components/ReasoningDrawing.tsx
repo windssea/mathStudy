@@ -4,6 +4,8 @@ import { CellDrawing } from './GridExercise';
 type Stage = NonNullable<Visual['stages']>[number];
 const blue = '#3563e9';
 export default function ReasoningDrawing({ stage }: { stage: Stage }) {
+  if (stage.kind === 'image')
+    return <image href={stage.image} x="0" y="0" width="720" height="340" />;
   if (stage.kind === 'packing') {
     const showRotated = stage.headings[1] === 'rotated';
     return (

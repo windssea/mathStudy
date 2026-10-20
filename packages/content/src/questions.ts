@@ -1,5 +1,6 @@
 import { questionSchema } from '@mathstudy/contracts';
 import collectedData from '../../../content/practice/collected-questions.json';
+import fullPaperData from '../../../content/practice/full-questions.json';
 import type { Question, QuestionType, Difficulty, Visual } from '@mathstudy/contracts';
 import { unit2Questions, unit2VisualOverrides } from './unit2-questions';
 import { depthQuestions } from './depth-questions';
@@ -937,6 +938,7 @@ export const questions: Question[] = [
   ...unit2Questions,
   ...depthQuestions,
   ...collectedData.map((q) => questionSchema.parse(q)),
+  ...fullPaperData.map((q) => questionSchema.parse(q)),
 ].map((q) =>
   unit2VisualOverrides[q.id]
     ? {

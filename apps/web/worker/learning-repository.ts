@@ -22,6 +22,7 @@ export function acceptLearningEvent(
   } else {
     const q = content.questions.find((q) => q.id === event.entityId);
     if (!q) throw new Error('UNKNOWN_QUESTION');
+    if (q.sourceIssue) throw new Error('INVALID_ANSWER');
     if (event.kind === 'attempt') {
       if (
         Object.keys(event.answers).length !== q.fields.length ||
@@ -29,7 +30,12 @@ export function acceptLearningEvent(
       )
         throw new Error('INVALID_ANSWER');
       const correct = gradeAnswers(q, event.answers);
-      return { ...event, correct, verified: true };
+      return {
+        ...event,
+        correct,
+        assisted: event.assisted || q.responseMode === 'selfReview',
+        verified: true,
+      };
     }
   }
   return { ...event, verified: event.kind !== 'legacy' };

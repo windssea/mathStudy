@@ -12,12 +12,19 @@ export function buildPracticeCatalog(questions: Question[]): PracticeCatalog {
   return {
     topics: topicData.map((topic) => ({
       ...topic,
-      questionIds: questions.filter((q) => q.topicIds?.includes(topic.id)).map((q) => q.id),
+      questionIds: questions
+        .filter(
+          (q) =>
+            !q.sourceIssue &&
+            (!q.sources?.length || q.id.startsWith('full-')) &&
+            q.topicIds?.includes(topic.id),
+        )
+        .map((q) => q.id),
     })),
     papers: paperData.map((paper) => ({
       ...paper,
       questionIds: questions
-        .filter((q) => q.sources?.some((s) => s.paperId === paper.id))
+        .filter((q) => q.id.startsWith('full-') && q.sources?.some((s) => s.paperId === paper.id))
         .sort((a, b) => {
           const sa = a.sources!.find((s) => s.paperId === paper.id)!,
             sb = b.sources!.find((s) => s.paperId === paper.id)!;

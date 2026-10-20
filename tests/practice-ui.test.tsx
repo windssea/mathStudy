@@ -43,13 +43,13 @@ it('keeps all source pages accessible and preserves a practice round while viewi
   fireEvent.click(screen.getByRole('button', { name: '下一张' }));
   expect(screen.getByRole('img').getAttribute('src')).toBe('/papers/P01/2.webp');
   fireEvent.click(screen.getByRole('button', { name: '回到练习' }));
-  await screen.findByRole('heading', { name: '绳长与周长' });
-  fireEvent.change(screen.getByLabelText('你的答案'), { target: { value: '16' } });
+  await screen.findByRole('heading', { name: '一1 · 填空' });
+  fireEvent.change(screen.getByLabelText('周长（米）'), { target: { value: '16' } });
   fireEvent.click(screen.getByRole('button', { name: '核对答案' }));
   await screen.findByText('答对了。');
   fireEvent.click(screen.getByRole('button', { name: '原卷' }));
   fireEvent.click(screen.getByRole('button', { name: '回到练习' }));
-  expect((screen.getByLabelText('你的答案') as HTMLInputElement).value).toBe('16');
+  expect((screen.getByLabelText('周长（米）') as HTMLInputElement).value).toBe('16');
   expect((screen.getByRole('button', { name: '下一题' }) as HTMLButtonElement).disabled).toBe(
     false,
   );
@@ -63,4 +63,33 @@ it('grades a rectangle drawn on the board using individual keyboard-accessible c
   fireEvent.click(screen.getByRole('button', { name: '核对答案' }));
   await screen.findByText('答对了。');
   expect(screen.getByText('已选18格')).toBeTruthy();
+}, 15000);
+it('lets the student jump to the complete construction problem, then explicitly self-check it', async () => {
+  open('/practice/papers/P15');
+  const select = await screen.findByRole('combobox', { name: '跳转题目' });
+  const paper = practice.papers.find((p) => p.id === 'P15')!;
+  const index = paper.questionIds.indexOf('full-p15-s4-q1');
+  fireEvent.change(select, { target: { value: String(index) } });
+  await screen.findByRole('button', { name: '核对解答' });
+  expect(screen.queryByRole('button', { name: '核对答案' })).toBeNull();
+  fireEvent.click(screen.getByRole('button', { name: '核对解答' }));
+  await screen.findByRole('button', { name: '我做对了' });
+  fireEvent.click(screen.getByRole('button', { name: '我做对了' }));
+  await screen.findByText('已记录：核对通过。');
+  expect((screen.getByRole('button', { name: '下一题' }) as HTMLButtonElement).disabled).toBe(
+    false,
+  );
+}, 15000);
+it('shows a missing-source explanation without a button to claim the question was solved', async () => {
+  open('/practice/papers/P16');
+  const select = await screen.findByRole('combobox', { name: '跳转题目' });
+  const paper = practice.papers.find((p) => p.id === 'P16')!;
+  fireEvent.change(select, {
+    target: { value: String(paper.questionIds.indexOf('full-p16-s4-q3-1')) },
+  });
+  await screen.findByText('原始截图材料框的数值缺失，暂不计分。');
+  expect(screen.queryByRole('button', { name: '核对答案' })).toBeNull();
+  fireEvent.click(screen.getByRole('button', { name: '查看解题方法' }));
+  await screen.findByRole('button', { name: '收起解析' });
+  expect(screen.queryByRole('button', { name: '我做对了' })).toBeNull();
 }, 15000);

@@ -1,0 +1,1 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 340"><rect width="720" height="340" fill="white"/><path d="M100 160H570" stroke="#3563e9" stroke-width="4"/><text x="100" y="130" font-family="sans-serif" font-size="22" fill="#243754">三角形：三段依次首尾相接</text><text x="100" y="210" font-family="sans-serif" font-size="22" fill="#243754">O    第一条边    第二条边    第三条边 A</text></svg>

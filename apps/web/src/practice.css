@@ -358,3 +358,24 @@
   width: 1100px;
   max-width: none;
 }
+
+.question-source-image {
+  display: block;
+  max-width: 100%;
+  max-height: 420px;
+  object-fit: contain;
+  object-position: left;
+  margin: 16px 0;
+}
+.question-stem {
+  white-space: pre-line;
+}
+.practice-progress select {
+  max-width: 320px;
+  min-height: 44px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: white;
+  font: inherit;
+}

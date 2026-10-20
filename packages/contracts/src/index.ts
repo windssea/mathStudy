@@ -2,7 +2,7 @@ import { z } from 'zod';
 export * from './learning';
 
 export const editionId = 'sj-math-g4-upper-2026-v1';
-export const releaseId = 'practice-2026-10-u12-r1';
+export const releaseId = 'practice-2026-10-full-papers-r2';
 export const difficultySchema = z.enum(['basic', 'advanced', 'challenge']);
 export type Difficulty = z.infer<typeof difficultySchema>;
 export const questionTypeSchema = z.enum([
@@ -112,12 +112,15 @@ export interface QuestionPublic {
   type: QuestionType;
   difficulty: Difficulty;
   stem: string;
-  fields: { key: string; label: string; suffix?: string }[];
+  fields: { key: string; label: string; suffix?: string; inputMode?: 'text' | 'numeric' }[];
   options?: string[];
   hint: string;
   sourceKind: 'original' | 'collected' | 'adapted';
   topicIds?: string[];
   sources?: { paperId: string; page: number; number: string }[];
+  promptImage?: { src: string; alt: string };
+  responseMode?: 'selfReview';
+  sourceIssue?: string;
   figure?: GridFigure;
   construction?: {
     columns: number;
@@ -152,7 +155,21 @@ export const visualSchema = z
     stages: z
       .array(
         z.object({
-          kind: z.enum(['flow', 'table', 'bars', 'digits', 'join', 'grid', 'packing', 'fence']),
+          kind: z.enum([
+            'flow',
+            'table',
+            'bars',
+            'digits',
+            'join',
+            'grid',
+            'packing',
+            'fence',
+            'image',
+          ]),
+          image: z
+            .string()
+            .regex(/^\/papers\/diagrams\/[a-zA-Z0-9_.-]+\.svg$/)
+            .optional(),
           headings: z.array(z.string()),
           rows: z.array(z.array(z.string())),
           values: z.array(z.number().nonnegative()).optional(),
@@ -168,6 +185,8 @@ export const visualSchema = z
       return;
     }
     for (const stage of visual.stages) {
+      if (stage.kind === 'image' && !stage.image)
+        ctx.addIssue({ code: 'custom', message: 'Image stage needs a local diagram' });
       if ((stage.kind === 'bars' || stage.kind === 'join') && !stage.values?.length)
         ctx.addIssue({ code: 'custom', message: 'Quantitative diagram needs values' });
       if (stage.kind === 'bars' && stage.headings.length !== stage.values?.length)
@@ -189,6 +208,7 @@ export interface Explanation {
 }
 export interface Question extends QuestionPublic {
   expected: Record<string, string>;
+  answerRules?: Record<string, { kind: 'oneOf' | 'set'; values: string[] }>;
   explanation: Explanation;
 }
 export interface GridFigure {
@@ -225,7 +245,14 @@ export const questionSchema = z.object({
   type: questionTypeSchema,
   difficulty: difficultySchema,
   fields: z
-    .array(z.object({ key: z.string(), label: z.string(), suffix: z.string().optional() }))
+    .array(
+      z.object({
+        key: z.string(),
+        label: z.string(),
+        suffix: z.string().optional(),
+        inputMode: z.enum(['text', 'numeric']).optional(),
+      }),
+    )
     .min(1)
     .max(8),
   options: z.array(z.string()).optional(),
@@ -239,6 +266,17 @@ export const questionSchema = z.object({
   pages: z.tuple([z.number(), z.number()]),
   hasVisual: z.boolean(),
   expected: z.record(z.string(), z.string()),
+  answerRules: z
+    .record(
+      z.string(),
+      z.object({ kind: z.enum(['oneOf', 'set']), values: z.array(z.string()).min(1) }),
+    )
+    .optional(),
+  promptImage: z
+    .object({ src: z.string().regex(/^\/papers\/[a-zA-Z0-9_./-]+\.webp$/), alt: z.string().min(1) })
+    .optional(),
+  responseMode: z.literal('selfReview').optional(),
+  sourceIssue: z.string().min(1).optional(),
   figure: z
     .object({
       columns: z.number().int().positive(),

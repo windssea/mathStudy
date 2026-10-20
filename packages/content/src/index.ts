@@ -33,7 +33,12 @@ export const textbook: Textbook = {
 };
 export { questions };
 export function publicQuestion(question: (typeof questions)[number]): QuestionPublic {
-  const { expected: _expected, explanation: _explanation, ...safe } = question;
+  const {
+    expected: _expected,
+    explanation: _explanation,
+    answerRules: _answerRules,
+    ...safe
+  } = question;
   return safe;
 }
 export const siteSettings = { defaultEditionId: textbook.id };

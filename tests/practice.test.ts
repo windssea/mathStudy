@@ -27,7 +27,7 @@ it('preserves all 70 captures in chronological sets, including repeated-paper pr
 });
 it('validates every imported question and keeps each source within its original set', () => {
   const imported = questions.filter((q) => q.sources?.length);
-  expect(imported).toHaveLength(136);
+  expect(imported).toHaveLength(701);
   for (const q of imported) {
     expect(questionSchema.safeParse(q).success, q.id).toBe(true);
     expect(
@@ -52,9 +52,9 @@ it('orders original section and question numbers rather than Chinese dictionary 
   expect(refs.slice(0, 5).map((s) => s.number)).toEqual([
     '一1',
     '一2',
-    '一3（1）',
-    '一3（2）',
-    '一6',
+    '一3',
+    '一4（1）',
+    '一4（2）',
   ]);
   expect(refs.findIndex((s) => s.number === '五1')).toBeGreaterThan(
     refs.findIndex((s) => s.number === '二4'),

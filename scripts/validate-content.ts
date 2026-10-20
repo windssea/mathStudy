@@ -9,6 +9,7 @@ import {
 } from '@mathstudy/animation-engine';
 import { createHash } from 'node:crypto';
 import { readFileSync, existsSync } from 'node:fs';
+import coverage from '../content/practice/coverage.json';
 
 const issues: string[] = [];
 const ids = new Set<string>();
@@ -22,6 +23,11 @@ for (const question of questions) {
     issues.push(`Missing valid visualization: ${question.id}`);
   if (!question.explanation.analysis || !question.explanation.steps.length)
     issues.push(`Missing explanation: ${question.id}`);
+  if (question.promptImage && !existsSync(`apps/web/public${question.promptImage.src}`))
+    issues.push(`Missing prompt figure: ${question.id}`);
+  for (const stage of question.explanation.visual?.stages ?? [])
+    if (stage.kind === 'image' && (!stage.image || !existsSync(`apps/web/public${stage.image}`)))
+      issues.push(`Missing diagram stage: ${question.id}`);
 }
 for (const lesson of lessons) {
   const demo = lesson.demo;
@@ -89,6 +95,16 @@ for (const topic of practice.topics) {
       issues.push(`Wrong topic unit: ${id}`);
 }
 for (const paper of practice.papers) {
+  const inventory = coverage.find((item) => item.paperId === paper.id);
+  const actual = paper.questionIds.map(
+    (id) =>
+      questions.find((q) => q.id === id)!.sources!.find((s) => s.paperId === paper.id)!.number,
+  );
+  if (
+    !inventory ||
+    JSON.stringify([...actual].sort()) !== JSON.stringify([...inventory.expectedNumbers].sort())
+  )
+    issues.push(`Original question coverage mismatch: ${paper.id}`);
   if (!paper.questionIds.length) issues.push(`Empty paper: ${paper.id}`);
   for (const page of paper.pages)
     if (!existsSync(`apps/web/public${page.image}`)) issues.push(`Missing scan: ${page.image}`);

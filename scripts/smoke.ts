@@ -110,7 +110,7 @@ const registration = await fetch(new URL('/api/auth/sign-up/email', origin), {
 assert.equal(registration.status, 403);
 await registration.arrayBuffer();
 const bank = await api('/questions?unit=U02');
-assert.equal(bank.total, 67);
+assert.equal(bank.total, 260);
 const grade = await api('/questions/u2-08/check', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json', Origin: origin.origin },
@@ -142,5 +142,5 @@ assert.equal(deepLink.status, 200);
 assert.ok(deepLink.headers.get('content-type')?.includes('text/html'));
 assert.ok((await deepLink.text()).includes('id="root"'));
 console.log(
-  `Smoke checks passed: ${origin.origin} (D1, current content hash, units two to five, 27 lessons, 232 questions, bank grading, registration closed, SPA deep link)`,
+  `Smoke checks passed: ${origin.origin} (D1, current content hash, units two to five, 27 lessons, 797 questions, bank grading, registration closed, SPA deep link)`,
 );

@@ -39,23 +39,24 @@ export default function QuestionRunner({
   const [details, setDetails] = useState(false);
   const [usedHint, setUsedHint] = useState(false);
   useAccount();
-  async function submit(event: React.FormEvent) {
-    event.preventDefault();
+  async function submit(event?: React.FormEvent, override?: Record<string, string>) {
+    event?.preventDefault();
+    const submitted = override ?? answers;
     setBusy(true);
     setError('');
     const owner = currentLearningOwner();
     const eventData = makeLearningEvent(
       'attempt',
       q.id,
-      answers,
-      revealed || usedHint || !!explanation,
+      submitted,
+      q.responseMode === 'selfReview' || revealed || usedHint || !!explanation,
     );
     try {
       const g = await request<Grade>(`/questions/${q.id}/check`, {
         method: 'POST',
         headers: currentAccountHeaders(),
         body: JSON.stringify({
-          answers,
+          answers: submitted,
           attemptId: eventData.id,
           occurredAt: eventData.occurredAt,
           assisted: eventData.assisted,
@@ -81,7 +82,7 @@ export default function QuestionRunner({
       setExplanation(e);
       setRevealed(true);
       setDetails(true);
-      recordAssistance(q.id, owner);
+      if (!q.sourceIssue) recordAssistance(q.id, owner);
       onAttempt?.(q.id);
       onResult?.('revealed', true);
     } catch (e) {
@@ -105,9 +106,16 @@ export default function QuestionRunner({
       </div>
       <Heading>{q.title}</Heading>
       <p className="question-stem">{q.stem}</p>
+      {q.promptImage && (
+        <img className="question-source-image" src={q.promptImage.src} alt={q.promptImage.alt} />
+      )}
       {q.figure && <GridFigureView figure={q.figure} />}
       <form onSubmit={submit}>
-        {q.construction ? (
+        {q.sourceIssue ? (
+          <p>{q.sourceIssue}</p>
+        ) : q.responseMode === 'selfReview' ? (
+          <p>先在草稿纸上完成，再核对解答。</p>
+        ) : q.construction ? (
           <GridEditor
             task={q.construction}
             value={answers.cells ?? initialDrawing(q.construction)}
@@ -145,7 +153,7 @@ export default function QuestionRunner({
                 <span>
                   <input
                     required
-                    inputMode="numeric"
+                    inputMode={f.inputMode ?? 'numeric'}
                     type="text"
                     maxLength={40}
                     autoComplete="off"
@@ -164,26 +172,61 @@ export default function QuestionRunner({
           </div>
         )}
         <div className="question-actions">
-          <button className="button primary" type="submit" disabled={busy}>
-            {busy ? '正在核对…' : '核对答案'}
-            <Icon name="Check" size={17} />
-          </button>
-          <button
-            type="button"
-            className="button subtle"
-            aria-expanded={hint}
-            onClick={() => {
-              if (!hint && !usedHint) {
-                setUsedHint(true);
-                recordAssistance(q.id);
-              }
-              setHint(!hint);
-            }}
-          >
-            <Icon name="Lightbulb" size={17} />
-            {hint ? '收起提示' : '提示'}
-          </button>
-          {!explanation && (
+          {!q.sourceIssue && q.responseMode !== 'selfReview' && (
+            <button className="button primary" type="submit" disabled={busy}>
+              {busy ? '正在核对…' : '核对答案'}
+              <Icon name="Check" size={17} />
+            </button>
+          )}
+          {q.sourceIssue
+            ? !explanation && (
+                <button className="button secondary" type="button" disabled={busy} onClick={reveal}>
+                  查看解题方法
+                </button>
+              )
+            : q.responseMode === 'selfReview' &&
+              (explanation ? (
+                <>
+                  <button
+                    className="button primary"
+                    type="button"
+                    disabled={busy}
+                    onClick={() => void submit(undefined, { review: '已核对' })}
+                  >
+                    我做对了
+                  </button>
+                  <button
+                    className="button secondary"
+                    type="button"
+                    disabled={busy}
+                    onClick={() => void submit(undefined, { review: '需要再练' })}
+                  >
+                    需要再练
+                  </button>
+                </>
+              ) : (
+                <button className="button primary" type="button" disabled={busy} onClick={reveal}>
+                  核对解答
+                </button>
+              ))}
+          {!q.sourceIssue && (
+            <button
+              type="button"
+              className="button subtle"
+              aria-expanded={hint}
+              onClick={() => {
+                if (!hint && !usedHint) {
+                  setUsedHint(true);
+                  recordAssistance(q.id);
+                }
+                setHint(!hint);
+              }}
+            >
+              <Icon name="Lightbulb" size={17} />
+              {hint ? '收起提示' : '提示'}
+            </button>
+          )}
+          {!explanation && q.responseMode !== 'selfReview' && (
             <button
               type="button"
               className="text-link reveal-link"
@@ -215,7 +258,7 @@ export default function QuestionRunner({
       {explanation && (
         <section className="answer-explanation">
           <div className="explanation-summary">
-            <p>{explanation.analysis}</p>
+            {!details && <p>{explanation.analysis}</p>}
             <button
               className="button secondary"
               aria-expanded={details}

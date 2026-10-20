@@ -425,3 +425,66 @@ describe('account authentication and private D1 learning records', () => {
     expect(result.snapshot.answers['u2-08'].attemptCount).toBe(1);
   });
 });
+it('syncs full-paper alternatives and actual source drawings between devices, and keeps self-checks assisted', async () => {
+  const a = device(),
+    b = device('192.0.2.2');
+  await a.provision();
+  await b.login();
+  const make = (
+    entityId: string,
+    answers: Record<string, string>,
+    offset: number,
+  ): LearningEvent => ({
+    kind: 'attempt',
+    id: crypto.randomUUID(),
+    entityId,
+    answers,
+    assisted: false,
+    occurredAt: new Date(Date.now() + offset).toISOString(),
+  });
+  const setAnswer = make('full-p04-s2-q5', { a1: '6、5、4' }, 10);
+  await a.sync([setAnswer]);
+  let remote = await b.sync();
+  expect(remote.snapshot.answers[setAnswer.entityId]).toMatchObject({
+    correct: true,
+    independentCorrect: true,
+    attemptCount: 1,
+  });
+  const gridId = 'full-p18-q23-2';
+  const wrong = make(gridId, { cells: '0'.repeat(60) }, 20);
+  await a.sync([wrong]);
+  expect((await b.sync()).snapshot.answers[gridId].needsReview).toBe(true);
+  const right = make(
+    gridId,
+    {
+      cells: Array.from({ length: 60 }, (_, i) =>
+        3 <= Math.floor(i / 10) && Math.floor(i / 10) <= 4 && 1 <= i % 10 && i % 10 <= 7
+          ? '1'
+          : '0',
+      ).join(''),
+    },
+    30,
+  );
+  await b.sync([right]);
+  remote = await a.sync([right]);
+  expect(remote.snapshot.answers[gridId]).toMatchObject({
+    correct: true,
+    attemptCount: 2,
+    wrongCount: 1,
+    needsReview: false,
+    independentCorrect: false,
+  });
+  await a.sync([make('full-p15-s4-q1', { review: '已核对' }, 40)]);
+  remote = await b.sync();
+  expect(remote.snapshot.answers['full-p15-s4-q1']).toMatchObject({
+    correct: true,
+    independentCorrect: false,
+    needsReview: true,
+  });
+  const before = remote.snapshot.history.length;
+  expect(
+    (await a.call('/api/v1/questions/full-p16-s4-q3-1/check', { answers: { review: '已核对' } }))
+      .status,
+  ).toBe(422);
+  expect((await b.sync()).snapshot.history).toHaveLength(before);
+});

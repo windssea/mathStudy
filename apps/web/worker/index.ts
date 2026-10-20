@@ -249,6 +249,14 @@ app.post('/api/v1/questions/:id/check', async (c) => {
     );
   }
   const parsed = submissionSchema.safeParse(raw);
+  if (question.sourceIssue)
+    return c.json(
+      {
+        error: { code: 'SOURCE_INCOMPLETE', message: question.sourceIssue },
+        requestId: c.get('requestId'),
+      },
+      422,
+    );
   if (
     !parsed.success ||
     Object.keys(parsed.data.answers).length !== question.fields.length ||
@@ -278,7 +286,7 @@ app.post('/api/v1/questions/:id/check', async (c) => {
         entityId: question.id,
         occurredAt: parsed.data.occurredAt ?? new Date().toISOString(),
         answers: parsed.data.answers,
-        assisted: parsed.data.assisted ?? false,
+        assisted: question.responseMode === 'selfReview' || (parsed.data.assisted ?? false),
       },
     ]);
   }
@@ -286,7 +294,14 @@ app.post('/api/v1/questions/:id/check', async (c) => {
     envelope(
       {
         correct,
-        feedback: correct ? '答对了。' : '答案不正确，可修改后重试。',
+        feedback:
+          question.responseMode === 'selfReview'
+            ? correct
+              ? '已记录：核对通过。'
+              : '已加入错题，再练一次。'
+            : correct
+              ? '答对了。'
+              : '答案不正确，可修改后重试。',
         explanation: question.explanation,
       },
       c.get('requestId'),

@@ -135,6 +135,8 @@ export * from './large-numbers';
 export function gradeAnswers(
   question: {
     expected: Record<string, string>;
+    sourceIssue?: string;
+    answerRules?: Record<string, { kind: 'oneOf' | 'set'; values: string[] }>;
     construction?: {
       columns: number;
       rows: number;
@@ -146,11 +148,24 @@ export function gradeAnswers(
   },
   answers: Record<string, string>,
 ) {
+  if (question.sourceIssue) return false;
   const task = question.construction;
   if (!task)
-    return Object.keys(question.expected).every((key) =>
-      sameAnswer(answers[key] ?? '', question.expected[key]),
-    );
+    return Object.keys(question.expected).every((key) => {
+      const rule = question.answerRules?.[key],
+        actual = answers[key] ?? '';
+      if (!rule) return sameAnswer(actual, question.expected[key]);
+      if (rule.kind === 'oneOf') return rule.values.some((value) => sameAnswer(actual, value));
+      const parts = actual
+        .trim()
+        .split(/[、,，;；\s]+/)
+        .filter(Boolean);
+      return (
+        parts.length === rule.values.length &&
+        new Set(parts.map(normalizeAnswer)).size === parts.length &&
+        rule.values.every((value) => parts.some((part) => sameAnswer(part, value)))
+      );
+    });
   const code = answers.cells ?? '',
     size = task.columns * task.rows;
   if (size > 80 || !/^[01]+$/.test(code) || code.length !== size) return false;

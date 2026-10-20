@@ -59,7 +59,7 @@ export default function Home() {
               <div>
                 <h2>{p.title}</h2>
                 <span>
-                  {p.pages.length}张原卷 · {p.questionIds.length}道选题
+                  {p.pages.length}张原卷 · {p.questionIds.length}题
                 </span>
               </div>
               <Link className="button secondary" to={`/practice/papers/${p.id}?original=1`}>

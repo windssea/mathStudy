@@ -160,6 +160,7 @@ function migrateLegacy() {
   try {
     const raw = JSON.parse(
       read(key) ??
+        read(`mathstudy:${editionId}:practice-2026-10-u12-r1`) ??
         read(`mathstudy:${editionId}:preview-2026-10-focus-r1`) ??
         read(`mathstudy:${editionId}:preview-2026-10-u05-r1`) ??
         read(`mathstudy:${editionId}:preview-2026-10-u04-r1`) ??
