@@ -29,7 +29,7 @@ it('guides a student from a topic into one question at a time', async () => {
   await screen.findByRole('heading', { name: first.title });
   expect(screen.getAllByRole('article')).toHaveLength(1);
   expect((screen.getByRole('button', { name: '下一题' }) as HTMLButtonElement).disabled).toBe(true);
-  for (const f of first.fields)
+  for (const f of first.fields.filter((f) => f.fixedValue === undefined))
     fireEvent.change(screen.getByLabelText(f.label), { target: { value: first.expected[f.key] } });
   fireEvent.click(screen.getByRole('button', { name: '核对答案' }));
   await screen.findByText('答对了。');
@@ -92,4 +92,17 @@ it('shows a missing-source explanation without a button to claim the question wa
   fireEvent.click(screen.getByRole('button', { name: '查看解题方法' }));
   await screen.findByRole('button', { name: '收起解析' });
   expect(screen.queryByRole('button', { name: '我做对了' })).toBeNull();
+}, 15000);
+it('keeps exact mental calculations to one visible input and retains the compatible submission on redo', async () => {
+  open('/questions/full-p17-s2-q1-1');
+  await screen.findByRole('heading', { name: '二1（1） · 计算' });
+  expect(screen.getAllByRole('textbox')).toHaveLength(1);
+  fireEvent.change(screen.getByLabelText('得数'), { target: { value: '17' } });
+  fireEvent.click(screen.getByRole('button', { name: '核对答案' }));
+  await screen.findByText('答对了。');
+  fireEvent.click(screen.getByRole('button', { name: '展开解析' }));
+  fireEvent.click(screen.getByRole('button', { name: '重做' }));
+  fireEvent.change(screen.getByLabelText('得数'), { target: { value: '17' } });
+  fireEvent.click(screen.getByRole('button', { name: '核对答案' }));
+  await screen.findByText('答对了。');
 }, 15000);

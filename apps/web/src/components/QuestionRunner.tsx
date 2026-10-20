@@ -14,6 +14,14 @@ import { Icon } from './ui';
 import VisualExplanation from './VisualExplanation';
 import { GridEditor, GridFigureView, initialDrawing } from './GridExercise';
 
+function initialAnswers(q: QuestionPublic): Record<string, string> {
+  return q.construction
+    ? { cells: initialDrawing(q.construction) }
+    : Object.fromEntries(
+        q.fields.filter((f) => f.fixedValue !== undefined).map((f) => [f.key, f.fixedValue!]),
+      );
+}
+
 export default function QuestionRunner({
   question: q,
   onAttempt,
@@ -27,9 +35,7 @@ export default function QuestionRunner({
   onResult?: (result: 'correct' | 'incorrect' | 'revealed', assisted: boolean) => void;
   onAttempt?: (id: string) => void;
 }) {
-  const [answers, setAnswers] = useState<Record<string, string>>(
-    (): Record<string, string> => (q.construction ? { cells: initialDrawing(q.construction) } : {}),
-  );
+  const [answers, setAnswers] = useState<Record<string, string>>(() => initialAnswers(q));
   const [hint, setHint] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
@@ -147,28 +153,30 @@ export default function QuestionRunner({
           </fieldset>
         ) : (
           <div className="answer-fields">
-            {q.fields.map((f) => (
-              <label key={f.key}>
-                {f.label}
-                <span>
-                  <input
-                    required
-                    inputMode={f.inputMode ?? 'numeric'}
-                    type="text"
-                    maxLength={40}
-                    autoComplete="off"
-                    name={`${q.id}-${f.key}`}
-                    value={answers[f.key] ?? ''}
-                    onChange={(e) => {
-                      setAnswers({ ...answers, [f.key]: e.target.value });
-                      setGrade(undefined);
-                    }}
-                    aria-label={f.label}
-                  />
-                  {f.suffix && <small>{f.suffix}</small>}
-                </span>
-              </label>
-            ))}
+            {q.fields
+              .filter((f) => f.fixedValue === undefined)
+              .map((f) => (
+                <label key={f.key}>
+                  {f.label}
+                  <span>
+                    <input
+                      required
+                      inputMode={f.inputMode ?? 'numeric'}
+                      type="text"
+                      maxLength={40}
+                      autoComplete="off"
+                      name={`${q.id}-${f.key}`}
+                      value={answers[f.key] ?? ''}
+                      onChange={(e) => {
+                        setAnswers({ ...answers, [f.key]: e.target.value });
+                        setGrade(undefined);
+                      }}
+                      aria-label={f.label}
+                    />
+                    {f.suffix && <small>{f.suffix}</small>}
+                  </span>
+                </label>
+              ))}
           </div>
         )}
         <div className="question-actions">
@@ -272,7 +280,7 @@ export default function QuestionRunner({
               <button
                 className="button secondary"
                 onClick={() => {
-                  setAnswers(q.construction ? { cells: initialDrawing(q.construction) } : {});
+                  setAnswers(initialAnswers(q));
                   setHint(false);
                   setUsedHint(false);
                   setGrade(undefined);

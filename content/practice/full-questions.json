@@ -2552,22 +2552,23 @@
     "id": "full-p02-s2-q1-2",
     "unitId": "U02",
     "title": "二1（2） · 计算",
-    "stem": "列竖式计算并验算：480÷20。",
+    "stem": "计算：480÷20。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取48，商2，20×2＝40，减后余8。落下下一位继续除。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -2582,7 +2583,7 @@
       }
     ],
     "topicIds": ["u2-measure"],
-    "knowledge": "取48，商2，20×2＝40，减后余8。落下下一位继续除。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [18, 43],
     "hasVisual": false,
     "expected": {
@@ -2590,13 +2591,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取48，商2，20×2＝40，减后余8。落下下一位继续除。",
-      "steps": [
-        "取48，商2，20×2＝40，减后余8。落下下一位继续除。",
-        "取80，商4，20×4＝80，减后余0。",
-        "验算：20×24＋0＝480，余数0小于除数20。"
-      ],
-      "answer": "商：24；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "480÷20＝48÷2＝24。"],
+      "answer": "得数：24",
       "pitfall": ""
     }
   },
@@ -2604,22 +2601,23 @@
     "id": "full-p02-s2-q1-3",
     "unitId": "U02",
     "title": "二1（3） · 计算",
-    "stem": "列竖式计算并验算：64÷4。",
+    "stem": "计算：64÷4。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取6，商1，4×1＝4，减后余2。落下下一位继续除。",
+    "hint": "想乘法：4×16＝64。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -2634,7 +2632,7 @@
       }
     ],
     "topicIds": ["u2-measure"],
-    "knowledge": "取6，商1，4×1＝4，减后余2。落下下一位继续除。",
+    "knowledge": "想乘法：4×16＝64。",
     "pages": [18, 43],
     "hasVisual": false,
     "expected": {
@@ -2642,13 +2640,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取6，商1，4×1＝4，减后余2。落下下一位继续除。",
-      "steps": [
-        "取6，商1，4×1＝4，减后余2。落下下一位继续除。",
-        "取24，商6，4×6＝24，减后余0。",
-        "验算：4×16＋0＝64，余数0小于除数4。"
-      ],
-      "answer": "商：16；余数：0",
+      "analysis": "想乘法：4×16＝64。",
+      "steps": ["想乘法：4×16＝64。", "所以64÷4＝16，可以用乘法验算。"],
+      "answer": "得数：16",
       "pitfall": ""
     }
   },
@@ -2656,22 +2650,23 @@
     "id": "full-p02-s2-q1-4",
     "unitId": "U02",
     "title": "二1（4） · 计算",
-    "stem": "列竖式计算并验算：360÷9。",
+    "stem": "计算：360÷9。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取36，商4，9×4＝36，减后余0。落下下一位继续除。",
+    "hint": "想乘法：9×40＝360。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -2686,7 +2681,7 @@
       }
     ],
     "topicIds": ["u2-measure"],
-    "knowledge": "取36，商4，9×4＝36，减后余0。落下下一位继续除。",
+    "knowledge": "想乘法：9×40＝360。",
     "pages": [18, 43],
     "hasVisual": false,
     "expected": {
@@ -2694,13 +2689,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取36，商4，9×4＝36，减后余0。落下下一位继续除。",
-      "steps": [
-        "取36，商4，9×4＝36，减后余0。落下下一位继续除。",
-        "取0，商0，9×0＝0，减后余0。",
-        "验算：9×40＋0＝360，余数0小于除数9。"
-      ],
-      "answer": "商：40；余数：0",
+      "analysis": "想乘法：9×40＝360。",
+      "steps": ["想乘法：9×40＝360。", "所以360÷9＝40，可以用乘法验算。"],
+      "answer": "得数：40",
       "pitfall": ""
     }
   },
@@ -2708,22 +2699,23 @@
     "id": "full-p02-s2-q1-5",
     "unitId": "U02",
     "title": "二1（5） · 计算",
-    "stem": "列竖式计算并验算：450÷50。",
+    "stem": "计算：450÷50。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取450，商9，50×9＝450，减后余0。",
+    "hint": "被除数和除数同时乘2，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -2738,7 +2730,7 @@
       }
     ],
     "topicIds": ["u2-measure"],
-    "knowledge": "取450，商9，50×9＝450，减后余0。",
+    "knowledge": "被除数和除数同时乘2，商不变。",
     "pages": [18, 43],
     "hasVisual": false,
     "expected": {
@@ -2746,9 +2738,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取450，商9，50×9＝450，减后余0。",
-      "steps": ["取450，商9，50×9＝450，减后余0。", "验算：50×9＋0＝450，余数0小于除数50。"],
-      "answer": "商：9；余数：0",
+      "analysis": "被除数和除数同时乘2，商不变。",
+      "steps": ["被除数和除数同时乘2，商不变。", "450÷50＝(450×2)÷(50×2)＝900÷100＝9。"],
+      "answer": "得数：9",
       "pitfall": ""
     }
   },
@@ -2756,22 +2748,23 @@
     "id": "full-p02-s2-q1-6",
     "unitId": "U02",
     "title": "二1（6） · 计算",
-    "stem": "列竖式计算并验算：70÷14。",
+    "stem": "计算：70÷14。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取70，商5，14×5＝70，减后余0。",
+    "hint": "想乘法：14×5＝70。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -2786,7 +2779,7 @@
       }
     ],
     "topicIds": ["u2-measure"],
-    "knowledge": "取70，商5，14×5＝70，减后余0。",
+    "knowledge": "想乘法：14×5＝70。",
     "pages": [18, 43],
     "hasVisual": false,
     "expected": {
@@ -2794,9 +2787,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取70，商5，14×5＝70，减后余0。",
-      "steps": ["取70，商5，14×5＝70，减后余0。", "验算：14×5＋0＝70，余数0小于除数14。"],
-      "answer": "商：5；余数：0",
+      "analysis": "想乘法：14×5＝70。",
+      "steps": ["想乘法：14×5＝70。", "所以70÷14＝5，可以用乘法验算。"],
+      "answer": "得数：5",
       "pitfall": ""
     }
   },
@@ -2972,22 +2965,23 @@
     "id": "full-p02-s2-q1-11",
     "unitId": "U02",
     "title": "二1（11） · 计算",
-    "stem": "列竖式计算并验算：360÷30。",
+    "stem": "计算：360÷30。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取36，商1，30×1＝30，减后余6。落下下一位继续除。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -3002,7 +2996,7 @@
       }
     ],
     "topicIds": ["u2-measure"],
-    "knowledge": "取36，商1，30×1＝30，减后余6。落下下一位继续除。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [18, 43],
     "hasVisual": false,
     "expected": {
@@ -3010,13 +3004,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取36，商1，30×1＝30，减后余6。落下下一位继续除。",
-      "steps": [
-        "取36，商1，30×1＝30，减后余6。落下下一位继续除。",
-        "取60，商2，30×2＝60，减后余0。",
-        "验算：30×12＋0＝360，余数0小于除数30。"
-      ],
-      "answer": "商：12；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "360÷30＝36÷3＝12。"],
+      "answer": "得数：12",
       "pitfall": ""
     }
   },
@@ -3070,22 +3060,23 @@
     "id": "full-p02-s2-q1-13",
     "unitId": "U02",
     "title": "二1（13） · 计算",
-    "stem": "列竖式计算并验算：44÷11。",
+    "stem": "计算：44÷11。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取44，商4，11×4＝44，减后余0。",
+    "hint": "想乘法：11×4＝44。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -3100,7 +3091,7 @@
       }
     ],
     "topicIds": ["u2-measure"],
-    "knowledge": "取44，商4，11×4＝44，减后余0。",
+    "knowledge": "想乘法：11×4＝44。",
     "pages": [18, 43],
     "hasVisual": false,
     "expected": {
@@ -3108,9 +3099,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取44，商4，11×4＝44，减后余0。",
-      "steps": ["取44，商4，11×4＝44，减后余0。", "验算：11×4＋0＝44，余数0小于除数11。"],
-      "answer": "商：4；余数：0",
+      "analysis": "想乘法：11×4＝44。",
+      "steps": ["想乘法：11×4＝44。", "所以44÷11＝4，可以用乘法验算。"],
+      "answer": "得数：4",
       "pitfall": ""
     }
   },
@@ -3118,22 +3109,23 @@
     "id": "full-p02-s2-q1-14",
     "unitId": "U02",
     "title": "二1（14） · 计算",
-    "stem": "列竖式计算并验算：510÷30。",
+    "stem": "计算：510÷30。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取51，商1，30×1＝30，减后余21。落下下一位继续除。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -3148,7 +3140,7 @@
       }
     ],
     "topicIds": ["u2-measure"],
-    "knowledge": "取51，商1，30×1＝30，减后余21。落下下一位继续除。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [18, 43],
     "hasVisual": false,
     "expected": {
@@ -3156,13 +3148,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取51，商1，30×1＝30，减后余21。落下下一位继续除。",
-      "steps": [
-        "取51，商1，30×1＝30，减后余21。落下下一位继续除。",
-        "取210，商7，30×7＝210，减后余0。",
-        "验算：30×17＋0＝510，余数0小于除数30。"
-      ],
-      "answer": "商：17；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "510÷30＝51÷3＝17。"],
+      "answer": "得数：17",
       "pitfall": ""
     }
   },
@@ -3170,22 +3158,23 @@
     "id": "full-p02-s2-q1-15",
     "unitId": "U02",
     "title": "二1（15） · 计算",
-    "stem": "列竖式计算并验算：720÷60。",
+    "stem": "计算：720÷60。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取72，商1，60×1＝60，减后余12。落下下一位继续除。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -3200,7 +3189,7 @@
       }
     ],
     "topicIds": ["u2-measure"],
-    "knowledge": "取72，商1，60×1＝60，减后余12。落下下一位继续除。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [18, 43],
     "hasVisual": false,
     "expected": {
@@ -3208,13 +3197,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取72，商1，60×1＝60，减后余12。落下下一位继续除。",
-      "steps": [
-        "取72，商1，60×1＝60，减后余12。落下下一位继续除。",
-        "取120，商2，60×2＝120，减后余0。",
-        "验算：60×12＋0＝720，余数0小于除数60。"
-      ],
-      "answer": "商：12；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "720÷60＝72÷6＝12。"],
+      "answer": "得数：12",
       "pitfall": ""
     }
   },
@@ -4983,22 +4968,23 @@
     "id": "full-p04-s1-q1-1",
     "unitId": "U01",
     "title": "一1（1） · 计算",
-    "stem": "列竖式计算并验算：420÷3。",
+    "stem": "计算：420÷3。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取4，商1，3×1＝3，减后余1。落下下一位继续除。",
+    "hint": "想乘法：3×140＝420。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -5008,7 +4994,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取4，商1，3×1＝3，减后余1。落下下一位继续除。",
+    "knowledge": "想乘法：3×140＝420。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -5016,14 +5002,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取4，商1，3×1＝3，减后余1。落下下一位继续除。",
-      "steps": [
-        "取4，商1，3×1＝3，减后余1。落下下一位继续除。",
-        "取12，商4，3×4＝12，减后余0。落下下一位继续除。",
-        "取0，商0，3×0＝0，减后余0。",
-        "验算：3×140＋0＝420，余数0小于除数3。"
-      ],
-      "answer": "商：140；余数：0",
+      "analysis": "想乘法：3×140＝420。",
+      "steps": ["想乘法：3×140＝420。", "所以420÷3＝140，可以用乘法验算。"],
+      "answer": "得数：140",
       "pitfall": ""
     }
   },
@@ -5068,22 +5049,23 @@
     "id": "full-p04-s1-q1-3",
     "unitId": "U01",
     "title": "一1（3） · 计算",
-    "stem": "列竖式计算并验算：540÷18。",
+    "stem": "计算：540÷18。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取54，商3，18×3＝54，减后余0。落下下一位继续除。",
+    "hint": "想乘法：18×30＝540。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -5093,7 +5075,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取54，商3，18×3＝54，减后余0。落下下一位继续除。",
+    "knowledge": "想乘法：18×30＝540。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -5101,13 +5083,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取54，商3，18×3＝54，减后余0。落下下一位继续除。",
-      "steps": [
-        "取54，商3，18×3＝54，减后余0。落下下一位继续除。",
-        "取0，商0，18×0＝0，减后余0。",
-        "验算：18×30＋0＝540，余数0小于除数18。"
-      ],
-      "answer": "商：30；余数：0",
+      "analysis": "想乘法：18×30＝540。",
+      "steps": ["想乘法：18×30＝540。", "所以540÷18＝30，可以用乘法验算。"],
+      "answer": "得数：30",
       "pitfall": ""
     }
   },
@@ -5115,22 +5093,23 @@
     "id": "full-p04-s1-q1-4",
     "unitId": "U01",
     "title": "一1（4） · 计算",
-    "stem": "列竖式计算并验算：250÷50。",
+    "stem": "计算：250÷50。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取250，商5，50×5＝250，减后余0。",
+    "hint": "被除数和除数同时乘2，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -5140,7 +5119,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取250，商5，50×5＝250，减后余0。",
+    "knowledge": "被除数和除数同时乘2，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -5148,9 +5127,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取250，商5，50×5＝250，减后余0。",
-      "steps": ["取250，商5，50×5＝250，减后余0。", "验算：50×5＋0＝250，余数0小于除数50。"],
-      "answer": "商：5；余数：0",
+      "analysis": "被除数和除数同时乘2，商不变。",
+      "steps": ["被除数和除数同时乘2，商不变。", "250÷50＝(250×2)÷(50×2)＝500÷100＝5。"],
+      "answer": "得数：5",
       "pitfall": ""
     }
   },
@@ -5195,22 +5174,23 @@
     "id": "full-p04-s1-q1-6",
     "unitId": "U01",
     "title": "一1（6） · 计算",
-    "stem": "列竖式计算并验算：810÷90。",
+    "stem": "计算：810÷90。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取810，商9，90×9＝810，减后余0。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -5220,7 +5200,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取810，商9，90×9＝810，减后余0。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -5228,9 +5208,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取810，商9，90×9＝810，减后余0。",
-      "steps": ["取810，商9，90×9＝810，减后余0。", "验算：90×9＋0＝810，余数0小于除数90。"],
-      "answer": "商：9；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "810÷90＝81÷9＝9。"],
+      "answer": "得数：9",
       "pitfall": ""
     }
   },
@@ -5238,22 +5218,23 @@
     "id": "full-p04-s1-q1-7",
     "unitId": "U01",
     "title": "一1（7） · 计算",
-    "stem": "列竖式计算并验算：48÷12。",
+    "stem": "计算：48÷12。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取48，商4，12×4＝48，减后余0。",
+    "hint": "想乘法：12×4＝48。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -5263,7 +5244,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取48，商4，12×4＝48，减后余0。",
+    "knowledge": "想乘法：12×4＝48。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -5271,9 +5252,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取48，商4，12×4＝48，减后余0。",
-      "steps": ["取48，商4，12×4＝48，减后余0。", "验算：12×4＋0＝48，余数0小于除数12。"],
-      "answer": "商：4；余数：0",
+      "analysis": "想乘法：12×4＝48。",
+      "steps": ["想乘法：12×4＝48。", "所以48÷12＝4，可以用乘法验算。"],
+      "answer": "得数：4",
       "pitfall": ""
     }
   },
@@ -5281,22 +5262,23 @@
     "id": "full-p04-s1-q1-8",
     "unitId": "U01",
     "title": "一1（8） · 计算",
-    "stem": "列竖式计算并验算：720÷36。",
+    "stem": "计算：720÷36。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取72，商2，36×2＝72，减后余0。落下下一位继续除。",
+    "hint": "想乘法：36×20＝720。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -5306,7 +5288,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取72，商2，36×2＝72，减后余0。落下下一位继续除。",
+    "knowledge": "想乘法：36×20＝720。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -5314,13 +5296,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取72，商2，36×2＝72，减后余0。落下下一位继续除。",
-      "steps": [
-        "取72，商2，36×2＝72，减后余0。落下下一位继续除。",
-        "取0，商0，36×0＝0，减后余0。",
-        "验算：36×20＋0＝720，余数0小于除数36。"
-      ],
-      "answer": "商：20；余数：0",
+      "analysis": "想乘法：36×20＝720。",
+      "steps": ["想乘法：36×20＝720。", "所以720÷36＝20，可以用乘法验算。"],
+      "answer": "得数：20",
       "pitfall": ""
     }
   },
@@ -5619,22 +5597,23 @@
     "id": "full-p04-s1-q3-2",
     "unitId": "U01",
     "title": "一3（2） · 计算",
-    "stem": "列竖式计算并验算：560÷16。",
+    "stem": "计算：560÷16。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取56，商3，16×3＝48，减后余8。落下下一位继续除。",
+    "hint": "想乘法：16×35＝560。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -5644,7 +5623,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取56，商3，16×3＝48，减后余8。落下下一位继续除。",
+    "knowledge": "想乘法：16×35＝560。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -5652,13 +5631,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取56，商3，16×3＝48，减后余8。落下下一位继续除。",
-      "steps": [
-        "取56，商3，16×3＝48，减后余8。落下下一位继续除。",
-        "取80，商5，16×5＝80，减后余0。",
-        "验算：16×35＋0＝560，余数0小于除数16。"
-      ],
-      "answer": "商：35；余数：0",
+      "analysis": "想乘法：16×35＝560。",
+      "steps": ["想乘法：16×35＝560。", "所以560÷16＝35，可以用乘法验算。"],
+      "answer": "得数：35",
       "pitfall": ""
     }
   },
@@ -5703,22 +5678,23 @@
     "id": "full-p04-s1-q3-4",
     "unitId": "U01",
     "title": "一3（4） · 计算",
-    "stem": "列竖式计算并验算：720÷48。",
+    "stem": "计算：720÷48。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取72，商1，48×1＝48，减后余24。落下下一位继续除。",
+    "hint": "想乘法：48×15＝720。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -5728,7 +5704,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取72，商1，48×1＝48，减后余24。落下下一位继续除。",
+    "knowledge": "想乘法：48×15＝720。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -5736,13 +5712,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取72，商1，48×1＝48，减后余24。落下下一位继续除。",
-      "steps": [
-        "取72，商1，48×1＝48，减后余24。落下下一位继续除。",
-        "取240，商5，48×5＝240，减后余0。",
-        "验算：48×15＋0＝720，余数0小于除数48。"
-      ],
-      "answer": "商：15；余数：0",
+      "analysis": "想乘法：48×15＝720。",
+      "steps": ["想乘法：48×15＝720。", "所以720÷48＝15，可以用乘法验算。"],
+      "answer": "得数：15",
       "pitfall": ""
     }
   },
@@ -8846,22 +8818,23 @@
     "id": "full-p06-s1-q1-1",
     "unitId": "U01",
     "title": "一1（1） · 计算",
-    "stem": "列竖式计算并验算：480÷12。",
+    "stem": "计算：480÷12。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取48，商4，12×4＝48，减后余0。落下下一位继续除。",
+    "hint": "想乘法：12×40＝480。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -8871,7 +8844,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取48，商4，12×4＝48，减后余0。落下下一位继续除。",
+    "knowledge": "想乘法：12×40＝480。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -8879,13 +8852,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取48，商4，12×4＝48，减后余0。落下下一位继续除。",
-      "steps": [
-        "取48，商4，12×4＝48，减后余0。落下下一位继续除。",
-        "取0，商0，12×0＝0，减后余0。",
-        "验算：12×40＋0＝480，余数0小于除数12。"
-      ],
-      "answer": "商：40；余数：0",
+      "analysis": "想乘法：12×40＝480。",
+      "steps": ["想乘法：12×40＝480。", "所以480÷12＝40，可以用乘法验算。"],
+      "answer": "得数：40",
       "pitfall": ""
     }
   },
@@ -8893,22 +8862,23 @@
     "id": "full-p06-s1-q1-2",
     "unitId": "U01",
     "title": "一1（2） · 计算",
-    "stem": "列竖式计算并验算：360÷30。",
+    "stem": "计算：360÷30。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取36，商1，30×1＝30，减后余6。落下下一位继续除。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -8918,7 +8888,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取36，商1，30×1＝30，减后余6。落下下一位继续除。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -8926,13 +8896,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取36，商1，30×1＝30，减后余6。落下下一位继续除。",
-      "steps": [
-        "取36，商1，30×1＝30，减后余6。落下下一位继续除。",
-        "取60，商2，30×2＝60，减后余0。",
-        "验算：30×12＋0＝360，余数0小于除数30。"
-      ],
-      "answer": "商：12；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "360÷30＝36÷3＝12。"],
+      "answer": "得数：12",
       "pitfall": ""
     }
   },
@@ -8940,22 +8906,23 @@
     "id": "full-p06-s1-q1-3",
     "unitId": "U01",
     "title": "一1（3） · 计算",
-    "stem": "列竖式计算并验算：96÷4。",
+    "stem": "计算：96÷4。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取9，商2，4×2＝8，减后余1。落下下一位继续除。",
+    "hint": "想乘法：4×24＝96。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -8965,7 +8932,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取9，商2，4×2＝8，减后余1。落下下一位继续除。",
+    "knowledge": "想乘法：4×24＝96。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -8973,13 +8940,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取9，商2，4×2＝8，减后余1。落下下一位继续除。",
-      "steps": [
-        "取9，商2，4×2＝8，减后余1。落下下一位继续除。",
-        "取16，商4，4×4＝16，减后余0。",
-        "验算：4×24＋0＝96，余数0小于除数4。"
-      ],
-      "answer": "商：24；余数：0",
+      "analysis": "想乘法：4×24＝96。",
+      "steps": ["想乘法：4×24＝96。", "所以96÷4＝24，可以用乘法验算。"],
+      "answer": "得数：24",
       "pitfall": ""
     }
   },
@@ -9024,22 +8987,23 @@
     "id": "full-p06-s1-q1-5",
     "unitId": "U01",
     "title": "一1（5） · 计算",
-    "stem": "列竖式计算并验算：80÷40。",
+    "stem": "计算：80÷40。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取80，商2，40×2＝80，减后余0。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -9049,7 +9013,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取80，商2，40×2＝80，减后余0。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -9057,9 +9021,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取80，商2，40×2＝80，减后余0。",
-      "steps": ["取80，商2，40×2＝80，减后余0。", "验算：40×2＋0＝80，余数0小于除数40。"],
-      "answer": "商：2；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "80÷40＝8÷4＝2。"],
+      "answer": "得数：2",
       "pitfall": ""
     }
   },
@@ -9067,22 +9031,23 @@
     "id": "full-p06-s1-q1-6",
     "unitId": "U01",
     "title": "一1（6） · 计算",
-    "stem": "列竖式计算并验算：72÷24。",
+    "stem": "计算：72÷24。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取72，商3，24×3＝72，减后余0。",
+    "hint": "想乘法：24×3＝72。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -9092,7 +9057,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取72，商3，24×3＝72，减后余0。",
+    "knowledge": "想乘法：24×3＝72。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -9100,9 +9065,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取72，商3，24×3＝72，减后余0。",
-      "steps": ["取72，商3，24×3＝72，减后余0。", "验算：24×3＋0＝72，余数0小于除数24。"],
-      "answer": "商：3；余数：0",
+      "analysis": "想乘法：24×3＝72。",
+      "steps": ["想乘法：24×3＝72。", "所以72÷24＝3，可以用乘法验算。"],
+      "answer": "得数：3",
       "pitfall": ""
     }
   },
@@ -9147,22 +9112,23 @@
     "id": "full-p06-s1-q1-8",
     "unitId": "U01",
     "title": "一1（8） · 计算",
-    "stem": "列竖式计算并验算：90÷15。",
+    "stem": "计算：90÷15。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取90，商6，15×6＝90，减后余0。",
+    "hint": "想乘法：15×6＝90。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -9172,7 +9138,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取90，商6，15×6＝90，减后余0。",
+    "knowledge": "想乘法：15×6＝90。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -9180,9 +9146,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取90，商6，15×6＝90，减后余0。",
-      "steps": ["取90，商6，15×6＝90，减后余0。", "验算：15×6＋0＝90，余数0小于除数15。"],
-      "answer": "商：6；余数：0",
+      "analysis": "想乘法：15×6＝90。",
+      "steps": ["想乘法：15×6＝90。", "所以90÷15＝6，可以用乘法验算。"],
+      "answer": "得数：6",
       "pitfall": ""
     }
   },
@@ -9604,22 +9570,23 @@
     "id": "full-p06-s1-q3-3",
     "unitId": "U01",
     "title": "一3（3） · 计算",
-    "stem": "列竖式计算并验算：600÷25。",
+    "stem": "计算：600÷25。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取60，商2，25×2＝50，减后余10。落下下一位继续除。",
+    "hint": "被除数和除数同时乘4，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -9629,7 +9596,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取60，商2，25×2＝50，减后余10。落下下一位继续除。",
+    "knowledge": "被除数和除数同时乘4，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -9637,13 +9604,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取60，商2，25×2＝50，减后余10。落下下一位继续除。",
-      "steps": [
-        "取60，商2，25×2＝50，减后余10。落下下一位继续除。",
-        "取100，商4，25×4＝100，减后余0。",
-        "验算：25×24＋0＝600，余数0小于除数25。"
-      ],
-      "answer": "商：24；余数：0",
+      "analysis": "被除数和除数同时乘4，商不变。",
+      "steps": ["被除数和除数同时乘4，商不变。", "600÷25＝(600×4)÷(25×4)＝2400÷100＝24。"],
+      "answer": "得数：24",
       "pitfall": ""
     }
   },
@@ -13635,22 +13598,23 @@
     "id": "full-p09-s3-q1-1",
     "unitId": "U01",
     "title": "三1（1） · 计算",
-    "stem": "列竖式计算并验算：51÷17。",
+    "stem": "计算：51÷17。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取51，商3，17×3＝51，减后余0。",
+    "hint": "想乘法：17×3＝51。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -13665,7 +13629,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取51，商3，17×3＝51，减后余0。",
+    "knowledge": "想乘法：17×3＝51。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -13673,9 +13637,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取51，商3，17×3＝51，减后余0。",
-      "steps": ["取51，商3，17×3＝51，减后余0。", "验算：17×3＋0＝51，余数0小于除数17。"],
-      "answer": "商：3；余数：0",
+      "analysis": "想乘法：17×3＝51。",
+      "steps": ["想乘法：17×3＝51。", "所以51÷17＝3，可以用乘法验算。"],
+      "answer": "得数：3",
       "pitfall": ""
     }
   },
@@ -13725,22 +13689,23 @@
     "id": "full-p09-s3-q1-3",
     "unitId": "U01",
     "title": "三1（3） · 计算",
-    "stem": "列竖式计算并验算：450÷50。",
+    "stem": "计算：450÷50。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取450，商9，50×9＝450，减后余0。",
+    "hint": "被除数和除数同时乘2，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -13755,7 +13720,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取450，商9，50×9＝450，减后余0。",
+    "knowledge": "被除数和除数同时乘2，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -13763,9 +13728,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取450，商9，50×9＝450，减后余0。",
-      "steps": ["取450，商9，50×9＝450，减后余0。", "验算：50×9＋0＝450，余数0小于除数50。"],
-      "answer": "商：9；余数：0",
+      "analysis": "被除数和除数同时乘2，商不变。",
+      "steps": ["被除数和除数同时乘2，商不变。", "450÷50＝(450×2)÷(50×2)＝900÷100＝9。"],
+      "answer": "得数：9",
       "pitfall": ""
     }
   },
@@ -13773,22 +13738,23 @@
     "id": "full-p09-s3-q1-4",
     "unitId": "U01",
     "title": "三1（4） · 计算",
-    "stem": "列竖式计算并验算：320÷8。",
+    "stem": "计算：320÷8。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取32，商4，8×4＝32，减后余0。落下下一位继续除。",
+    "hint": "想乘法：8×40＝320。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -13803,7 +13769,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取32，商4，8×4＝32，减后余0。落下下一位继续除。",
+    "knowledge": "想乘法：8×40＝320。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -13811,13 +13777,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取32，商4，8×4＝32，减后余0。落下下一位继续除。",
-      "steps": [
-        "取32，商4，8×4＝32，减后余0。落下下一位继续除。",
-        "取0，商0，8×0＝0，减后余0。",
-        "验算：8×40＋0＝320，余数0小于除数8。"
-      ],
-      "answer": "商：40；余数：0",
+      "analysis": "想乘法：8×40＝320。",
+      "steps": ["想乘法：8×40＝320。", "所以320÷8＝40，可以用乘法验算。"],
+      "answer": "得数：40",
       "pitfall": ""
     }
   },
@@ -13825,22 +13787,23 @@
     "id": "full-p09-s3-q1-5",
     "unitId": "U01",
     "title": "三1（5） · 计算",
-    "stem": "列竖式计算并验算：320÷40。",
+    "stem": "计算：320÷40。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取320，商8，40×8＝320，减后余0。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -13855,7 +13818,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取320，商8，40×8＝320，减后余0。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -13863,9 +13826,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取320，商8，40×8＝320，减后余0。",
-      "steps": ["取320，商8，40×8＝320，减后余0。", "验算：40×8＋0＝320，余数0小于除数40。"],
-      "answer": "商：8；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "320÷40＝32÷4＝8。"],
+      "answer": "得数：8",
       "pitfall": ""
     }
   },
@@ -13873,22 +13836,23 @@
     "id": "full-p09-s3-q1-6",
     "unitId": "U01",
     "title": "三1（6） · 计算",
-    "stem": "列竖式计算并验算：810÷90。",
+    "stem": "计算：810÷90。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取810，商9，90×9＝810，减后余0。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -13903,7 +13867,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取810，商9，90×9＝810，减后余0。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -13911,9 +13875,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取810，商9，90×9＝810，减后余0。",
-      "steps": ["取810，商9，90×9＝810，减后余0。", "验算：90×9＋0＝810，余数0小于除数90。"],
-      "answer": "商：9；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "810÷90＝81÷9＝9。"],
+      "answer": "得数：9",
       "pitfall": ""
     }
   },
@@ -13921,22 +13885,23 @@
     "id": "full-p09-s3-q1-7",
     "unitId": "U01",
     "title": "三1（7） · 计算",
-    "stem": "列竖式计算并验算：560÷70。",
+    "stem": "计算：560÷70。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取560，商8，70×8＝560，减后余0。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -13951,7 +13916,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取560，商8，70×8＝560，减后余0。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -13959,9 +13924,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取560，商8，70×8＝560，减后余0。",
-      "steps": ["取560，商8，70×8＝560，减后余0。", "验算：70×8＋0＝560，余数0小于除数70。"],
-      "answer": "商：8；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "560÷70＝56÷7＝8。"],
+      "answer": "得数：8",
       "pitfall": ""
     }
   },
@@ -13969,22 +13934,23 @@
     "id": "full-p09-s3-q1-8",
     "unitId": "U01",
     "title": "三1（8） · 计算",
-    "stem": "列竖式计算并验算：450÷90。",
+    "stem": "计算：450÷90。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取450，商5，90×5＝450，减后余0。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -13999,7 +13965,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取450，商5，90×5＝450，减后余0。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -14007,9 +13973,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取450，商5，90×5＝450，减后余0。",
-      "steps": ["取450，商5，90×5＝450，减后余0。", "验算：90×5＋0＝450，余数0小于除数90。"],
-      "answer": "商：5；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "450÷90＝45÷9＝5。"],
+      "answer": "得数：5",
       "pitfall": ""
     }
   },
@@ -14213,22 +14179,23 @@
     "id": "full-p09-s3-q3-1",
     "unitId": "U01",
     "title": "三3（1） · 计算",
-    "stem": "列竖式计算并验算：630÷35。",
+    "stem": "计算：630÷35。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取63，商1，35×1＝35，减后余28。落下下一位继续除。",
+    "hint": "想乘法：35×18＝630。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -14243,7 +14210,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取63，商1，35×1＝35，减后余28。落下下一位继续除。",
+    "knowledge": "想乘法：35×18＝630。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -14251,13 +14218,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取63，商1，35×1＝35，减后余28。落下下一位继续除。",
-      "steps": [
-        "取63，商1，35×1＝35，减后余28。落下下一位继续除。",
-        "取280，商8，35×8＝280，减后余0。",
-        "验算：35×18＋0＝630，余数0小于除数35。"
-      ],
-      "answer": "商：18；余数：0",
+      "analysis": "想乘法：35×18＝630。",
+      "steps": ["想乘法：35×18＝630。", "所以630÷35＝18，可以用乘法验算。"],
+      "answer": "得数：18",
       "pitfall": ""
     }
   },
@@ -14265,22 +14228,23 @@
     "id": "full-p09-s3-q3-2",
     "unitId": "U01",
     "title": "三3（2） · 计算",
-    "stem": "列竖式计算并验算：560÷16。",
+    "stem": "计算：560÷16。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取56，商3，16×3＝48，减后余8。落下下一位继续除。",
+    "hint": "想乘法：16×35＝560。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -14295,7 +14259,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取56，商3，16×3＝48，减后余8。落下下一位继续除。",
+    "knowledge": "想乘法：16×35＝560。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -14303,13 +14267,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取56，商3，16×3＝48，减后余8。落下下一位继续除。",
-      "steps": [
-        "取56，商3，16×3＝48，减后余8。落下下一位继续除。",
-        "取80，商5，16×5＝80，减后余0。",
-        "验算：16×35＋0＝560，余数0小于除数16。"
-      ],
-      "answer": "商：35；余数：0",
+      "analysis": "想乘法：16×35＝560。",
+      "steps": ["想乘法：16×35＝560。", "所以560÷16＝35，可以用乘法验算。"],
+      "answer": "得数：35",
       "pitfall": ""
     }
   },
@@ -17560,22 +17520,23 @@
     "id": "full-p11-s4-q1-1",
     "unitId": "U01",
     "title": "四1（1） · 计算",
-    "stem": "列竖式计算并验算：64÷2。",
+    "stem": "计算：64÷2。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取6，商3，2×3＝6，减后余0。落下下一位继续除。",
+    "hint": "想乘法：2×32＝64。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -17585,7 +17546,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取6，商3，2×3＝6，减后余0。落下下一位继续除。",
+    "knowledge": "想乘法：2×32＝64。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -17593,13 +17554,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取6，商3，2×3＝6，减后余0。落下下一位继续除。",
-      "steps": [
-        "取6，商3，2×3＝6，减后余0。落下下一位继续除。",
-        "取4，商2，2×2＝4，减后余0。",
-        "验算：2×32＋0＝64，余数0小于除数2。"
-      ],
-      "answer": "商：32；余数：0",
+      "analysis": "想乘法：2×32＝64。",
+      "steps": ["想乘法：2×32＝64。", "所以64÷2＝32，可以用乘法验算。"],
+      "answer": "得数：32",
       "pitfall": ""
     }
   },
@@ -17607,22 +17564,23 @@
     "id": "full-p11-s4-q1-2",
     "unitId": "U01",
     "title": "四1（2） · 计算",
-    "stem": "列竖式计算并验算：84÷6。",
+    "stem": "计算：84÷6。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取8，商1，6×1＝6，减后余2。落下下一位继续除。",
+    "hint": "想乘法：6×14＝84。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -17632,7 +17590,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取8，商1，6×1＝6，减后余2。落下下一位继续除。",
+    "knowledge": "想乘法：6×14＝84。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -17640,13 +17598,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取8，商1，6×1＝6，减后余2。落下下一位继续除。",
-      "steps": [
-        "取8，商1，6×1＝6，减后余2。落下下一位继续除。",
-        "取24，商4，6×4＝24，减后余0。",
-        "验算：6×14＋0＝84，余数0小于除数6。"
-      ],
-      "answer": "商：14；余数：0",
+      "analysis": "想乘法：6×14＝84。",
+      "steps": ["想乘法：6×14＝84。", "所以84÷6＝14，可以用乘法验算。"],
+      "answer": "得数：14",
       "pitfall": ""
     }
   },
@@ -17654,22 +17608,23 @@
     "id": "full-p11-s4-q1-3",
     "unitId": "U01",
     "title": "四1（3） · 计算",
-    "stem": "列竖式计算并验算：780÷30。",
+    "stem": "计算：780÷30。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取78，商2，30×2＝60，减后余18。落下下一位继续除。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -17679,7 +17634,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取78，商2，30×2＝60，减后余18。落下下一位继续除。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -17687,13 +17642,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取78，商2，30×2＝60，减后余18。落下下一位继续除。",
-      "steps": [
-        "取78，商2，30×2＝60，减后余18。落下下一位继续除。",
-        "取180，商6，30×6＝180，减后余0。",
-        "验算：30×26＋0＝780，余数0小于除数30。"
-      ],
-      "answer": "商：26；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "780÷30＝78÷3＝26。"],
+      "answer": "得数：26",
       "pitfall": ""
     }
   },
@@ -17701,22 +17652,23 @@
     "id": "full-p11-s4-q1-4",
     "unitId": "U01",
     "title": "四1（4） · 计算",
-    "stem": "列竖式计算并验算：540÷60。",
+    "stem": "计算：540÷60。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取540，商9，60×9＝540，减后余0。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -17726,7 +17678,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取540，商9，60×9＝540，减后余0。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -17734,9 +17686,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取540，商9，60×9＝540，减后余0。",
-      "steps": ["取540，商9，60×9＝540，减后余0。", "验算：60×9＋0＝540，余数0小于除数60。"],
-      "answer": "商：9；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "540÷60＝54÷6＝9。"],
+      "answer": "得数：9",
       "pitfall": ""
     }
   },
@@ -17744,22 +17696,23 @@
     "id": "full-p11-s4-q1-5",
     "unitId": "U01",
     "title": "四1（5） · 计算",
-    "stem": "列竖式计算并验算：630÷90。",
+    "stem": "计算：630÷90。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取630，商7，90×7＝630，减后余0。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -17769,7 +17722,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取630，商7，90×7＝630，减后余0。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -17777,9 +17730,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取630，商7，90×7＝630，减后余0。",
-      "steps": ["取630，商7，90×7＝630，减后余0。", "验算：90×7＋0＝630，余数0小于除数90。"],
-      "answer": "商：7；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "630÷90＝63÷9＝7。"],
+      "answer": "得数：7",
       "pitfall": ""
     }
   },
@@ -17787,22 +17740,23 @@
     "id": "full-p11-s4-q1-6",
     "unitId": "U01",
     "title": "四1（6） · 计算",
-    "stem": "列竖式计算并验算：560÷80。",
+    "stem": "计算：560÷80。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取560，商7，80×7＝560，减后余0。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -17812,7 +17766,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取560，商7，80×7＝560，减后余0。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -17820,9 +17774,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取560，商7，80×7＝560，减后余0。",
-      "steps": ["取560，商7，80×7＝560，减后余0。", "验算：80×7＋0＝560，余数0小于除数80。"],
-      "answer": "商：7；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "560÷80＝56÷8＝7。"],
+      "answer": "得数：7",
       "pitfall": ""
     }
   },
@@ -17830,22 +17784,23 @@
     "id": "full-p11-s4-q1-7",
     "unitId": "U01",
     "title": "四1（7） · 计算",
-    "stem": "列竖式计算并验算：720÷40。",
+    "stem": "计算：720÷40。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取72，商1，40×1＝40，减后余32。落下下一位继续除。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -17855,7 +17810,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取72，商1，40×1＝40，减后余32。落下下一位继续除。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -17863,13 +17818,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取72，商1，40×1＝40，减后余32。落下下一位继续除。",
-      "steps": [
-        "取72，商1，40×1＝40，减后余32。落下下一位继续除。",
-        "取320，商8，40×8＝320，减后余0。",
-        "验算：40×18＋0＝720，余数0小于除数40。"
-      ],
-      "answer": "商：18；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "720÷40＝72÷4＝18。"],
+      "answer": "得数：18",
       "pitfall": ""
     }
   },
@@ -17877,22 +17828,23 @@
     "id": "full-p11-s4-q1-8",
     "unitId": "U01",
     "title": "四1（8） · 计算",
-    "stem": "列竖式计算并验算：420÷70。",
+    "stem": "计算：420÷70。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取420，商6，70×6＝420，减后余0。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -17902,7 +17854,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取420，商6，70×6＝420，减后余0。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -17910,9 +17862,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取420，商6，70×6＝420，减后余0。",
-      "steps": ["取420，商6，70×6＝420，减后余0。", "验算：70×6＋0＝420，余数0小于除数70。"],
-      "answer": "商：6；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "420÷70＝42÷7＝6。"],
+      "answer": "得数：6",
       "pitfall": ""
     }
   },
@@ -18683,22 +18635,23 @@
     "id": "full-p13-s1-q1-1",
     "unitId": "U01",
     "title": "一1（1） · 计算",
-    "stem": "列竖式计算并验算：800÷40。",
+    "stem": "计算：800÷40。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取80，商2，40×2＝80，减后余0。落下下一位继续除。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -18708,7 +18661,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取80，商2，40×2＝80，减后余0。落下下一位继续除。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -18716,13 +18669,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取80，商2，40×2＝80，减后余0。落下下一位继续除。",
-      "steps": [
-        "取80，商2，40×2＝80，减后余0。落下下一位继续除。",
-        "取0，商0，40×0＝0，减后余0。",
-        "验算：40×20＋0＝800，余数0小于除数40。"
-      ],
-      "answer": "商：20；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "800÷40＝80÷4＝20。"],
+      "answer": "得数：20",
       "pitfall": ""
     }
   },
@@ -18730,22 +18679,23 @@
     "id": "full-p13-s1-q1-2",
     "unitId": "U01",
     "title": "一1（2） · 计算",
-    "stem": "列竖式计算并验算：420÷30。",
+    "stem": "计算：420÷30。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取42，商1，30×1＝30，减后余12。落下下一位继续除。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -18755,7 +18705,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取42，商1，30×1＝30，减后余12。落下下一位继续除。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -18763,13 +18713,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取42，商1，30×1＝30，减后余12。落下下一位继续除。",
-      "steps": [
-        "取42，商1，30×1＝30，减后余12。落下下一位继续除。",
-        "取120，商4，30×4＝120，减后余0。",
-        "验算：30×14＋0＝420，余数0小于除数30。"
-      ],
-      "answer": "商：14；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "420÷30＝42÷3＝14。"],
+      "answer": "得数：14",
       "pitfall": ""
     }
   },
@@ -18814,22 +18760,23 @@
     "id": "full-p13-s1-q1-4",
     "unitId": "U01",
     "title": "一1（4） · 计算",
-    "stem": "列竖式计算并验算：320÷8。",
+    "stem": "计算：320÷8。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取32，商4，8×4＝32，减后余0。落下下一位继续除。",
+    "hint": "想乘法：8×40＝320。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -18839,7 +18786,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取32，商4，8×4＝32，减后余0。落下下一位继续除。",
+    "knowledge": "想乘法：8×40＝320。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -18847,13 +18794,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取32，商4，8×4＝32，减后余0。落下下一位继续除。",
-      "steps": [
-        "取32，商4，8×4＝32，减后余0。落下下一位继续除。",
-        "取0，商0，8×0＝0，减后余0。",
-        "验算：8×40＋0＝320，余数0小于除数8。"
-      ],
-      "answer": "商：40；余数：0",
+      "analysis": "想乘法：8×40＝320。",
+      "steps": ["想乘法：8×40＝320。", "所以320÷8＝40，可以用乘法验算。"],
+      "answer": "得数：40",
       "pitfall": ""
     }
   },
@@ -18898,22 +18841,23 @@
     "id": "full-p13-s1-q1-6",
     "unitId": "U01",
     "title": "一1（6） · 计算",
-    "stem": "列竖式计算并验算：560÷80。",
+    "stem": "计算：560÷80。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取560，商7，80×7＝560，减后余0。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -18923,7 +18867,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取560，商7，80×7＝560，减后余0。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -18931,9 +18875,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取560，商7，80×7＝560，减后余0。",
-      "steps": ["取560，商7，80×7＝560，减后余0。", "验算：80×7＋0＝560，余数0小于除数80。"],
-      "answer": "商：7；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "560÷80＝56÷8＝7。"],
+      "answer": "得数：7",
       "pitfall": ""
     }
   },
@@ -18941,22 +18885,23 @@
     "id": "full-p13-s1-q1-7",
     "unitId": "U01",
     "title": "一1（7） · 计算",
-    "stem": "列竖式计算并验算：150÷50。",
+    "stem": "计算：150÷50。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取150，商3，50×3＝150，减后余0。",
+    "hint": "被除数和除数同时乘2，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -18966,7 +18911,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取150，商3，50×3＝150，减后余0。",
+    "knowledge": "被除数和除数同时乘2，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -18974,9 +18919,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取150，商3，50×3＝150，减后余0。",
-      "steps": ["取150，商3，50×3＝150，减后余0。", "验算：50×3＋0＝150，余数0小于除数50。"],
-      "answer": "商：3；余数：0",
+      "analysis": "被除数和除数同时乘2，商不变。",
+      "steps": ["被除数和除数同时乘2，商不变。", "150÷50＝(150×2)÷(50×2)＝300÷100＝3。"],
+      "answer": "得数：3",
       "pitfall": ""
     }
   },
@@ -18984,22 +18929,23 @@
     "id": "full-p13-s1-q1-8",
     "unitId": "U01",
     "title": "一1（8） · 计算",
-    "stem": "列竖式计算并验算：640÷8。",
+    "stem": "计算：640÷8。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取64，商8，8×8＝64，减后余0。落下下一位继续除。",
+    "hint": "想乘法：8×80＝640。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -19009,7 +18955,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取64，商8，8×8＝64，减后余0。落下下一位继续除。",
+    "knowledge": "想乘法：8×80＝640。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -19017,13 +18963,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取64，商8，8×8＝64，减后余0。落下下一位继续除。",
-      "steps": [
-        "取64，商8，8×8＝64，减后余0。落下下一位继续除。",
-        "取0，商0，8×0＝0，减后余0。",
-        "验算：8×80＋0＝640，余数0小于除数8。"
-      ],
-      "answer": "商：80；余数：0",
+      "analysis": "想乘法：8×80＝640。",
+      "steps": ["想乘法：8×80＝640。", "所以640÷8＝80，可以用乘法验算。"],
+      "answer": "得数：80",
       "pitfall": ""
     }
   },
@@ -19031,22 +18973,23 @@
     "id": "full-p13-s1-q1-9",
     "unitId": "U01",
     "title": "一1（9） · 计算",
-    "stem": "列竖式计算并验算：200÷40。",
+    "stem": "计算：200÷40。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取200，商5，40×5＝200，减后余0。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -19056,7 +18999,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取200，商5，40×5＝200，减后余0。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -19064,9 +19007,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取200，商5，40×5＝200，减后余0。",
-      "steps": ["取200，商5，40×5＝200，减后余0。", "验算：40×5＋0＝200，余数0小于除数40。"],
-      "answer": "商：5；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "200÷40＝20÷4＝5。"],
+      "answer": "得数：5",
       "pitfall": ""
     }
   },
@@ -19074,22 +19017,23 @@
     "id": "full-p13-s1-q1-10",
     "unitId": "U01",
     "title": "一1（10） · 计算",
-    "stem": "列竖式计算并验算：40÷10。",
+    "stem": "计算：40÷10。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取40，商4，10×4＝40，减后余0。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -19099,7 +19043,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取40，商4，10×4＝40，减后余0。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -19107,9 +19051,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取40，商4，10×4＝40，减后余0。",
-      "steps": ["取40，商4，10×4＝40，减后余0。", "验算：10×4＋0＝40，余数0小于除数10。"],
-      "answer": "商：4；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "40÷10＝4÷1＝4。"],
+      "answer": "得数：4",
       "pitfall": ""
     }
   },
@@ -21654,22 +21598,23 @@
     "id": "full-p14-s3-q1-1",
     "unitId": "U01",
     "title": "三1（1） · 计算",
-    "stem": "列竖式计算并验算：84÷14。",
+    "stem": "计算：84÷14。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取84，商6，14×6＝84，减后余0。",
+    "hint": "想乘法：14×6＝84。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -21679,7 +21624,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取84，商6，14×6＝84，减后余0。",
+    "knowledge": "想乘法：14×6＝84。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -21687,9 +21632,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取84，商6，14×6＝84，减后余0。",
-      "steps": ["取84，商6，14×6＝84，减后余0。", "验算：14×6＋0＝84，余数0小于除数14。"],
-      "answer": "商：6；余数：0",
+      "analysis": "想乘法：14×6＝84。",
+      "steps": ["想乘法：14×6＝84。", "所以84÷14＝6，可以用乘法验算。"],
+      "answer": "得数：6",
       "pitfall": ""
     }
   },
@@ -21697,22 +21642,23 @@
     "id": "full-p14-s3-q1-2",
     "unitId": "U01",
     "title": "三1（2） · 计算",
-    "stem": "列竖式计算并验算：230÷10。",
+    "stem": "计算：230÷10。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取23，商2，10×2＝20，减后余3。落下下一位继续除。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -21722,7 +21668,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取23，商2，10×2＝20，减后余3。落下下一位继续除。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -21730,13 +21676,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取23，商2，10×2＝20，减后余3。落下下一位继续除。",
-      "steps": [
-        "取23，商2，10×2＝20，减后余3。落下下一位继续除。",
-        "取30，商3，10×3＝30，减后余0。",
-        "验算：10×23＋0＝230，余数0小于除数10。"
-      ],
-      "answer": "商：23；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "230÷10＝23÷1＝23。"],
+      "answer": "得数：23",
       "pitfall": ""
     }
   },
@@ -21744,22 +21686,23 @@
     "id": "full-p14-s3-q1-3",
     "unitId": "U01",
     "title": "三1（3） · 计算",
-    "stem": "列竖式计算并验算：910÷70。",
+    "stem": "计算：910÷70。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取91，商1，70×1＝70，减后余21。落下下一位继续除。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -21769,7 +21712,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取91，商1，70×1＝70，减后余21。落下下一位继续除。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -21777,13 +21720,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取91，商1，70×1＝70，减后余21。落下下一位继续除。",
-      "steps": [
-        "取91，商1，70×1＝70，减后余21。落下下一位继续除。",
-        "取210，商3，70×3＝210，减后余0。",
-        "验算：70×13＋0＝910，余数0小于除数70。"
-      ],
-      "answer": "商：13；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "910÷70＝91÷7＝13。"],
+      "answer": "得数：13",
       "pitfall": ""
     }
   },
@@ -21791,22 +21730,23 @@
     "id": "full-p14-s3-q1-4",
     "unitId": "U01",
     "title": "三1（4） · 计算",
-    "stem": "列竖式计算并验算：360÷20。",
+    "stem": "计算：360÷20。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取36，商1，20×1＝20，减后余16。落下下一位继续除。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -21816,7 +21756,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取36，商1，20×1＝20，减后余16。落下下一位继续除。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -21824,13 +21764,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取36，商1，20×1＝20，减后余16。落下下一位继续除。",
-      "steps": [
-        "取36，商1，20×1＝20，减后余16。落下下一位继续除。",
-        "取160，商8，20×8＝160，减后余0。",
-        "验算：20×18＋0＝360，余数0小于除数20。"
-      ],
-      "answer": "商：18；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "360÷20＝36÷2＝18。"],
+      "answer": "得数：18",
       "pitfall": ""
     }
   },
@@ -21875,22 +21811,23 @@
     "id": "full-p14-s3-q1-6",
     "unitId": "U01",
     "title": "三1（6） · 计算",
-    "stem": "列竖式计算并验算：450÷15。",
+    "stem": "计算：450÷15。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取45，商3，15×3＝45，减后余0。落下下一位继续除。",
+    "hint": "想乘法：15×30＝450。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -21900,7 +21837,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取45，商3，15×3＝45，减后余0。落下下一位继续除。",
+    "knowledge": "想乘法：15×30＝450。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -21908,13 +21845,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取45，商3，15×3＝45，减后余0。落下下一位继续除。",
-      "steps": [
-        "取45，商3，15×3＝45，减后余0。落下下一位继续除。",
-        "取0，商0，15×0＝0，减后余0。",
-        "验算：15×30＋0＝450，余数0小于除数15。"
-      ],
-      "answer": "商：30；余数：0",
+      "analysis": "想乘法：15×30＝450。",
+      "steps": ["想乘法：15×30＝450。", "所以450÷15＝30，可以用乘法验算。"],
+      "answer": "得数：30",
       "pitfall": ""
     }
   },
@@ -21922,22 +21855,23 @@
     "id": "full-p14-s3-q1-7",
     "unitId": "U01",
     "title": "三1（7） · 计算",
-    "stem": "列竖式计算并验算：540÷27。",
+    "stem": "计算：540÷27。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取54，商2，27×2＝54，减后余0。落下下一位继续除。",
+    "hint": "想乘法：27×20＝540。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -21947,7 +21881,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取54，商2，27×2＝54，减后余0。落下下一位继续除。",
+    "knowledge": "想乘法：27×20＝540。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -21955,13 +21889,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取54，商2，27×2＝54，减后余0。落下下一位继续除。",
-      "steps": [
-        "取54，商2，27×2＝54，减后余0。落下下一位继续除。",
-        "取0，商0，27×0＝0，减后余0。",
-        "验算：27×20＋0＝540，余数0小于除数27。"
-      ],
-      "answer": "商：20；余数：0",
+      "analysis": "想乘法：27×20＝540。",
+      "steps": ["想乘法：27×20＝540。", "所以540÷27＝20，可以用乘法验算。"],
+      "answer": "得数：20",
       "pitfall": ""
     }
   },
@@ -21969,22 +21899,23 @@
     "id": "full-p14-s3-q1-8",
     "unitId": "U01",
     "title": "三1（8） · 计算",
-    "stem": "列竖式计算并验算：780÷30。",
+    "stem": "计算：780÷30。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取78，商2，30×2＝60，减后余18。落下下一位继续除。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -21994,7 +21925,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取78，商2，30×2＝60，减后余18。落下下一位继续除。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -22002,13 +21933,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取78，商2，30×2＝60，减后余18。落下下一位继续除。",
-      "steps": [
-        "取78，商2，30×2＝60，减后余18。落下下一位继续除。",
-        "取180，商6，30×6＝180，减后余0。",
-        "验算：30×26＋0＝780，余数0小于除数30。"
-      ],
-      "answer": "商：26；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "780÷30＝78÷3＝26。"],
+      "answer": "得数：26",
       "pitfall": ""
     }
   },
@@ -25092,22 +25019,23 @@
     "id": "full-p16-s3-q1-1",
     "unitId": "U01",
     "title": "三1（1） · 计算",
-    "stem": "列竖式计算并验算：630÷90。",
+    "stem": "计算：630÷90。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取630，商7，90×7＝630，减后余0。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -25117,7 +25045,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取630，商7，90×7＝630，减后余0。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -25125,9 +25053,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取630，商7，90×7＝630，减后余0。",
-      "steps": ["取630，商7，90×7＝630，减后余0。", "验算：90×7＋0＝630，余数0小于除数90。"],
-      "answer": "商：7；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "630÷90＝63÷9＝7。"],
+      "answer": "得数：7",
       "pitfall": ""
     }
   },
@@ -25135,22 +25063,23 @@
     "id": "full-p16-s3-q1-2",
     "unitId": "U01",
     "title": "三1（2） · 计算",
-    "stem": "列竖式计算并验算：80÷20。",
+    "stem": "计算：80÷20。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取80，商4，20×4＝80，减后余0。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -25160,7 +25089,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取80，商4，20×4＝80，减后余0。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -25168,9 +25097,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取80，商4，20×4＝80，减后余0。",
-      "steps": ["取80，商4，20×4＝80，减后余0。", "验算：20×4＋0＝80，余数0小于除数20。"],
-      "answer": "商：4；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "80÷20＝8÷2＝4。"],
+      "answer": "得数：4",
       "pitfall": ""
     }
   },
@@ -25178,22 +25107,23 @@
     "id": "full-p16-s3-q1-3",
     "unitId": "U01",
     "title": "三1（3） · 计算",
-    "stem": "列竖式计算并验算：540÷90。",
+    "stem": "计算：540÷90。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取540，商6，90×6＝540，减后余0。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -25203,7 +25133,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取540，商6，90×6＝540，减后余0。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -25211,9 +25141,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取540，商6，90×6＝540，减后余0。",
-      "steps": ["取540，商6，90×6＝540，减后余0。", "验算：90×6＋0＝540，余数0小于除数90。"],
-      "answer": "商：6；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "540÷90＝54÷9＝6。"],
+      "answer": "得数：6",
       "pitfall": ""
     }
   },
@@ -25262,22 +25192,23 @@
     "id": "full-p16-s3-q1-5",
     "unitId": "U01",
     "title": "三1（5） · 计算",
-    "stem": "列竖式计算并验算：660÷11。",
+    "stem": "计算：660÷11。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取66，商6，11×6＝66，减后余0。落下下一位继续除。",
+    "hint": "想乘法：11×60＝660。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -25287,7 +25218,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取66，商6，11×6＝66，减后余0。落下下一位继续除。",
+    "knowledge": "想乘法：11×60＝660。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -25295,13 +25226,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取66，商6，11×6＝66，减后余0。落下下一位继续除。",
-      "steps": [
-        "取66，商6，11×6＝66，减后余0。落下下一位继续除。",
-        "取0，商0，11×0＝0，减后余0。",
-        "验算：11×60＋0＝660，余数0小于除数11。"
-      ],
-      "answer": "商：60；余数：0",
+      "analysis": "想乘法：11×60＝660。",
+      "steps": ["想乘法：11×60＝660。", "所以660÷11＝60，可以用乘法验算。"],
+      "answer": "得数：60",
       "pitfall": ""
     }
   },
@@ -25346,22 +25273,23 @@
     "id": "full-p16-s3-q1-7",
     "unitId": "U01",
     "title": "三1（7） · 计算",
-    "stem": "列竖式计算并验算：930÷31。",
+    "stem": "计算：930÷31。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取93，商3，31×3＝93，减后余0。落下下一位继续除。",
+    "hint": "想乘法：31×30＝930。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -25371,7 +25299,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取93，商3，31×3＝93，减后余0。落下下一位继续除。",
+    "knowledge": "想乘法：31×30＝930。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -25379,13 +25307,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取93，商3，31×3＝93，减后余0。落下下一位继续除。",
-      "steps": [
-        "取93，商3，31×3＝93，减后余0。落下下一位继续除。",
-        "取0，商0，31×0＝0，减后余0。",
-        "验算：31×30＋0＝930，余数0小于除数31。"
-      ],
-      "answer": "商：30；余数：0",
+      "analysis": "想乘法：31×30＝930。",
+      "steps": ["想乘法：31×30＝930。", "所以930÷31＝30，可以用乘法验算。"],
+      "answer": "得数：30",
       "pitfall": ""
     }
   },
@@ -26486,22 +26410,23 @@
     "id": "full-p17-s2-q1-1",
     "unitId": "U01",
     "title": "二1（1） · 计算",
-    "stem": "列竖式计算并验算：68÷4。",
+    "stem": "计算：68÷4。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取6，商1，4×1＝4，减后余2。落下下一位继续除。",
+    "hint": "想乘法：4×17＝68。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -26511,7 +26436,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取6，商1，4×1＝4，减后余2。落下下一位继续除。",
+    "knowledge": "想乘法：4×17＝68。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -26519,13 +26444,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取6，商1，4×1＝4，减后余2。落下下一位继续除。",
-      "steps": [
-        "取6，商1，4×1＝4，减后余2。落下下一位继续除。",
-        "取28，商7，4×7＝28，减后余0。",
-        "验算：4×17＋0＝68，余数0小于除数4。"
-      ],
-      "answer": "商：17；余数：0",
+      "analysis": "想乘法：4×17＝68。",
+      "steps": ["想乘法：4×17＝68。", "所以68÷4＝17，可以用乘法验算。"],
+      "answer": "得数：17",
       "pitfall": ""
     }
   },
@@ -26533,22 +26454,23 @@
     "id": "full-p17-s2-q1-2",
     "unitId": "U01",
     "title": "二1（2） · 计算",
-    "stem": "列竖式计算并验算：510÷30。",
+    "stem": "计算：510÷30。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取51，商1，30×1＝30，减后余21。落下下一位继续除。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -26558,7 +26480,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取51，商1，30×1＝30，减后余21。落下下一位继续除。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -26566,13 +26488,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取51，商1，30×1＝30，减后余21。落下下一位继续除。",
-      "steps": [
-        "取51，商1，30×1＝30，减后余21。落下下一位继续除。",
-        "取210，商7，30×7＝210，减后余0。",
-        "验算：30×17＋0＝510，余数0小于除数30。"
-      ],
-      "answer": "商：17；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "510÷30＝51÷3＝17。"],
+      "answer": "得数：17",
       "pitfall": ""
     }
   },
@@ -26617,22 +26535,23 @@
     "id": "full-p17-s2-q1-4",
     "unitId": "U01",
     "title": "二1（4） · 计算",
-    "stem": "列竖式计算并验算：60÷12。",
+    "stem": "计算：60÷12。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取60，商5，12×5＝60，减后余0。",
+    "hint": "想乘法：12×5＝60。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -26642,7 +26561,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取60，商5，12×5＝60，减后余0。",
+    "knowledge": "想乘法：12×5＝60。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -26650,9 +26569,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取60，商5，12×5＝60，减后余0。",
-      "steps": ["取60，商5，12×5＝60，减后余0。", "验算：12×5＋0＝60，余数0小于除数12。"],
-      "answer": "商：5；余数：0",
+      "analysis": "想乘法：12×5＝60。",
+      "steps": ["想乘法：12×5＝60。", "所以60÷12＝5，可以用乘法验算。"],
+      "answer": "得数：5",
       "pitfall": ""
     }
   },
@@ -26660,22 +26579,23 @@
     "id": "full-p17-s2-q1-5",
     "unitId": "U01",
     "title": "二1（5） · 计算",
-    "stem": "列竖式计算并验算：720÷90。",
+    "stem": "计算：720÷90。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取720，商8，90×8＝720，减后余0。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -26685,7 +26605,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取720，商8，90×8＝720，减后余0。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -26693,9 +26613,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取720，商8，90×8＝720，减后余0。",
-      "steps": ["取720，商8，90×8＝720，减后余0。", "验算：90×8＋0＝720，余数0小于除数90。"],
-      "answer": "商：8；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "720÷90＝72÷9＝8。"],
+      "answer": "得数：8",
       "pitfall": ""
     }
   },
@@ -26740,22 +26660,23 @@
     "id": "full-p17-s2-q1-7",
     "unitId": "U01",
     "title": "二1（7） · 计算",
-    "stem": "列竖式计算并验算：400÷80。",
+    "stem": "计算：400÷80。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取400，商5，80×5＝400，减后余0。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -26765,7 +26686,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取400，商5，80×5＝400，减后余0。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -26773,9 +26694,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取400，商5，80×5＝400，减后余0。",
-      "steps": ["取400，商5，80×5＝400，减后余0。", "验算：80×5＋0＝400，余数0小于除数80。"],
-      "answer": "商：5；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "400÷80＝40÷8＝5。"],
+      "answer": "得数：5",
       "pitfall": ""
     }
   },
@@ -26783,22 +26704,23 @@
     "id": "full-p17-s2-q1-8",
     "unitId": "U01",
     "title": "二1（8） · 计算",
-    "stem": "列竖式计算并验算：560÷40。",
+    "stem": "计算：560÷40。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取56，商1，40×1＝40，减后余16。落下下一位继续除。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -26808,7 +26730,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取56，商1，40×1＝40，减后余16。落下下一位继续除。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -26816,13 +26738,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取56，商1，40×1＝40，减后余16。落下下一位继续除。",
-      "steps": [
-        "取56，商1，40×1＝40，减后余16。落下下一位继续除。",
-        "取160，商4，40×4＝160，减后余0。",
-        "验算：40×14＋0＝560，余数0小于除数40。"
-      ],
-      "answer": "商：14；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "560÷40＝56÷4＝14。"],
+      "answer": "得数：14",
       "pitfall": ""
     }
   },
@@ -26830,22 +26748,23 @@
     "id": "full-p17-s2-q1-9",
     "unitId": "U01",
     "title": "二1（9） · 计算",
-    "stem": "列竖式计算并验算：350÷50。",
+    "stem": "计算：350÷50。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取350，商7，50×7＝350，减后余0。",
+    "hint": "被除数和除数同时乘2，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -26855,7 +26774,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取350，商7，50×7＝350，减后余0。",
+    "knowledge": "被除数和除数同时乘2，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -26863,9 +26782,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取350，商7，50×7＝350，减后余0。",
-      "steps": ["取350，商7，50×7＝350，减后余0。", "验算：50×7＋0＝350，余数0小于除数50。"],
-      "answer": "商：7；余数：0",
+      "analysis": "被除数和除数同时乘2，商不变。",
+      "steps": ["被除数和除数同时乘2，商不变。", "350÷50＝(350×2)÷(50×2)＝700÷100＝7。"],
+      "answer": "得数：7",
       "pitfall": ""
     }
   },
@@ -26873,22 +26792,23 @@
     "id": "full-p17-s2-q1-10",
     "unitId": "U01",
     "title": "二1（10） · 计算",
-    "stem": "列竖式计算并验算：140÷20。",
+    "stem": "计算：140÷20。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取140，商7，20×7＝140，减后余0。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -26898,7 +26818,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取140，商7，20×7＝140，减后余0。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -26906,9 +26826,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取140，商7，20×7＝140，减后余0。",
-      "steps": ["取140，商7，20×7＝140，减后余0。", "验算：20×7＋0＝140，余数0小于除数20。"],
-      "answer": "商：7；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "140÷20＝14÷2＝7。"],
+      "answer": "得数：7",
       "pitfall": ""
     }
   },
@@ -26916,22 +26836,23 @@
     "id": "full-p17-s2-q1-11",
     "unitId": "U01",
     "title": "二1（11） · 计算",
-    "stem": "列竖式计算并验算：300÷5。",
+    "stem": "计算：300÷5。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取30，商6，5×6＝30，减后余0。落下下一位继续除。",
+    "hint": "想乘法：5×60＝300。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -26941,7 +26862,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取30，商6，5×6＝30，减后余0。落下下一位继续除。",
+    "knowledge": "想乘法：5×60＝300。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -26949,13 +26870,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取30，商6，5×6＝30，减后余0。落下下一位继续除。",
-      "steps": [
-        "取30，商6，5×6＝30，减后余0。落下下一位继续除。",
-        "取0，商0，5×0＝0，减后余0。",
-        "验算：5×60＋0＝300，余数0小于除数5。"
-      ],
-      "answer": "商：60；余数：0",
+      "analysis": "想乘法：5×60＝300。",
+      "steps": ["想乘法：5×60＝300。", "所以300÷5＝60，可以用乘法验算。"],
+      "answer": "得数：60",
       "pitfall": ""
     }
   },
@@ -26963,22 +26880,23 @@
     "id": "full-p17-s2-q1-12",
     "unitId": "U01",
     "title": "二1（12） · 计算",
-    "stem": "列竖式计算并验算：700÷10。",
+    "stem": "计算：700÷10。",
     "type": "calculation",
     "difficulty": "basic",
     "fields": [
       {
         "key": "a1",
-        "label": "商",
+        "label": "得数",
         "inputMode": "numeric"
       },
       {
         "key": "a2",
         "label": "余数",
-        "inputMode": "numeric"
+        "inputMode": "numeric",
+        "fixedValue": "0"
       }
     ],
-    "hint": "取70，商7，10×7＝70，减后余0。落下下一位继续除。",
+    "hint": "被除数和除数同时除以10，商不变。",
     "sourceKind": "collected",
     "sources": [
       {
@@ -26988,7 +26906,7 @@
       }
     ],
     "topicIds": ["u1-calculation"],
-    "knowledge": "取70，商7，10×7＝70，减后余0。落下下一位继续除。",
+    "knowledge": "被除数和除数同时除以10，商不变。",
     "pages": [2, 16],
     "hasVisual": false,
     "expected": {
@@ -26996,13 +26914,9 @@
       "a2": "0"
     },
     "explanation": {
-      "analysis": "取70，商7，10×7＝70，减后余0。落下下一位继续除。",
-      "steps": [
-        "取70，商7，10×7＝70，减后余0。落下下一位继续除。",
-        "取0，商0，10×0＝0，减后余0。",
-        "验算：10×70＋0＝700，余数0小于除数10。"
-      ],
-      "answer": "商：70；余数：0",
+      "analysis": "被除数和除数同时除以10，商不变。",
+      "steps": ["被除数和除数同时除以10，商不变。", "700÷10＝70÷1＝70。"],
+      "answer": "得数：70",
       "pitfall": ""
     }
   },

@@ -112,7 +112,13 @@ export interface QuestionPublic {
   type: QuestionType;
   difficulty: Difficulty;
   stem: string;
-  fields: { key: string; label: string; suffix?: string; inputMode?: 'text' | 'numeric' }[];
+  fields: {
+    key: string;
+    label: string;
+    suffix?: string;
+    inputMode?: 'text' | 'numeric';
+    fixedValue?: '0';
+  }[];
   options?: string[];
   hint: string;
   sourceKind: 'original' | 'collected' | 'adapted';
@@ -251,6 +257,7 @@ export const questionSchema = z.object({
         label: z.string(),
         suffix: z.string().optional(),
         inputMode: z.enum(['text', 'numeric']).optional(),
+        fixedValue: z.literal('0').optional(),
       }),
     )
     .min(1)

@@ -77,7 +77,19 @@ def arithmetic(section,expressions):
   # Exact integer-division examples use column explanations, including remainders.
   normalized=expr.replace(' ','')
   if '÷' in expr and normalized.count('÷')==1 and all(x.isdigit() for x in normalized.split('÷')):
-   a,b=map(int,normalized.split('÷'));calc(f'{section}（{i}）',a,b)
+   a,b=map(int,normalized.split('÷'));item=calc(f'{section}（{i}）',a,b)
+   assert a%b==0,('mental division must be exact',a,b)
+   item['stem']=f'计算：{expr}。'
+   item['fields'][0]['label']='得数';item['fields'][1]['fixedValue']='0'
+   d=a//b
+   if b in [25,50,125]:
+    factor={25:4,50:2,125:8}[b]
+    steps=[f'被除数和除数同时乘{factor}，商不变。',f'{a}÷{b}＝({a}×{factor})÷({b}×{factor})＝{a*factor}÷{b*factor}＝{d}。']
+   elif a%10==0 and b%10==0:
+    steps=['被除数和除数同时除以10，商不变。',f'{a}÷{b}＝{a//10}÷{b//10}＝{d}。']
+   else:
+    steps=[f'想乘法：{b}×{d}＝{a}。',f'所以{a}÷{b}＝{d}，可以用乘法验算。']
+   item['hint']=steps[0];item['knowledge']=steps[0];item['explanation']={'analysis':steps[0],'steps':steps,'answer':f'得数：{d}','pitfall':''}
   else:
    tree=ast.parse(expr.replace('×','*').replace('÷','/').replace('−','-'),mode='eval').body
    detail=[]
