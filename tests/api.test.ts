@@ -19,7 +19,7 @@ describe('public course and grading API', () => {
     }
     expect([...ids].sort()).toEqual(
       questions
-        .filter((q) => q.unitId === 'U05')
+        .filter((q) => q.unitId === 'U05' && Number(q.id.slice(3)) <= 18)
         .map((q) => q.id)
         .sort(),
     );
@@ -43,7 +43,7 @@ describe('public course and grading API', () => {
     expect(r.status).toBe(200);
     const b = await r.json();
     expect(b.data.textbook.id).toBe('sj-math-g4-upper-2026-v1');
-    expect(b.data.questionCount).toBe(78);
+    expect(b.data.questionCount).toBe(232);
     expect(b.data.availableLessons).toBe(27);
     expect(b.requestId).toBeTruthy();
   });
@@ -81,7 +81,7 @@ describe('public course and grading API', () => {
   it('filters questions without leaking answer keys', async () => {
     const r = await app.request(`${base}/questions?unit=U02&difficulty=challenge&type=application`);
     const b = await r.json();
-    expect(b.data.total).toBe(3);
+    expect(b.data.total).toBe(24);
     for (const q of b.data.items) {
       expect(q).not.toHaveProperty('expected');
       expect(q).not.toHaveProperty('explanation');

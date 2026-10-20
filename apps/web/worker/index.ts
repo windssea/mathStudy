@@ -7,7 +7,7 @@ import {
 } from '@mathstudy/contracts';
 import { publicQuestion } from '@mathstudy/content';
 import { loadCourseContent } from './content-repository';
-import { sameAnswer } from '@mathstudy/math-core';
+import { gradeAnswers } from '@mathstudy/math-core';
 import { bodyLimit } from 'hono/body-limit';
 import { builtInEmail, getAuth, sessionUser } from './auth';
 import { learningApi } from './learning-api';
@@ -180,6 +180,26 @@ app.get('/api/v1/textbooks/:edition/lessons/:lesson', (c) => {
     ),
   );
 });
+app.get('/api/v1/practice', (c) => c.json(envelope(c.get('content').practice, c.get('requestId'))));
+app.get('/api/v1/practice/:kind/:id', (c) => {
+  const content = c.get('content'),
+    kind = c.req.param('kind');
+  const set = (
+    kind === 'topics' ? content.practice.topics : kind === 'papers' ? content.practice.papers : []
+  ).find((s) => s.id === c.req.param('id'));
+  if (!set) return c.json({ error: { code: 'NOT_FOUND', message: '未找到这组练习。' } }, 404);
+  return c.json(
+    envelope(
+      {
+        set,
+        items: set.questionIds.map((id) =>
+          publicQuestion(content.questions.find((q) => q.id === id)!),
+        ),
+      },
+      c.get('requestId'),
+    ),
+  );
+});
 app.get('/api/v1/questions', (c) => {
   const { textbook, questions } = c.get('content');
   const { unit, difficulty, type, search = '' } = c.req.query();
@@ -241,9 +261,7 @@ app.post('/api/v1/questions/:id/check', async (c) => {
       },
       400,
     );
-  const correct = Object.keys(question.expected).every((key) =>
-    sameAnswer(parsed.data.answers[key], question.expected[key]),
-  );
+  const correct = gradeAnswers(question, parsed.data.answers);
   const user = await sessionUser(c.env ?? {}, c.req.raw, (cookie) =>
     c.header('Set-Cookie', cookie, { append: true }),
   );
@@ -268,9 +286,7 @@ app.post('/api/v1/questions/:id/check', async (c) => {
     envelope(
       {
         correct,
-        feedback: correct
-          ? '答对了！再看看思路，理解为什么。'
-          : '再想一想。对照分析，找出需要调整的那一步。',
+        feedback: correct ? '答对了。' : '答案不正确，可修改后重试。',
         explanation: question.explanation,
       },
       c.get('requestId'),

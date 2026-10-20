@@ -1,3 +1,4 @@
+import StepControls from './StepControls';
 import { useEffect, useId, useState } from 'react';
 import type { LargeNumberDemo } from '@mathstudy/contracts';
 import {
@@ -223,7 +224,6 @@ export default function LargeNumberLessonPlayer({
     <section className="panel large-number-player" aria-label="多位数交互演示">
       <div className="arithmetic-heading">
         <div>
-          <span className="eyebrow">多位数实验室</span>
           <h2>
             {workspace === 'counter'
               ? '让计数单位一档一档进位'
@@ -285,38 +285,44 @@ export default function LargeNumberLessonPlayer({
               ))}
             </select>
           </label>
-          <form
-            className="number-input-form"
-            onSubmit={(e) => {
-              e.preventDefault();
-              try {
-                commit(parseLargeNumber(draft));
-              } catch (error) {
-                setFeedback((error as Error).message);
-              }
-            }}
+          <details
+            className="number-customize"
+            open={workspace === 'reading' && readingMode === 'write'}
+            key={`${workspace}-${readingMode}`}
           >
-            <label htmlFor={`${id}-number`}>
-              {workspace === 'rounding' && roundingMode === 'range'
-                ? '目标近似数（整万或整亿）'
-                : readingMode === 'write' && workspace === 'reading'
-                  ? '写出阿拉伯数字'
-                  : '输入整数'}
-              <input
-                id={`${id}-number`}
-                inputMode="numeric"
-                maxLength={12}
-                value={draft}
-                onChange={(e) => setDraft(e.target.value)}
-              />
-            </label>
-            <button className="button" type="submit">
-              写到数位表
-            </button>
-          </form>
-          <p className="number-tool-note">
-            演示范围为0至999999999999。按我国四位一级分组；输入数字后点击“写到数位表”。
-          </p>
+            <summary>
+              {workspace === 'reading' && readingMode === 'write' ? '写数作答' : '自定义数字'}
+            </summary>
+            <form
+              className="number-input-form"
+              onSubmit={(e) => {
+                e.preventDefault();
+                try {
+                  commit(parseLargeNumber(draft));
+                } catch (error) {
+                  setFeedback((error as Error).message);
+                }
+              }}
+            >
+              <label htmlFor={`${id}-number`}>
+                {workspace === 'rounding' && roundingMode === 'range'
+                  ? '目标近似数（整万或整亿）'
+                  : readingMode === 'write' && workspace === 'reading'
+                    ? '写出阿拉伯数字'
+                    : '输入整数'}
+                <input
+                  id={`${id}-number`}
+                  inputMode="numeric"
+                  maxLength={12}
+                  value={draft}
+                  onChange={(e) => setDraft(e.target.value)}
+                />
+              </label>
+              <button className="button" type="submit">
+                写到数位表
+              </button>
+            </form>
+          </details>
         </>
       )}
       {workspace === 'counter' && (
@@ -420,13 +426,12 @@ export default function LargeNumberLessonPlayer({
                   : '阿拉伯数字'}
             </span>
             <strong>{groupedNumber(value)}</strong>
-            <small>竖线仅帮助分级，正式写数时不写竖线。</small>
           </div>
         )}
         {workspace === 'reading' && readingMode === 'write' && (
           <div className="writing-task">
             <strong>请写出：{readChineseNumber(writingTarget)}</strong>
-            <p>可以输入数字，也可以点选数位后改变该位数字；没有数量的数位用0占位。</p>
+
             <button
               className="button primary"
               onClick={() => {
@@ -491,44 +496,53 @@ export default function LargeNumberLessonPlayer({
             </div>
           </>
         ) : (
-          workspace !== 'encoding' && (
+          (workspace === 'reading' || workspace === 'counter') && (
             <>
               <div className="number-classes" aria-label="整数数位顺序表">
-                {[2, 1, 0].map((group) => (
-                  <section
-                    key={group}
-                    className={
-                      frame.power !== undefined && Math.floor(frame.power / 4) === group
-                        ? 'active-number-class'
-                        : ''
-                    }
-                  >
-                    <h4>{['个级', '万级', '亿级'][group]}</h4>
-                    <div className="digit-row">
-                      {[3, 2, 1, 0].map((offset) => {
-                        const power = group * 4 + offset,
-                          place = places[power],
-                          used = workspace === 'counter' ? power <= highestCount : place.used;
-                        return (
-                          <button
-                            key={power}
-                            className="digit-card"
-                            data-selected={power === selectedPower}
-                            data-focus={frame.power === power}
-                            aria-label={`${place.position}：${used ? counts[power] : '空位'}`}
-                            onClick={() => setSelectedPower(power)}
-                          >
-                            <small>{place.position}</small>
-                            <strong>{used ? counts[power] : '—'}</strong>
-                            <span>{counts[power] > 9 ? '待进位' : place.unit}</span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </section>
-                ))}
+                {[2, 1, 0]
+                  .filter(
+                    (group) =>
+                      group <=
+                      Math.floor(
+                        Math.max(highestCount, workspace === 'counter' ? counterPower + 1 : 0) / 4,
+                      ),
+                  )
+                  .map((group) => (
+                    <section
+                      key={group}
+                      className={
+                        frame.power !== undefined && Math.floor(frame.power / 4) === group
+                          ? 'active-number-class'
+                          : ''
+                      }
+                    >
+                      <h4>{['个级', '万级', '亿级'][group]}</h4>
+                      <div className="digit-row">
+                        {[3, 2, 1, 0].map((offset) => {
+                          const power = group * 4 + offset,
+                            place = places[power],
+                            used = workspace === 'counter' ? power <= highestCount : place.used;
+                          return (
+                            <button
+                              key={power}
+                              className="digit-card"
+                              data-selected={power === selectedPower}
+                              data-focus={frame.power === power}
+                              aria-label={`${place.position}：${used ? counts[power] : '空位'}`}
+                              onClick={() => setSelectedPower(power)}
+                            >
+                              <small>{place.position}</small>
+                              <strong>{used ? counts[power] : '—'}</strong>
+                              <span>{counts[power] > 9 ? '待进位' : place.unit}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </section>
+                  ))}
               </div>
-              <div className="number-place-detail">
+              <details className="number-place-detail">
+                <summary>数位含义与修改</summary>
                 <strong>{places[selectedPower].position}</strong>
                 <span>
                   从右起第{selectedPower + 1}位 · 计数单位：{countingUnits[selectedPower]}
@@ -559,7 +573,7 @@ export default function LargeNumberLessonPlayer({
                     </select>
                   </label>
                 )}
-              </div>
+              </details>
               {workspace === 'reading' && readingMode === 'read' && (
                 <div className="number-readout" aria-live="polite">
                   <span>读作</span>
@@ -617,7 +631,8 @@ export default function LargeNumberLessonPlayer({
                       );
                     }}
                   >
-                    {['下边界前一个', '下边界', '最大整数', '上边界后一个'][index]}：{number}
+                    <small>{['下界之前', '最小整数', '最大整数', '上界之外'][index]}</small>
+                    {number}
                   </button>
                 ),
               );
@@ -683,67 +698,70 @@ export default function LargeNumberLessonPlayer({
                     .join(' ')
                 : '先按规则分段，再逐位读出编号。'}
             </p>
-            <form
-              className="number-input-form"
-              onSubmit={(e) => {
-                e.preventDefault();
-                try {
-                  const data = decodeLibraryBook(decodeDraft);
-                  setCodeData(data);
-                  setCodeDraft({
-                    year: String(data.year),
-                    shelf: String(data.shelf),
-                    serial: String(data.serial),
-                  });
-                  reset();
-                  setStep(2);
-                  setFeedback(
-                    `解读成功：${data.year}年、${data.shelf}号书架、第${data.serial}本。`,
-                  );
-                } catch (error) {
-                  setFeedback((error as Error).message);
-                }
-              }}
-            >
-              <label>
-                要解读的编号
-                <input
-                  inputMode="numeric"
-                  maxLength={9}
-                  value={decodeDraft}
-                  onChange={(e) => setDecodeDraft(e.target.value)}
-                />
-              </label>
-              <button className="button">解读编号</button>
-            </form>
-            <form
-              className="number-input-form"
-              onSubmit={(e) => {
-                e.preventDefault();
-                try {
-                  decodeLibraryBook(otherCode);
-                  setFeedback(
-                    code === otherCode
-                      ? '编号重复！不能把同一个编号分给另一本书。'
-                      : '两个编号不同，可以区分这两本书。',
-                  );
-                  setPlaying(false);
-                } catch (error) {
-                  setFeedback((error as Error).message);
-                }
-              }}
-            >
-              <label>
-                另一本书的编号
-                <input
-                  inputMode="numeric"
-                  maxLength={9}
-                  value={otherCode}
-                  onChange={(e) => setOtherCode(e.target.value)}
-                />
-              </label>
-              <button className="button">检查重复</button>
-            </form>
+            <details className="encoding-tools">
+              <summary>解读编号与查重</summary>
+              <form
+                className="number-input-form"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  try {
+                    const data = decodeLibraryBook(decodeDraft);
+                    setCodeData(data);
+                    setCodeDraft({
+                      year: String(data.year),
+                      shelf: String(data.shelf),
+                      serial: String(data.serial),
+                    });
+                    reset();
+                    setStep(2);
+                    setFeedback(
+                      `解读成功：${data.year}年、${data.shelf}号书架、第${data.serial}本。`,
+                    );
+                  } catch (error) {
+                    setFeedback((error as Error).message);
+                  }
+                }}
+              >
+                <label>
+                  要解读的编号
+                  <input
+                    inputMode="numeric"
+                    maxLength={9}
+                    value={decodeDraft}
+                    onChange={(e) => setDecodeDraft(e.target.value)}
+                  />
+                </label>
+                <button className="button">解读编号</button>
+              </form>
+              <form
+                className="number-input-form"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  try {
+                    decodeLibraryBook(otherCode);
+                    setFeedback(
+                      code === otherCode
+                        ? '编号重复！不能把同一个编号分给另一本书。'
+                        : '两个编号不同，可以区分这两本书。',
+                    );
+                    setPlaying(false);
+                  } catch (error) {
+                    setFeedback((error as Error).message);
+                  }
+                }}
+              >
+                <label>
+                  另一本书的编号
+                  <input
+                    inputMode="numeric"
+                    maxLength={9}
+                    value={otherCode}
+                    onChange={(e) => setOtherCode(e.target.value)}
+                  />
+                </label>
+                <button className="button">检查重复</button>
+              </form>
+            </details>
           </>
         )}
         <div className="arithmetic-reason" role="status" aria-live="polite">
@@ -751,76 +769,25 @@ export default function LargeNumberLessonPlayer({
         </div>
         {frame.result && <div className="number-result">{frame.result}</div>}
       </div>
-      <div className="arithmetic-controls">
-        <div className="arithmetic-actions">
-          <button
-            className="button"
-            disabled={step === 0 || staticMode}
-            onClick={() => {
-              setStep(step - 1);
-              setPlaying(false);
-              setFeedback('');
-            }}
-          >
-            上一步
-          </button>
-          <button className="button primary" disabled={staticMode} onClick={play}>
-            {playing ? '暂停' : step === last ? '重新播放' : '播放演示'}
-          </button>
-          <button
-            className="button"
-            disabled={step === last || staticMode}
-            onClick={() => {
-              setStep(step + 1);
-              setPlaying(false);
-              setFeedback('');
-            }}
-          >
-            下一步
-          </button>
-          <button className="button" onClick={reset}>
-            重置步骤
-          </button>
-        </div>
-        <label>
-          播放速度
-          <select value={speed} onChange={(e) => setSpeed(Number(e.target.value))}>
-            <option value={0.5}>0.5倍</option>
-            <option value={1}>1倍</option>
-            <option value={1.5}>1.5倍</option>
-          </select>
-        </label>
-        <label className="arithmetic-timeline" htmlFor={`${id}-step`}>
-          演示步骤
-          <span>
-            {step + 1} / {last + 1}
-          </span>
-          <input
-            id={`${id}-step`}
-            aria-label="演示步骤"
-            type="range"
-            min={0}
-            max={last}
-            value={step}
-            disabled={staticMode}
-            onChange={(e) => {
-              setStep(Number(e.target.value));
-              setPlaying(false);
-              setFeedback('');
-            }}
-          />
-        </label>
-        <button
-          className="button"
-          aria-pressed={staticMode}
-          onClick={() => {
-            setStaticMode(!staticMode);
-            setPlaying(false);
-          }}
-        >
-          查看静态步骤
-        </button>
-      </div>
+      <StepControls
+        step={step}
+        last={last}
+        onStep={(next) => {
+          setStep(next);
+          setPlaying(false);
+          setFeedback('');
+        }}
+        playing={playing}
+        onPlay={play}
+        speed={speed}
+        onSpeed={setSpeed}
+        onReset={() => reset()}
+        staticMode={staticMode}
+        onStatic={() => {
+          setStaticMode(!staticMode);
+          setPlaying(false);
+        }}
+      />
       {staticMode && (
         <div className="arithmetic-static">
           <h3>完整静态步骤</h3>

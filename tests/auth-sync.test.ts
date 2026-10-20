@@ -85,6 +85,43 @@ function attempt(value: string, assisted = false, offset = 0): LearningEvent {
   };
 }
 describe('account authentication and private D1 learning records', () => {
+  it('persists flexible grid answers and correction history across two authenticated D1 sessions', async () => {
+    const a = device(),
+      b = device('192.0.2.2');
+    await a.provision();
+    await b.login();
+    const stamp = Date.now();
+    const wrong: LearningEvent = {
+      id: crypto.randomUUID(),
+      kind: 'attempt',
+      entityId: 'p15-draw',
+      answers: { cells: '0'.repeat(60) },
+      assisted: false,
+      occurredAt: new Date(stamp).toISOString(),
+    };
+    const cells = Array.from({ length: 60 }, (_, i) =>
+      Math.floor(i / 10) >= 2 && Math.floor(i / 10) < 4 && i % 10 < 9 ? '1' : '0',
+    ).join('');
+    const right: LearningEvent = {
+      ...wrong,
+      id: crypto.randomUUID(),
+      answers: { cells },
+      occurredAt: new Date(stamp + 10).toISOString(),
+    };
+    await a.sync([wrong]);
+    expect((await b.sync()).snapshot.answers['p15-draw'].needsReview).toBe(true);
+    await b.sync([right]);
+    const result = await a.sync([wrong, right]);
+    expect(result.snapshot.answers['p15-draw']).toMatchObject({
+      attemptCount: 2,
+      wrongCount: 1,
+      needsReview: false,
+      source: 'verified',
+    });
+    expect(
+      result.snapshot.history.find((r: { id: string }) => r.id === right.id).answers.cells,
+    ).toBe(cells);
+  });
   it('syncs seven fifth-unit lessons, rounding corrections and new encoding answers across devices', async () => {
     const a = device(),
       b = device('192.0.2.2');

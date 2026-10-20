@@ -4,10 +4,10 @@ import { useCourse } from '../app/course';
 import { useRemote } from '../lib/api';
 import { useProgress, useAccount, progressMessage, synchronize } from '../lib/progress';
 import type { QuestionPublic } from '@mathstudy/contracts';
-import { Icon, Loading, ErrorState, ProgressRing } from '../components/ui';
+import { Icon, Loading, ErrorState } from '../components/ui';
 
 export default function Records() {
-  const { textbook: book, availableLessons } = useCourse(),
+  const { textbook: book } = useCourse(),
     progress = useProgress();
   const remote = useRemote<{ items: QuestionPublic[] }>('/questions');
   const attempted = Object.entries(progress.answers);
@@ -23,8 +23,7 @@ export default function Records() {
     <>
       <div className="page-heading">
         <div>
-          <div className="eyebrow">不和别人比，只看自己的收获</div>
-          <h1>我的学习记录</h1>
+          <h1>练习记录</h1>
           <p>{progressMessage()}</p>
         </div>
       </div>
@@ -44,11 +43,9 @@ export default function Records() {
         )}
       </div>
       <section className="record-summary panel">
-        <ProgressRing value={progress.completed.length} total={availableLessons} />
-        <div>
-          <span>全部已开放课节</span>
-          <h2>一步一个脚印</h2>
-          <p>完成探索与练习后，可以在课节末尾记录完成。</p>
+        <div className="record-stat">
+          <b>{attempted.filter(([, a]) => a.needsReview).length}</b>
+          <span>待复习</span>
         </div>
         <div className="record-stat">
           <b>{attempted.length}</b>
@@ -60,34 +57,6 @@ export default function Records() {
         </div>
       </section>
       <div className="records-columns">
-        <section className="panel records-panel">
-          <h2>
-            <Icon name="BookOpen" />
-            已完成的课节
-          </h2>
-          {progress.completed.length ? (
-            book.catalog
-              .flatMap((n) => n.lessons)
-              .filter((l) => progress.completed.includes(l.id))
-              .map((l) => (
-                <Link className="record-row" key={l.id} to={`/books/${book.id}/lessons/${l.id}`}>
-                  <Icon name="CheckCircle2" />
-                  <span>{l.title}</span>
-                  <Icon name="ChevronRight" size={16} />
-                </Link>
-              ))
-          ) : (
-            <div className="empty-state compact">
-              <Icon name="Flag" size={32} />
-              <h3>第一课，在等你出发</h3>
-              <p>看懂演示，再独立试几道题。</p>
-              <Link className="button primary" to={`/books/${book.id}/lessons/U01-L01`}>
-                开始学习
-                <Icon name="ArrowRight" size={17} />
-              </Link>
-            </div>
-          )}
-        </section>
         <section className="panel records-panel">
           <h2>
             <Icon name="RotateCcw" />
@@ -124,10 +93,10 @@ export default function Records() {
                     {q.title}
                     <small>
                       {!a.needsReview
-                        ? '已独立答对，保留复习足迹'
+                        ? '已独立答对'
                         : a.revealed
                           ? '看过提示或讲解，再独立试试'
-                          : '上次没有做对，再想一想'}
+                          : '待订正'}
                       {a.wrongCount > 0 && ` · 错过 ${a.wrongCount} 次`}
                     </small>
                   </span>
@@ -138,9 +107,7 @@ export default function Records() {
           ) : (
             <div className="empty-state compact">
               <Icon name="Lightbulb" size={32} />
-              <h3>
-                {reviewFilter === 'resolved' ? '独立订正后，会留在这里' : '把每次尝试变成收获'}
-              </h3>
+              <h3>{reviewFilter === 'resolved' ? '暂无已掌握错题' : '暂无待复习题目'}</h3>
               <p>做错或看过提示的题进入待复习；重新独立答对后转入已掌握。</p>
               <Link to="/questions" className="text-link">
                 去题库练一练
@@ -149,6 +116,34 @@ export default function Records() {
             </div>
           )}
         </section>
+        <details className="panel records-panel lesson-records">
+          <summary>
+            <Icon name="BookOpen" />
+            已完成的课节
+          </summary>
+          {progress.completed.length ? (
+            book.catalog
+              .flatMap((n) => n.lessons)
+              .filter((l) => progress.completed.includes(l.id))
+              .map((l) => (
+                <Link className="record-row" key={l.id} to={`/books/${book.id}/lessons/${l.id}`}>
+                  <Icon name="CheckCircle2" />
+                  <span>{l.title}</span>
+                  <Icon name="ChevronRight" size={16} />
+                </Link>
+              ))
+          ) : (
+            <div className="empty-state compact">
+              <Icon name="Flag" size={32} />
+              <h3>暂无已完成课节</h3>
+              <p>完成课节后将在这里显示。</p>
+              <Link className="button primary" to={`/books/${book.id}/lessons/U01-L01`}>
+                开始学习
+                <Icon name="ArrowRight" size={17} />
+              </Link>
+            </div>
+          )}
+        </details>
       </div>
       <section className="panel records-panel answer-history">
         <h2>
@@ -177,9 +172,13 @@ export default function Records() {
                         ? '旧版记录，未保存原始答案'
                         : q?.options
                           ? (q.options[Number(a.answers.value)] ?? a.answers.value)
-                          : (q?.fields
-                              .map((f) => `${f.label}：${a.answers[f.key] ?? '—'}${f.suffix ?? ''}`)
-                              .join('，') ?? Object.values(a.answers).join('，'))}
+                          : q?.construction
+                            ? `方格作图：选中${[...(a.answers.cells ?? '')].filter((c) => c === '1').length}格`
+                            : (q?.fields
+                                .map(
+                                  (f) => `${f.label}：${a.answers[f.key] ?? '—'}${f.suffix ?? ''}`,
+                                )
+                                .join('，') ?? Object.values(a.answers).join('，'))}
                     </p>
                     <small>
                       {new Date(a.date).toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })} ·{' '}
@@ -197,7 +196,7 @@ export default function Records() {
         ) : (
           <div className="empty-state compact">
             <h3>还没有作答记录</h3>
-            <p>在课节或题库中提交答案后，就会记录每一次尝试。</p>
+            <p>提交答案后显示记录。</p>
           </div>
         )}
       </section>

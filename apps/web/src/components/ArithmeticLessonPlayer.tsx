@@ -1,3 +1,4 @@
+import StepControls from './StepControls';
 import { useEffect, useId, useState } from 'react';
 import type { ArithmeticDemo } from '@mathstudy/contracts';
 import {
@@ -120,7 +121,6 @@ export default function ArithmeticLessonPlayer({
     <section className="panel arithmetic-player" aria-label="混合运算交互演示">
       <div className="arithmetic-heading">
         <div>
-          <span className="eyebrow">混合运算实验室</span>
           <h2>{scene.title}</h2>
         </div>
         <span className="source-label">{scene.source}</span>
@@ -294,80 +294,25 @@ export default function ArithmeticLessonPlayer({
           </details>
         )}
       </div>
-      <div className="arithmetic-controls">
-        <div className="arithmetic-actions">
-          <button
-            className="button"
-            disabled={step === 0 || staticMode}
-            onClick={() => {
-              setStep(step - 1);
-              setPlaying(false);
-              setFeedback('');
-            }}
-          >
-            上一步
-          </button>
-          <button className="button primary" disabled={staticMode} onClick={play}>
-            {playing ? '暂停' : step === last ? '重新播放' : '播放演示'}
-          </button>
-          <button
-            className="button"
-            disabled={step === last || staticMode}
-            onClick={() => {
-              setStep(step + 1);
-              setPlaying(false);
-              setFeedback('');
-            }}
-          >
-            下一步
-          </button>
-          <button className="button" onClick={() => reset()}>
-            重置
-          </button>
-        </div>
-        <label htmlFor={`${id}-speed`}>
-          播放速度
-          <select
-            id={`${id}-speed`}
-            value={speed}
-            onChange={(event) => setSpeed(Number(event.target.value))}
-          >
-            <option value={0.5}>0.5倍</option>
-            <option value={1}>1倍</option>
-            <option value={1.5}>1.5倍</option>
-          </select>
-        </label>
-        <label className="arithmetic-timeline" htmlFor={`${id}-step`}>
-          演示步骤{' '}
-          <span>
-            {step + 1} / {last + 1}
-          </span>
-          <input
-            id={`${id}-step`}
-            aria-label="演示步骤"
-            type="range"
-            min={0}
-            max={last}
-            value={step}
-            disabled={staticMode}
-            onChange={(event) => {
-              setStep(Number(event.target.value));
-              setPlaying(false);
-              setFeedback('');
-            }}
-          />
-        </label>
-        <button
-          className="button"
-          aria-pressed={staticMode}
-          onClick={() => {
-            setStaticMode(!staticMode);
-            setPlaying(false);
-          }}
-        >
-          静态步骤{staticMode ? '：已展开' : ''}
-        </button>
-      </div>
+      <StepControls
+        step={step}
+        last={last}
+        onStep={(next) => {
+          setStep(next);
+          setPlaying(false);
+          setFeedback('');
+        }}
+        playing={playing}
+        onPlay={play}
+        speed={speed}
+        onSpeed={setSpeed}
+        onReset={() => reset()}
+        staticMode={staticMode}
+        onStatic={() => {
+          setStaticMode(!staticMode);
+          setPlaying(false);
+        }}
+      />
       {staticMode && (
         <div className="arithmetic-static">
           <h3>逐步阅读</h3>

@@ -102,6 +102,7 @@ it('pauses playback and provides full static steps for reduced motion', () => {
       onExplored={done}
     />,
   );
+  fireEvent.click(screen.getByRole('button', { name: '演示设置' }));
   fireEvent.click(screen.getByRole('button', { name: '播放演示' }));
   act(() => vi.advanceTimersByTime(2200));
   expect(screen.getByRole('slider').getAttribute('value')).toBe('1');

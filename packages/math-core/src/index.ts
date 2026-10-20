@@ -130,3 +130,61 @@ export function cornerCutMetrics(
 export * from './quantities';
 export * from './expressions';
 export * from './large-numbers';
+
+/** Grid answers encode a board as at most 80 zero/one characters. */
+export function gradeAnswers(
+  question: {
+    expected: Record<string, string>;
+    construction?: {
+      columns: number;
+      rows: number;
+      area: number;
+      perimeter?: number;
+      rectangle: boolean;
+      given?: number[];
+    };
+  },
+  answers: Record<string, string>,
+) {
+  const task = question.construction;
+  if (!task)
+    return Object.keys(question.expected).every((key) =>
+      sameAnswer(answers[key] ?? '', question.expected[key]),
+    );
+  const code = answers.cells ?? '',
+    size = task.columns * task.rows;
+  if (size > 80 || !/^[01]+$/.test(code) || code.length !== size) return false;
+  const cells = new Set([...code].flatMap((c, i) => (c === '1' ? [i] : [])));
+  if (cells.size !== task.area || task.given?.some((i) => !cells.has(i))) return false;
+  const neighbors = (i: number) =>
+    [
+      i % task.columns > 0 ? i - 1 : -1,
+      i % task.columns < task.columns - 1 ? i + 1 : -1,
+      i - task.columns,
+      i + task.columns,
+    ].filter((n) => n >= 0 && n < size);
+  const seen = new Set<number>(),
+    queue = [...cells].slice(0, 1);
+  while (queue.length) {
+    const i = queue.pop()!;
+    if (seen.has(i)) continue;
+    seen.add(i);
+    for (const n of neighbors(i)) if (cells.has(n) && !seen.has(n)) queue.push(n);
+  }
+  if (seen.size !== cells.size) return false;
+  const perimeter = [...cells].reduce(
+    (total, i) => total + 4 - neighbors(i).filter((n) => cells.has(n)).length,
+    0,
+  );
+  if (task.perimeter !== undefined && perimeter !== task.perimeter) return false;
+  if (task.rectangle) {
+    const xs = [...cells].map((i) => i % task.columns),
+      ys = [...cells].map((i) => Math.floor(i / task.columns));
+    if (
+      (Math.max(...xs) - Math.min(...xs) + 1) * (Math.max(...ys) - Math.min(...ys) + 1) !==
+      cells.size
+    )
+      return false;
+  }
+  return true;
+}

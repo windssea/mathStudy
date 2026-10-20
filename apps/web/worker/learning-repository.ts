@@ -3,7 +3,7 @@ import {
   type AcceptedLearningEvent,
   type LearningEvent,
 } from '@mathstudy/contracts';
-import { sameAnswer } from '@mathstudy/math-core';
+import { gradeAnswers } from '@mathstudy/math-core';
 import type { ContentDatabase, CourseContent, D1Statement } from './content-repository';
 
 interface LearningStatement extends D1Statement {
@@ -28,9 +28,7 @@ export function acceptLearningEvent(
         q.fields.some((f) => !event.answers[f.key]?.trim())
       )
         throw new Error('INVALID_ANSWER');
-      const correct = Object.keys(q.expected).every((key) =>
-        sameAnswer(event.answers[key], q.expected[key]),
-      );
+      const correct = gradeAnswers(q, event.answers);
       return { ...event, correct, verified: true };
     }
   }

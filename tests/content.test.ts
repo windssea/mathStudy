@@ -40,8 +40,8 @@ describe('textbook-driven content', () => {
     }
   });
   it('covers all six units, every difficulty, fill-ins and applications', () => {
-    expect(questions).toHaveLength(78);
-    expect(new Set(questions.map((q) => q.id)).size).toBe(78);
+    expect(questions).toHaveLength(232);
+    expect(new Set(questions.map((q) => q.id)).size).toBe(232);
     for (const unit of textbook.catalog.filter((n) => n.kind === 'unit')) {
       const group = questions.filter((q) => q.unitId === unit.id);
       expect(group.length).toBeGreaterThanOrEqual(9);
@@ -54,7 +54,7 @@ describe('textbook-driven content', () => {
     for (const q of questions) {
       expect(q.explanation.analysis.length).toBeGreaterThan(5);
       expect(q.explanation.steps.length).toBeGreaterThan(0);
-      expect(q.sourceKind).toBe('original');
+      expect(['original', 'collected', 'adapted']).toContain(q.sourceKind);
       expect(Object.keys(q.expected).sort()).toEqual(q.fields.map((f) => f.key).sort());
       if (q.difficulty === 'challenge') {
         expect(q.hasVisual).toBe(true);

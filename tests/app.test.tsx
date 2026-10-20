@@ -13,6 +13,26 @@ afterEach(() => {
   vi.unstubAllGlobals();
   vi.restoreAllMocks();
 });
+it('keeps a new reasoning exercise focused until its explanation is requested', async () => {
+  window.history.replaceState({}, '', '/questions/u1-17');
+  vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
+  vi.stubGlobal('fetch', (input: string, init?: RequestInit) =>
+    app.request(new URL(input, 'http://localhost').href, init),
+  );
+  render(<App />);
+  await screen.findByRole('heading', { name: '除数看错了，怎样还原', level: 1 });
+  expect(screen.queryByRole('img')).toBeNull();
+  fireEvent.change(screen.getByLabelText('你的答案'), { target: { value: '1' } });
+  fireEvent.click(screen.getByRole('button', { name: '核对答案' }));
+  await screen.findByText('答对了。');
+  expect(screen.queryByRole('img')).toBeNull();
+  fireEvent.click(screen.getByRole('button', { name: '展开解析' }));
+  expect(screen.getByRole('img').getAttribute('aria-label')).toContain('737');
+  fireEvent.click(screen.getByRole('button', { name: '下一步' }));
+  expect(screen.getByRole('img').textContent).toContain('46×16＝736');
+  fireEvent.click(screen.getByRole('button', { name: '收起解析' }));
+  expect(screen.queryByRole('img')).toBeNull();
+}, 15000);
 it('connects fifth-unit reading exploration, fill-in/choice grading and completion', async () => {
   window.history.replaceState({}, '', '/books/sj-math-g4-upper-2026-v1/lessons/U05-L02');
   vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
@@ -21,7 +41,7 @@ it('connects fifth-unit reading exploration, fill-in/choice grading and completi
   );
   render(<App />);
   await screen.findByRole('heading', { name: '万级数的读写与比较' });
-  expect(screen.getByRole('heading', { name: '第五单元的探索路线' })).toBeTruthy();
+  expect(screen.getByRole('combobox', { name: '本单元课节' })).toBeTruthy();
   fireEvent.change(screen.getByRole('slider', { name: '演示步骤' }), {
     target: { value: screen.getByRole('slider').getAttribute('max') },
   });
@@ -33,9 +53,7 @@ it('connects fifth-unit reading exploration, fill-in/choice grading and completi
   fireEvent.submit(articles[1].querySelector('form')!);
   fireEvent.change(articles[2].querySelector('input')!, { target: { value: '20022000' } });
   fireEvent.submit(articles[2].querySelector('form')!);
-  await waitFor(() =>
-    expect(screen.getAllByText('答对了！再看看思路，理解为什么。')).toHaveLength(3),
-  );
+  await waitFor(() => expect(screen.getAllByText('答对了。')).toHaveLength(3));
   fireEvent.click(screen.getByRole('button', { name: '完成本课' }));
   expect(screen.getByRole('link', { name: '继续下一课' }).getAttribute('href')).toContain(
     'U05-L03',
@@ -49,7 +67,7 @@ it('connects fourth-unit bracket exploration, grading and completion to the shar
   );
   render(<App />);
   await screen.findByRole('heading', { name: '小括号与中括号' });
-  expect(screen.getByRole('heading', { name: '第四单元的探索路线' })).toBeTruthy();
+  expect(screen.getByRole('combobox', { name: '本单元课节' })).toBeTruthy();
   fireEvent.change(screen.getByRole('slider', { name: /演示步骤/ }), { target: { value: '3' } });
   fireEvent.click(screen.getByRole('tab', { name: /自己试一试/ }));
   const articles = screen.getAllByRole('article');
@@ -57,9 +75,7 @@ it('connects fourth-unit bracket exploration, grading and completion to the shar
     fireEvent.change(articles[index].querySelector('input')!, { target: { value } });
     fireEvent.submit(articles[index].querySelector('form')!);
   }
-  await waitFor(() =>
-    expect(screen.getAllByText('答对了！再看看思路，理解为什么。')).toHaveLength(3),
-  );
+  await waitFor(() => expect(screen.getAllByText('答对了。')).toHaveLength(3));
   fireEvent.click(screen.getByRole('button', { name: '完成本课' }));
   expect(screen.getByRole('link', { name: '继续下一课' }).getAttribute('href')).toContain(
     'U04-L03',
@@ -73,7 +89,7 @@ it('connects third-unit exploration, existing exercises and course completion', 
   );
   render(<App />);
   await screen.findByRole('heading', { name: '速度、时间与路程' });
-  expect(screen.getByRole('heading', { name: '第三单元的探索路线' })).toBeTruthy();
+  expect(screen.getByRole('combobox', { name: '本单元课节' })).toBeTruthy();
   fireEvent.click(screen.getByRole('button', { name: '查看静态步骤' }));
   fireEvent.click(screen.getByRole('tab', { name: /自己试一试/ }));
   const articles = screen.getAllByRole('article');
@@ -83,9 +99,7 @@ it('connects third-unit exploration, existing exercises and course completion', 
   fireEvent.submit(articles[1].querySelector('form')!);
   fireEvent.change(articles[2].querySelector('input')!, { target: { value: '180' } });
   fireEvent.submit(articles[2].querySelector('form')!);
-  await waitFor(() =>
-    expect(screen.getAllByText('答对了！再看看思路，理解为什么。')).toHaveLength(3),
-  );
+  await waitFor(() => expect(screen.getAllByText('答对了。')).toHaveLength(3));
   fireEvent.click(screen.getByRole('button', { name: '完成本课' }));
   expect(screen.getByRole('link', { name: '继续下一课' }).getAttribute('href')).toContain(
     'U03-L04',
@@ -98,7 +112,7 @@ it('connects the homepage, catalog, first lesson, and visual question explanatio
     app.request(new URL(input, 'http://localhost').href, init),
   );
   render(<App />);
-  await screen.findByRole('heading', { name: '今天，一起探索数学吧' });
+  await screen.findByRole('heading', { name: '数学练习' });
   fireEvent.click(screen.getByRole('link', { name: '课程目录' }));
   await screen.findByRole('heading', { name: '课程目录' });
   fireEvent.click(screen.getByRole('link', { name: /1 整十数除法与分组意义/ }));
@@ -112,15 +126,15 @@ it('connects the homepage, catalog, first lesson, and visual question explanatio
     target: { value: '0' },
   });
   fireEvent.submit(first.querySelector('form')!);
-  await screen.findByText('答对了！再看看思路，理解为什么。');
-  fireEvent.click(screen.getByRole('link', { name: /分层题库/ }));
-  await screen.findByRole('heading', { name: '分层题库' });
+  await screen.findByText('答对了。');
+  fireEvent.click(screen.getByRole('link', { name: /全部题目/ }));
+  await screen.findByRole('heading', { name: '全部题目' });
   fireEvent.change(screen.getByRole('combobox', { name: '难度' }), {
     target: { value: 'challenge' },
   });
-  await waitFor(() => expect(document.querySelectorAll('a.question-card').length).toBe(14));
+  await waitFor(() => expect(document.querySelectorAll('a.question-card').length).toBe(12));
   fireEvent.click(screen.getByRole('link', { name: /剪去一角，面积怎么变/ }));
-  fireEvent.click(await screen.findByRole('button', { name: '我想先看讲解' }));
+  fireEvent.click(await screen.findByRole('button', { name: '解析' }));
   await screen.findByRole('img', { name: /完整面积减去剪去的部分/ });
   fireEvent.click(screen.getByRole('button', { name: '下一步' }));
   fireEvent.click(screen.getByRole('button', { name: '下一步' }));
@@ -136,7 +150,7 @@ it('connects unit two exploration, bank grading, and the activity through the sh
   render(<App />);
   await screen.findByRole('heading', { name: '长方形与正方形面积' });
   expect(screen.getByText('第二单元 · 第 5 课')).toBeTruthy();
-  expect(screen.getByRole('heading', { name: '第二单元的探索路线' })).toBeTruthy();
+  expect(screen.getByRole('combobox', { name: '本单元课节' })).toBeTruthy();
   fireEvent.click(screen.getByRole('button', { name: '铺一排' }));
   expect(screen.getByRole('img').getAttribute('aria-label')).toContain('已铺8格');
   fireEvent.click(screen.getByRole('button', { name: '铺满方格' }));
@@ -148,18 +162,19 @@ it('connects unit two exploration, bank grading, and the activity through the sh
     fireEvent.change(articles[i].querySelector('input')!, { target: { value } });
     fireEvent.submit(articles[i].querySelector('form')!);
   }
-  await waitFor(() =>
-    expect(screen.getAllByText('答对了！再看看思路，理解为什么。')).toHaveLength(3),
-  );
+  await waitFor(() => expect(screen.getAllByText('答对了。')).toHaveLength(3));
   fireEvent.click(screen.getByRole('button', { name: '完成本课' }));
   expect(screen.getByRole('link', { name: '继续下一课' }).getAttribute('href')).toContain(
     'U02-L06',
   );
   fireEvent.click(screen.getByRole('link', { name: '进入本单元题库' }));
-  await screen.findByRole('heading', { name: '分层题库' });
-  await waitFor(() => expect(document.querySelectorAll('a.question-card')).toHaveLength(18));
-  fireEvent.click(screen.getByRole('link', { name: /同面积的最短周长/ }));
-  fireEvent.click(await screen.findByRole('button', { name: '我想先看讲解' }));
+  await screen.findByRole('heading', { name: '全部题目' });
+  await waitFor(() => expect(document.querySelectorAll('a.question-card')).toHaveLength(12));
+  fireEvent.change(screen.getByRole('combobox', { name: '难度' }), {
+    target: { value: 'challenge' },
+  });
+  fireEvent.click(await screen.findByRole('link', { name: /同面积的最短周长/ }));
+  fireEvent.click(await screen.findByRole('button', { name: '解析' }));
   const image = await screen.findByRole('img', { name: /36个单位方格/ });
   fireEvent.click(screen.getByRole('button', { name: '下一步' }));
   fireEvent.click(screen.getByRole('button', { name: '下一步' }));

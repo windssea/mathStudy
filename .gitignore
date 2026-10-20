@@ -10,3 +10,5 @@ playwright-report/
 *.tsbuildinfo
 pnpm-debug.log*
 /doc/*.pdf
+
+/doc/题目四年级1-2单元/

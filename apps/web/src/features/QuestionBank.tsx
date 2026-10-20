@@ -11,7 +11,7 @@ import QuestionRunner from '../components/QuestionRunner';
 export default function QuestionBank() {
   const { questionId } = useParams();
   const [params, setParams] = useSearchParams();
-  const { textbook: book, questionCount } = useCourse();
+  const { textbook: book } = useCourse();
   const [search, setSearch] = useState(params.get('search') ?? '');
   const progress = useProgress();
   const unit = params.get('unit') ?? '',
@@ -29,11 +29,14 @@ export default function QuestionBank() {
   function filter(key: string, value: string) {
     setParams((previous) => {
       const next = new URLSearchParams(previous);
+      next.delete('page');
       if (value) next.set(key, value);
       else next.delete(key);
       return next;
     });
   }
+  const pageCount = Math.max(1, Math.ceil((remote.data?.total ?? 0) / 12));
+  const page = Math.min(pageCount, Math.max(1, Math.trunc(Number(params.get('page'))) || 1));
   if (questionId) {
     if (remote.loading) return <Loading />;
     if (!question || remote.error) return <ErrorState message={remote.error ?? '没有找到这道题'} />;
@@ -44,15 +47,9 @@ export default function QuestionBank() {
           <Icon name="ArrowLeft" size={16} />
           返回本单元题库
         </Link>
-        <div className="page-heading">
-          <div>
-            <div className="eyebrow">{unitNode?.title} · 原创练习</div>
-            <h1>把问题，一步步想明白</h1>
-            <p>先独立尝试，再看看分析。挑战题可以动手切换图解步骤。</p>
-          </div>
-        </div>
+        <p className="question-unit-label">{unitNode?.title}</p>
         <div className="question-detail panel">
-          <QuestionRunner key={question.id} question={question} />
+          <QuestionRunner key={question.id} question={question} standalone />
         </div>
       </>
     );
@@ -61,14 +58,8 @@ export default function QuestionBank() {
     <>
       <div className="page-heading">
         <div>
-          <div className="eyebrow">练习，是另一种发现</div>
-          <h1>分层题库</h1>
-          <p>{questionCount} 道原创题，覆盖本册六个单元。每题都有分析，挑战题配分步图解。</p>
+          <h1>全部题目</h1>
         </div>
-        <span className="term-tag">
-          <Icon name="Shapes" size={17} />
-          难题也能看得懂
-        </span>
       </div>
       <section className="bank-filters panel">
         <div className="unit-filter" role="group" aria-label="按单元筛选">
@@ -137,10 +128,6 @@ export default function QuestionBank() {
         <span>
           共 <b>{remote.data?.total ?? '…'}</b> 道题
         </span>
-        <span>
-          <Icon name="Lightbulb" size={16} />
-          基础打底，进阶巩固，挑战拓展
-        </span>
       </div>
       {remote.loading ? (
         <Loading />
@@ -149,7 +136,7 @@ export default function QuestionBank() {
       ) : (
         <>
           <div className="question-grid">
-            {remote.data?.items.map((q) => (
+            {remote.data?.items.slice((page - 1) * 12, page * 12).map((q) => (
               <Link className="question-card panel" to={`/questions/${q.id}`} key={q.id}>
                 <div className="question-meta">
                   <span className={`chip difficulty-${q.difficulty}`}>
@@ -190,6 +177,39 @@ export default function QuestionBank() {
               </Link>
             ))}
           </div>
+          {pageCount > 1 && (
+            <nav className="bank-pagination" aria-label="题库分页">
+              <button
+                className="button secondary"
+                disabled={page <= 1}
+                onClick={() =>
+                  setParams((p) => {
+                    const n = new URLSearchParams(p);
+                    n.set('page', String(page - 1));
+                    return n;
+                  })
+                }
+              >
+                上一页
+              </button>
+              <span>
+                第 {page} / {pageCount} 页 · 每页12题
+              </span>
+              <button
+                className="button secondary"
+                disabled={page >= pageCount}
+                onClick={() =>
+                  setParams((p) => {
+                    const n = new URLSearchParams(p);
+                    n.set('page', String(page + 1));
+                    return n;
+                  })
+                }
+              >
+                下一页
+              </button>
+            </nav>
+          )}
           {remote.data?.total === 0 && (
             <div className="empty-state">
               <Icon name="Search" size={32} />

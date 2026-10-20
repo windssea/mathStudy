@@ -9,25 +9,34 @@ import {
   currentLearningOwner,
   currentAccountHeaders,
   useAccount,
-  progressMessage,
 } from '../lib/progress';
 import { Icon } from './ui';
 import VisualExplanation from './VisualExplanation';
+import { GridEditor, GridFigureView, initialDrawing } from './GridExercise';
 
 export default function QuestionRunner({
   question: q,
   onAttempt,
+  standalone = false,
+  onResult,
+  headingLevel,
 }: {
   question: QuestionPublic;
+  standalone?: boolean;
+  headingLevel?: 2 | 3;
+  onResult?: (result: 'correct' | 'incorrect' | 'revealed', assisted: boolean) => void;
   onAttempt?: (id: string) => void;
 }) {
-  const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [answers, setAnswers] = useState<Record<string, string>>(
+    (): Record<string, string> => (q.construction ? { cells: initialDrawing(q.construction) } : {}),
+  );
   const [hint, setHint] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [grade, setGrade] = useState<Grade>();
   const [explanation, setExplanation] = useState<Explanation>();
   const [revealed, setRevealed] = useState(false);
+  const [details, setDetails] = useState(false);
   const [usedHint, setUsedHint] = useState(false);
   useAccount();
   async function submit(event: React.FormEvent) {
@@ -56,6 +65,7 @@ export default function QuestionRunner({
       setExplanation(g.explanation);
       recordAnswer(q.id, g.correct, eventData.assisted, eventData, owner);
       onAttempt?.(q.id);
+      onResult?.(g.correct ? 'correct' : 'incorrect', eventData.assisted);
     } catch (e) {
       setError((e as Error).message);
     } finally {
@@ -70,14 +80,17 @@ export default function QuestionRunner({
       const e = await request<Explanation>(`/questions/${q.id}/explanation`, { method: 'POST' });
       setExplanation(e);
       setRevealed(true);
+      setDetails(true);
       recordAssistance(q.id, owner);
       onAttempt?.(q.id);
+      onResult?.('revealed', true);
     } catch (e) {
       setError((e as Error).message);
     } finally {
       setBusy(false);
     }
   }
+  const Heading = standalone ? 'h1' : headingLevel === 2 ? 'h2' : 'h3';
   return (
     <article className="question-runner">
       <div className="question-meta">
@@ -89,12 +102,21 @@ export default function QuestionRunner({
             分步图解
           </span>
         )}
-        <span className="original-tag">原创练习</span>
       </div>
-      <h3>{q.title}</h3>
+      <Heading>{q.title}</Heading>
       <p className="question-stem">{q.stem}</p>
+      {q.figure && <GridFigureView figure={q.figure} />}
       <form onSubmit={submit}>
-        {q.options ? (
+        {q.construction ? (
+          <GridEditor
+            task={q.construction}
+            value={answers.cells ?? initialDrawing(q.construction)}
+            onChange={(cells) => {
+              setAnswers({ cells });
+              setGrade(undefined);
+            }}
+          />
+        ) : q.options ? (
           <fieldset className="answer-options">
             <legend className="sr-only">选择答案</legend>
             {q.options.map((option, i) => (
@@ -110,7 +132,7 @@ export default function QuestionRunner({
                     setGrade(undefined);
                   }}
                 />
-                <span>{String.fromCharCode(65 + i)}</span>
+                {q.type !== 'judgement' && <span>{String.fromCharCode(65 + i)}</span>}
                 {option}
               </label>
             ))}
@@ -159,7 +181,7 @@ export default function QuestionRunner({
             }}
           >
             <Icon name="Lightbulb" size={17} />
-            {hint ? '收起提示' : '给我一个提示'}
+            {hint ? '收起提示' : '提示'}
           </button>
           {!explanation && (
             <button
@@ -168,7 +190,7 @@ export default function QuestionRunner({
               disabled={busy}
               onClick={reveal}
             >
-              我想先看讲解
+              解析
             </button>
           )}
         </div>
@@ -192,51 +214,74 @@ export default function QuestionRunner({
       )}
       {explanation && (
         <section className="answer-explanation">
-          <button
-            className="button secondary"
-            onClick={() => {
-              setAnswers({});
-              setHint(false);
-              setUsedHint(false);
-              setGrade(undefined);
-              setExplanation(undefined);
-              setRevealed(false);
-              setError('');
-            }}
-          >
-            重新独立作答
-            <Icon name="RotateCcw" size={17} />
-          </button>
-          <h4>
-            <Icon name="Search" size={18} />
-            思路分析
-          </h4>
-          <p>{explanation.analysis}</p>
-          <h4>
-            <Icon name="ListChecks" size={18} />
-            一步一步解
-          </h4>
-          <ol>
-            {explanation.steps.map((s, i) => (
-              <li key={i}>{s}</li>
-            ))}
-          </ol>
-          <div className="answer-result">
-            <span>参考答案</span>
-            <strong>{explanation.answer}</strong>
+          <div className="explanation-summary">
+            <p>{explanation.analysis}</p>
+            <button
+              className="button secondary"
+              aria-expanded={details}
+              onClick={() => setDetails(!details)}
+            >
+              {details ? '收起解析' : '展开解析'}
+            </button>
           </div>
-          {explanation.visual && <VisualExplanation visual={explanation.visual} />}
-          <div className="pitfall">
-            <Icon name="Flag" size={17} />
-            <p>
-              <b>别掉进这个小陷阱：</b>
-              {explanation.pitfall}
-            </p>
-          </div>
-          <p className="save-note">
-            {progressMessage()}
-            {(revealed || usedHint) && ' 使用提示或查看讲解后，不计作首次独立做对。'}
-          </p>
+          {details && (
+            <div className="explanation-details">
+              <button
+                className="button secondary"
+                onClick={() => {
+                  setAnswers(q.construction ? { cells: initialDrawing(q.construction) } : {});
+                  setHint(false);
+                  setUsedHint(false);
+                  setGrade(undefined);
+                  setExplanation(undefined);
+                  setRevealed(false);
+                  setError('');
+                  setDetails(false);
+                }}
+              >
+                重做
+                <Icon name="RotateCcw" size={17} />
+              </button>
+              {explanation.visual ? (
+                <>
+                  <VisualExplanation
+                    visual={explanation.visual}
+                    hideTitle={explanation.visual.title === q.title}
+                  />
+                  <details className="text-solution">
+                    <summary>文字解答</summary>
+                    <ol>
+                      {explanation.steps.map((s, i) => (
+                        <li key={i}>{s}</li>
+                      ))}
+                    </ol>
+                  </details>
+                </>
+              ) : (
+                <>
+                  <h4>解答</h4>
+                  <ol>
+                    {explanation.steps.map((s, i) => (
+                      <li key={i}>{s}</li>
+                    ))}
+                  </ol>
+                </>
+              )}
+              <div className="answer-result">
+                <span>答案</span>
+                <strong>{explanation.answer}</strong>
+              </div>
+              {explanation.pitfall && (
+                <div className="pitfall">
+                  <Icon name="Flag" size={17} />
+                  <p>
+                    <b>易错点：</b>
+                    {explanation.pitfall}
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
         </section>
       )}
     </article>

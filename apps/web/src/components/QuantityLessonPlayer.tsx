@@ -1,3 +1,4 @@
+import StepControls from './StepControls';
 import { useEffect, useId, useState } from 'react';
 import type { QuantityDemo } from '@mathstudy/contracts';
 import {
@@ -405,72 +406,26 @@ export default function QuantityLessonPlayer({
               <p>{current.text}</p>
             </div>
           </div>
-          <div className="quantity-playback">
-            <button className="icon-button" aria-label="重新演示" onClick={reset}>
-              <Icon name="RotateCcw" size={18} />
-            </button>
-            <button
-              className="icon-button"
-              aria-label="上一步"
-              disabled={step === 0}
-              onClick={() => {
-                setStep((s) => s - 1);
-                setPlaying(false);
-              }}
-            >
-              <Icon name="ArrowLeft" size={18} />
-            </button>
-            <button
-              className="play-button"
-              aria-label={playing ? '暂停演示' : '播放演示'}
-              onClick={() => {
-                if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
-                  setStaticMode(true);
-                  return;
-                }
-                if (step === frames.length - 1) setStep(0);
-                setPlaying(!playing);
-              }}
-            >
-              <Icon name={playing ? 'Pause' : 'Play'} size={18} />
-            </button>
-            <button
-              className="icon-button"
-              aria-label="下一步"
-              disabled={step === frames.length - 1}
-              onClick={() => {
-                setStep((s) => s + 1);
-                setPlaying(false);
-              }}
-            >
-              <Icon name="StepForward" size={18} />
-            </button>
-            <label className="quantity-timeline">
-              演示步骤
-              <input
-                type="range"
-                aria-label="演示步骤"
-                min={0}
-                max={frames.length - 1}
-                value={step}
-                onChange={(e) => {
-                  setStep(Number(e.target.value));
-                  setPlaying(false);
-                }}
-              />
-              <span>
-                {step + 1} / {frames.length} 步
-              </span>
-            </label>
-            <label className="quantity-speed">
-              播放速度
-              <select value={speed} onChange={(e) => setSpeed(Number(e.target.value))}>
-                <option value={0.75}>0.75倍速</option>
-                <option value={1}>1倍速</option>
-                <option value={1.5}>1.5倍速</option>
-              </select>
-            </label>
-          </div>
+          <StepControls
+            step={step}
+            last={frames.length - 1}
+            onStep={(next) => {
+              setPlaying(false);
+              setStep(next);
+            }}
+            playing={playing}
+            onPlay={() => {
+              if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+                setStaticMode(true);
+                return;
+              }
+              if (step === frames.length - 1) setStep(0);
+              setPlaying(!playing);
+            }}
+            speed={speed}
+            onSpeed={setSpeed}
+            onReset={reset}
+          />
         </>
       )}
       <p className="quantity-footnote">

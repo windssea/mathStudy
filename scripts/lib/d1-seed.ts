@@ -1,13 +1,14 @@
 import { createHash } from 'node:crypto';
-import { textbook, lessons, questions, siteSettings } from '@mathstudy/content';
+import { textbook, lessons, questions, siteSettings, practice } from '@mathstudy/content';
 
 const literal = (value: unknown) => `'${String(value).replaceAll("'", "''")}'`;
 export function buildContentSeed() {
   const sourceHash = createHash('sha256')
-    .update(JSON.stringify({ textbook, lessons, questions, siteSettings }))
+    .update(JSON.stringify({ textbook, lessons, questions, siteSettings, practice }))
     .digest('hex');
   const manifest = {
     textbook,
+    practice,
     siteSettings,
     lessonCount: lessons.length,
     questionCount: questions.length,

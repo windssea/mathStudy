@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { buildContentSeed } from './lib/d1-seed';
+import { questions, practice } from '@mathstudy/content';
 import { editionId, releaseId } from '@mathstudy/contracts';
 
 const originIndex = process.argv.indexOf('--origin');
@@ -38,7 +39,7 @@ assert.equal(privateRecords.status, 401);
 await privateRecords.arrayBuffer();
 const home = await api('/home');
 assert.equal(home.availableLessons, 27);
-assert.equal(home.questionCount, 78);
+assert.equal(home.questionCount, questions.length);
 const lesson = await api(`/textbooks/${editionId}/lessons/U02-L05`);
 assert.equal((lesson.lesson as { id: string }).id, 'U02-L05');
 assert.equal((lesson.questions as unknown[]).length, 3);
@@ -50,14 +51,14 @@ for (const id of ['U03-L01', 'U03-L02', 'U03-L03', 'U03-L04']) {
   assert.ok(!JSON.stringify(third).includes('"expected"'));
 }
 const thirdBank = await api('/questions?unit=U03');
-assert.equal(thirdBank.total, 9);
+assert.equal(thirdBank.total, 12);
 for (const id of ['U04-L01', 'U04-L02', 'U04-L03']) {
   const fourth = await api(`/textbooks/${editionId}/lessons/${id}`);
   assert.equal((fourth.lesson as { id: string }).id, id);
   assert.equal((fourth.questions as unknown[]).length, 3);
   assert.ok(!JSON.stringify(fourth).includes('"expected"'));
 }
-assert.equal((await api('/questions?unit=U04')).total, 9);
+assert.equal((await api('/questions?unit=U04')).total, 12);
 for (const [questionId, value] of [
   ['u4-03', '7'],
   ['u4-07', '6'],
@@ -82,7 +83,7 @@ for (let index = 1; index <= 7; index++) {
   assert.equal((fifth.questions as unknown[]).length, 3);
   assert.ok(!JSON.stringify(fifth).includes('"expected"'));
 }
-assert.equal((await api('/questions?unit=U05')).total, 18);
+assert.equal((await api('/questions?unit=U05')).total, 21);
 for (const [questionId, value] of [
   ['u5-07', '355000'],
   ['u5-08', '364999'],
@@ -109,13 +110,31 @@ const registration = await fetch(new URL('/api/auth/sign-up/email', origin), {
 assert.equal(registration.status, 403);
 await registration.arrayBuffer();
 const bank = await api('/questions?unit=U02');
-assert.equal(bank.total, 18);
+assert.equal(bank.total, 67);
 const grade = await api('/questions/u2-08/check', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json', Origin: origin.origin },
   body: JSON.stringify({ answers: { value: '132' } }),
 });
 assert.equal(grade.correct, true);
+const catalog = await api('/practice');
+assert.equal((catalog.papers as unknown[]).length, 18);
+assert.equal((catalog.topics as unknown[]).length, 20);
+for (const id of ['P01', 'P07', 'P18']) {
+  const pack = await api(`/practice/papers/${id}`);
+  assert.equal(
+    (pack.items as unknown[]).length,
+    practice.papers.find((p) => p.id === id)!.questionIds.length,
+  );
+  assert.ok(!JSON.stringify(pack).includes('"expected"'));
+  assert.ok(!JSON.stringify(pack).includes('"explanation"'));
+}
+const pageImage = await fetch(new URL('/papers/P01/1.webp', origin), {
+  signal: AbortSignal.timeout(15000),
+});
+assert.equal(pageImage.status, 200);
+assert.match(pageImage.headers.get('content-type') ?? '', /image\/webp/);
+await pageImage.arrayBuffer();
 const deepLink = await fetch(new URL(`/books/${editionId}/lessons/U05-L05`, origin), {
   signal: AbortSignal.timeout(15000),
 });
@@ -123,5 +142,5 @@ assert.equal(deepLink.status, 200);
 assert.ok(deepLink.headers.get('content-type')?.includes('text/html'));
 assert.ok((await deepLink.text()).includes('id="root"'));
 console.log(
-  `Smoke checks passed: ${origin.origin} (D1, current content hash, units two to five, 27 lessons, 78 questions, bank grading, registration closed, SPA deep link)`,
+  `Smoke checks passed: ${origin.origin} (D1, current content hash, units two to five, 27 lessons, 232 questions, bank grading, registration closed, SPA deep link)`,
 );

@@ -85,7 +85,7 @@ export function Loading() {
   return (
     <div className="loading-state" role="status">
       <span className="loader" />
-      <p>正在翻开你的数学课本…</p>
+      <p>加载中…</p>
     </div>
   );
 }

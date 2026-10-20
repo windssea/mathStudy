@@ -175,12 +175,13 @@ describe('unit-two manipulatives', () => {
   it('plays, pauses, exposes complete static explanations, and resets without stale completion', () => {
     vi.useFakeTimers();
     const { observed } = mount('U02-L05');
+    fireEvent.click(screen.getByRole('button', { name: '演示设置' }));
     fireEvent.click(screen.getByRole('button', { name: '播放演示' }));
     act(() => {
       vi.advanceTimersByTime(2600);
     });
     expect(screen.getByRole('img').getAttribute('aria-label')).toContain('已铺8格');
-    fireEvent.click(screen.getByRole('button', { name: '暂停演示' }));
+    fireEvent.click(screen.getByRole('button', { name: '暂停' }));
     act(() => {
       vi.advanceTimersByTime(5200);
     });
@@ -189,7 +190,8 @@ describe('unit-two manipulatives', () => {
     expect(screen.getAllByRole('listitem')).toHaveLength(4);
     expect(observed).toHaveBeenLastCalledWith(true);
     fireEvent.click(screen.getByRole('button', { name: '返回动态演示' }));
-    fireEvent.click(screen.getByRole('button', { name: '重置几何演示' }));
+    fireEvent.click(screen.getByRole('button', { name: '演示设置' }));
+    fireEvent.click(screen.getByRole('button', { name: '重新演示' }));
     expect(observed).toHaveBeenLastCalledWith(false);
     expect(screen.getByRole('img').getAttribute('aria-label')).toContain('已铺0格');
   });

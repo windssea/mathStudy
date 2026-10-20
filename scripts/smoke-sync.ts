@@ -15,9 +15,22 @@ assert.ok(password, 'Set MATHSTUDY_ACCOUNT_PASSWORD in the operator environment.
 const write = process.argv.includes('--write');
 const unitIndex = process.argv.indexOf('--unit');
 const unit = unitIndex < 0 ? 'U03' : process.argv[unitIndex + 1];
-assert.ok(['U03', 'U04', 'U05'].includes(unit), 'Use --unit U03, U04 or U05.');
-const questionId = unit === 'U05' ? 'u5-07' : unit === 'U04' ? 'u4-07' : 'u3-07';
-const correctValue = unit === 'U05' ? '355000' : unit === 'U04' ? '6' : '80';
+assert.ok(
+  ['U03', 'U04', 'U05', 'practice'].includes(unit),
+  'Use --unit U03, U04, U05 or practice.',
+);
+const questionId =
+  unit === 'practice' ? 'p15-draw' : unit === 'U05' ? 'u5-07' : unit === 'U04' ? 'u4-07' : 'u3-07';
+const correctValue =
+  unit === 'practice'
+    ? Array.from({ length: 60 }, (_, i) =>
+        Math.floor(i / 10) >= 2 && Math.floor(i / 10) < 4 && i % 10 < 9 ? '1' : '0',
+      ).join('')
+    : unit === 'U05'
+      ? '355000'
+      : unit === 'U04'
+        ? '6'
+        : '80';
 const device = () => {
   const cookies = new Map<string, string>();
   let id = '';
@@ -74,11 +87,11 @@ if (write) {
     id: crypto.randomUUID(),
     kind: 'attempt',
     entityId: questionId,
-    answers: { value },
+    answers: unit === 'practice' ? { cells: value } : { value },
     assisted: false,
     occurredAt: new Date(stamp + offset).toISOString(),
   });
-  const wrong = event('0', 10),
+  const wrong = event(unit === 'practice' ? '0'.repeat(60) : '0', 10),
     right = event(correctValue, 20);
   const complete = (entityId: string): LearningEvent => ({
     id: crypto.randomUUID(),
@@ -86,12 +99,14 @@ if (write) {
     entityId,
     occurredAt: new Date(stamp).toISOString(),
   });
-  await a.sync([complete(`${unit}-L02`), wrong]);
+  await a.sync(unit === 'practice' ? [wrong] : [complete(`${unit}-L02`), wrong]);
   assert.equal((await b.sync()).snapshot.answers[questionId].needsReview, true);
-  await b.sync([complete(`${unit}-L03`), right]);
+  await b.sync(unit === 'practice' ? [right] : [complete(`${unit}-L03`), right]);
   const result = await a.sync([wrong, right]);
-  assert.ok(result.snapshot.completed.includes(`${unit}-L02`));
-  assert.ok(result.snapshot.completed.includes(`${unit}-L03`));
+  if (unit !== 'practice') {
+    assert.ok(result.snapshot.completed.includes(`${unit}-L02`));
+    assert.ok(result.snapshot.completed.includes(`${unit}-L03`));
+  }
   assert.equal(result.snapshot.answers[questionId].attemptCount, initialCount + 2);
   assert.equal(result.snapshot.answers[questionId].needsReview, false);
 }

@@ -1,0 +1,102 @@
+[
+  {
+    "id": "u1-calculation",
+    "unitId": "U01",
+    "title": "口算与笔算"
+  },
+  {
+    "id": "u1-trial",
+    "unitId": "U01",
+    "title": "试商与商的位数"
+  },
+  {
+    "id": "u1-remainder",
+    "unitId": "U01",
+    "title": "余数与验算"
+  },
+  {
+    "id": "u1-restore",
+    "unitId": "U01",
+    "title": "错题还原"
+  },
+  {
+    "id": "u1-loading",
+    "unitId": "U01",
+    "title": "装载与分配"
+  },
+  {
+    "id": "u1-intervals",
+    "unitId": "U01",
+    "title": "间隔与分段"
+  },
+  {
+    "id": "u1-changes",
+    "unitId": "U01",
+    "title": "条件变化"
+  },
+  {
+    "id": "u1-groups",
+    "unitId": "U01",
+    "title": "连除与分组"
+  },
+  {
+    "id": "u2-meaning",
+    "unitId": "U02",
+    "title": "周长与面积辨析"
+  },
+  {
+    "id": "u2-units",
+    "unitId": "U02",
+    "title": "单位与换算"
+  },
+  {
+    "id": "u2-grid",
+    "unitId": "U02",
+    "title": "方格图"
+  },
+  {
+    "id": "u2-measure",
+    "unitId": "U02",
+    "title": "周长与面积计算"
+  },
+  {
+    "id": "u2-cut",
+    "unitId": "U02",
+    "title": "拼接与分割"
+  },
+  {
+    "id": "u2-fence",
+    "unitId": "U02",
+    "title": "围栏与靠墙"
+  },
+  {
+    "id": "u2-tiling",
+    "unitId": "U02",
+    "title": "铺砖与费用"
+  },
+  {
+    "id": "u2-compare",
+    "unitId": "U02",
+    "title": "条件与方案"
+  },
+  {
+    "id": "u3-general",
+    "unitId": "U03",
+    "title": "乘法数量关系"
+  },
+  {
+    "id": "u4-general",
+    "unitId": "U04",
+    "title": "混合运算"
+  },
+  {
+    "id": "u5-general",
+    "unitId": "U05",
+    "title": "多位数"
+  },
+  {
+    "id": "u6-general",
+    "unitId": "U06",
+    "title": "大数运算"
+  }
+]

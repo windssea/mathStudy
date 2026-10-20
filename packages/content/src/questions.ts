@@ -1,5 +1,8 @@
+import { questionSchema } from '@mathstudy/contracts';
+import collectedData from '../../../content/practice/collected-questions.json';
 import type { Question, QuestionType, Difficulty, Visual } from '@mathstudy/contracts';
 import { unit2Questions, unit2VisualOverrides } from './unit2-questions';
+import { depthQuestions } from './depth-questions';
 
 type Spec = {
   id: string;
@@ -929,7 +932,12 @@ const baseQuestions: Question[] = [
     steps: ['249 × 32 = 7968（元）', '8000 − 7968 = 32（元）。'],
   }),
 ];
-export const questions: Question[] = [...baseQuestions, ...unit2Questions].map((q) =>
+export const questions: Question[] = [
+  ...baseQuestions,
+  ...unit2Questions,
+  ...depthQuestions,
+  ...collectedData.map((q) => questionSchema.parse(q)),
+].map((q) =>
   unit2VisualOverrides[q.id]
     ? {
         ...q,
@@ -938,3 +946,41 @@ export const questions: Question[] = [...baseQuestions, ...unit2Questions].map((
       }
     : q,
 );
+for (const q of questions) {
+  if (q.topicIds?.length) continue;
+  const text = q.title + q.stem;
+  let topic = 'general';
+  if (q.unitId === 'U01')
+    topic = /看错|看成|还原|错写/.test(text)
+      ? 'restore'
+      : /锯|楼|段|间隔/.test(text)
+        ? 'intervals'
+        : /试商|调商|商是|位数/.test(text)
+          ? 'trial'
+          : /余数|验算/.test(text)
+            ? 'remainder'
+            : /每层|每班|每小时|连除/.test(text)
+              ? 'groups'
+              : /车|箱|装|盒/.test(text)
+                ? 'loading'
+                : /降价|单价|不变|变化/.test(text)
+                  ? 'changes'
+                  : 'calculation';
+  if (q.unitId === 'U02')
+    topic = /换算|平方分米|进率|单位/.test(text)
+      ? 'units'
+      : /方格|铺格|数格/.test(text)
+        ? 'grid'
+        : /靠墙|围栏|栅栏/.test(text)
+          ? 'fence'
+          : /铺砖|费用|地砖/.test(text)
+            ? 'tiling'
+            : /拼|剪|切|分割/.test(text)
+              ? 'cut'
+              : /同周长|同面积|最长|最短|方案|条件/.test(text)
+                ? 'compare'
+                : /区别|区分|辨|一定/.test(text)
+                  ? 'meaning'
+                  : 'measure';
+  q.topicIds = [`u${Number(q.unitId.slice(1))}-${topic}`];
+}

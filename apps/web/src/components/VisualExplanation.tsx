@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Visual } from '@mathstudy/contracts';
 import { Icon } from './ui';
+import ReasoningDrawing from './ReasoningDrawing';
 import {
   CornerCutDrawing,
   ComparisonDrawing,
@@ -8,12 +9,29 @@ import {
   WallFenceDrawing,
 } from './GeometryProblemDrawing';
 
-export default function VisualExplanation({ visual }: { visual: Visual }) {
+export default function VisualExplanation({
+  visual,
+  hideTitle = false,
+}: {
+  visual: Visual;
+  hideTitle?: boolean;
+}) {
   const [step, setStep] = useState(0);
   const v = visual.values;
+  const stage = visual.kind === 'reasoning' ? visual.stages?.[step] : undefined;
+  const height =
+    stage?.kind === 'table'
+      ? Math.min(40, 305 / (stage.rows.length + 1)) * (stage.rows.length + 1) + 30
+      : stage?.kind === 'flow'
+        ? stage.rows.length * 105 + 25
+        : stage?.kind === 'bars'
+          ? (stage.values?.length ?? 0) * 72 + Math.min(stage.rows.length, 2) * 30 + 45
+          : 340;
   const lineColor = '#3563e9';
   let drawing;
-  if (visual.kind === 'rectangle') {
+  if (visual.kind === 'reasoning' && visual.stages) {
+    drawing = <ReasoningDrawing stage={visual.stages[step]} />;
+  } else if (visual.kind === 'rectangle') {
     drawing = <CornerCutDrawing values={v} step={step} />;
   } else if (visual.kind === 'perimeterComparison' || visual.kind === 'areaComparison') {
     drawing = <ComparisonDrawing kind={visual.kind} value={v[0]} step={step} />;
@@ -192,15 +210,21 @@ export default function VisualExplanation({ visual }: { visual: Visual }) {
       <div className="visual-heading">
         <span>
           <Icon name="Shapes" size={19} />
-          把思路画出来
+          图解
         </span>
         <span>
           {step + 1} / {visual.captions.length}
         </span>
       </div>
-      <h4>{visual.title}</h4>
+      {!hideTitle && <h4>{visual.title}</h4>}
       <svg
-        viewBox={visual.kind === 'rectangle' ? '100 0 300 310' : '0 0 500 310'}
+        viewBox={
+          visual.kind === 'reasoning'
+            ? `0 0 720 ${height}`
+            : visual.kind === 'rectangle'
+              ? '100 0 300 310'
+              : '0 0 500 310'
+        }
         className={visual.kind === 'rectangle' ? 'corner-visual' : undefined}
         role="img"
         aria-label={`${visual.title}。${visual.captions[step]}`}

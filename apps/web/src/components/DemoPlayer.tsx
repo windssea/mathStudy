@@ -1,3 +1,4 @@
+import StepControls from './StepControls';
 import { useEffect, useMemo, useState } from 'react';
 import type { DivisionDemo } from '@mathstudy/contracts';
 import { divide, trialQuotient } from '@mathstudy/math-core';
@@ -144,7 +145,7 @@ export default function DemoPlayer({
       <div className="demo-topbar">
         <span>
           <span className="live-dot" />
-          交互实验室
+          除法演示
         </span>
         <button
           className="text-link"
@@ -178,7 +179,6 @@ export default function DemoPlayer({
               ))}
             </select>
           </label>
-          <span>换题后从第一步重新观察</span>
         </div>
       )}
       {staticMode ? (
@@ -341,77 +341,29 @@ export default function DemoPlayer({
               <p>{current.text}</p>
             </div>
           </div>
-          <div className="playback">
-            <button
-              className="icon-button"
-              aria-label="重新演示"
-              onClick={() => {
-                setStep(0);
-                setPlaying(false);
-              }}
-            >
-              <Icon name="RotateCcw" size={19} />
-            </button>
-            <button
-              className="icon-button"
-              aria-label="上一步"
-              disabled={step === 0}
-              onClick={() => {
-                setStep((s) => s - 1);
-                setPlaying(false);
-              }}
-            >
-              <Icon name="ArrowLeft" size={19} />
-            </button>
-            <button
-              className="play-button"
-              aria-label={playing ? '暂停演示' : '播放演示'}
-              onClick={() => {
-                if (step === frames.length - 1) setStep(0);
-                setPlaying(!playing);
-              }}
-            >
-              <Icon name={playing ? 'Pause' : 'Play'} size={19} />
-            </button>
-            <button
-              className="icon-button"
-              aria-label="下一步"
-              disabled={step === frames.length - 1}
-              onClick={() => {
-                setStep((s) => s + 1);
-                setPlaying(false);
-              }}
-            >
-              <Icon name="StepForward" size={19} />
-            </button>
-            <div className="playback-track">
-              <label className="sr-only" htmlFor="demo-step">
-                演示步骤
-              </label>
-              <input
-                id="demo-step"
-                type="range"
-                min="0"
-                max={frames.length - 1}
-                value={step}
-                onChange={(e) => {
-                  setStep(Number(e.target.value));
-                  setPlaying(false);
-                }}
-              />
-              <span>
-                {step + 1} / {frames.length} 步
-              </span>
-            </div>
-            <label className="speed-select">
-              <span className="sr-only">播放速度</span>
-              <select value={speed} onChange={(e) => setSpeed(Number(e.target.value))}>
-                <option value={0.75}>0.75 倍速</option>
-                <option value={1}>1 倍速</option>
-                <option value={1.5}>1.5 倍速</option>
-              </select>
-            </label>
-          </div>
+          <StepControls
+            step={step}
+            last={frames.length - 1}
+            onStep={(next) => {
+              setPlaying(false);
+              setStep(next);
+            }}
+            playing={playing}
+            onPlay={() => {
+              if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+                setStaticMode(true);
+                return;
+              }
+              if (step === frames.length - 1) setStep(0);
+              setPlaying(!playing);
+            }}
+            speed={speed}
+            onSpeed={setSpeed}
+            onReset={() => {
+              setStep(0);
+              setPlaying(false);
+            }}
+          />
         </>
       )}
     </section>

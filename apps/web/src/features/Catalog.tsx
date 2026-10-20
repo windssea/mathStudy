@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { useCourse } from '../app/course';
-import { BookArt, ErrorState, Icon } from '../components/ui';
+import { ErrorState, Icon } from '../components/ui';
 import { useProgress } from '../lib/progress';
 
 export default function Catalog() {
@@ -28,24 +28,16 @@ export default function Catalog() {
     <>
       <div className="page-heading">
         <div>
-          <div className="eyebrow">跟着课本，有序探索</div>
           <h1>课程目录</h1>
-          <p>保留教材的每一个单元，也保留动手发现的乐趣。</p>
+          <p>按教材顺序学习，或搜索课节。</p>
         </div>
       </div>
       <section className="catalog-book panel">
-        <BookArt small />
         <div>
-          <span className="chip blue">当前教材</span>
           <h2>苏教版数学四年级上册</h2>
           <p>
             {book.editionLabel} · {book.publisher}
           </p>
-          <div className="catalog-meta">
-            <span>6 个单元</span>
-            <span>4 项实践</span>
-            <span>期末复习</span>
-          </div>
         </div>
         <div className="catalog-book-status">
           <strong>
@@ -138,7 +130,7 @@ export default function Catalog() {
                       </span>
                       <div>
                         <h3>{l.title}</h3>
-                        <p>{l.summary}</p>
+
                         <span>
                           课本 p.{l.pages.join('–')} · {l.minutes} 分钟
                         </span>
@@ -153,7 +145,7 @@ export default function Catalog() {
                       <span className="lesson-number">{index + 1}</span>
                       <div>
                         <h3>{l.title}</h3>
-                        <p>{l.summary}</p>
+
                         <span>课本 p.{l.pages.join('–')}</span>
                       </div>
                       <span className="chip neutral">建设中</span>
@@ -163,7 +155,7 @@ export default function Catalog() {
                 {n.kind === 'unit' && (
                   <Link to={`/questions?unit=${n.id}`} className="unit-practice-link">
                     <Icon name="NotebookPen" size={18} />
-                    先练本单元原创题
+                    本单元练习
                     <Icon name="ArrowRight" size={16} />
                   </Link>
                 )}

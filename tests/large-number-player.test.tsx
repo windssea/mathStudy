@@ -57,6 +57,7 @@ it('reads zero-containing groups, edits places and checks writing without droppi
   fireEvent.click(screen.getByRole('button', { name: '核对写数' }));
   expect(screen.getByRole('status').textContent).toContain('写对了');
   expect(done).toHaveBeenLastCalledWith(true);
+  fireEvent.click(screen.getByText('数位含义与修改'));
   fireEvent.click(screen.getByRole('button', { name: '万位：8' }));
   fireEvent.change(screen.getByRole('combobox', { name: '改变选中数位的数字' }), {
     target: { value: '9' },
@@ -109,16 +110,17 @@ it('shows rounding midpoint and carry, exact rewrite, and inclusive/exclusive ra
   });
   fireEvent.change(screen.getByRole('slider'), { target: { value: '2' } });
   expect(screen.getByRole('status').textContent).toContain('32000000＝3200万');
+  fireEvent.click(screen.getByText('自定义数字'));
   fireEvent.change(screen.getByLabelText('输入整数'), { target: { value: '32000001' } });
   fireEvent.click(screen.getByRole('button', { name: '写到数位表' }));
   fireEvent.change(screen.getByRole('slider'), { target: { value: '2' } });
   expect(screen.getByRole('status').textContent).toContain('不能直接写成整数万');
   fireEvent.click(screen.getByRole('button', { name: '反推整数范围' }));
-  fireEvent.click(screen.getByRole('button', { name: '下边界前一个：354999' }));
+  fireEvent.click(screen.getByRole('button', { name: /下界之前.*354999/ }));
   expect(screen.getByRole('status').textContent).toContain('不在目标范围内');
-  fireEvent.click(screen.getByRole('button', { name: '下边界：355000' }));
+  fireEvent.click(screen.getByRole('button', { name: /最小整数.*355000/ }));
   expect(screen.getByRole('status').textContent).toContain('在目标范围内');
-  fireEvent.click(screen.getByRole('button', { name: '上边界后一个：365000' }));
+  fireEvent.click(screen.getByRole('button', { name: /上界之外.*365000/ }));
   expect(screen.getByRole('status').textContent).toContain('370000');
   fireEvent.change(screen.getByRole('slider'), { target: { value: '3' } });
   expect(screen.getByRole('status').textContent).toContain('355000 ≤ 原数 ≤ 364999');
@@ -139,6 +141,7 @@ it('generates fixed-length library codes, decodes them and rejects duplicates or
   );
   fireEvent.click(screen.getByRole('button', { name: '下一步' }));
   expect(screen.getByLabelText('分段图书编号').textContent).toContain('030');
+  fireEvent.click(screen.getByText('解读编号与查重'));
   fireEvent.change(screen.getByLabelText('另一本书的编号'), { target: { value: '202604030' } });
   fireEvent.click(screen.getByRole('button', { name: '检查重复' }));
   expect(screen.getByRole('status').textContent).toContain('编号重复');
@@ -158,6 +161,7 @@ it('pauses playback, resets review workspaces and uses static steps for reduced 
       onExplored={done}
     />,
   );
+  fireEvent.click(screen.getByRole('button', { name: '演示设置' }));
   fireEvent.click(screen.getByRole('button', { name: '播放演示' }));
   act(() => vi.advanceTimersByTime(2400));
   fireEvent.click(screen.getByRole('button', { name: '暂停' }));

@@ -131,6 +131,7 @@ describe('multiplicative quantity relationships', () => {
         onExplored={done}
       />,
     );
+    fireEvent.click(screen.getByRole('button', { name: '演示设置' }));
     fireEvent.click(screen.getByRole('button', { name: '播放演示' }));
     expect(screen.getByRole('button', { name: '返回动态演示' })).toBeTruthy();
     expect(done).toHaveBeenLastCalledWith(true);

@@ -6,6 +6,8 @@ import unit3Data from '../../../content/textbooks/sj-math-g4-upper-2026-v1/unit3
 import unit4Data from '../../../content/textbooks/sj-math-g4-upper-2026-v1/unit4-lessons.json';
 import unit5Data from '../../../content/textbooks/sj-math-g4-upper-2026-v1/unit5-lessons.json';
 import { questions } from './questions';
+import { buildPracticeCatalog } from './practice';
+export const practice = buildPracticeCatalog(questions);
 
 export const lessons = [...lessonData, ...unit2Data, ...unit3Data, ...unit4Data, ...unit5Data].map(
   (lesson) => lessonSchema.parse(lesson),

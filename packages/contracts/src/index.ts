@@ -2,10 +2,17 @@ import { z } from 'zod';
 export * from './learning';
 
 export const editionId = 'sj-math-g4-upper-2026-v1';
-export const releaseId = 'preview-2026-10-u05-r1';
+export const releaseId = 'practice-2026-10-u12-r1';
 export const difficultySchema = z.enum(['basic', 'advanced', 'challenge']);
 export type Difficulty = z.infer<typeof difficultySchema>;
-export const questionTypeSchema = z.enum(['fill', 'application', 'choice']);
+export const questionTypeSchema = z.enum([
+  'fill',
+  'application',
+  'choice',
+  'judgement',
+  'calculation',
+  'drawing',
+]);
 export type QuestionType = z.infer<typeof questionTypeSchema>;
 export const divisionDemoSchema = z.object({
   kind: z.enum(['groups', 'trial', 'longDivision', 'chain', 'review']),
@@ -108,28 +115,70 @@ export interface QuestionPublic {
   fields: { key: string; label: string; suffix?: string }[];
   options?: string[];
   hint: string;
-  sourceKind: 'original';
+  sourceKind: 'original' | 'collected' | 'adapted';
+  topicIds?: string[];
+  sources?: { paperId: string; page: number; number: string }[];
+  figure?: GridFigure;
+  construction?: {
+    columns: number;
+    rows: number;
+    area: number;
+    perimeter?: number;
+    rectangle: boolean;
+    given?: number[];
+  };
   knowledge: string;
   pages: [number, number];
   hasVisual: boolean;
 }
-export const visualSchema = z.object({
-  kind: z.enum([
-    'division',
-    'bars',
-    'rectangle',
-    'operations',
-    'numberline',
-    'multiplication',
-    'perimeterComparison',
-    'areaComparison',
-    'wallFence',
-  ]),
-  title: z.string(),
-  labels: z.array(z.string()),
-  values: z.array(z.number().finite()),
-  captions: z.array(z.string()).min(2),
-});
+export const visualSchema = z
+  .object({
+    kind: z.enum([
+      'division',
+      'bars',
+      'rectangle',
+      'operations',
+      'numberline',
+      'multiplication',
+      'perimeterComparison',
+      'areaComparison',
+      'wallFence',
+      'reasoning',
+    ]),
+    title: z.string(),
+    labels: z.array(z.string()),
+    values: z.array(z.number().finite()),
+    captions: z.array(z.string()).min(2),
+    stages: z
+      .array(
+        z.object({
+          kind: z.enum(['flow', 'table', 'bars', 'digits', 'join', 'grid', 'packing', 'fence']),
+          headings: z.array(z.string()),
+          rows: z.array(z.array(z.string())),
+          values: z.array(z.number().nonnegative()).optional(),
+          highlights: z.array(z.number().int().nonnegative()).optional(),
+        }),
+      )
+      .optional(),
+  })
+  .superRefine((visual, ctx) => {
+    if (visual.kind !== 'reasoning') return;
+    if (!visual.stages || visual.stages.length !== visual.captions.length) {
+      ctx.addIssue({ code: 'custom', message: 'Each reasoning caption needs one diagram stage' });
+      return;
+    }
+    for (const stage of visual.stages) {
+      if ((stage.kind === 'bars' || stage.kind === 'join') && !stage.values?.length)
+        ctx.addIssue({ code: 'custom', message: 'Quantitative diagram needs values' });
+      if (stage.kind === 'bars' && stage.headings.length !== stage.values?.length)
+        ctx.addIssue({ code: 'custom', message: 'Each bar needs a label' });
+      if (
+        stage.kind === 'table' &&
+        (!stage.headings.length || stage.rows.some((row) => row.length !== stage.headings.length))
+      )
+        ctx.addIssue({ code: 'custom', message: 'Table columns must match headings' });
+    }
+  });
 export type Visual = z.infer<typeof visualSchema>;
 export interface Explanation {
   analysis: string;
@@ -142,6 +191,82 @@ export interface Question extends QuestionPublic {
   expected: Record<string, string>;
   explanation: Explanation;
 }
+export interface GridFigure {
+  columns: number;
+  rows: number;
+  unitLabel: string;
+  shapes: { label: string; cells: [number, number][] }[];
+}
+export interface PracticeTopic {
+  id: string;
+  unitId: string;
+  title: string;
+  questionIds: string[];
+}
+export interface PracticePaper {
+  id: string;
+  title: string;
+  unitIds: string[];
+  capturedAt: string;
+  pages: { image: string; sourceFile: string }[];
+  questionIds: string[];
+  duplicateOf?: string;
+}
+export interface PracticeCatalog {
+  topics: PracticeTopic[];
+  papers: PracticePaper[];
+}
+export const questionSchema = z.object({
+  id: z.string(),
+  unitId: z.string(),
+  lessonId: z.string().optional(),
+  title: z.string(),
+  stem: z.string(),
+  type: questionTypeSchema,
+  difficulty: difficultySchema,
+  fields: z
+    .array(z.object({ key: z.string(), label: z.string(), suffix: z.string().optional() }))
+    .min(1)
+    .max(8),
+  options: z.array(z.string()).optional(),
+  hint: z.string(),
+  sourceKind: z.enum(['original', 'collected', 'adapted']),
+  topicIds: z.array(z.string()).optional(),
+  sources: z
+    .array(z.object({ paperId: z.string(), page: z.number().int().positive(), number: z.string() }))
+    .optional(),
+  knowledge: z.string(),
+  pages: z.tuple([z.number(), z.number()]),
+  hasVisual: z.boolean(),
+  expected: z.record(z.string(), z.string()),
+  figure: z
+    .object({
+      columns: z.number().int().positive(),
+      rows: z.number().int().positive(),
+      unitLabel: z.string(),
+      shapes: z.array(
+        z.object({ label: z.string(), cells: z.array(z.tuple([z.number(), z.number()])) }),
+      ),
+    })
+    .optional(),
+  construction: z
+    .object({
+      columns: z.number().int().positive(),
+      rows: z.number().int().positive(),
+      area: z.number().int().positive(),
+      perimeter: z.number().int().positive().optional(),
+      rectangle: z.boolean(),
+      given: z.array(z.number().int().nonnegative()).optional(),
+    })
+    .optional(),
+  explanation: z.object({
+    analysis: z.string(),
+    steps: z.array(z.string()).min(1),
+    answer: z.string(),
+    pitfall: z.string(),
+    visual: visualSchema.optional(),
+  }),
+});
 export const submissionSchema = z
   .object({
     answers: z.record(z.string(), z.string().max(80)),
@@ -168,4 +293,7 @@ export const typeLabels: Record<QuestionType, string> = {
   fill: '填空题',
   application: '应用题',
   choice: '选择题',
+  judgement: '判断题',
+  calculation: '计算题',
+  drawing: '作图题',
 };

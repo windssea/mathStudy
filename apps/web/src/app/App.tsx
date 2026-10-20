@@ -11,6 +11,7 @@ const LessonPage = lazy(() => import('../features/Lesson'));
 const QuestionBank = lazy(() => import('../features/QuestionBank'));
 const Records = lazy(() => import('../features/Records'));
 const Account = lazy(() => import('../features/Account'));
+const Practice = lazy(() => import('../features/Practice'));
 function Shell() {
   const account = useAccount();
   useEffect(() => startLearningSync(), []);
@@ -23,16 +24,16 @@ function Shell() {
   }, [location.pathname]);
   const lesson = location.pathname.includes('/lessons/');
   const title = lesson
-    ? '课节学习'
+    ? '知识讲解'
     : location.pathname.startsWith('/questions')
-      ? '分层题库'
+      ? '全部题目'
       : location.pathname.startsWith('/records')
-        ? '学习记录'
+        ? '练习记录'
         : location.pathname.startsWith('/account')
           ? '账号与同步'
           : location.pathname.startsWith('/books')
             ? '课程目录'
-            : '学习首页';
+            : '练习';
   return (
     <>
       <a className="skip-link" href="#main">
@@ -47,43 +48,26 @@ function Shell() {
             数趣<small>MathStudy</small>
           </span>
         </Link>
-        <div className="nav-label">我的学习空间</div>
+
         <nav aria-label="主要导航">
           <NavLink to="/" end>
             <Icon name="LayoutDashboard" />
-            学习首页
+            练习
+          </NavLink>
+
+          <NavLink to="/questions">
+            <Icon name="NotebookPen" />
+            全部题目
+          </NavLink>
+          <NavLink to="/records">
+            <Icon name="ListChecks" />
+            练习记录
           </NavLink>
           <NavLink to={remote.data ? `/books/${remote.data.textbook.id}` : '/books'}>
             <Icon name="BookOpen" />
             课程目录
           </NavLink>
-          <NavLink to="/questions">
-            <Icon name="NotebookPen" />
-            分层题库<span className="nav-new">NEW</span>
-          </NavLink>
-          <NavLink to="/records">
-            <Icon name="ListChecks" />
-            学习记录
-          </NavLink>
         </nav>
-        <div className="sidebar-note">
-          <span className="note-icon">
-            <Icon name="Lightbulb" size={26} />
-          </span>
-          <strong>多想一步，多懂一点</strong>
-          <p>
-            不着急找答案，
-            <br />
-            先发现数学里的小规律。
-          </p>
-          <Link to="/questions?difficulty=challenge">
-            挑战一道题 <Icon name="ArrowRight" size={15} />
-          </Link>
-        </div>
-        <div className="sidebar-footer">
-          <Icon name="GraduationCap" size={19} />
-          <span>跟着课本，慢慢学懂</span>
-        </div>
       </aside>
       {menu && (
         <button className="menu-scrim" aria-label="关闭菜单" onClick={() => setMenu(false)} />
@@ -100,8 +84,7 @@ function Shell() {
               <Icon name="Menu" />
             </button>
             <span className="breadcrumb">
-              <span className="breadcrumb-home">我的学习空间</span>
-              <Icon name="ChevronRight" size={14} /> <b>{title}</b>
+              <b>{title}</b>
             </span>
           </div>
           <div className="topbar-right">
@@ -118,9 +101,6 @@ function Shell() {
             <Link className="account-link" to="/account">
               {account.user ? account.user.name : '登录同步'}
             </Link>
-            <Link className="profile" to="/records" aria-label="查看学习记录">
-              数
-            </Link>
           </div>
         </header>
         <main id="main" className={`main-content ${lesson ? 'lesson-main' : ''}`} tabIndex={-1}>
@@ -133,6 +113,7 @@ function Shell() {
               <Suspense fallback={<Loading />}>
                 <Routes key={account.user?.id ?? 'guest'}>
                   <Route path="/" element={<Home />} />
+                  <Route path="/practice/:kind/:id" element={<Practice />} />
                   <Route path="/books/:editionId" element={<Catalog />} />
                   <Route path="/books/:editionId/lessons/:lessonId" element={<LessonPage />} />
                   <Route path="/questions" element={<QuestionBank />} />
@@ -148,10 +129,6 @@ function Shell() {
             </DataContext>
           )}
         </main>
-        <footer className="page-footer">
-          <span>数趣 MathStudy</span>
-          <span>理解每一步，让数学看得见。</span>
-        </footer>
       </div>
     </>
   );

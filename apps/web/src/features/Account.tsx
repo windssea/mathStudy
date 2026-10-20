@@ -48,7 +48,6 @@ export default function Account() {
     <>
       <div className="page-heading">
         <div>
-          <div className="eyebrow">把学习足迹，留在自己的账号里</div>
           <h1>{account.user ? '我的账号' : '账号登录'}</h1>
           <p>使用内置账号登录，在其他设备继续学习、查看答题记录和错题。</p>
         </div>

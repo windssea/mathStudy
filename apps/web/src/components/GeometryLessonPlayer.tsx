@@ -1,3 +1,4 @@
+import StepControls from './StepControls';
 import { useEffect, useState } from 'react';
 import type { GeometryDemo } from '@mathstudy/contracts';
 import { areaPairs, perimeterPairs, rectangleMetrics, tilingMetrics } from '@mathstudy/math-core';
@@ -224,7 +225,7 @@ export default function GeometryLessonPlayer({
       <div className="demo-topbar">
         <span>
           <span className="live-dot" />
-          几何探索实验室
+          几何演示
         </span>
         <button
           className="text-link"
@@ -636,9 +637,7 @@ export default function GeometryLessonPlayer({
                 </table>
               </div>
             )}
-            <p className="geometry-scale-note">
-              按比例示意，屏幕上的长度不等于实际厘米；每次改参会从头探索。
-            </p>
+            <p className="geometry-scale-note">示意图，非实际尺寸。</p>
           </div>
           <div className="narration" aria-live="polite">
             <span className="narration-step">{step + 1}</span>
@@ -647,70 +646,26 @@ export default function GeometryLessonPlayer({
               <p>{frames[step].text}</p>
             </div>
           </div>
-          <div className="playback">
-            <button className="icon-button" aria-label="重置几何演示" onClick={resetAll}>
-              <Icon name="RotateCcw" size={19} />
-            </button>
-            <button
-              className="icon-button"
-              aria-label="上一步"
-              disabled={step === 0}
-              onClick={() => {
-                setPlaying(false);
-                applyStep(step - 1);
-              }}
-            >
-              <Icon name="ArrowLeft" size={19} />
-            </button>
-            <button
-              className="play-button"
-              aria-label={playing ? '暂停演示' : '播放演示'}
-              onClick={() => {
-                if (step === frames.length - 1) applyStep(0);
-                setPlaying(!playing);
-              }}
-            >
-              <Icon name={playing ? 'Pause' : 'Play'} size={19} />
-            </button>
-            <button
-              className="icon-button"
-              aria-label="下一步"
-              disabled={step === frames.length - 1}
-              onClick={() => {
-                setPlaying(false);
-                applyStep(step + 1);
-              }}
-            >
-              <Icon name="StepForward" size={19} />
-            </button>
-            <div className="playback-track">
-              <label className="sr-only" htmlFor="geometry-step">
-                演示步骤
-              </label>
-              <input
-                id="geometry-step"
-                type="range"
-                min={0}
-                max={frames.length - 1}
-                value={step}
-                onChange={(e) => {
-                  setPlaying(false);
-                  applyStep(Number(e.target.value));
-                }}
-              />
-              <span>
-                {step + 1} / {frames.length} 步
-              </span>
-            </div>
-            <label className="speed-select">
-              <span className="sr-only">播放速度</span>
-              <select value={speed} onChange={(e) => setSpeed(Number(e.target.value))}>
-                <option value={0.75}>0.75 倍速</option>
-                <option value={1}>1 倍速</option>
-                <option value={1.5}>1.5 倍速</option>
-              </select>
-            </label>
-          </div>
+          <StepControls
+            step={step}
+            last={frames.length - 1}
+            onStep={(next) => {
+              setPlaying(false);
+              applyStep(next);
+            }}
+            playing={playing}
+            onPlay={() => {
+              if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+                setStaticMode(true);
+                return;
+              }
+              if (step === frames.length - 1) applyStep(0);
+              setPlaying(!playing);
+            }}
+            speed={speed}
+            onSpeed={setSpeed}
+            onReset={resetAll}
+          />
         </>
       )}
     </section>

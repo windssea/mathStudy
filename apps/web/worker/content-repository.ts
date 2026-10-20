@@ -1,8 +1,9 @@
-import { textbook, lessons, questions, siteSettings } from '@mathstudy/content';
+import { textbook, lessons, questions, siteSettings, practice } from '@mathstudy/content';
 import {
   editionId,
   releaseId,
   type Lesson,
+  type PracticeCatalog,
   type Question,
   type Textbook,
 } from '@mathstudy/contracts';
@@ -19,13 +20,14 @@ export interface CourseContent {
   lessons: Lesson[];
   questions: Question[];
   siteSettings: { defaultEditionId: string };
+  practice: PracticeCatalog;
   source: 'd1' | 'fixture';
   sourceHash?: string;
 }
 
 export async function loadCourseContent(db?: ContentDatabase): Promise<CourseContent> {
   // Only direct, unbound unit tests use fixtures. A configured database must be healthy.
-  if (!db) return { textbook, lessons, questions, siteSettings, source: 'fixture' };
+  if (!db) return { textbook, lessons, questions, siteSettings, practice, source: 'fixture' };
   const rows = await db.batch<{ body_json: string }>([
     db
       .prepare(
@@ -43,12 +45,14 @@ export async function loadCourseContent(db?: ContentDatabase): Promise<CourseCon
   if (!rows[0]?.results[0]) throw new Error('D1 content release is not initialized');
   const manifest = JSON.parse(rows[0].results[0].body_json) as {
     textbook: Textbook;
+    practice: PracticeCatalog;
     siteSettings: { defaultEditionId: string };
     lessonCount: number;
     questionCount: number;
     sourceHash: string;
   };
   if (
+    !manifest.practice ||
     manifest.textbook?.id !== editionId ||
     manifest.textbook.releaseId !== releaseId ||
     manifest.lessonCount !== rows[1].results.length ||
@@ -57,6 +61,7 @@ export async function loadCourseContent(db?: ContentDatabase): Promise<CourseCon
     throw new Error('D1 content release is incomplete or mismatched');
   return {
     textbook: manifest.textbook,
+    practice: manifest.practice,
     siteSettings: manifest.siteSettings,
     lessons: rows[1].results.map((row) => JSON.parse(row.body_json) as Lesson),
     questions: rows[2].results.map((row) => JSON.parse(row.body_json) as Question),

@@ -1,0 +1,7552 @@
+[
+  {
+    "id": "p01-01",
+    "unitId": "U02",
+    "title": "绳长与周长",
+    "stem": "一根16米长的绳子，正好绕桌子一周。桌子的周长是多少米？",
+    "type": "fill",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "米"
+      }
+    ],
+    "hint": "绕物体一周的长度就是周长。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-meaning"],
+    "sources": [
+      {
+        "paperId": "P01",
+        "page": 1,
+        "number": "一1"
+      }
+    ],
+    "knowledge": "绳长与周长",
+    "pages": [18, 43],
+    "hasVisual": false,
+    "expected": {
+      "value": "16"
+    },
+    "explanation": {
+      "analysis": "绕物体一周的长度就是周长。",
+      "steps": ["没有剩余也没有重叠，所以一周的长度等于绳长。", "桌子的周长是16米。"],
+      "answer": "16米",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p01-02",
+    "unitId": "U02",
+    "title": "三角形周长",
+    "stem": "一个三角形三条边都长5厘米，周长是多少厘米？",
+    "type": "application",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "厘米"
+      }
+    ],
+    "hint": "周长要把三条边都加起来。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-measure"],
+    "sources": [
+      {
+        "paperId": "P01",
+        "page": 1,
+        "number": "一2"
+      }
+    ],
+    "knowledge": "三角形周长",
+    "pages": [18, 43],
+    "hasVisual": false,
+    "expected": {
+      "value": "15"
+    },
+    "explanation": {
+      "analysis": "周长要把三条边都加起来。",
+      "steps": ["5＋5＋5＝15厘米。", "也可以算5×3＝15厘米。"],
+      "answer": "15厘米",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p01-03",
+    "unitId": "U02",
+    "title": "单位换算",
+    "stem": "9平方米＝（　）平方分米。",
+    "type": "fill",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "平方分米"
+      }
+    ],
+    "hint": "先确认是长度单位还是面积单位，再选择进率。",
+    "sourceKind": "adapted",
+    "topicIds": ["u2-units"],
+    "sources": [
+      {
+        "paperId": "P01",
+        "page": 1,
+        "number": "一3（1）"
+      }
+    ],
+    "knowledge": "单位换算",
+    "pages": [18, 43],
+    "hasVisual": false,
+    "expected": {
+      "value": "900"
+    },
+    "explanation": {
+      "analysis": "先确认是长度单位还是面积单位，再选择进率。",
+      "steps": ["1平方米＝100平方分米。", "9×100＝900。"],
+      "answer": "900平方分米",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p01-04",
+    "unitId": "U02",
+    "title": "单位换算",
+    "stem": "36平方分米＝（　）平方厘米。",
+    "type": "fill",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "平方厘米"
+      }
+    ],
+    "hint": "先确认是长度单位还是面积单位，再选择进率。",
+    "sourceKind": "adapted",
+    "topicIds": ["u2-units"],
+    "sources": [
+      {
+        "paperId": "P01",
+        "page": 1,
+        "number": "一3（2）"
+      }
+    ],
+    "knowledge": "单位换算",
+    "pages": [18, 43],
+    "hasVisual": false,
+    "expected": {
+      "value": "3600"
+    },
+    "explanation": {
+      "analysis": "先确认是长度单位还是面积单位，再选择进率。",
+      "steps": ["1平方分米＝100平方厘米。", "36×100＝3600。"],
+      "answer": "3600平方厘米",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p01-05",
+    "unitId": "U02",
+    "title": "三个正方形拼成长方形",
+    "stem": "一个长方形由3个完全相同的正方形排成一行。每个正方形周长16厘米，求长方形的长和周长（厘米）。",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "length",
+        "label": "长",
+        "suffix": ""
+      },
+      {
+        "key": "perimeter",
+        "label": "周长",
+        "suffix": ""
+      }
+    ],
+    "hint": "先从正方形的周长求边长，再确定拼成长方形的长与宽。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-cut"],
+    "sources": [
+      {
+        "paperId": "P01",
+        "page": 1,
+        "number": "一6"
+      }
+    ],
+    "knowledge": "三个正方形拼成长方形",
+    "pages": [18, 43],
+    "hasVisual": true,
+    "expected": {
+      "length": "12",
+      "perimeter": "32"
+    },
+    "explanation": {
+      "analysis": "先从正方形的周长求边长，再确定拼成长方形的长与宽。",
+      "steps": [
+        "每个正方形边长：16÷4＝4厘米。",
+        "长方形长：4×3＝12厘米，宽4厘米。",
+        "周长：(12＋4)×2＝32厘米。"
+      ],
+      "answer": "长：12，周长：32",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "三个正方形拼成长方形",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "每个正方形边长：16÷4＝4厘米。",
+          "长方形长：4×3＝12厘米，宽4厘米。",
+          "周长：(12＋4)×2＝32厘米。"
+        ],
+        "stages": [
+          {
+            "kind": "table",
+            "headings": ["正方形周长", "边长"],
+            "rows": [["16", "16÷4＝4"]]
+          },
+          {
+            "kind": "bars",
+            "headings": ["长方形的长", "长方形的宽"],
+            "values": [12, 4],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["长", "宽", "周长"],
+            "rows": [["12", "4", "32"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p01-06",
+    "unitId": "U02",
+    "title": "长宽都不同，面积能相等吗",
+    "stem": "两个长方形的长不相等，宽也不相等，它们的面积一定不相等。这句话对吗？",
+    "type": "judgement",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": ""
+      }
+    ],
+    "hint": "尝试用一个反例检验“一定”。比较两组长宽的乘积。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-meaning"],
+    "sources": [
+      {
+        "paperId": "P01",
+        "page": 2,
+        "number": "二3"
+      }
+    ],
+    "knowledge": "长宽都不同，面积能相等吗",
+    "pages": [18, 43],
+    "hasVisual": false,
+    "expected": {
+      "value": "1"
+    },
+    "explanation": {
+      "analysis": "尝试用一个反例检验“一定”。比较两组长宽的乘积。",
+      "steps": ["6×4＝24，8×3＝24。", "两组长与宽都不同，面积却相同，所以原说法错误。"],
+      "answer": "错",
+      "pitfall": ""
+    },
+    "options": ["对", "错"]
+  },
+  {
+    "id": "p01-07",
+    "unitId": "U02",
+    "title": "剪出最大的正方形",
+    "stem": "从长6厘米、宽4厘米的长方形纸片中剪下一个尽可能大的正方形，这个正方形的周长是多少厘米？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "厘米"
+      }
+    ],
+    "hint": "正方形的边长不能超过原长方形的短边。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-cut"],
+    "sources": [
+      {
+        "paperId": "P01",
+        "page": 2,
+        "number": "二4"
+      }
+    ],
+    "knowledge": "剪出最大的正方形",
+    "pages": [18, 43],
+    "hasVisual": false,
+    "expected": {
+      "value": "16"
+    },
+    "explanation": {
+      "analysis": "正方形的边长不能超过原长方形的短边。",
+      "steps": ["最大边长是4厘米。", "周长：4×4＝16厘米。"],
+      "answer": "16厘米",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p01-08",
+    "unitId": "U02",
+    "title": "剪下正方形后剩余部分",
+    "stem": "长5米、宽4米的木板，锯下一个最大的正方形后，剩余长方形的周长是多少米？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "米"
+      }
+    ],
+    "hint": "最大正方形边长为短边4米。剩余部分的长宽分别是4米和5−4米。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-cut"],
+    "sources": [
+      {
+        "paperId": "P01",
+        "page": 4,
+        "number": "五1"
+      }
+    ],
+    "knowledge": "剪下正方形后剩余部分",
+    "pages": [18, 43],
+    "hasVisual": false,
+    "expected": {
+      "value": "10"
+    },
+    "explanation": {
+      "analysis": "最大正方形边长为短边4米。剩余部分的长宽分别是4米和5−4米。",
+      "steps": ["剩余木板的宽：5−4＝1米。", "剩余木板周长：(4＋1)×2＝10米。"],
+      "answer": "10米",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p01-09",
+    "unitId": "U02",
+    "title": "压路面积",
+    "stem": "压路机每分钟前进15米，压过的宽度是2米，连续工作半小时，不重复碾压，可以压多少平方米？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "平方米"
+      }
+    ],
+    "hint": "半小时先换成分钟。把压过的部分看成长方形。",
+    "sourceKind": "adapted",
+    "topicIds": ["u2-tiling"],
+    "sources": [
+      {
+        "paperId": "P01",
+        "page": 4,
+        "number": "五2"
+      }
+    ],
+    "knowledge": "压路面积",
+    "pages": [18, 43],
+    "hasVisual": false,
+    "expected": {
+      "value": "900"
+    },
+    "explanation": {
+      "analysis": "半小时先换成分钟。把压过的部分看成长方形。",
+      "steps": ["半小时＝30分钟；总长15×30＝450米。", "面积：450×2＝900平方米。"],
+      "answer": "900平方米",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p01-10",
+    "unitId": "U02",
+    "title": "靠墙围栏",
+    "stem": "用36米篱笆一面靠墙围一个长方形，靠墙的长边长26米，靠墙的一边不围。菜地面积是多少平方米？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "平方米"
+      }
+    ],
+    "hint": "篱笆只围一条长边和两条宽。先从总长中减去一条长边，再把剩下的平均分成两条宽。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-fence"],
+    "sources": [
+      {
+        "paperId": "P01",
+        "page": 4,
+        "number": "五4（1）"
+      }
+    ],
+    "knowledge": "靠墙围栏",
+    "pages": [18, 43],
+    "hasVisual": true,
+    "expected": {
+      "value": "130"
+    },
+    "explanation": {
+      "analysis": "篱笆只围一条长边和两条宽。先从总长中减去一条长边，再把剩下的平均分成两条宽。",
+      "steps": ["两条宽合计：36−26＝10米。", "一条宽：10÷2＝5米。", "面积：26×5＝130平方米。"],
+      "answer": "130平方米",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "靠墙围栏",
+        "labels": [],
+        "values": [],
+        "captions": ["两条宽合计：36−26＝10米。", "一条宽：10÷2＝5米。", "面积：26×5＝130平方米。"],
+        "stages": [
+          {
+            "kind": "fence",
+            "headings": ["靠墙围栏", "0"],
+            "rows": [],
+            "values": [26, 5]
+          },
+          {
+            "kind": "fence",
+            "headings": ["靠墙围栏", "1"],
+            "rows": [],
+            "values": [26, 5]
+          },
+          {
+            "kind": "fence",
+            "headings": ["靠墙围栏", "2"],
+            "rows": [],
+            "values": [26, 5]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p02-01",
+    "unitId": "U02",
+    "title": "单位换算",
+    "stem": "8平方分米＝（　）平方厘米。",
+    "type": "fill",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "平方厘米"
+      }
+    ],
+    "hint": "先确认是长度单位还是面积单位，再选择进率。",
+    "sourceKind": "adapted",
+    "topicIds": ["u2-units"],
+    "sources": [
+      {
+        "paperId": "P02",
+        "page": 2,
+        "number": "三2（1）"
+      },
+      {
+        "paperId": "P03",
+        "page": 2,
+        "number": "三2（1）"
+      }
+    ],
+    "knowledge": "单位换算",
+    "pages": [18, 43],
+    "hasVisual": false,
+    "expected": {
+      "value": "800"
+    },
+    "explanation": {
+      "analysis": "先确认是长度单位还是面积单位，再选择进率。",
+      "steps": ["1平方分米＝100平方厘米。", "8×100＝800。"],
+      "answer": "800平方厘米",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p02-02",
+    "unitId": "U02",
+    "title": "方砖铺地",
+    "stem": "厨房长6米、宽3米，用边长3分米的正方形砖铺地，不切割、不留缝。至少需要多少块？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "块"
+      }
+    ],
+    "hint": "把长度统一成分米，再求长、宽方向各铺多少块。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-tiling"],
+    "sources": [
+      {
+        "paperId": "P02",
+        "page": 2,
+        "number": "三4"
+      },
+      {
+        "paperId": "P03",
+        "page": 2,
+        "number": "三4"
+      }
+    ],
+    "knowledge": "方砖铺地",
+    "pages": [18, 43],
+    "hasVisual": true,
+    "expected": {
+      "value": "200"
+    },
+    "explanation": {
+      "analysis": "把长度统一成分米，再求长、宽方向各铺多少块。",
+      "steps": ["6米＝60分米，3米＝30分米。", "每排60÷3＝20块，共30÷3＝10排。", "20×10＝200块。"],
+      "answer": "200块",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "方砖铺地",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "6米＝60分米，3米＝30分米。",
+          "每排60÷3＝20块，共30÷3＝10排。",
+          "20×10＝200块。"
+        ],
+        "stages": [
+          {
+            "kind": "table",
+            "headings": ["项目", "长", "宽"],
+            "rows": [
+              ["地面（分米）", "60", "30"],
+              ["每边砖数", "20", "10"]
+            ]
+          },
+          {
+            "kind": "bars",
+            "headings": ["每排块数", "排数"],
+            "values": [20, 10],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["总块数", "20×10＝200"],
+            "rows": [["面积验算", "60×30÷(3×3)＝200"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p02-03",
+    "unitId": "U02",
+    "title": "相同面积求长方形的宽",
+    "stem": "一个正方形周长24厘米。与它面积相同的长方形长9厘米，宽是多少厘米？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "厘米"
+      }
+    ],
+    "hint": "先由周长求正方形边长和面积，再用相同面积除以长方形的长。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-measure"],
+    "sources": [
+      {
+        "paperId": "P02",
+        "page": 2,
+        "number": "三5"
+      },
+      {
+        "paperId": "P03",
+        "page": 2,
+        "number": "三5"
+      }
+    ],
+    "knowledge": "相同面积求长方形的宽",
+    "pages": [18, 43],
+    "hasVisual": true,
+    "expected": {
+      "value": "4"
+    },
+    "explanation": {
+      "analysis": "先由周长求正方形边长和面积，再用相同面积除以长方形的长。",
+      "steps": [
+        "正方形边长：24÷4＝6厘米。",
+        "共同面积：6×6＝36平方厘米。",
+        "长方形宽：36÷9＝4厘米。"
+      ],
+      "answer": "4厘米",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "相同面积求长方形的宽",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "正方形边长：24÷4＝6厘米。",
+          "共同面积：6×6＝36平方厘米。",
+          "长方形宽：36÷9＝4厘米。"
+        ],
+        "stages": [
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第1步", "正方形边长：24÷4＝6厘米。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第2步", "共同面积：6×6＝36平方厘米。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第3步", "长方形宽：36÷9＝4厘米。"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p02-04",
+    "unitId": "U02",
+    "title": "面积与周长大小",
+    "stem": "面积相等的两个图形，周长也一定相等。这句话对吗？",
+    "type": "judgement",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": ""
+      }
+    ],
+    "hint": "用两个面积都等于12的长方形检验。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-meaning"],
+    "sources": [
+      {
+        "paperId": "P02",
+        "page": 3,
+        "number": "四9"
+      },
+      {
+        "paperId": "P03",
+        "page": 3,
+        "number": "四9"
+      }
+    ],
+    "knowledge": "面积与周长大小",
+    "pages": [18, 43],
+    "hasVisual": false,
+    "expected": {
+      "value": "1"
+    },
+    "explanation": {
+      "analysis": "用两个面积都等于12的长方形检验。",
+      "steps": ["6×2和4×3的面积都等于12。", "周长分别是16和14，因此说法错误。"],
+      "answer": "错",
+      "pitfall": ""
+    },
+    "options": ["对", "错"]
+  },
+  {
+    "id": "p02-05",
+    "unitId": "U02",
+    "title": "靠墙围栏",
+    "stem": "用40米篱笆一面靠墙围一个长方形，靠墙的长边长28米，靠墙的一边不围。菜地面积是多少平方米？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "平方米"
+      }
+    ],
+    "hint": "篱笆只围一条长边和两条宽。先从总长中减去一条长边，再把剩下的平均分成两条宽。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-fence"],
+    "sources": [
+      {
+        "paperId": "P02",
+        "page": 4,
+        "number": "五1"
+      },
+      {
+        "paperId": "P03",
+        "page": 4,
+        "number": "五1"
+      }
+    ],
+    "knowledge": "靠墙围栏",
+    "pages": [18, 43],
+    "hasVisual": true,
+    "expected": {
+      "value": "168"
+    },
+    "explanation": {
+      "analysis": "篱笆只围一条长边和两条宽。先从总长中减去一条长边，再把剩下的平均分成两条宽。",
+      "steps": ["两条宽合计：40−28＝12米。", "一条宽：12÷2＝6米。", "面积：28×6＝168平方米。"],
+      "answer": "168平方米",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "靠墙围栏",
+        "labels": [],
+        "values": [],
+        "captions": ["两条宽合计：40−28＝12米。", "一条宽：12÷2＝6米。", "面积：28×6＝168平方米。"],
+        "stages": [
+          {
+            "kind": "fence",
+            "headings": ["靠墙围栏", "0"],
+            "rows": [],
+            "values": [28, 6]
+          },
+          {
+            "kind": "fence",
+            "headings": ["靠墙围栏", "1"],
+            "rows": [],
+            "values": [28, 6]
+          },
+          {
+            "kind": "fence",
+            "headings": ["靠墙围栏", "2"],
+            "rows": [],
+            "values": [28, 6]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p02-06",
+    "unitId": "U02",
+    "title": "大正方形分成四块",
+    "stem": "把边长50米的正方形田地分成4块完全一样的小正方形。每块小田地的周长是多少米？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "米"
+      }
+    ],
+    "hint": "每个方向都平均分成2份，小正方形边长是原来的一半。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-cut"],
+    "sources": [
+      {
+        "paperId": "P02",
+        "page": 4,
+        "number": "五2"
+      },
+      {
+        "paperId": "P03",
+        "page": 4,
+        "number": "五2"
+      }
+    ],
+    "knowledge": "大正方形分成四块",
+    "pages": [18, 43],
+    "hasVisual": false,
+    "expected": {
+      "value": "100"
+    },
+    "explanation": {
+      "analysis": "每个方向都平均分成2份，小正方形边长是原来的一半。",
+      "steps": ["小正方形边长：50÷2＝25米。", "周长：25×4＝100米。"],
+      "answer": "100米",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p02-07",
+    "unitId": "U02",
+    "title": "连续剪正方形后的剩余",
+    "stem": "长32厘米、宽9厘米的纸片，连续剪下边长9厘米的正方形。最多剪几个？剩余长方形的面积是多少平方厘米？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "count",
+        "label": "数量",
+        "suffix": ""
+      },
+      {
+        "key": "area",
+        "label": "面积",
+        "suffix": ""
+      }
+    ],
+    "hint": "长边上按9厘米一段分割，商表示块数，余数表示剩下的短边。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-cut"],
+    "sources": [
+      {
+        "paperId": "P02",
+        "page": 4,
+        "number": "五5"
+      },
+      {
+        "paperId": "P03",
+        "page": 4,
+        "number": "五5"
+      }
+    ],
+    "knowledge": "连续剪正方形后的剩余",
+    "pages": [18, 43],
+    "hasVisual": true,
+    "expected": {
+      "count": "3",
+      "area": "45"
+    },
+    "explanation": {
+      "analysis": "长边上按9厘米一段分割，商表示块数，余数表示剩下的短边。",
+      "steps": [
+        "32÷9＝3……5，最多剪3个。",
+        "剩余长方形长9厘米、宽5厘米。",
+        "面积：9×5＝45平方厘米。"
+      ],
+      "answer": "数量：3，面积：45",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "连续剪正方形后的剩余",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "32÷9＝3……5，最多剪3个。",
+          "剩余长方形长9厘米、宽5厘米。",
+          "面积：9×5＝45平方厘米。"
+        ],
+        "stages": [
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第1步", "32÷9＝3……5，最多剪3个。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第2步", "剩余长方形长9厘米、宽5厘米。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第3步", "面积：9×5＝45平方厘米。"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p04-01",
+    "unitId": "U01",
+    "title": "98÷30",
+    "stem": "用竖式计算98÷30，填写商和余数，并验算。",
+    "type": "calculation",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "quotient",
+        "label": "商",
+        "suffix": ""
+      },
+      {
+        "key": "remainder",
+        "label": "余数",
+        "suffix": ""
+      }
+    ],
+    "hint": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-calculation"],
+    "sources": [
+      {
+        "paperId": "P04",
+        "page": 1,
+        "number": "一2（1）"
+      }
+    ],
+    "knowledge": "98÷30",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "quotient": "3",
+      "remainder": "8"
+    },
+    "explanation": {
+      "analysis": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+      "steps": ["30×3＝90。", "98−90＝8，8＜30。", "验算：30×3＋8＝98。"],
+      "answer": "商：3，余数：8",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p04-02",
+    "unitId": "U01",
+    "title": "897÷48",
+    "stem": "用竖式计算897÷48，填写商和余数，并验算。",
+    "type": "calculation",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "quotient",
+        "label": "商",
+        "suffix": ""
+      },
+      {
+        "key": "remainder",
+        "label": "余数",
+        "suffix": ""
+      }
+    ],
+    "hint": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-calculation"],
+    "sources": [
+      {
+        "paperId": "P04",
+        "page": 1,
+        "number": "一2（2）"
+      }
+    ],
+    "knowledge": "897÷48",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "quotient": "18",
+      "remainder": "33"
+    },
+    "explanation": {
+      "analysis": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+      "steps": ["48×18＝864。", "897−864＝33，33＜48。", "验算：48×18＋33＝897。"],
+      "answer": "商：18，余数：33",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p04-03",
+    "unitId": "U01",
+    "title": "226÷43",
+    "stem": "用竖式计算226÷43，填写商和余数，并验算。",
+    "type": "calculation",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "quotient",
+        "label": "商",
+        "suffix": ""
+      },
+      {
+        "key": "remainder",
+        "label": "余数",
+        "suffix": ""
+      }
+    ],
+    "hint": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-calculation"],
+    "sources": [
+      {
+        "paperId": "P04",
+        "page": 1,
+        "number": "一2（3）"
+      }
+    ],
+    "knowledge": "226÷43",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "quotient": "5",
+      "remainder": "11"
+    },
+    "explanation": {
+      "analysis": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+      "steps": ["43×5＝215。", "226−215＝11，11＜43。", "验算：43×5＋11＝226。"],
+      "answer": "商：5，余数：11",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p04-04",
+    "unitId": "U01",
+    "title": "608÷54",
+    "stem": "用竖式计算608÷54，填写商和余数，并验算。",
+    "type": "calculation",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "quotient",
+        "label": "商",
+        "suffix": ""
+      },
+      {
+        "key": "remainder",
+        "label": "余数",
+        "suffix": ""
+      }
+    ],
+    "hint": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-calculation"],
+    "sources": [
+      {
+        "paperId": "P04",
+        "page": 1,
+        "number": "一2（4）"
+      }
+    ],
+    "knowledge": "608÷54",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "quotient": "11",
+      "remainder": "14"
+    },
+    "explanation": {
+      "analysis": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+      "steps": ["54×11＝594。", "608−594＝14，14＜54。", "验算：54×11＋14＝608。"],
+      "answer": "商：11，余数：14",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p04-05",
+    "unitId": "U01",
+    "title": "商是一位数的条件",
+    "stem": "在□53÷38中，要使商是一位数，□里最大可以填几？（□不为0。）",
+    "type": "fill",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": ""
+      }
+    ],
+    "hint": "比较被除数的前两位与38：前两位比38小，商才是一位数。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-trial"],
+    "sources": [
+      {
+        "paperId": "P04",
+        "page": 1,
+        "number": "二3"
+      }
+    ],
+    "knowledge": "商是一位数的条件",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "value": "3"
+    },
+    "explanation": {
+      "analysis": "比较被除数的前两位与38：前两位比38小，商才是一位数。",
+      "steps": ["□5＜38，□可以填1、2、3。", "最大填3；353÷38商9，453÷38商已是两位数。"],
+      "answer": "3",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p04-06",
+    "unitId": "U01",
+    "title": "锯木条的次数",
+    "stem": "75厘米的木条锯成每段15厘米，共有几段，需要锯几次？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "count",
+        "label": "数量",
+        "suffix": ""
+      },
+      {
+        "key": "cuts",
+        "label": "次数",
+        "suffix": ""
+      }
+    ],
+    "hint": "先求段数，再看相邻两段之间有几个分界点。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-intervals"],
+    "sources": [
+      {
+        "paperId": "P04",
+        "page": 2,
+        "number": "二6"
+      }
+    ],
+    "knowledge": "锯木条的次数",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "count": "5",
+      "cuts": "4"
+    },
+    "explanation": {
+      "analysis": "先求段数，再看相邻两段之间有几个分界点。",
+      "steps": ["75÷15＝5段。", "锯1次多1段，5段只需要5−1＝4次。"],
+      "answer": "数量：5，次数：4",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p04-07",
+    "unitId": "U01",
+    "title": "装箱时余数怎么办",
+    "stem": "上半月生产246件，下半月364件，每箱装20件。全部装走至少要多少箱？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "箱"
+      }
+    ],
+    "hint": "先求总件数，再按每箱容量计算。有剩余就还需要一个箱子。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-loading"],
+    "sources": [
+      {
+        "paperId": "P04",
+        "page": 2,
+        "number": "二7"
+      }
+    ],
+    "knowledge": "装箱时余数怎么办",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "value": "31"
+    },
+    "explanation": {
+      "analysis": "先求总件数，再按每箱容量计算。有剩余就还需要一个箱子。",
+      "steps": ["246＋364＝610件。", "610÷20＝30……10，30箱装不完。", "再加1箱，至少31箱。"],
+      "answer": "31箱",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p04-08",
+    "unitId": "U01",
+    "title": "平均每人每小时",
+    "stem": "6人5小时加工240个零件，平均每人每小时加工多少个？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "个"
+      }
+    ],
+    "hint": "先平均分给6人，再平均分给5小时。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-groups"],
+    "sources": [
+      {
+        "paperId": "P04",
+        "page": 2,
+        "number": "二8"
+      }
+    ],
+    "knowledge": "平均每人每小时",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "value": "8"
+    },
+    "explanation": {
+      "analysis": "先平均分给6人，再平均分给5小时。",
+      "steps": ["240÷6＝40个，每人5小时的数量。", "40÷5＝8个，平均每人每小时8个。"],
+      "answer": "8个",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p04-09",
+    "unitId": "U01",
+    "title": "从商和余数反求除数",
+    "stem": "136÷□＝6……16，□是多少？",
+    "type": "fill",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": ""
+      }
+    ],
+    "hint": "先减去余数，剩余部分就是除数的6倍。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-remainder"],
+    "sources": [
+      {
+        "paperId": "P04",
+        "page": 2,
+        "number": "三1"
+      }
+    ],
+    "knowledge": "从商和余数反求除数",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "value": "20"
+    },
+    "explanation": {
+      "analysis": "先减去余数，剩余部分就是除数的6倍。",
+      "steps": ["136−16＝120。", "120÷6＝20，且16＜20，符合余数要求。"],
+      "answer": "20",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p04-10",
+    "unitId": "U01",
+    "title": "满减付款",
+    "stem": "商店每满60元减20元，购买原价330元的商品，实际要付多少元？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "元"
+      }
+    ],
+    "hint": "先看330元包含多少个完整的60元。没有满60元的部分不再优惠。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-changes"],
+    "sources": [
+      {
+        "paperId": "P04",
+        "page": 2,
+        "number": "三4"
+      }
+    ],
+    "knowledge": "满减付款",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "value": "230"
+    },
+    "explanation": {
+      "analysis": "先看330元包含多少个完整的60元。没有满60元的部分不再优惠。",
+      "steps": ["330÷60＝5……30，只能享受5次优惠。", "优惠20×5＝100元。", "实际付330−100＝230元。"],
+      "answer": "230元",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "满减付款",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "330÷60＝5……30，只能享受5次优惠。",
+          "优惠20×5＝100元。",
+          "实际付330−100＝230元。"
+        ],
+        "stages": [
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第1步", "330÷60＝5……30，只能享受5次优惠。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第2步", "优惠20×5＝100元。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第3步", "实际付330−100＝230元。"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p04-11",
+    "unitId": "U01",
+    "title": "两种材料能配几束",
+    "stem": "一束花需要30枝康乃馨、20枝月季。现有240枝康乃馨、180枝月季，最多能扎几束？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "束"
+      }
+    ],
+    "hint": "两种花必须同时够用，分别计算可扎束数，再选较小值。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-loading"],
+    "sources": [
+      {
+        "paperId": "P04",
+        "page": 3,
+        "number": "五2"
+      }
+    ],
+    "knowledge": "两种材料能配几束",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "value": "8"
+    },
+    "explanation": {
+      "analysis": "两种花必须同时够用，分别计算可扎束数，再选较小值。",
+      "steps": ["康乃馨：240÷30＝8束。", "月季：180÷20＝9束。", "只能扎8束；第9束的康乃馨不够。"],
+      "answer": "8束",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "两种材料能配几束",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "康乃馨：240÷30＝8束。",
+          "月季：180÷20＝9束。",
+          "只能扎8束；第9束的康乃馨不够。"
+        ],
+        "stages": [
+          {
+            "kind": "bars",
+            "headings": ["康乃馨可扎", "月季可扎"],
+            "values": [8, 9],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["试扎8束", "康乃馨240", "月季160"],
+            "rows": [["试扎9束", "康乃馨270，不够", "月季180"]]
+          },
+          {
+            "kind": "bars",
+            "headings": ["两种都够的束数"],
+            "values": [8],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p04-12",
+    "unitId": "U01",
+    "title": "总价中先扣掉另一项",
+    "stem": "买12个分类垃圾桶和13把扫帚，每把扫帚6元，共花678元。平均每个垃圾桶多少元？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "元"
+      }
+    ],
+    "hint": "先求扫帚的钱，再从总钱数中扣除，剩余才是12个垃圾桶的钱。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-groups"],
+    "sources": [
+      {
+        "paperId": "P04",
+        "page": 3,
+        "number": "五3"
+      }
+    ],
+    "knowledge": "总价中先扣掉另一项",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "value": "50"
+    },
+    "explanation": {
+      "analysis": "先求扫帚的钱，再从总钱数中扣除，剩余才是12个垃圾桶的钱。",
+      "steps": ["13×6＝78元。", "678−78＝600元。", "600÷12＝50元。"],
+      "answer": "50元",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "总价中先扣掉另一项",
+        "labels": [],
+        "values": [],
+        "captions": ["13×6＝78元。", "678−78＝600元。", "600÷12＝50元。"],
+        "stages": [
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第1步", "13×6＝78元。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第2步", "678−78＝600元。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第3步", "600÷12＝50元。"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p04-13",
+    "unitId": "U01",
+    "title": "先装袋，再装箱",
+    "stem": "每小时生产720块小蛋糕，每6块装一袋，每20袋装一箱。每小时能装多少箱？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "箱"
+      }
+    ],
+    "hint": "两次分组都要计算，不能把每箱袋数当成每箱蛋糕数。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-groups"],
+    "sources": [
+      {
+        "paperId": "P04",
+        "page": 4,
+        "number": "五5"
+      }
+    ],
+    "knowledge": "先装袋，再装箱",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "value": "6"
+    },
+    "explanation": {
+      "analysis": "两次分组都要计算，不能把每箱袋数当成每箱蛋糕数。",
+      "steps": ["720÷6＝120袋。", "120÷20＝6箱。"],
+      "answer": "6箱",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p04-14",
+    "unitId": "U01",
+    "title": "轮流抬物，先算总路程",
+    "stem": "4人轮流抬一筐物品，每次需要2人一起抬，送到600米外。平均每人抬多少米？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "米"
+      }
+    ],
+    "hint": "物品前进1米，就同时有多个人各抬1米。先求所有人抬的路程总和，再平均分。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-groups"],
+    "sources": [
+      {
+        "paperId": "P04",
+        "page": 4,
+        "number": "五6"
+      }
+    ],
+    "knowledge": "轮流抬物，先算总路程",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "value": "300"
+    },
+    "explanation": {
+      "analysis": "物品前进1米，就同时有多个人各抬1米。先求所有人抬的路程总和，再平均分。",
+      "steps": [
+        "所有人合计抬：600×2＝1200米（各人路程之和）。",
+        "平均每人：1200÷4＝300米。",
+        "检验：300×4＝1200，与总路程相同。"
+      ],
+      "answer": "300米",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "轮流抬物，先算总路程",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "所有人合计抬：600×2＝1200米（各人路程之和）。",
+          "平均每人：1200÷4＝300米。",
+          "检验：300×4＝1200，与总路程相同。"
+        ],
+        "stages": [
+          {
+            "kind": "bars",
+            "headings": ["物品移动距离", "所有人的合计路程"],
+            "values": [600, 1200],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["人数", "合计路程", "每人"],
+            "rows": [["4", "1200", "300"]]
+          },
+          {
+            "kind": "bars",
+            "headings": ["所有人合计", "每人×人数"],
+            "values": [1200, 1200],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p05-01",
+    "unitId": "U02",
+    "title": "长方形和正方形拼接",
+    "stem": "把长8厘米、宽3厘米的长方形，与边长3厘米的正方形沿一条完整边拼成大长方形。求大长方形长和周长（厘米）。",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "length",
+        "label": "长",
+        "suffix": ""
+      },
+      {
+        "key": "perimeter",
+        "label": "周长",
+        "suffix": ""
+      }
+    ],
+    "hint": "拼接增加一段3厘米的长，宽仍是3厘米。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-cut"],
+    "sources": [
+      {
+        "paperId": "P05",
+        "page": 2,
+        "number": "一7"
+      }
+    ],
+    "knowledge": "长方形和正方形拼接",
+    "pages": [18, 43],
+    "hasVisual": false,
+    "expected": {
+      "length": "11",
+      "perimeter": "28"
+    },
+    "explanation": {
+      "analysis": "拼接增加一段3厘米的长，宽仍是3厘米。",
+      "steps": ["长：8＋3＝11厘米。", "周长：(11＋3)×2＝28厘米。"],
+      "answer": "长：11，周长：28",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p05-02",
+    "unitId": "U02",
+    "title": "宽增加，面积增加多少",
+    "stem": "长方形菜地长34米，宽从12米增加到18米。面积增加多少平方米？周长增加多少米？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "area",
+        "label": "面积",
+        "suffix": ""
+      },
+      {
+        "key": "perimeter",
+        "label": "周长",
+        "suffix": ""
+      }
+    ],
+    "hint": "长不变，新增部分是长34米、宽6米的长方形；周长中有两条宽发生变化。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-compare"],
+    "sources": [
+      {
+        "paperId": "P05",
+        "page": 2,
+        "number": "一8"
+      }
+    ],
+    "knowledge": "宽增加，面积增加多少",
+    "pages": [18, 43],
+    "hasVisual": true,
+    "expected": {
+      "area": "204",
+      "perimeter": "12"
+    },
+    "explanation": {
+      "analysis": "长不变，新增部分是长34米、宽6米的长方形；周长中有两条宽发生变化。",
+      "steps": ["宽增加：18−12＝6米。", "面积增加：34×6＝204平方米。", "周长增加：6×2＝12米。"],
+      "answer": "面积：204，周长：12",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "宽增加，面积增加多少",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "宽增加：18−12＝6米。",
+          "面积增加：34×6＝204平方米。",
+          "周长增加：6×2＝12米。"
+        ],
+        "stages": [
+          {
+            "kind": "bars",
+            "headings": ["原宽", "新宽", "增加"],
+            "values": [12, 18, 6],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["新增长方形", "长34米", "宽6米"],
+            "rows": [["新增面积", "34×6", "204平方米"]]
+          },
+          {
+            "kind": "table",
+            "headings": ["周长中变化的边", "两条宽"],
+            "rows": [["增加的长度", "6×2＝12米"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p05-03",
+    "unitId": "U02",
+    "title": "方格卡片测封面",
+    "stem": "用每张面积25平方厘米的正方形卡片测一本画册封面，沿长摆6张，沿宽摆4张。封面面积是多少平方分米？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "平方分米"
+      }
+    ],
+    "hint": "先数卡片总张数，再乘每张面积，最后换算单位。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-grid"],
+    "sources": [
+      {
+        "paperId": "P05",
+        "page": 4,
+        "number": "五2"
+      }
+    ],
+    "knowledge": "方格卡片测封面",
+    "pages": [18, 43],
+    "hasVisual": true,
+    "expected": {
+      "value": "6"
+    },
+    "explanation": {
+      "analysis": "先数卡片总张数，再乘每张面积，最后换算单位。",
+      "steps": ["6×4＝24张。", "24×25＝600平方厘米。", "600÷100＝6平方分米。"],
+      "answer": "6平方分米",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "方格卡片测封面",
+        "labels": [],
+        "values": [],
+        "captions": ["6×4＝24张。", "24×25＝600平方厘米。", "600÷100＝6平方分米。"],
+        "stages": [
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第1步", "6×4＝24张。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第2步", "24×25＝600平方厘米。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第3步", "600÷100＝6平方分米。"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p05-04",
+    "unitId": "U02",
+    "title": "一小时压路面积",
+    "stem": "压路机碾轮宽2米，每分钟前进40米，连续工作1小时、不重复碾压。压过多少平方米？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "平方米"
+      }
+    ],
+    "hint": "先把1小时换成60分钟，再求压过的长方形面积。",
+    "sourceKind": "adapted",
+    "topicIds": ["u2-tiling"],
+    "sources": [
+      {
+        "paperId": "P05",
+        "page": 4,
+        "number": "五3"
+      }
+    ],
+    "knowledge": "一小时压路面积",
+    "pages": [18, 43],
+    "hasVisual": false,
+    "expected": {
+      "value": "4800"
+    },
+    "explanation": {
+      "analysis": "先把1小时换成60分钟，再求压过的长方形面积。",
+      "steps": ["40×60＝2400米。", "2400×2＝4800平方米。"],
+      "answer": "4800平方米",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p05-05",
+    "unitId": "U02",
+    "title": "正方形三面围栏",
+    "stem": "一块正方形菜地一面靠墙，另外三面共用60米栅栏。菜地面积是多少平方米？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "平方米"
+      }
+    ],
+    "hint": "正方形的三条边相等，用栅栏总长平均分成3份。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-fence"],
+    "sources": [
+      {
+        "paperId": "P05",
+        "page": 4,
+        "number": "五4（1）"
+      }
+    ],
+    "knowledge": "正方形三面围栏",
+    "pages": [18, 43],
+    "hasVisual": false,
+    "expected": {
+      "value": "400"
+    },
+    "explanation": {
+      "analysis": "正方形的三条边相等，用栅栏总长平均分成3份。",
+      "steps": ["边长：60÷3＝20米。", "面积：20×20＝400平方米。"],
+      "answer": "400平方米",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p05-06",
+    "unitId": "U02",
+    "title": "边长增加2米，面积增加28",
+    "stem": "一个正方形的边长增加2米后，面积增加28平方米。原来正方形的面积是多少平方米？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "平方米"
+      }
+    ],
+    "hint": "新增面积由两条宽2米的长方形和一个2×2的小正方形组成。先扣掉角上的4平方米。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-compare"],
+    "sources": [
+      {
+        "paperId": "P05",
+        "page": 4,
+        "number": "附加"
+      }
+    ],
+    "knowledge": "边长增加2米，面积增加28",
+    "pages": [18, 43],
+    "hasVisual": true,
+    "expected": {
+      "value": "36"
+    },
+    "explanation": {
+      "analysis": "新增面积由两条宽2米的长方形和一个2×2的小正方形组成。先扣掉角上的4平方米。",
+      "steps": [
+        "角上小正方形面积：2×2＝4平方米。",
+        "两条长方形合计28−4＝24平方米；原边长：24÷2÷2＝6米。",
+        "原面积：6×6＝36平方米。"
+      ],
+      "answer": "36平方米",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "边长增加2米，面积增加28",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "角上小正方形面积：2×2＝4平方米。",
+          "两条长方形合计28−4＝24平方米；原边长：24÷2÷2＝6米。",
+          "原面积：6×6＝36平方米。"
+        ],
+        "stages": [
+          {
+            "kind": "table",
+            "headings": ["新增部分", "面积"],
+            "rows": [
+              ["角上2×2", "4"],
+              ["两条宽2米的长方形", "24"]
+            ]
+          },
+          {
+            "kind": "bars",
+            "headings": ["两条长方形面积", "角上面积"],
+            "values": [24, 4],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["原边长", "24÷2÷2＝6"],
+            "rows": [["原面积", "6×6＝36"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p06-01",
+    "unitId": "U01",
+    "title": "969÷25",
+    "stem": "用竖式计算969÷25，填写商和余数，并验算。",
+    "type": "calculation",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "quotient",
+        "label": "商",
+        "suffix": ""
+      },
+      {
+        "key": "remainder",
+        "label": "余数",
+        "suffix": ""
+      }
+    ],
+    "hint": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-calculation"],
+    "sources": [
+      {
+        "paperId": "P06",
+        "page": 1,
+        "number": "一2（1）"
+      }
+    ],
+    "knowledge": "969÷25",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "quotient": "38",
+      "remainder": "19"
+    },
+    "explanation": {
+      "analysis": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+      "steps": ["25×38＝950。", "969−950＝19，19＜25。", "验算：25×38＋19＝969。"],
+      "answer": "商：38，余数：19",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p06-02",
+    "unitId": "U01",
+    "title": "304÷38",
+    "stem": "用竖式计算304÷38，填写商和余数，并验算。",
+    "type": "calculation",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "quotient",
+        "label": "商",
+        "suffix": ""
+      },
+      {
+        "key": "remainder",
+        "label": "余数",
+        "suffix": ""
+      }
+    ],
+    "hint": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-calculation"],
+    "sources": [
+      {
+        "paperId": "P06",
+        "page": 1,
+        "number": "一2（2）"
+      }
+    ],
+    "knowledge": "304÷38",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "quotient": "8",
+      "remainder": "0"
+    },
+    "explanation": {
+      "analysis": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+      "steps": ["38×8＝304。", "304−304＝0，0＜38。", "验算：38×8＋0＝304。"],
+      "answer": "商：8，余数：0",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p06-03",
+    "unitId": "U01",
+    "title": "700÷40",
+    "stem": "用竖式计算700÷40，填写商和余数，并验算。",
+    "type": "calculation",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "quotient",
+        "label": "商",
+        "suffix": ""
+      },
+      {
+        "key": "remainder",
+        "label": "余数",
+        "suffix": ""
+      }
+    ],
+    "hint": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-calculation"],
+    "sources": [
+      {
+        "paperId": "P06",
+        "page": 1,
+        "number": "一2（3）"
+      }
+    ],
+    "knowledge": "700÷40",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "quotient": "17",
+      "remainder": "20"
+    },
+    "explanation": {
+      "analysis": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+      "steps": ["40×17＝680。", "700−680＝20，20＜40。", "验算：40×17＋20＝700。"],
+      "answer": "商：17，余数：20",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p06-04",
+    "unitId": "U01",
+    "title": "627÷33",
+    "stem": "用竖式计算627÷33，填写商和余数，并验算。",
+    "type": "calculation",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "quotient",
+        "label": "商",
+        "suffix": ""
+      },
+      {
+        "key": "remainder",
+        "label": "余数",
+        "suffix": ""
+      }
+    ],
+    "hint": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-calculation"],
+    "sources": [
+      {
+        "paperId": "P06",
+        "page": 1,
+        "number": "一2（4）"
+      }
+    ],
+    "knowledge": "627÷33",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "quotient": "19",
+      "remainder": "0"
+    },
+    "explanation": {
+      "analysis": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+      "steps": ["33×19＝627。", "627−627＝0，0＜33。", "验算：33×19＋0＝627。"],
+      "answer": "商：19，余数：0",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p06-05",
+    "unitId": "U01",
+    "title": "半价后可以买多少",
+    "stem": "一盒水彩笔22元，242元可以买多少盒？如果半价出售，242元可以买多少盒？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "原价盒数",
+        "label": "原价盒数",
+        "suffix": ""
+      },
+      {
+        "key": "半价盒数",
+        "label": "半价盒数",
+        "suffix": ""
+      }
+    ],
+    "hint": "半价后每盒价钱是原来的一半，同样的钱可以买两倍的数量。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-changes"],
+    "sources": [
+      {
+        "paperId": "P06",
+        "page": 2,
+        "number": "二6"
+      }
+    ],
+    "knowledge": "半价后可以买多少",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "原价盒数": "11",
+      "半价盒数": "22"
+    },
+    "explanation": {
+      "analysis": "半价后每盒价钱是原来的一半，同样的钱可以买两倍的数量。",
+      "steps": ["原价：242÷22＝11盒。", "半价单价：22÷2＝11元。", "半价数量：242÷11＝22盒。"],
+      "answer": "原价盒数：11，半价盒数：22",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p06-06",
+    "unitId": "U01",
+    "title": "余数29，最小被除数",
+    "stem": "○÷☆＝17……29，○最小是多少？",
+    "type": "fill",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": ""
+      }
+    ],
+    "hint": "余数必须小于除数，先确定除数的最小值。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-remainder"],
+    "sources": [
+      {
+        "paperId": "P06",
+        "page": 2,
+        "number": "二7（2）"
+      }
+    ],
+    "knowledge": "余数29，最小被除数",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "value": "539"
+    },
+    "explanation": {
+      "analysis": "余数必须小于除数，先确定除数的最小值。",
+      "steps": ["除数至少是30。", "最小被除数：30×17＋29＝539。", "检验：539÷30＝17……29。"],
+      "answer": "539",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "余数29，最小被除数",
+        "labels": [],
+        "values": [],
+        "captions": ["除数至少是30。", "最小被除数：30×17＋29＝539。", "检验：539÷30＝17……29。"],
+        "stages": [
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第1步", "除数至少是30。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第2步", "最小被除数：30×17＋29＝539。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第3步", "检验：539÷30＝17……29。"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p06-07",
+    "unitId": "U01",
+    "title": "除数看错后的还原",
+    "stem": "把除数27看成72，算得商12、余数9。被除数没有看错，正确的商和余数分别是多少？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "quotient",
+        "label": "商",
+        "suffix": ""
+      },
+      {
+        "key": "remainder",
+        "label": "余数",
+        "suffix": ""
+      }
+    ],
+    "hint": "先用错误的除数、商和余数还原被除数，再按正确的除数重算。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-restore"],
+    "sources": [
+      {
+        "paperId": "P06",
+        "page": 2,
+        "number": "二9"
+      }
+    ],
+    "knowledge": "除数看错后的还原",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "quotient": "32",
+      "remainder": "9"
+    },
+    "explanation": {
+      "analysis": "先用错误的除数、商和余数还原被除数，再按正确的除数重算。",
+      "steps": [
+        "还原被除数：72×12＋9＝873。",
+        "27×32＝864，873−864＝9。",
+        "验算：27×32＋9＝873，余数9＜27。"
+      ],
+      "answer": "商：32，余数：9",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "除数看错后的还原",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "还原被除数：72×12＋9＝873。",
+          "27×32＝864，873−864＝9。",
+          "验算：27×32＋9＝873，余数9＜27。"
+        ],
+        "stages": [
+          {
+            "kind": "bars",
+            "headings": ["错误计算已分", "错误余数"],
+            "values": [864, 9],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["正确除数", "试商", "乘回"],
+            "rows": [
+              ["27", "32", "864"],
+              ["27", "33", "891"]
+            ]
+          },
+          {
+            "kind": "bars",
+            "headings": ["正确分完", "正确剩余"],
+            "values": [864, 9],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p06-08",
+    "unitId": "U01",
+    "title": "均分钢笔后补钱",
+    "stem": "两人出同样多的钱买同样的笔，明明比亮亮少分24支。亮亮应还明明144元。每支笔多少元？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "元"
+      }
+    ],
+    "hint": "平均分时，亮亮多拿的一半差额应属于明明；补的钱只对应多拿的12支。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-changes"],
+    "sources": [
+      {
+        "paperId": "P06",
+        "page": 2,
+        "number": "二11"
+      }
+    ],
+    "knowledge": "均分钢笔后补钱",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "value": "12"
+    },
+    "explanation": {
+      "analysis": "平均分时，亮亮多拿的一半差额应属于明明；补的钱只对应多拿的12支。",
+      "steps": [
+        "24÷2＝12支，亮亮比平均分多拿12支。",
+        "144÷12＝12元/支。",
+        "不是把144元直接除以24支。"
+      ],
+      "answer": "12元",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "均分钢笔后补钱",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "24÷2＝12支，亮亮比平均分多拿12支。",
+          "144÷12＝12元/支。",
+          "不是把144元直接除以24支。"
+        ],
+        "stages": [
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第1步", "24÷2＝12支，亮亮比平均分多拿12支。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第2步", "144÷12＝12元/支。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第3步", "不是把144元直接除以24支。"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p06-09",
+    "unitId": "U01",
+    "title": "楼层与台阶段数",
+    "stem": "从1楼到5楼共92级台阶，每层之间台阶数相同。一栋楼共437级台阶，这栋楼共有几层？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "层"
+      }
+    ],
+    "hint": "1楼到5楼经过4段台阶。整栋楼的楼层数比台阶段数多1。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-intervals"],
+    "sources": [
+      {
+        "paperId": "P06",
+        "page": 2,
+        "number": "二12"
+      }
+    ],
+    "knowledge": "楼层与台阶段数",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "value": "20"
+    },
+    "explanation": {
+      "analysis": "1楼到5楼经过4段台阶。整栋楼的楼层数比台阶段数多1。",
+      "steps": ["每段：92÷(5−1)＝23级。", "437÷23＝19段。", "楼层：19＋1＝20层。"],
+      "answer": "20层",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "楼层与台阶段数",
+        "labels": [],
+        "values": [],
+        "captions": ["每段：92÷(5−1)＝23级。", "437÷23＝19段。", "楼层：19＋1＝20层。"],
+        "stages": [
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第1步", "每段：92÷(5−1)＝23级。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第2步", "437÷23＝19段。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第3步", "楼层：19＋1＝20层。"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p06-10",
+    "unitId": "U01",
+    "title": "用反例判断商末尾的0",
+    "stem": "“被除数末尾有0，商末尾一定有0。”哪道算式能说明这句话不正确？",
+    "type": "choice",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": ""
+      }
+    ],
+    "hint": "只要找到被除数末尾有0、商末尾没有0的一例，就能推翻“一定”。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-remainder"],
+    "sources": [
+      {
+        "paperId": "P06",
+        "page": 3,
+        "number": "三5"
+      }
+    ],
+    "knowledge": "用反例判断商末尾的0",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "value": "1"
+    },
+    "explanation": {
+      "analysis": "只要找到被除数末尾有0、商末尾没有0的一例，就能推翻“一定”。",
+      "steps": [
+        "930÷31＝30；180÷15＝12。",
+        "480÷12＝40；780÷26＝30。",
+        "只有180÷15的商12末尾没有0。"
+      ],
+      "answer": "180÷15",
+      "pitfall": ""
+    },
+    "options": ["930÷31", "180÷15", "480÷12", "780÷26"]
+  },
+  {
+    "id": "p07-01",
+    "unitId": "U01",
+    "title": "余数等于除数时调商",
+    "stem": "除数38，试商后余数正好也是38。把商改正确后，余数是多少？",
+    "type": "fill",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": ""
+      }
+    ],
+    "hint": "剩下38还可以再分出完整的1份，所以商要增加1。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-trial"],
+    "sources": [
+      {
+        "paperId": "P07",
+        "page": 1,
+        "number": "1"
+      }
+    ],
+    "knowledge": "余数等于除数时调商",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "value": "0"
+    },
+    "explanation": {
+      "analysis": "剩下38还可以再分出完整的1份，所以商要增加1。",
+      "steps": ["商增加1，要再减去1个38。", "38−38＝0，正确余数为0。"],
+      "answer": "0",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p07-02",
+    "unitId": "U01",
+    "title": "除数看错后的还原",
+    "stem": "把除数35看成53，算得商7、余数49。被除数没有看错，正确的商和余数分别是多少？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "quotient",
+        "label": "商",
+        "suffix": ""
+      },
+      {
+        "key": "remainder",
+        "label": "余数",
+        "suffix": ""
+      }
+    ],
+    "hint": "先用错误的除数、商和余数还原被除数，再按正确的除数重算。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-restore"],
+    "sources": [
+      {
+        "paperId": "P07",
+        "page": 1,
+        "number": "3"
+      }
+    ],
+    "knowledge": "除数看错后的还原",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "quotient": "12",
+      "remainder": "0"
+    },
+    "explanation": {
+      "analysis": "先用错误的除数、商和余数还原被除数，再按正确的除数重算。",
+      "steps": [
+        "还原被除数：53×7＋49＝420。",
+        "35×12＝420，420−420＝0。",
+        "验算：35×12＋0＝420，余数0＜35。"
+      ],
+      "answer": "商：12，余数：0",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "除数看错后的还原",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "还原被除数：53×7＋49＝420。",
+          "35×12＝420，420−420＝0。",
+          "验算：35×12＋0＝420，余数0＜35。"
+        ],
+        "stages": [
+          {
+            "kind": "bars",
+            "headings": ["错误计算已分", "错误余数"],
+            "values": [371, 49],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["正确除数", "试商", "乘回"],
+            "rows": [
+              ["35", "12", "420"],
+              ["35", "13", "455"]
+            ]
+          },
+          {
+            "kind": "bars",
+            "headings": ["正确分完", "正确剩余"],
+            "values": [420, 0],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p07-03",
+    "unitId": "U01",
+    "title": "除数看错后的还原",
+    "stem": "把除数53看成35，算得商15、余数5。被除数没有看错，正确的商和余数分别是多少？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "quotient",
+        "label": "商",
+        "suffix": ""
+      },
+      {
+        "key": "remainder",
+        "label": "余数",
+        "suffix": ""
+      }
+    ],
+    "hint": "先用错误的除数、商和余数还原被除数，再按正确的除数重算。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-restore"],
+    "sources": [
+      {
+        "paperId": "P07",
+        "page": 1,
+        "number": "10"
+      }
+    ],
+    "knowledge": "除数看错后的还原",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "quotient": "10",
+      "remainder": "0"
+    },
+    "explanation": {
+      "analysis": "先用错误的除数、商和余数还原被除数，再按正确的除数重算。",
+      "steps": [
+        "还原被除数：35×15＋5＝530。",
+        "53×10＝530，530−530＝0。",
+        "验算：53×10＋0＝530，余数0＜53。"
+      ],
+      "answer": "商：10，余数：0",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "除数看错后的还原",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "还原被除数：35×15＋5＝530。",
+          "53×10＝530，530−530＝0。",
+          "验算：53×10＋0＝530，余数0＜53。"
+        ],
+        "stages": [
+          {
+            "kind": "bars",
+            "headings": ["错误计算已分", "错误余数"],
+            "values": [525, 5],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["正确除数", "试商", "乘回"],
+            "rows": [
+              ["53", "10", "530"],
+              ["53", "11", "583"]
+            ]
+          },
+          {
+            "kind": "bars",
+            "headings": ["正确分完", "正确剩余"],
+            "values": [530, 0],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p07-04",
+    "unitId": "U01",
+    "title": "除数看错后的还原",
+    "stem": "把除数35看成53，算得商12、余数23。被除数没有看错，正确的商和余数分别是多少？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "quotient",
+        "label": "商",
+        "suffix": ""
+      },
+      {
+        "key": "remainder",
+        "label": "余数",
+        "suffix": ""
+      }
+    ],
+    "hint": "先用错误的除数、商和余数还原被除数，再按正确的除数重算。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-restore"],
+    "sources": [
+      {
+        "paperId": "P07",
+        "page": 1,
+        "number": "11"
+      }
+    ],
+    "knowledge": "除数看错后的还原",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "quotient": "18",
+      "remainder": "29"
+    },
+    "explanation": {
+      "analysis": "先用错误的除数、商和余数还原被除数，再按正确的除数重算。",
+      "steps": [
+        "还原被除数：53×12＋23＝659。",
+        "35×18＝630，659−630＝29。",
+        "验算：35×18＋29＝659，余数29＜35。"
+      ],
+      "answer": "商：18，余数：29",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "除数看错后的还原",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "还原被除数：53×12＋23＝659。",
+          "35×18＝630，659−630＝29。",
+          "验算：35×18＋29＝659，余数29＜35。"
+        ],
+        "stages": [
+          {
+            "kind": "bars",
+            "headings": ["错误计算已分", "错误余数"],
+            "values": [636, 23],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["正确除数", "试商", "乘回"],
+            "rows": [
+              ["35", "18", "630"],
+              ["35", "19", "665"]
+            ]
+          },
+          {
+            "kind": "bars",
+            "headings": ["正确分完", "正确剩余"],
+            "values": [630, 29],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p07-05",
+    "unitId": "U01",
+    "title": "除数看错后的还原",
+    "stem": "把除数80看成8，算得商65、余数3。被除数没有看错，正确的商和余数分别是多少？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "quotient",
+        "label": "商",
+        "suffix": ""
+      },
+      {
+        "key": "remainder",
+        "label": "余数",
+        "suffix": ""
+      }
+    ],
+    "hint": "先用错误的除数、商和余数还原被除数，再按正确的除数重算。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-restore"],
+    "sources": [
+      {
+        "paperId": "P07",
+        "page": 1,
+        "number": "12"
+      }
+    ],
+    "knowledge": "除数看错后的还原",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "quotient": "6",
+      "remainder": "43"
+    },
+    "explanation": {
+      "analysis": "先用错误的除数、商和余数还原被除数，再按正确的除数重算。",
+      "steps": [
+        "还原被除数：8×65＋3＝523。",
+        "80×6＝480，523−480＝43。",
+        "验算：80×6＋43＝523，余数43＜80。"
+      ],
+      "answer": "商：6，余数：43",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "除数看错后的还原",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "还原被除数：8×65＋3＝523。",
+          "80×6＝480，523−480＝43。",
+          "验算：80×6＋43＝523，余数43＜80。"
+        ],
+        "stages": [
+          {
+            "kind": "bars",
+            "headings": ["错误计算已分", "错误余数"],
+            "values": [520, 3],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["正确除数", "试商", "乘回"],
+            "rows": [
+              ["80", "6", "480"],
+              ["80", "7", "560"]
+            ]
+          },
+          {
+            "kind": "bars",
+            "headings": ["正确分完", "正确剩余"],
+            "values": [480, 43],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p07-06",
+    "unitId": "U01",
+    "title": "三个数的和已知，反求除法",
+    "stem": "一道没有余数的除法，被除数、除数与商的和是335，商是13。求被除数与除数。",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "dividend",
+        "label": "被除数",
+        "suffix": ""
+      },
+      {
+        "key": "divisor",
+        "label": "除数",
+        "suffix": ""
+      }
+    ],
+    "hint": "被除数是除数的商倍。先从总和中减去商，再把剩余看成若干个除数。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-restore"],
+    "sources": [
+      {
+        "paperId": "P07",
+        "page": 1,
+        "number": "6"
+      }
+    ],
+    "knowledge": "三个数的和已知，反求除法",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "dividend": "299",
+      "divisor": "23"
+    },
+    "explanation": {
+      "analysis": "被除数是除数的商倍。先从总和中减去商，再把剩余看成若干个除数。",
+      "steps": [
+        "被除数＋除数：335−13＝322。",
+        "它们相当于13＋1＝14个除数，除数：322÷14＝23。",
+        "被除数：23×13＝299。"
+      ],
+      "answer": "被除数：299，除数：23",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "三个数的和已知，反求除法",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "被除数＋除数：335−13＝322。",
+          "它们相当于13＋1＝14个除数，除数：322÷14＝23。",
+          "被除数：23×13＝299。"
+        ],
+        "stages": [
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第1步", "被除数＋除数：335−13＝322。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第2步", "它们相当于13＋1＝14个除数，除数：322÷14＝23。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第3步", "被除数：23×13＝299。"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p07-07",
+    "unitId": "U01",
+    "title": "三个数的和已知，反求除法",
+    "stem": "一道没有余数的除法，被除数、除数与商的和是689，商是14。求被除数与除数。",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "dividend",
+        "label": "被除数",
+        "suffix": ""
+      },
+      {
+        "key": "divisor",
+        "label": "除数",
+        "suffix": ""
+      }
+    ],
+    "hint": "被除数是除数的商倍。先从总和中减去商，再把剩余看成若干个除数。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-restore"],
+    "sources": [
+      {
+        "paperId": "P07",
+        "page": 2,
+        "number": "15"
+      }
+    ],
+    "knowledge": "三个数的和已知，反求除法",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "dividend": "630",
+      "divisor": "45"
+    },
+    "explanation": {
+      "analysis": "被除数是除数的商倍。先从总和中减去商，再把剩余看成若干个除数。",
+      "steps": [
+        "被除数＋除数：689−14＝675。",
+        "它们相当于14＋1＝15个除数，除数：675÷15＝45。",
+        "被除数：45×14＝630。"
+      ],
+      "answer": "被除数：630，除数：45",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "三个数的和已知，反求除法",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "被除数＋除数：689−14＝675。",
+          "它们相当于14＋1＝15个除数，除数：675÷15＝45。",
+          "被除数：45×14＝630。"
+        ],
+        "stages": [
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第1步", "被除数＋除数：689−14＝675。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第2步", "它们相当于14＋1＝15个除数，除数：675÷15＝45。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第3步", "被除数：45×14＝630。"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p07-08",
+    "unitId": "U01",
+    "title": "三个数的和已知，反求除法",
+    "stem": "一道没有余数的除法，被除数、除数与商的和是560，商是16。求被除数与除数。",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "dividend",
+        "label": "被除数",
+        "suffix": ""
+      },
+      {
+        "key": "divisor",
+        "label": "除数",
+        "suffix": ""
+      }
+    ],
+    "hint": "被除数是除数的商倍。先从总和中减去商，再把剩余看成若干个除数。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-restore"],
+    "sources": [
+      {
+        "paperId": "P07",
+        "page": 2,
+        "number": "16"
+      }
+    ],
+    "knowledge": "三个数的和已知，反求除法",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "dividend": "512",
+      "divisor": "32"
+    },
+    "explanation": {
+      "analysis": "被除数是除数的商倍。先从总和中减去商，再把剩余看成若干个除数。",
+      "steps": [
+        "被除数＋除数：560−16＝544。",
+        "它们相当于16＋1＝17个除数，除数：544÷17＝32。",
+        "被除数：32×16＝512。"
+      ],
+      "answer": "被除数：512，除数：32",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "三个数的和已知，反求除法",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "被除数＋除数：560−16＝544。",
+          "它们相当于16＋1＝17个除数，除数：544÷17＝32。",
+          "被除数：32×16＝512。"
+        ],
+        "stages": [
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第1步", "被除数＋除数：560−16＝544。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第2步", "它们相当于16＋1＝17个除数，除数：544÷17＝32。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第3步", "被除数：32×16＝512。"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p07-09",
+    "unitId": "U01",
+    "title": "三个数的和已知，反求除法",
+    "stem": "一道没有余数的除法，被除数、除数与商的和是159，商是7。求被除数与除数。",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "dividend",
+        "label": "被除数",
+        "suffix": ""
+      },
+      {
+        "key": "divisor",
+        "label": "除数",
+        "suffix": ""
+      }
+    ],
+    "hint": "被除数是除数的商倍。先从总和中减去商，再把剩余看成若干个除数。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-restore"],
+    "sources": [
+      {
+        "paperId": "P07",
+        "page": 2,
+        "number": "20"
+      }
+    ],
+    "knowledge": "三个数的和已知，反求除法",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "dividend": "133",
+      "divisor": "19"
+    },
+    "explanation": {
+      "analysis": "被除数是除数的商倍。先从总和中减去商，再把剩余看成若干个除数。",
+      "steps": [
+        "被除数＋除数：159−7＝152。",
+        "它们相当于7＋1＝8个除数，除数：152÷8＝19。",
+        "被除数：19×7＝133。"
+      ],
+      "answer": "被除数：133，除数：19",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "三个数的和已知，反求除法",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "被除数＋除数：159−7＝152。",
+          "它们相当于7＋1＝8个除数，除数：152÷8＝19。",
+          "被除数：19×7＝133。"
+        ],
+        "stages": [
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第1步", "被除数＋除数：159−7＝152。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第2步", "它们相当于7＋1＝8个除数，除数：152÷8＝19。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第3步", "被除数：19×7＝133。"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p07-10",
+    "unitId": "U01",
+    "title": "余数不变时还原除数",
+    "stem": "把被除数114错写成141，商比原来多3，余数不变。求除数和原来的余数。",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "divisor",
+        "label": "除数",
+        "suffix": ""
+      },
+      {
+        "key": "remainder",
+        "label": "余数",
+        "suffix": ""
+      }
+    ],
+    "hint": "余数不变，两个被除数之差就完全来自商变化的整份数量。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-restore"],
+    "sources": [
+      {
+        "paperId": "P07",
+        "page": 1,
+        "number": "7"
+      }
+    ],
+    "knowledge": "余数不变时还原除数",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "divisor": "9",
+      "remainder": "6"
+    },
+    "explanation": {
+      "analysis": "余数不变，两个被除数之差就完全来自商变化的整份数量。",
+      "steps": ["被除数相差：27。", "除数：27÷3＝9。", "114÷9＝12……6，原余数是6。"],
+      "answer": "除数：9，余数：6",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "余数不变时还原除数",
+        "labels": [],
+        "values": [],
+        "captions": ["被除数相差：27。", "除数：27÷3＝9。", "114÷9＝12……6，原余数是6。"],
+        "stages": [
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第1步", "被除数相差：27。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第2步", "除数：27÷3＝9。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第3步", "114÷9＝12……6，原余数是6。"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p07-11",
+    "unitId": "U01",
+    "title": "余数不变时还原除数",
+    "stem": "把被除数137错写成173，商比原来多3，余数不变。求除数和原来的余数。",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "divisor",
+        "label": "除数",
+        "suffix": ""
+      },
+      {
+        "key": "remainder",
+        "label": "余数",
+        "suffix": ""
+      }
+    ],
+    "hint": "余数不变，两个被除数之差就完全来自商变化的整份数量。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-restore"],
+    "sources": [
+      {
+        "paperId": "P07",
+        "page": 1,
+        "number": "8"
+      }
+    ],
+    "knowledge": "余数不变时还原除数",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "divisor": "12",
+      "remainder": "5"
+    },
+    "explanation": {
+      "analysis": "余数不变，两个被除数之差就完全来自商变化的整份数量。",
+      "steps": ["被除数相差：36。", "除数：36÷3＝12。", "137÷12＝11……5，原余数是5。"],
+      "answer": "除数：12，余数：5",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "余数不变时还原除数",
+        "labels": [],
+        "values": [],
+        "captions": ["被除数相差：36。", "除数：36÷3＝12。", "137÷12＝11……5，原余数是5。"],
+        "stages": [
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第1步", "被除数相差：36。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第2步", "除数：36÷3＝12。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第3步", "137÷12＝11……5，原余数是5。"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p07-12",
+    "unitId": "U01",
+    "title": "余数不变时还原除数",
+    "stem": "把被除数895错写成831，商比原来少2，余数不变。求除数和原来的余数。",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "divisor",
+        "label": "除数",
+        "suffix": ""
+      },
+      {
+        "key": "remainder",
+        "label": "余数",
+        "suffix": ""
+      }
+    ],
+    "hint": "余数不变，两个被除数之差就完全来自商变化的整份数量。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-restore"],
+    "sources": [
+      {
+        "paperId": "P07",
+        "page": 2,
+        "number": "17"
+      }
+    ],
+    "knowledge": "余数不变时还原除数",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "divisor": "32",
+      "remainder": "31"
+    },
+    "explanation": {
+      "analysis": "余数不变，两个被除数之差就完全来自商变化的整份数量。",
+      "steps": ["被除数相差：64。", "除数：64÷2＝32。", "895÷32＝27……31，原余数是31。"],
+      "answer": "除数：32，余数：31",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "余数不变时还原除数",
+        "labels": [],
+        "values": [],
+        "captions": ["被除数相差：64。", "除数：64÷2＝32。", "895÷32＝27……31，原余数是31。"],
+        "stages": [
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第1步", "被除数相差：64。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第2步", "除数：64÷2＝32。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第3步", "895÷32＝27……31，原余数是31。"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p07-13",
+    "unitId": "U01",
+    "title": "余数不变时还原除数",
+    "stem": "把被除数339错写成393，商比原来多3，余数不变。求除数和原来的余数。",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "divisor",
+        "label": "除数",
+        "suffix": ""
+      },
+      {
+        "key": "remainder",
+        "label": "余数",
+        "suffix": ""
+      }
+    ],
+    "hint": "余数不变，两个被除数之差就完全来自商变化的整份数量。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-restore"],
+    "sources": [
+      {
+        "paperId": "P07",
+        "page": 2,
+        "number": "18"
+      }
+    ],
+    "knowledge": "余数不变时还原除数",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "divisor": "18",
+      "remainder": "15"
+    },
+    "explanation": {
+      "analysis": "余数不变，两个被除数之差就完全来自商变化的整份数量。",
+      "steps": ["被除数相差：54。", "除数：54÷3＝18。", "339÷18＝18……15，原余数是15。"],
+      "answer": "除数：18，余数：15",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "余数不变时还原除数",
+        "labels": [],
+        "values": [],
+        "captions": ["被除数相差：54。", "除数：54÷3＝18。", "339÷18＝18……15，原余数是15。"],
+        "stages": [
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第1步", "被除数相差：54。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第2步", "除数：54÷3＝18。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第3步", "339÷18＝18……15，原余数是15。"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p07-14",
+    "unitId": "U01",
+    "title": "商与余数同时变化",
+    "stem": "把被除数574错写成745，商多10，余数少9。求原算式的除数与余数。",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "divisor",
+        "label": "除数",
+        "suffix": ""
+      },
+      {
+        "key": "remainder",
+        "label": "余数",
+        "suffix": ""
+      }
+    ],
+    "hint": "被除数增加量比10个除数少9，因此要先补回少掉的9。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-restore"],
+    "sources": [
+      {
+        "paperId": "P07",
+        "page": 2,
+        "number": "19"
+      }
+    ],
+    "knowledge": "商与余数同时变化",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "divisor": "18",
+      "remainder": "16"
+    },
+    "explanation": {
+      "analysis": "被除数增加量比10个除数少9，因此要先补回少掉的9。",
+      "steps": [
+        "745−574＝171。",
+        "10个除数是171＋9＝180，所以除数180÷10＝18。",
+        "574÷18＝31……16，原余数是16。"
+      ],
+      "answer": "除数：18，余数：16",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "商与余数同时变化",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "745−574＝171。",
+          "10个除数是171＋9＝180，所以除数180÷10＝18。",
+          "574÷18＝31……16，原余数是16。"
+        ],
+        "stages": [
+          {
+            "kind": "bars",
+            "headings": ["被除数增加", "余数减少"],
+            "values": [171, 9],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["10个除数", "171＋9＝180"],
+            "rows": [["1个除数", "180÷10＝18"]]
+          },
+          {
+            "kind": "table",
+            "headings": ["原算式", "574÷18＝31……16"],
+            "rows": [["错写后", "745÷18＝41……7"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p08-01",
+    "unitId": "U01",
+    "title": "轮流抬物，先算总路程",
+    "stem": "3人轮流抬一筐物品，每次需要2人一起抬，送到450米外。平均每人抬多少米？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "米"
+      }
+    ],
+    "hint": "物品前进1米，就同时有多个人各抬1米。先求所有人抬的路程总和，再平均分。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-groups"],
+    "sources": [
+      {
+        "paperId": "P08",
+        "page": 1,
+        "number": "1"
+      }
+    ],
+    "knowledge": "轮流抬物，先算总路程",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "value": "300"
+    },
+    "explanation": {
+      "analysis": "物品前进1米，就同时有多个人各抬1米。先求所有人抬的路程总和，再平均分。",
+      "steps": [
+        "所有人合计抬：450×2＝900米（各人路程之和）。",
+        "平均每人：900÷3＝300米。",
+        "检验：300×3＝900，与总路程相同。"
+      ],
+      "answer": "300米",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "轮流抬物，先算总路程",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "所有人合计抬：450×2＝900米（各人路程之和）。",
+          "平均每人：900÷3＝300米。",
+          "检验：300×3＝900，与总路程相同。"
+        ],
+        "stages": [
+          {
+            "kind": "bars",
+            "headings": ["物品移动距离", "所有人的合计路程"],
+            "values": [450, 900],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["人数", "合计路程", "每人"],
+            "rows": [["3", "900", "300"]]
+          },
+          {
+            "kind": "bars",
+            "headings": ["所有人合计", "每人×人数"],
+            "values": [900, 900],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p08-02",
+    "unitId": "U01",
+    "title": "轮流抬物，先算总路程",
+    "stem": "3人轮流抬一筐物品，每次需要2人一起抬，送到300米外。平均每人抬多少米？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "米"
+      }
+    ],
+    "hint": "物品前进1米，就同时有多个人各抬1米。先求所有人抬的路程总和，再平均分。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-groups"],
+    "sources": [
+      {
+        "paperId": "P08",
+        "page": 1,
+        "number": "2"
+      }
+    ],
+    "knowledge": "轮流抬物，先算总路程",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "value": "200"
+    },
+    "explanation": {
+      "analysis": "物品前进1米，就同时有多个人各抬1米。先求所有人抬的路程总和，再平均分。",
+      "steps": [
+        "所有人合计抬：300×2＝600米（各人路程之和）。",
+        "平均每人：600÷3＝200米。",
+        "检验：200×3＝600，与总路程相同。"
+      ],
+      "answer": "200米",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "轮流抬物，先算总路程",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "所有人合计抬：300×2＝600米（各人路程之和）。",
+          "平均每人：600÷3＝200米。",
+          "检验：200×3＝600，与总路程相同。"
+        ],
+        "stages": [
+          {
+            "kind": "bars",
+            "headings": ["物品移动距离", "所有人的合计路程"],
+            "values": [300, 600],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["人数", "合计路程", "每人"],
+            "rows": [["3", "600", "200"]]
+          },
+          {
+            "kind": "bars",
+            "headings": ["所有人合计", "每人×人数"],
+            "values": [600, 600],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p08-03",
+    "unitId": "U01",
+    "title": "轮流抬物，先算总路程",
+    "stem": "3人轮流抬一筐物品，每次需要2人一起抬，送到120米外。平均每人抬多少米？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "米"
+      }
+    ],
+    "hint": "物品前进1米，就同时有多个人各抬1米。先求所有人抬的路程总和，再平均分。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-groups"],
+    "sources": [
+      {
+        "paperId": "P08",
+        "page": 1,
+        "number": "4"
+      }
+    ],
+    "knowledge": "轮流抬物，先算总路程",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "value": "80"
+    },
+    "explanation": {
+      "analysis": "物品前进1米，就同时有多个人各抬1米。先求所有人抬的路程总和，再平均分。",
+      "steps": [
+        "所有人合计抬：120×2＝240米（各人路程之和）。",
+        "平均每人：240÷3＝80米。",
+        "检验：80×3＝240，与总路程相同。"
+      ],
+      "answer": "80米",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "轮流抬物，先算总路程",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "所有人合计抬：120×2＝240米（各人路程之和）。",
+          "平均每人：240÷3＝80米。",
+          "检验：80×3＝240，与总路程相同。"
+        ],
+        "stages": [
+          {
+            "kind": "bars",
+            "headings": ["物品移动距离", "所有人的合计路程"],
+            "values": [120, 240],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["人数", "合计路程", "每人"],
+            "rows": [["3", "240", "80"]]
+          },
+          {
+            "kind": "bars",
+            "headings": ["所有人合计", "每人×人数"],
+            "values": [240, 240],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p08-04",
+    "unitId": "U01",
+    "title": "轮流抬物，先算总路程",
+    "stem": "5人轮流抬一筐物品，每次需要4人一起抬，送到960米外。平均每人抬多少米？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "米"
+      }
+    ],
+    "hint": "物品前进1米，就同时有多个人各抬1米。先求所有人抬的路程总和，再平均分。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-groups"],
+    "sources": [
+      {
+        "paperId": "P08",
+        "page": 1,
+        "number": "5"
+      }
+    ],
+    "knowledge": "轮流抬物，先算总路程",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "value": "768"
+    },
+    "explanation": {
+      "analysis": "物品前进1米，就同时有多个人各抬1米。先求所有人抬的路程总和，再平均分。",
+      "steps": [
+        "所有人合计抬：960×4＝3840米（各人路程之和）。",
+        "平均每人：3840÷5＝768米。",
+        "检验：768×5＝3840，与总路程相同。"
+      ],
+      "answer": "768米",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "轮流抬物，先算总路程",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "所有人合计抬：960×4＝3840米（各人路程之和）。",
+          "平均每人：3840÷5＝768米。",
+          "检验：768×5＝3840，与总路程相同。"
+        ],
+        "stages": [
+          {
+            "kind": "bars",
+            "headings": ["物品移动距离", "所有人的合计路程"],
+            "values": [960, 3840],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["人数", "合计路程", "每人"],
+            "rows": [["5", "3840", "768"]]
+          },
+          {
+            "kind": "bars",
+            "headings": ["所有人合计", "每人×人数"],
+            "values": [3840, 3840],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p08-05",
+    "unitId": "U01",
+    "title": "轮流抬物，先算总路程",
+    "stem": "3人轮流抬一筐物品，每次需要2人一起抬，送到300米外。平均每人抬多少米？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "米"
+      }
+    ],
+    "hint": "物品前进1米，就同时有多个人各抬1米。先求所有人抬的路程总和，再平均分。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-groups"],
+    "sources": [
+      {
+        "paperId": "P08",
+        "page": 1,
+        "number": "6"
+      }
+    ],
+    "knowledge": "轮流抬物，先算总路程",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "value": "200"
+    },
+    "explanation": {
+      "analysis": "物品前进1米，就同时有多个人各抬1米。先求所有人抬的路程总和，再平均分。",
+      "steps": [
+        "所有人合计抬：300×2＝600米（各人路程之和）。",
+        "平均每人：600÷3＝200米。",
+        "检验：200×3＝600，与总路程相同。"
+      ],
+      "answer": "200米",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "轮流抬物，先算总路程",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "所有人合计抬：300×2＝600米（各人路程之和）。",
+          "平均每人：600÷3＝200米。",
+          "检验：200×3＝600，与总路程相同。"
+        ],
+        "stages": [
+          {
+            "kind": "bars",
+            "headings": ["物品移动距离", "所有人的合计路程"],
+            "values": [300, 600],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["人数", "合计路程", "每人"],
+            "rows": [["3", "600", "200"]]
+          },
+          {
+            "kind": "bars",
+            "headings": ["所有人合计", "每人×人数"],
+            "values": [600, 600],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p08-06",
+    "unitId": "U01",
+    "title": "轮流抬物，先算总路程",
+    "stem": "4人轮流抬一筐物品，每次需要3人一起抬，送到200米外。平均每人抬多少米？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "米"
+      }
+    ],
+    "hint": "物品前进1米，就同时有多个人各抬1米。先求所有人抬的路程总和，再平均分。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-groups"],
+    "sources": [
+      {
+        "paperId": "P08",
+        "page": 1,
+        "number": "9"
+      }
+    ],
+    "knowledge": "轮流抬物，先算总路程",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "value": "150"
+    },
+    "explanation": {
+      "analysis": "物品前进1米，就同时有多个人各抬1米。先求所有人抬的路程总和，再平均分。",
+      "steps": [
+        "所有人合计抬：200×3＝600米（各人路程之和）。",
+        "平均每人：600÷4＝150米。",
+        "检验：150×4＝600，与总路程相同。"
+      ],
+      "answer": "150米",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "轮流抬物，先算总路程",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "所有人合计抬：200×3＝600米（各人路程之和）。",
+          "平均每人：600÷4＝150米。",
+          "检验：150×4＝600，与总路程相同。"
+        ],
+        "stages": [
+          {
+            "kind": "bars",
+            "headings": ["物品移动距离", "所有人的合计路程"],
+            "values": [200, 600],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["人数", "合计路程", "每人"],
+            "rows": [["4", "600", "150"]]
+          },
+          {
+            "kind": "bars",
+            "headings": ["所有人合计", "每人×人数"],
+            "values": [600, 600],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p08-07",
+    "unitId": "U01",
+    "title": "轮流抬物，先算总路程",
+    "stem": "3人轮流抬一筐物品，每次需要2人一起抬，送到600米外。平均每人抬多少米？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "米"
+      }
+    ],
+    "hint": "物品前进1米，就同时有多个人各抬1米。先求所有人抬的路程总和，再平均分。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-groups"],
+    "sources": [
+      {
+        "paperId": "P08",
+        "page": 2,
+        "number": "10"
+      }
+    ],
+    "knowledge": "轮流抬物，先算总路程",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "value": "400"
+    },
+    "explanation": {
+      "analysis": "物品前进1米，就同时有多个人各抬1米。先求所有人抬的路程总和，再平均分。",
+      "steps": [
+        "所有人合计抬：600×2＝1200米（各人路程之和）。",
+        "平均每人：1200÷3＝400米。",
+        "检验：400×3＝1200，与总路程相同。"
+      ],
+      "answer": "400米",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "轮流抬物，先算总路程",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "所有人合计抬：600×2＝1200米（各人路程之和）。",
+          "平均每人：1200÷3＝400米。",
+          "检验：400×3＝1200，与总路程相同。"
+        ],
+        "stages": [
+          {
+            "kind": "bars",
+            "headings": ["物品移动距离", "所有人的合计路程"],
+            "values": [600, 1200],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["人数", "合计路程", "每人"],
+            "rows": [["3", "1200", "400"]]
+          },
+          {
+            "kind": "bars",
+            "headings": ["所有人合计", "每人×人数"],
+            "values": [1200, 1200],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p08-08",
+    "unitId": "U01",
+    "title": "轮流抬物，先算总路程",
+    "stem": "4人轮流抬一筐物品，每次需要3人一起抬，送到420米外。平均每人抬多少米？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "米"
+      }
+    ],
+    "hint": "物品前进1米，就同时有多个人各抬1米。先求所有人抬的路程总和，再平均分。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-groups"],
+    "sources": [
+      {
+        "paperId": "P08",
+        "page": 2,
+        "number": "11"
+      }
+    ],
+    "knowledge": "轮流抬物，先算总路程",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "value": "315"
+    },
+    "explanation": {
+      "analysis": "物品前进1米，就同时有多个人各抬1米。先求所有人抬的路程总和，再平均分。",
+      "steps": [
+        "所有人合计抬：420×3＝1260米（各人路程之和）。",
+        "平均每人：1260÷4＝315米。",
+        "检验：315×4＝1260，与总路程相同。"
+      ],
+      "answer": "315米",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "轮流抬物，先算总路程",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "所有人合计抬：420×3＝1260米（各人路程之和）。",
+          "平均每人：1260÷4＝315米。",
+          "检验：315×4＝1260，与总路程相同。"
+        ],
+        "stages": [
+          {
+            "kind": "bars",
+            "headings": ["物品移动距离", "所有人的合计路程"],
+            "values": [420, 1260],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["人数", "合计路程", "每人"],
+            "rows": [["4", "1260", "315"]]
+          },
+          {
+            "kind": "bars",
+            "headings": ["所有人合计", "每人×人数"],
+            "values": [1260, 1260],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p08-09",
+    "unitId": "U01",
+    "title": "轮流骑车，平均步行距离",
+    "stem": "4人去400米外的景点，只有一辆双人自行车。全程两人骑、两人步行，大家平均轮换。平均每人步行多少米？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "米"
+      }
+    ],
+    "hint": "每前进1米，就有2人各步行1米。合计步行路程平均分给4人。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-groups"],
+    "sources": [
+      {
+        "paperId": "P08",
+        "page": 1,
+        "number": "3"
+      }
+    ],
+    "knowledge": "轮流骑车，平均步行距离",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "value": "200"
+    },
+    "explanation": {
+      "analysis": "每前进1米，就有2人各步行1米。合计步行路程平均分给4人。",
+      "steps": ["合计步行：400×2＝800米（各人路程之和）。", "平均每人：800÷4＝200米。"],
+      "answer": "200米",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "轮流骑车，平均步行距离",
+        "labels": [],
+        "values": [],
+        "captions": ["合计步行：400×2＝800米（各人路程之和）。", "平均每人：800÷4＝200米。"],
+        "stages": [
+          {
+            "kind": "bars",
+            "headings": ["单程距离", "合计步行"],
+            "values": [400, 800],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["人数", "合计步行", "平均步行"],
+            "rows": [["4", "800", "200"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p09-01",
+    "unitId": "U01",
+    "title": "897÷48",
+    "stem": "用竖式计算897÷48，填写商和余数，并验算。",
+    "type": "calculation",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "quotient",
+        "label": "商",
+        "suffix": ""
+      },
+      {
+        "key": "remainder",
+        "label": "余数",
+        "suffix": ""
+      }
+    ],
+    "hint": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-calculation"],
+    "sources": [
+      {
+        "paperId": "P09",
+        "page": 2,
+        "number": "三2（1）"
+      },
+      {
+        "paperId": "P12",
+        "page": 2,
+        "number": "三2（1）"
+      }
+    ],
+    "knowledge": "897÷48",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "quotient": "18",
+      "remainder": "33"
+    },
+    "explanation": {
+      "analysis": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+      "steps": ["48×18＝864。", "897−864＝33，33＜48。", "验算：48×18＋33＝897。"],
+      "answer": "商：18，余数：33",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p09-02",
+    "unitId": "U01",
+    "title": "516÷86",
+    "stem": "用竖式计算516÷86，填写商和余数，并验算。",
+    "type": "calculation",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "quotient",
+        "label": "商",
+        "suffix": ""
+      },
+      {
+        "key": "remainder",
+        "label": "余数",
+        "suffix": ""
+      }
+    ],
+    "hint": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-calculation"],
+    "sources": [
+      {
+        "paperId": "P09",
+        "page": 2,
+        "number": "三2（2）"
+      },
+      {
+        "paperId": "P12",
+        "page": 2,
+        "number": "三2（2）"
+      }
+    ],
+    "knowledge": "516÷86",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "quotient": "6",
+      "remainder": "0"
+    },
+    "explanation": {
+      "analysis": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+      "steps": ["86×6＝516。", "516−516＝0，0＜86。", "验算：86×6＋0＝516。"],
+      "answer": "商：6，余数：0",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p09-03",
+    "unitId": "U01",
+    "title": "竖式中的56表示多少",
+    "stem": "645÷28的竖式中，先在十位商2，写下28×2得到的56。这里的56表示什么？",
+    "type": "choice",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": ""
+      }
+    ],
+    "hint": "商2写在十位，表示20份；竖式这一行的56也在十位单位下。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-trial"],
+    "sources": [
+      {
+        "paperId": "P09",
+        "page": 2,
+        "number": "二2"
+      },
+      {
+        "paperId": "P12",
+        "page": 2,
+        "number": "二2"
+      }
+    ],
+    "knowledge": "竖式中的56表示多少",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "value": "2"
+    },
+    "explanation": {
+      "analysis": "商2写在十位，表示20份；竖式这一行的56也在十位单位下。",
+      "steps": ["28×20＝560，表示20个花篮用560枝花。", "不能把这一步读成只做2个花篮。"],
+      "answer": "20份，共560",
+      "pitfall": ""
+    },
+    "options": ["2份，共56", "2份，共560", "20份，共560", "20份，共56"]
+  },
+  {
+    "id": "p09-04",
+    "unitId": "U01",
+    "title": "能装满多少盒",
+    "stem": "380块核桃酥，每24块装一盒。可以装满几盒，还剩几块？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "quotient",
+        "label": "商",
+        "suffix": ""
+      },
+      {
+        "key": "remainder",
+        "label": "余数",
+        "suffix": ""
+      }
+    ],
+    "hint": "题目问装满的盒数，剩余部分不计为满盒。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-loading"],
+    "sources": [
+      {
+        "paperId": "P09",
+        "page": 3,
+        "number": "五1"
+      },
+      {
+        "paperId": "P12",
+        "page": 3,
+        "number": "五1"
+      }
+    ],
+    "knowledge": "能装满多少盒",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "quotient": "15",
+      "remainder": "20"
+    },
+    "explanation": {
+      "analysis": "题目问装满的盒数，剩余部分不计为满盒。",
+      "steps": ["24×15＝360。", "380−360＝20，商15余20。"],
+      "answer": "商：15，余数：20",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p09-05",
+    "unitId": "U01",
+    "title": "从收入反求人数",
+    "stem": "每名志愿者一天售30份套餐，每份8元。当天套餐全部售完，收入960元，有多少名志愿者？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "人"
+      }
+    ],
+    "hint": "先由收入求套餐总份数，再看每人能卖30份，共需要几人。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-groups"],
+    "sources": [
+      {
+        "paperId": "P09",
+        "page": 3,
+        "number": "五2"
+      },
+      {
+        "paperId": "P12",
+        "page": 3,
+        "number": "五2"
+      }
+    ],
+    "knowledge": "从收入反求人数",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "value": "4"
+    },
+    "explanation": {
+      "analysis": "先由收入求套餐总份数，再看每人能卖30份，共需要几人。",
+      "steps": ["960÷8＝120份。", "120÷30＝4人。"],
+      "answer": "4人",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p09-06",
+    "unitId": "U01",
+    "title": "先扣扫帚费用",
+    "stem": "买12个垃圾桶和11把扫帚，每把扫帚6元，共花642元。平均每个垃圾桶多少元？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "元"
+      }
+    ],
+    "hint": "总钱数包括两种物品，先扣掉扫帚费用。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-groups"],
+    "sources": [
+      {
+        "paperId": "P09",
+        "page": 4,
+        "number": "五3"
+      },
+      {
+        "paperId": "P12",
+        "page": 4,
+        "number": "五3"
+      }
+    ],
+    "knowledge": "先扣扫帚费用",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "value": "48"
+    },
+    "explanation": {
+      "analysis": "总钱数包括两种物品，先扣掉扫帚费用。",
+      "steps": ["11×6＝66元。", "642−66＝576元。", "576÷12＝48元。"],
+      "answer": "48元",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "先扣扫帚费用",
+        "labels": [],
+        "values": [],
+        "captions": ["11×6＝66元。", "642−66＝576元。", "576÷12＝48元。"],
+        "stages": [
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第1步", "11×6＝66元。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第2步", "642−66＝576元。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第3步", "576÷12＝48元。"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p09-07",
+    "unitId": "U01",
+    "title": "赠送与降价，哪家买得多",
+    "stem": "两家店手套原价都是12元。甲店每买10副送1副，赠品不参加满赠；乙店买超过20副时，每副便宜2元。用400元买，哪家得到的手套更多？",
+    "type": "choice",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": ""
+      }
+    ],
+    "hint": "两家都要算实际能得到的数量，不能只比较赠品与降价的字面大小。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-changes"],
+    "sources": [
+      {
+        "paperId": "P09",
+        "page": 4,
+        "number": "五5"
+      },
+      {
+        "paperId": "P12",
+        "page": 4,
+        "number": "五5"
+      }
+    ],
+    "knowledge": "赠送与降价，哪家买得多",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "value": "1"
+    },
+    "explanation": {
+      "analysis": "两家都要算实际能得到的数量，不能只比较赠品与降价的字面大小。",
+      "steps": [
+        "甲店：400÷12＝33……4，付33副的钱，送3副，共36副。",
+        "乙店：单价12−2＝10元，400÷10＝40副，满足超过20副的条件。",
+        "40＞36，所以乙店多4副。"
+      ],
+      "answer": "乙店",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "赠送与降价，哪家买得多",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "甲店：400÷12＝33……4，付33副的钱，送3副，共36副。",
+          "乙店：单价12−2＝10元，400÷10＝40副，满足超过20副的条件。",
+          "40＞36，所以乙店多4副。"
+        ],
+        "stages": [
+          {
+            "kind": "table",
+            "headings": ["店", "付款数量", "赠品", "实得"],
+            "rows": [["甲", "33", "3", "36"]]
+          },
+          {
+            "kind": "table",
+            "headings": ["店", "每副价格", "实得"],
+            "rows": [["乙", "10元", "40"]]
+          },
+          {
+            "kind": "bars",
+            "headings": ["甲店实得", "乙店实得"],
+            "values": [36, 40],
+            "rows": []
+          }
+        ]
+      }
+    },
+    "options": ["甲店", "乙店", "一样多"]
+  },
+  {
+    "id": "p10-01",
+    "unitId": "U02",
+    "title": "长方形周长与面积",
+    "stem": "长方形长22厘米、宽8厘米。求周长和面积，答案分别用厘米和平方厘米表示。",
+    "type": "application",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "perimeter",
+        "label": "周长",
+        "suffix": ""
+      },
+      {
+        "key": "area",
+        "label": "面积",
+        "suffix": ""
+      }
+    ],
+    "hint": "周长是四条边的长度和；面积是内部单位方格的个数。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-measure"],
+    "sources": [
+      {
+        "paperId": "P10",
+        "page": 3,
+        "number": "三1"
+      }
+    ],
+    "knowledge": "长方形周长与面积",
+    "pages": [18, 43],
+    "hasVisual": false,
+    "expected": {
+      "perimeter": "60",
+      "area": "176"
+    },
+    "explanation": {
+      "analysis": "周长是四条边的长度和；面积是内部单位方格的个数。",
+      "steps": ["周长：(22＋8)×2＝60厘米。", "面积：22×8＝176平方厘米。"],
+      "answer": "周长：60，面积：176",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p10-02",
+    "unitId": "U02",
+    "title": "画框与玻璃分别算什么",
+    "stem": "一幅画长75厘米、宽45厘米。画框沿四周制作，玻璃正好盖住画面。分别需要多长画框、多大玻璃？答案用厘米和平方厘米。",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "perimeter",
+        "label": "周长",
+        "suffix": ""
+      },
+      {
+        "key": "area",
+        "label": "面积",
+        "suffix": ""
+      }
+    ],
+    "hint": "画框对应周长，玻璃对应面积，两种数量单位不同。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-measure"],
+    "sources": [
+      {
+        "paperId": "P10",
+        "page": 3,
+        "number": "五1"
+      }
+    ],
+    "knowledge": "画框与玻璃分别算什么",
+    "pages": [18, 43],
+    "hasVisual": false,
+    "expected": {
+      "perimeter": "240",
+      "area": "3375"
+    },
+    "explanation": {
+      "analysis": "画框对应周长，玻璃对应面积，两种数量单位不同。",
+      "steps": ["画框：(75＋45)×2＝240厘米。", "玻璃：75×45＝3375平方厘米。"],
+      "answer": "周长：240，面积：3375",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p10-03",
+    "unitId": "U02",
+    "title": "墙角围地，只围两边",
+    "stem": "用24米篱笆在墙角围一个长方形，两条相邻边靠墙不用围。需要围的一条边长16米。面积是多少平方米？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "平方米"
+      }
+    ],
+    "hint": "两条靠墙边不需要篱笆。24米只是一条长与一条宽的和。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-fence"],
+    "sources": [
+      {
+        "paperId": "P10",
+        "page": 3,
+        "number": "五2"
+      }
+    ],
+    "knowledge": "墙角围地，只围两边",
+    "pages": [18, 43],
+    "hasVisual": true,
+    "expected": {
+      "value": "128"
+    },
+    "explanation": {
+      "analysis": "两条靠墙边不需要篱笆。24米只是一条长与一条宽的和。",
+      "steps": ["另一边：24−16＝8米。", "面积：16×8＝128平方米。"],
+      "answer": "128平方米",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "墙角围地，只围两边",
+        "labels": [],
+        "values": [],
+        "captions": ["另一边：24−16＝8米。", "面积：16×8＝128平方米。"],
+        "stages": [
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第1步", "另一边：24−16＝8米。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第2步", "面积：16×8＝128平方米。"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p10-04",
+    "unitId": "U02",
+    "title": "春联拼接的两种周长",
+    "stem": "上联、下联各长125厘米、宽21厘米。两张纸沿完整的长边拼成大长方形，周长是多少厘米？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "厘米"
+      }
+    ],
+    "hint": "沿长边拼接时，长仍为125，宽变成两个21。",
+    "sourceKind": "adapted",
+    "topicIds": ["u2-cut"],
+    "sources": [
+      {
+        "paperId": "P10",
+        "page": 4,
+        "number": "五3"
+      }
+    ],
+    "knowledge": "春联拼接的两种周长",
+    "pages": [18, 43],
+    "hasVisual": false,
+    "expected": {
+      "value": "334"
+    },
+    "explanation": {
+      "analysis": "沿长边拼接时，长仍为125，宽变成两个21。",
+      "steps": ["拼成的宽：21×2＝42厘米。", "周长：(125＋42)×2＝334厘米。"],
+      "answer": "334厘米",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p10-05",
+    "unitId": "U02",
+    "title": "宣传板收费比较",
+    "stem": "制作长10米、宽4米的宣传板，印8个字。甲公司材料每平方米50元，印字免费；乙公司材料每平方米45元，每字10元。乙公司比甲公司少收多少元？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "元"
+      }
+    ],
+    "hint": "先算共同面积，再分别算材料费和文字费，最后比较总价。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-tiling"],
+    "sources": [
+      {
+        "paperId": "P10",
+        "page": 4,
+        "number": "五4"
+      }
+    ],
+    "knowledge": "宣传板收费比较",
+    "pages": [18, 43],
+    "hasVisual": true,
+    "expected": {
+      "value": "120"
+    },
+    "explanation": {
+      "analysis": "先算共同面积，再分别算材料费和文字费，最后比较总价。",
+      "steps": [
+        "面积：10×4＝40平方米。甲公司：40×50＝2000元。",
+        "乙公司：40×45＋8×10＝1880元。",
+        "2000−1880＝120元。"
+      ],
+      "answer": "120元",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "宣传板收费比较",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "面积：10×4＝40平方米。甲公司：40×50＝2000元。",
+          "乙公司：40×45＋8×10＝1880元。",
+          "2000−1880＝120元。"
+        ],
+        "stages": [
+          {
+            "kind": "bars",
+            "headings": ["甲材料费", "乙材料费", "乙文字费"],
+            "values": [2000, 1800, 80],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["公司", "材料", "文字", "合计"],
+            "rows": [
+              ["甲", "2000", "0", "2000"],
+              ["乙", "1800", "80", "1880"]
+            ]
+          },
+          {
+            "kind": "bars",
+            "headings": ["甲合计", "乙合计"],
+            "values": [2000, 1880],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p10-06",
+    "unitId": "U02",
+    "title": "两种地砖的总费用",
+    "stem": "第一种地砖边长2分米，每块3元，铺满客厅花900元。第二种地砖长3分米、宽2分米，每块4元，都不切割。第二种共需多少元？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "元"
+      }
+    ],
+    "hint": "先求第一种用了多少块和客厅面积，再算第二种块数与总价。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-tiling"],
+    "sources": [
+      {
+        "paperId": "P10",
+        "page": 4,
+        "number": "五6"
+      }
+    ],
+    "knowledge": "两种地砖的总费用",
+    "pages": [18, 43],
+    "hasVisual": true,
+    "expected": {
+      "value": "800"
+    },
+    "explanation": {
+      "analysis": "先求第一种用了多少块和客厅面积，再算第二种块数与总价。",
+      "steps": [
+        "第一种：900÷3＝300块；客厅面积300×(2×2)＝1200平方分米。",
+        "第二种每块面积3×2＝6平方分米，需要1200÷6＝200块。",
+        "费用：200×4＝800元，比第一种省100元。"
+      ],
+      "answer": "800元",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "两种地砖的总费用",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "第一种：900÷3＝300块；客厅面积300×(2×2)＝1200平方分米。",
+          "第二种每块面积3×2＝6平方分米，需要1200÷6＝200块。",
+          "费用：200×4＝800元，比第一种省100元。"
+        ],
+        "stages": [
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第1步", "第一种：900÷3＝300块；客厅面积300×(2×2)＝1200平方分米。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第2步", "第二种每块面积3×2＝6平方分米，需要1200÷6＝200块。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第3步", "费用：200×4＝800元，比第一种省100元。"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p11-01",
+    "unitId": "U01",
+    "title": "商不变，看哪些数变化",
+    "stem": "下面哪个算式与120÷30的结果不同？",
+    "type": "choice",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": ""
+      }
+    ],
+    "hint": "同时把被除数和除数乘或除以同一个非零数，商才不变。",
+    "sourceKind": "adapted",
+    "topicIds": ["u1-changes"],
+    "sources": [
+      {
+        "paperId": "P11",
+        "page": 2,
+        "number": "三2"
+      }
+    ],
+    "knowledge": "商不变，看哪些数变化",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "value": "1"
+    },
+    "explanation": {
+      "analysis": "同时把被除数和除数乘或除以同一个非零数，商才不变。",
+      "steps": ["120÷30＝4；240÷60＝4；120÷5÷6＝4。", "120÷2＋15＝75，与原式不同。"],
+      "answer": "120÷2＋15",
+      "pitfall": ""
+    },
+    "options": ["240÷60", "120÷2＋15", "120÷5÷6"]
+  },
+  {
+    "id": "p11-02",
+    "unitId": "U01",
+    "title": "从作文总数求每组人数",
+    "stem": "4个小组人数相同，每人收集15篇作文，一共720篇。每组多少人？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "人"
+      }
+    ],
+    "hint": "先求全班人数，再平均分给4个组。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-groups"],
+    "sources": [
+      {
+        "paperId": "P11",
+        "page": 3,
+        "number": "五1"
+      }
+    ],
+    "knowledge": "从作文总数求每组人数",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "value": "12"
+    },
+    "explanation": {
+      "analysis": "先求全班人数，再平均分给4个组。",
+      "steps": ["720÷15＝48人。", "48÷4＝12人。"],
+      "answer": "12人",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p11-03",
+    "unitId": "U01",
+    "title": "两类水果一起运输",
+    "stem": "410箱油桃和265箱黄桃，一辆卡车每次运75箱。全部运完需多少次？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "次"
+      }
+    ],
+    "hint": "先把两类箱数相加，再除以每次运量。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-loading"],
+    "sources": [
+      {
+        "paperId": "P11",
+        "page": 3,
+        "number": "五2"
+      }
+    ],
+    "knowledge": "两类水果一起运输",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "value": "9"
+    },
+    "explanation": {
+      "analysis": "先把两类箱数相加，再除以每次运量。",
+      "steps": ["410＋265＝675箱。", "675÷75＝9次，刚好整除。"],
+      "answer": "9次",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p11-04",
+    "unitId": "U01",
+    "title": "剩余量先扣掉",
+    "stem": "要加工700个零件，12小时后还有28个没加工。平均每小时加工多少个？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "个"
+      }
+    ],
+    "hint": "700是计划总量，不能直接除以12；先求实际完成量。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-groups"],
+    "sources": [
+      {
+        "paperId": "P11",
+        "page": 4,
+        "number": "五4"
+      }
+    ],
+    "knowledge": "剩余量先扣掉",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "value": "56"
+    },
+    "explanation": {
+      "analysis": "700是计划总量，不能直接除以12；先求实际完成量。",
+      "steps": ["700−28＝672个。", "672÷12＝56个。"],
+      "answer": "56个",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p11-05",
+    "unitId": "U01",
+    "title": "租车费平均分",
+    "stem": "75人租车，每辆限坐45人，租一辆450元。平均每人需付多少元？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "元"
+      }
+    ],
+    "hint": "先向上取整求车数，再算总车费。不能按车上只坐满的部分付钱。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-loading"],
+    "sources": [
+      {
+        "paperId": "P11",
+        "page": 4,
+        "number": "五5"
+      }
+    ],
+    "knowledge": "租车费平均分",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "value": "12"
+    },
+    "explanation": {
+      "analysis": "先向上取整求车数，再算总车费。不能按车上只坐满的部分付钱。",
+      "steps": ["75÷45＝1……30，要租2辆。", "450×2＝900元。", "900÷75＝12元。"],
+      "answer": "12元",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "租车费平均分",
+        "labels": [],
+        "values": [],
+        "captions": ["75÷45＝1……30，要租2辆。", "450×2＝900元。", "900÷75＝12元。"],
+        "stages": [
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第1步", "75÷45＝1……30，要租2辆。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第2步", "450×2＝900元。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第3步", "900÷75＝12元。"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p13-01",
+    "unitId": "U01",
+    "title": "除数看错后的还原",
+    "stem": "把除数35看成36，算得商25、余数10。被除数没有看错，正确的商和余数分别是多少？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "quotient",
+        "label": "商",
+        "suffix": ""
+      },
+      {
+        "key": "remainder",
+        "label": "余数",
+        "suffix": ""
+      }
+    ],
+    "hint": "先用错误的除数、商和余数还原被除数，再按正确的除数重算。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-restore"],
+    "sources": [
+      {
+        "paperId": "P13",
+        "page": 2,
+        "number": "二13"
+      }
+    ],
+    "knowledge": "除数看错后的还原",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "quotient": "26",
+      "remainder": "0"
+    },
+    "explanation": {
+      "analysis": "先用错误的除数、商和余数还原被除数，再按正确的除数重算。",
+      "steps": [
+        "还原被除数：36×25＋10＝910。",
+        "35×26＝910，910−910＝0。",
+        "验算：35×26＋0＝910，余数0＜35。"
+      ],
+      "answer": "商：26，余数：0",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "除数看错后的还原",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "还原被除数：36×25＋10＝910。",
+          "35×26＝910，910−910＝0。",
+          "验算：35×26＋0＝910，余数0＜35。"
+        ],
+        "stages": [
+          {
+            "kind": "bars",
+            "headings": ["错误计算已分", "错误余数"],
+            "values": [900, 10],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["正确除数", "试商", "乘回"],
+            "rows": [
+              ["35", "26", "910"],
+              ["35", "27", "945"]
+            ]
+          },
+          {
+            "kind": "bars",
+            "headings": ["正确分完", "正确剩余"],
+            "values": [910, 0],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p13-02",
+    "unitId": "U01",
+    "title": "商的最高位在十位",
+    "stem": "要使216÷□的商最高位在十位，除数可以选哪个？",
+    "type": "choice",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": ""
+      }
+    ],
+    "hint": "被除数前两位是21，只有除数不大于21，才能在十位商。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-trial"],
+    "sources": [
+      {
+        "paperId": "P13",
+        "page": 2,
+        "number": "三2"
+      }
+    ],
+    "knowledge": "商的最高位在十位",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "value": "3"
+    },
+    "explanation": {
+      "analysis": "被除数前两位是21，只有除数不大于21，才能在十位商。",
+      "steps": ["除数24、23、22都大于21，十位不够除。", "21等于前两位，可以在十位商1。"],
+      "answer": "21",
+      "pitfall": ""
+    },
+    "options": ["24", "23", "22", "21"]
+  },
+  {
+    "id": "p13-03",
+    "unitId": "U01",
+    "title": "锯成小段需要几次",
+    "stem": "把长330厘米的木头锯成每段22厘米的小段，要锯多少次？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "次"
+      }
+    ],
+    "hint": "段数比锯的次数多1。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-intervals"],
+    "sources": [
+      {
+        "paperId": "P13",
+        "page": 2,
+        "number": "三5"
+      }
+    ],
+    "knowledge": "锯成小段需要几次",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "value": "14"
+    },
+    "explanation": {
+      "analysis": "段数比锯的次数多1。",
+      "steps": ["330÷22＝15段。", "15−1＝14次。"],
+      "answer": "14次",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p13-04",
+    "unitId": "U01",
+    "title": "等式两边同时扩大",
+    "stem": "判断：被除数和除数同时乘10，商和余数都不变。",
+    "type": "judgement",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": ""
+      }
+    ],
+    "hint": "商不变，但余数必须随着被除数和除数一起变化。用具体例子检验。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-changes"],
+    "sources": [
+      {
+        "paperId": "P13",
+        "page": 3,
+        "number": "四2"
+      }
+    ],
+    "knowledge": "等式两边同时扩大",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "value": "1"
+    },
+    "explanation": {
+      "analysis": "商不变，但余数必须随着被除数和除数一起变化。用具体例子检验。",
+      "steps": ["75÷6＝12……3。", "750÷60＝12……30，商相同，余数扩大10倍。"],
+      "answer": "错",
+      "pitfall": ""
+    },
+    "options": ["对", "错"]
+  },
+  {
+    "id": "p13-05",
+    "unitId": "U01",
+    "title": "展厅平均分配",
+    "stem": "展馆有2层，每层12个展厅，共展出720幅画。平均每个展厅多少幅？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "幅"
+      }
+    ],
+    "hint": "先求展厅总数，再平均分画。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-groups"],
+    "sources": [
+      {
+        "paperId": "P13",
+        "page": 4,
+        "number": "五3"
+      }
+    ],
+    "knowledge": "展厅平均分配",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "value": "30"
+    },
+    "explanation": {
+      "analysis": "先求展厅总数，再平均分画。",
+      "steps": ["2×12＝24个展厅。", "720÷24＝30幅。"],
+      "answer": "30幅",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p13-06",
+    "unitId": "U01",
+    "title": "两类购书后还剩多少",
+    "stem": "带2000元买书，百科读物25套，每套24元；文学读物共花480元。买完还剩多少元？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "元"
+      }
+    ],
+    "hint": "先求百科读物费用，然后从总钱数依次扣除两类费用。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-groups"],
+    "sources": [
+      {
+        "paperId": "P13",
+        "page": 4,
+        "number": "五4（2）"
+      }
+    ],
+    "knowledge": "两类购书后还剩多少",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "value": "920"
+    },
+    "explanation": {
+      "analysis": "先求百科读物费用，然后从总钱数依次扣除两类费用。",
+      "steps": ["25×24＝600元。", "2000−600−480＝920元。"],
+      "answer": "920元",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p14-01",
+    "unitId": "U01",
+    "title": "把58看成60后怎样调商",
+    "stem": "计算472÷58，把58看成60，初商7。正确的商应是多少？",
+    "type": "fill",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": ""
+      }
+    ],
+    "hint": "用原除数乘回，检查余数是否还够一个58。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-trial"],
+    "sources": [
+      {
+        "paperId": "P14",
+        "page": 1,
+        "number": "一1"
+      }
+    ],
+    "knowledge": "把58看成60后怎样调商",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "value": "8"
+    },
+    "explanation": {
+      "analysis": "用原除数乘回，检查余数是否还够一个58。",
+      "steps": [
+        "58×7＝406，472−406＝66。",
+        "66≥58，初商偏小，应增加1。",
+        "58×8＝464，472−464＝8＜58，正确商8。"
+      ],
+      "answer": "8",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p14-02",
+    "unitId": "U01",
+    "title": "租船至少几条",
+    "stem": "190名游客，每条船限乘30人，至少租多少条船？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "条"
+      }
+    ],
+    "hint": "题目要求所有人都上船，有余数就还需一条船。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-loading"],
+    "sources": [
+      {
+        "paperId": "P14",
+        "page": 1,
+        "number": "一3"
+      }
+    ],
+    "knowledge": "租船至少几条",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "value": "7"
+    },
+    "explanation": {
+      "analysis": "题目要求所有人都上船，有余数就还需一条船。",
+      "steps": ["190÷30＝6……10。", "6条船只能坐180人，至少7条。"],
+      "answer": "7条",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p14-03",
+    "unitId": "U01",
+    "title": "最大余数与最大被除数",
+    "stem": "除数36，商8，求最大余数和最大被除数。",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "remainder",
+        "label": "余数",
+        "suffix": ""
+      },
+      {
+        "key": "dividend",
+        "label": "被除数",
+        "suffix": ""
+      }
+    ],
+    "hint": "余数必须小于36。最大被除数等于36的8倍加最大余数。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-remainder"],
+    "sources": [
+      {
+        "paperId": "P14",
+        "page": 1,
+        "number": "一6"
+      }
+    ],
+    "knowledge": "最大余数与最大被除数",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "remainder": "35",
+      "dividend": "323"
+    },
+    "explanation": {
+      "analysis": "余数必须小于36。最大被除数等于36的8倍加最大余数。",
+      "steps": ["最大余数36−1＝35。", "最大被除数36×8＋35＝323。"],
+      "answer": "余数：35，被除数：323",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p14-04",
+    "unitId": "U01",
+    "title": "买完电器再买面粉",
+    "stem": "带600元，买一台360元的微波炉，剩下的钱买每袋48元的面粉，可以买几袋？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "袋"
+      }
+    ],
+    "hint": "先扣掉电器的钱，再计算剩下的钱能买多少袋。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-groups"],
+    "sources": [
+      {
+        "paperId": "P14",
+        "page": 4,
+        "number": "四2"
+      }
+    ],
+    "knowledge": "买完电器再买面粉",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "value": "5"
+    },
+    "explanation": {
+      "analysis": "先扣掉电器的钱，再计算剩下的钱能买多少袋。",
+      "steps": ["600−360＝240元。", "240÷48＝5袋。"],
+      "answer": "5袋",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p14-05",
+    "unitId": "U01",
+    "title": "滴灌管道，哪些条件有用",
+    "stem": "主管每分钟最多供水60升，每根支管每分钟供水2升。开放若干根支管，15分钟流出750升。开放多少根支管？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "根"
+      }
+    ],
+    "hint": "750升是实际供水量，60升是主管的上限。先算实际每分钟供水，再求支管数。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-groups"],
+    "sources": [
+      {
+        "paperId": "P14",
+        "page": 4,
+        "number": "四3"
+      }
+    ],
+    "knowledge": "滴灌管道，哪些条件有用",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "value": "25"
+    },
+    "explanation": {
+      "analysis": "750升是实际供水量，60升是主管的上限。先算实际每分钟供水，再求支管数。",
+      "steps": ["750÷15＝50升/分钟，没有超过60升的上限。", "50÷2＝25根支管。"],
+      "answer": "25根",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "滴灌管道，哪些条件有用",
+        "labels": [],
+        "values": [],
+        "captions": ["750÷15＝50升/分钟，没有超过60升的上限。", "50÷2＝25根支管。"],
+        "stages": [
+          {
+            "kind": "bars",
+            "headings": ["供水能力上限", "实际每分钟供水"],
+            "values": [60, 50],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["实际供水", "每根供水", "支管数"],
+            "rows": [["50", "2", "25"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p14-06",
+    "unitId": "U01",
+    "title": "两个年级组成方阵",
+    "stem": "四年级288人、五年级432人，每36人排成一个方阵，一共多少个方阵？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "个"
+      }
+    ],
+    "hint": "先求总人数，或分别求两个年级的方阵数再相加。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-loading"],
+    "sources": [
+      {
+        "paperId": "P14",
+        "page": 4,
+        "number": "四4"
+      }
+    ],
+    "knowledge": "两个年级组成方阵",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "value": "20"
+    },
+    "explanation": {
+      "analysis": "先求总人数，或分别求两个年级的方阵数再相加。",
+      "steps": ["(288＋432)÷36＝720÷36＝20个。", "检验：288÷36＋432÷36＝8＋12＝20。"],
+      "answer": "20个",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p14-07",
+    "unitId": "U01",
+    "title": "选择能按期完工的两人",
+    "stem": "11天要完成737件球衣。张师傅每天30件、李师傅33件、王师傅36件。安排哪两人能按期完成？",
+    "type": "choice",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": ""
+      }
+    ],
+    "hint": "先求两人每天合计至少做多少件，再逐对比较。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-changes"],
+    "sources": [
+      {
+        "paperId": "P14",
+        "page": 4,
+        "number": "四5"
+      }
+    ],
+    "knowledge": "选择能按期完工的两人",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "value": "2"
+    },
+    "explanation": {
+      "analysis": "先求两人每天合计至少做多少件，再逐对比较。",
+      "steps": [
+        "737÷11＝67件/天。",
+        "张＋李＝63，张＋王＝66，都不足67。",
+        "李＋王＝69，69×11＝759≥737，能按期完成。"
+      ],
+      "answer": "李、王",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "选择能按期完工的两人",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "737÷11＝67件/天。",
+          "张＋李＝63，张＋王＝66，都不足67。",
+          "李＋王＝69，69×11＝759≥737，能按期完成。"
+        ],
+        "stages": [
+          {
+            "kind": "table",
+            "headings": ["所需总量", "天数", "每天至少"],
+            "rows": [["737", "11", "67"]]
+          },
+          {
+            "kind": "table",
+            "headings": ["组合", "每天合计", "够不够"],
+            "rows": [
+              ["张＋李", "63", "不够"],
+              ["张＋王", "66", "不够"],
+              ["李＋王", "69", "够"]
+            ]
+          },
+          {
+            "kind": "bars",
+            "headings": ["每天至少", "李王合计"],
+            "values": [67, 69],
+            "rows": []
+          }
+        ]
+      }
+    },
+    "options": ["张、李", "张、王", "李、王"]
+  },
+  {
+    "id": "p15-01",
+    "unitId": "U02",
+    "title": "长方形周长与面积",
+    "stem": "长方形长14厘米、宽8厘米。求周长和面积，答案分别用厘米和平方厘米表示。",
+    "type": "application",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "perimeter",
+        "label": "周长",
+        "suffix": ""
+      },
+      {
+        "key": "area",
+        "label": "面积",
+        "suffix": ""
+      }
+    ],
+    "hint": "周长是四条边的长度和；面积是内部单位方格的个数。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-measure"],
+    "sources": [
+      {
+        "paperId": "P15",
+        "page": 3,
+        "number": "三1"
+      }
+    ],
+    "knowledge": "长方形周长与面积",
+    "pages": [18, 43],
+    "hasVisual": false,
+    "expected": {
+      "perimeter": "44",
+      "area": "112"
+    },
+    "explanation": {
+      "analysis": "周长是四条边的长度和；面积是内部单位方格的个数。",
+      "steps": ["周长：(14＋8)×2＝44厘米。", "面积：14×8＝112平方厘米。"],
+      "answer": "周长：44，面积：112",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p15-02",
+    "unitId": "U02",
+    "title": "正方形周长与面积",
+    "stem": "一个正方形边长13分米，求周长和面积，分别用分米、平方分米表示。",
+    "type": "application",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "perimeter",
+        "label": "周长",
+        "suffix": ""
+      },
+      {
+        "key": "area",
+        "label": "面积",
+        "suffix": ""
+      }
+    ],
+    "hint": "正方形周长是边长的4倍，面积是边长乘边长。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-measure"],
+    "sources": [
+      {
+        "paperId": "P15",
+        "page": 3,
+        "number": "三2"
+      }
+    ],
+    "knowledge": "正方形周长与面积",
+    "pages": [18, 43],
+    "hasVisual": false,
+    "expected": {
+      "perimeter": "52",
+      "area": "169"
+    },
+    "explanation": {
+      "analysis": "正方形周长是边长的4倍，面积是边长乘边长。",
+      "steps": ["周长：13×4＝52分米。", "面积：13×13＝169平方分米。"],
+      "answer": "周长：52，面积：169",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p15-03",
+    "unitId": "U02",
+    "title": "粉刷面积要扣黑板",
+    "stem": "墙壁长6米、宽4米，黑板面积4平方米。只粉刷黑板以外的墙面，要刷多少平方米？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "平方米"
+      }
+    ],
+    "hint": "墙面总面积减去不刷的黑板面积。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-tiling"],
+    "sources": [
+      {
+        "paperId": "P15",
+        "page": 3,
+        "number": "五1"
+      }
+    ],
+    "knowledge": "粉刷面积要扣黑板",
+    "pages": [18, 43],
+    "hasVisual": false,
+    "expected": {
+      "value": "20"
+    },
+    "explanation": {
+      "analysis": "墙面总面积减去不刷的黑板面积。",
+      "steps": ["总面积：6×4＝24平方米。", "粉刷面积：24−4＝20平方米。"],
+      "answer": "20平方米",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p15-04",
+    "unitId": "U02",
+    "title": "篱笆改围正方形",
+    "stem": "长12米、宽8米的菜地，一条12米边靠墙，其余三边围篱笆。改用这些篱笆围不靠墙的正方形，求边长和面积（米、平方米）。",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "length",
+        "label": "长",
+        "suffix": ""
+      },
+      {
+        "key": "area",
+        "label": "面积",
+        "suffix": ""
+      }
+    ],
+    "hint": "先求实际篱笆长，不是原长方形的完整周长。再平均分成四条边。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-fence"],
+    "sources": [
+      {
+        "paperId": "P15",
+        "page": 4,
+        "number": "五2"
+      }
+    ],
+    "knowledge": "篱笆改围正方形",
+    "pages": [18, 43],
+    "hasVisual": true,
+    "expected": {
+      "length": "7",
+      "area": "49"
+    },
+    "explanation": {
+      "analysis": "先求实际篱笆长，不是原长方形的完整周长。再平均分成四条边。",
+      "steps": ["篱笆：12＋8×2＝28米。", "正方形边长：28÷4＝7米。", "面积：7×7＝49平方米。"],
+      "answer": "长：7，面积：49",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "篱笆改围正方形",
+        "labels": [],
+        "values": [],
+        "captions": ["篱笆：12＋8×2＝28米。", "正方形边长：28÷4＝7米。", "面积：7×7＝49平方米。"],
+        "stages": [
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第1步", "篱笆：12＋8×2＝28米。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第2步", "正方形边长：28÷4＝7米。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第3步", "面积：7×7＝49平方米。"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p15-05",
+    "unitId": "U02",
+    "title": "大小方砖各需要几块",
+    "stem": "画廊长8米、宽2米。大方砖边长4分米，小方砖边长2分米，均整块铺设、不留缝。分别需多少块？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "大方砖",
+        "label": "大方砖",
+        "suffix": ""
+      },
+      {
+        "key": "小方砖",
+        "label": "小方砖",
+        "suffix": ""
+      }
+    ],
+    "hint": "先统一单位求地面面积。砖边长相差2倍，面积相差4倍。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-tiling"],
+    "sources": [
+      {
+        "paperId": "P15",
+        "page": 4,
+        "number": "五4"
+      }
+    ],
+    "knowledge": "大小方砖各需要几块",
+    "pages": [18, 43],
+    "hasVisual": true,
+    "expected": {
+      "大方砖": "100",
+      "小方砖": "400"
+    },
+    "explanation": {
+      "analysis": "先统一单位求地面面积。砖边长相差2倍，面积相差4倍。",
+      "steps": [
+        "地面：80×20＝1600平方分米。",
+        "大砖：1600÷(4×4)＝100块。",
+        "小砖：1600÷(2×2)＝400块。"
+      ],
+      "answer": "大方砖：100，小方砖：400",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "大小方砖各需要几块",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "地面：80×20＝1600平方分米。",
+          "大砖：1600÷(4×4)＝100块。",
+          "小砖：1600÷(2×2)＝400块。"
+        ],
+        "stages": [
+          {
+            "kind": "table",
+            "headings": ["地面长", "地面宽", "面积"],
+            "rows": [["80分米", "20分米", "1600平方分米"]]
+          },
+          {
+            "kind": "table",
+            "headings": ["砖", "每块面积", "块数"],
+            "rows": [
+              ["大", "16", "100"],
+              ["小", "4", "400"]
+            ]
+          },
+          {
+            "kind": "bars",
+            "headings": ["大砖块数", "小砖块数"],
+            "values": [100, 400],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p15-06",
+    "unitId": "U02",
+    "title": "20幅方形作品怎样拼最省花边",
+    "stem": "20幅边长1分米的正方形作品拼成一个长方形，四周贴花边。最少需要多少分米花边？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "分米"
+      }
+    ],
+    "hint": "按整行整列排列，列出20的不同长宽组合，再比较周长。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-compare"],
+    "sources": [
+      {
+        "paperId": "P15",
+        "page": 4,
+        "number": "五5"
+      }
+    ],
+    "knowledge": "20幅方形作品怎样拼最省花边",
+    "pages": [18, 43],
+    "hasVisual": true,
+    "expected": {
+      "value": "18"
+    },
+    "explanation": {
+      "analysis": "按整行整列排列，列出20的不同长宽组合，再比较周长。",
+      "steps": [
+        "长宽可为20和1、10和2、5和4。",
+        "周长分别为42、24、18分米。",
+        "5×4的排列最省，花边18分米。"
+      ],
+      "answer": "18分米",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "20幅方形作品怎样拼最省花边",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "长宽可为20和1、10和2、5和4。",
+          "周长分别为42、24、18分米。",
+          "5×4的排列最省，花边18分米。"
+        ],
+        "stages": [
+          {
+            "kind": "table",
+            "headings": ["长", "宽", "面积", "周长"],
+            "rows": [
+              ["20", "1", "20", "42"],
+              ["10", "2", "20", "24"],
+              ["5", "4", "20", "18"]
+            ]
+          },
+          {
+            "kind": "bars",
+            "headings": ["20×1周长", "10×2周长", "5×4周长"],
+            "values": [42, 24, 18],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["最佳排列", "5行4列或4行5列"],
+            "rows": [["所需花边", "18分米"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p16-01",
+    "unitId": "U01",
+    "title": "省略末尾0时，余数的单位",
+    "stem": "570元买每袋40元的莲子，竖式先省略末尾0，用57÷4算出商14、余1。实际还余多少元？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "元"
+      }
+    ],
+    "hint": "省略末尾0后计算的57和4都以十元为单位，余下的1也代表一个十元。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-remainder"],
+    "sources": [
+      {
+        "paperId": "P16",
+        "page": 2,
+        "number": "二2"
+      }
+    ],
+    "knowledge": "省略末尾0时，余数的单位",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "value": "10"
+    },
+    "explanation": {
+      "analysis": "省略末尾0后计算的57和4都以十元为单位，余下的1也代表一个十元。",
+      "steps": ["57÷4＝14……1，其中余1个十元。", "实际余款1×10＝10元。", "验算：40×14＋10＝570元。"],
+      "answer": "10元",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "省略末尾0时，余数的单位",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "57÷4＝14……1，其中余1个十元。",
+          "实际余款1×10＝10元。",
+          "验算：40×14＋10＝570元。"
+        ],
+        "stages": [
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第1步", "57÷4＝14……1，其中余1个十元。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第2步", "实际余款1×10＝10元。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第3步", "验算：40×14＋10＝570元。"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p16-02",
+    "unitId": "U02",
+    "title": "长方形翻滚一周",
+    "stem": "长2厘米、宽1厘米的长方形，沿直尺无滑动翻滚完整一周，起点前进多少厘米？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "厘米"
+      }
+    ],
+    "hint": "翻滚时四条边依次接触直尺，一周前进的总长度就是周长。",
+    "sourceKind": "adapted",
+    "topicIds": ["u2-meaning"],
+    "sources": [
+      {
+        "paperId": "P16",
+        "page": 2,
+        "number": "二3"
+      }
+    ],
+    "knowledge": "长方形翻滚一周",
+    "pages": [18, 43],
+    "hasVisual": false,
+    "expected": {
+      "value": "6"
+    },
+    "explanation": {
+      "analysis": "翻滚时四条边依次接触直尺，一周前进的总长度就是周长。",
+      "steps": ["2＋1＋2＋1＝6厘米。", "不是用长乘宽算面积。"],
+      "answer": "6厘米",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p16-03",
+    "unitId": "U02",
+    "title": "天然泳池的人均面积",
+    "stem": "题目规定天然泳池人均至少4平方米。甲池长15米、宽8米，有30人；乙池长40米、宽20米，有200人。哪种判断正确？",
+    "type": "choice",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": ""
+      }
+    ],
+    "hint": "分别求两池面积，再除以人数，达到4也算符合。",
+    "sourceKind": "adapted",
+    "topicIds": ["u2-tiling"],
+    "sources": [
+      {
+        "paperId": "P16",
+        "page": 2,
+        "number": "二5"
+      }
+    ],
+    "knowledge": "天然泳池的人均面积",
+    "pages": [18, 43],
+    "hasVisual": false,
+    "expected": {
+      "value": "2"
+    },
+    "explanation": {
+      "analysis": "分别求两池面积，再除以人数，达到4也算符合。",
+      "steps": [
+        "甲池：15×8÷30＝4平方米/人。",
+        "乙池：40×20÷200＝4平方米/人。",
+        "两个泳池都符合规定。"
+      ],
+      "answer": "都符合",
+      "pitfall": ""
+    },
+    "options": ["只有甲符合", "只有乙符合", "都符合", "都不符合"]
+  },
+  {
+    "id": "p16-04",
+    "unitId": "U01",
+    "title": "按天计算餐费",
+    "stem": "每月按22天计，预交4个月共704元。平均每天餐费是多少元？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "元"
+      }
+    ],
+    "hint": "先求4个月合计多少天，再平均分餐费。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-groups"],
+    "sources": [
+      {
+        "paperId": "P16",
+        "page": 4,
+        "number": "五1"
+      }
+    ],
+    "knowledge": "按天计算餐费",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "value": "8"
+    },
+    "explanation": {
+      "analysis": "先求4个月合计多少天，再平均分餐费。",
+      "steps": ["22×4＝88天。", "704÷88＝8元。"],
+      "answer": "8元",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p16-05",
+    "unitId": "U02",
+    "title": "哪条边靠墙最省",
+    "stem": "长24米、宽18米的长方形地，一面靠足够长的墙，另三面围护栏。至少需要多少米护栏？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "米"
+      }
+    ],
+    "hint": "靠墙可以省去一条边。要用最少护栏，就把较长的24米边靠墙。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-fence"],
+    "sources": [
+      {
+        "paperId": "P16",
+        "page": 4,
+        "number": "五2"
+      }
+    ],
+    "knowledge": "哪条边靠墙最省",
+    "pages": [18, 43],
+    "hasVisual": true,
+    "expected": {
+      "value": "60"
+    },
+    "explanation": {
+      "analysis": "靠墙可以省去一条边。要用最少护栏，就把较长的24米边靠墙。",
+      "steps": ["长边靠墙：24＋18×2＝60米。", "短边靠墙：18＋24×2＝66米。", "60＜66，最少60米。"],
+      "answer": "60米",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "哪条边靠墙最省",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "长边靠墙：24＋18×2＝60米。",
+          "短边靠墙：18＋24×2＝66米。",
+          "60＜66，最少60米。"
+        ],
+        "stages": [
+          {
+            "kind": "table",
+            "headings": ["靠墙的边", "三面护栏"],
+            "rows": [
+              ["24米边", "60米"],
+              ["18米边", "66米"]
+            ]
+          },
+          {
+            "kind": "bars",
+            "headings": ["长边靠墙", "短边靠墙"],
+            "values": [60, 66],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["最省方案", "长边靠墙"],
+            "rows": [["护栏长度", "60米"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p17-01",
+    "unitId": "U01",
+    "title": "850÷34",
+    "stem": "用竖式计算850÷34，填写商和余数，并验算。",
+    "type": "calculation",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "quotient",
+        "label": "商",
+        "suffix": ""
+      },
+      {
+        "key": "remainder",
+        "label": "余数",
+        "suffix": ""
+      }
+    ],
+    "hint": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-calculation"],
+    "sources": [
+      {
+        "paperId": "P17",
+        "page": 2,
+        "number": "二2（1）"
+      }
+    ],
+    "knowledge": "850÷34",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "quotient": "25",
+      "remainder": "0"
+    },
+    "explanation": {
+      "analysis": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+      "steps": ["34×25＝850。", "850−850＝0，0＜34。", "验算：34×25＋0＝850。"],
+      "answer": "商：25，余数：0",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p17-02",
+    "unitId": "U01",
+    "title": "438÷69",
+    "stem": "用竖式计算438÷69，填写商和余数，并验算。",
+    "type": "calculation",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "quotient",
+        "label": "商",
+        "suffix": ""
+      },
+      {
+        "key": "remainder",
+        "label": "余数",
+        "suffix": ""
+      }
+    ],
+    "hint": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-calculation"],
+    "sources": [
+      {
+        "paperId": "P17",
+        "page": 2,
+        "number": "二2（2）"
+      }
+    ],
+    "knowledge": "438÷69",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "quotient": "6",
+      "remainder": "24"
+    },
+    "explanation": {
+      "analysis": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+      "steps": ["69×6＝414。", "438−414＝24，24＜69。", "验算：69×6＋24＝438。"],
+      "answer": "商：6，余数：24",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p17-03",
+    "unitId": "U01",
+    "title": "576÷48",
+    "stem": "用竖式计算576÷48，填写商和余数，并验算。",
+    "type": "calculation",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "quotient",
+        "label": "商",
+        "suffix": ""
+      },
+      {
+        "key": "remainder",
+        "label": "余数",
+        "suffix": ""
+      }
+    ],
+    "hint": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-calculation"],
+    "sources": [
+      {
+        "paperId": "P17",
+        "page": 2,
+        "number": "二2（3）"
+      }
+    ],
+    "knowledge": "576÷48",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "quotient": "12",
+      "remainder": "0"
+    },
+    "explanation": {
+      "analysis": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+      "steps": ["48×12＝576。", "576−576＝0，0＜48。", "验算：48×12＋0＝576。"],
+      "answer": "商：12，余数：0",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p17-04",
+    "unitId": "U01",
+    "title": "865÷32",
+    "stem": "用竖式计算865÷32，填写商和余数，并验算。",
+    "type": "calculation",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "quotient",
+        "label": "商",
+        "suffix": ""
+      },
+      {
+        "key": "remainder",
+        "label": "余数",
+        "suffix": ""
+      }
+    ],
+    "hint": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-calculation"],
+    "sources": [
+      {
+        "paperId": "P17",
+        "page": 2,
+        "number": "二2（4）"
+      }
+    ],
+    "knowledge": "865÷32",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "quotient": "27",
+      "remainder": "1"
+    },
+    "explanation": {
+      "analysis": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+      "steps": ["32×27＝864。", "865−864＝1，1＜32。", "验算：32×27＋1＝865。"],
+      "answer": "商：27，余数：1",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p17-05",
+    "unitId": "U01",
+    "title": "最晚哪天开始读",
+    "stem": "一本书314页，每天读30页，要在9月1日之前读完，每天都读，最晚应在8月几日开始？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "日"
+      }
+    ],
+    "hint": "先向上取整求阅读天数。最后一天是8月31日，起止两天都要计入。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-intervals"],
+    "sources": [
+      {
+        "paperId": "P17",
+        "page": 1,
+        "number": "一9"
+      }
+    ],
+    "knowledge": "最晚哪天开始读",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "value": "21"
+    },
+    "explanation": {
+      "analysis": "先向上取整求阅读天数。最后一天是8月31日，起止两天都要计入。",
+      "steps": [
+        "314÷30＝10……14，需要11天。",
+        "8月31日往前数11天，31−11＋1＝21。",
+        "最晚8月21日开始，8月31日完成。"
+      ],
+      "answer": "21日",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "最晚哪天开始读",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "314÷30＝10……14，需要11天。",
+          "8月31日往前数11天，31−11＋1＝21。",
+          "最晚8月21日开始，8月31日完成。"
+        ],
+        "stages": [
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第1步", "314÷30＝10……14，需要11天。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第2步", "8月31日往前数11天，31−11＋1＝21。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第3步", "最晚8月21日开始，8月31日完成。"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p17-06",
+    "unitId": "U01",
+    "title": "被除数至少增加多少，商才加1",
+    "stem": "584÷52的商要增加1，被除数至少增加多少？",
+    "type": "fill",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": ""
+      }
+    ],
+    "hint": "先求当前商，再找下一个52的整数倍。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-trial"],
+    "sources": [
+      {
+        "paperId": "P17",
+        "page": 1,
+        "number": "一10"
+      }
+    ],
+    "knowledge": "被除数至少增加多少，商才加1",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "value": "40"
+    },
+    "explanation": {
+      "analysis": "先求当前商，再找下一个52的整数倍。",
+      "steps": ["584÷52＝11……12。", "商增加到12，最小被除数为52×12＝624。", "624−584＝40。"],
+      "answer": "40",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "被除数至少增加多少，商才加1",
+        "labels": [],
+        "values": [],
+        "captions": ["584÷52＝11……12。", "商增加到12，最小被除数为52×12＝624。", "624−584＝40。"],
+        "stages": [
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第1步", "584÷52＝11……12。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第2步", "商增加到12，最小被除数为52×12＝624。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第3步", "624−584＝40。"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p17-07",
+    "unitId": "U01",
+    "title": "商不变，余数怎样变",
+    "stem": "已知728÷30＝24……8，求7280÷300和364÷15的商、余数。",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "第一式商",
+        "label": "第一式商",
+        "suffix": ""
+      },
+      {
+        "key": "第一式余数",
+        "label": "第一式余数",
+        "suffix": ""
+      },
+      {
+        "key": "第二式商",
+        "label": "第二式商",
+        "suffix": ""
+      },
+      {
+        "key": "第二式余数",
+        "label": "第二式余数",
+        "suffix": ""
+      }
+    ],
+    "hint": "被除数和除数一起扩大或缩小，商不变，余数也要按同样倍数变化。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-remainder"],
+    "sources": [
+      {
+        "paperId": "P17",
+        "page": 2,
+        "number": "三5"
+      }
+    ],
+    "knowledge": "商不变，余数怎样变",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "第一式商": "24",
+      "第一式余数": "80",
+      "第二式商": "24",
+      "第二式余数": "4"
+    },
+    "explanation": {
+      "analysis": "被除数和除数一起扩大或缩小，商不变，余数也要按同样倍数变化。",
+      "steps": [
+        "7280和300都是原来的10倍，余数8×10＝80。",
+        "364和15都是原来的一半，余数8÷2＝4。",
+        "300×24＋80＝7280；15×24＋4＝364。"
+      ],
+      "answer": "第一式商：24，第一式余数：80，第二式商：24，第二式余数：4",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "商不变，余数怎样变",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "7280和300都是原来的10倍，余数8×10＝80。",
+          "364和15都是原来的一半，余数8÷2＝4。",
+          "300×24＋80＝7280；15×24＋4＝364。"
+        ],
+        "stages": [
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第1步", "7280和300都是原来的10倍，余数8×10＝80。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第2步", "364和15都是原来的一半，余数8÷2＝4。"]]
+          },
+          {
+            "kind": "flow",
+            "headings": [],
+            "rows": [["第3步", "300×24＋80＝7280；15×24＋4＝364。"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p17-08",
+    "unitId": "U01",
+    "title": "比较销量，不能只比收入",
+    "stem": "《成语故事》每本12元，收入192元；《趣味数学》每本28元，收入504元。哪本卖出的本数更多？",
+    "type": "choice",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": ""
+      }
+    ],
+    "hint": "收入还受到单价影响。比较畅销程度，应先算售出本数。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-changes"],
+    "sources": [
+      {
+        "paperId": "P17",
+        "page": 4,
+        "number": "四4"
+      }
+    ],
+    "knowledge": "比较销量，不能只比收入",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "value": "1"
+    },
+    "explanation": {
+      "analysis": "收入还受到单价影响。比较畅销程度，应先算售出本数。",
+      "steps": [
+        "《成语故事》：192÷12＝16本。",
+        "《趣味数学》：504÷28＝18本。",
+        "18＞16，《趣味数学》卖得更多。"
+      ],
+      "answer": "《趣味数学》",
+      "pitfall": ""
+    },
+    "options": ["《成语故事》", "《趣味数学》", "一样多"]
+  },
+  {
+    "id": "p17-09",
+    "unitId": "U01",
+    "title": "三家店买篮球",
+    "stem": "288元买篮球。甲店原价35元，每个便宜2元；乙店68元一组，每组2个；丙店每个48元，买2送1，赠品不参加满赠。哪家实际得到最多？",
+    "type": "choice",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": ""
+      }
+    ],
+    "hint": "分别计算付款数量和赠品，不把“组”当作“个”。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-changes"],
+    "sources": [
+      {
+        "paperId": "P17",
+        "page": 4,
+        "number": "四5"
+      }
+    ],
+    "knowledge": "三家店买篮球",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "value": "2"
+    },
+    "explanation": {
+      "analysis": "分别计算付款数量和赠品，不把“组”当作“个”。",
+      "steps": [
+        "甲：288÷33＝8……24，得8个。",
+        "乙：288÷68＝4……16，得4×2＝8个。",
+        "丙：288÷48＝6，送6÷2＝3个，共9个。"
+      ],
+      "answer": "丙店",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "三家店买篮球",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "甲：288÷33＝8……24，得8个。",
+          "乙：288÷68＝4……16，得4×2＝8个。",
+          "丙：288÷48＝6，送6÷2＝3个，共9个。"
+        ],
+        "stages": [
+          {
+            "kind": "table",
+            "headings": ["店", "付费数量", "赠品", "实得"],
+            "rows": [
+              ["甲", "8", "0", "8"],
+              ["乙", "4组", "0", "8"],
+              ["丙", "6", "3", "9"]
+            ]
+          },
+          {
+            "kind": "bars",
+            "headings": ["甲店", "乙店", "丙店"],
+            "values": [8, 8, 9],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["最多", "丙店9个"],
+            "rows": []
+          }
+        ]
+      }
+    },
+    "options": ["甲店", "乙店", "丙店"]
+  },
+  {
+    "id": "p18-01",
+    "unitId": "U01",
+    "title": "918÷18",
+    "stem": "用竖式计算918÷18，填写商和余数，并验算。",
+    "type": "calculation",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "quotient",
+        "label": "商",
+        "suffix": ""
+      },
+      {
+        "key": "remainder",
+        "label": "余数",
+        "suffix": ""
+      }
+    ],
+    "hint": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-calculation"],
+    "sources": [
+      {
+        "paperId": "P18",
+        "page": 3,
+        "number": "21（1）"
+      }
+    ],
+    "knowledge": "918÷18",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "quotient": "51",
+      "remainder": "0"
+    },
+    "explanation": {
+      "analysis": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+      "steps": ["18×51＝918。", "918−918＝0，0＜18。", "验算：18×51＋0＝918。"],
+      "answer": "商：51，余数：0",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p18-02",
+    "unitId": "U01",
+    "title": "800÷70",
+    "stem": "用竖式计算800÷70，填写商和余数，并验算。",
+    "type": "calculation",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "quotient",
+        "label": "商",
+        "suffix": ""
+      },
+      {
+        "key": "remainder",
+        "label": "余数",
+        "suffix": ""
+      }
+    ],
+    "hint": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-calculation"],
+    "sources": [
+      {
+        "paperId": "P18",
+        "page": 3,
+        "number": "21（3）"
+      }
+    ],
+    "knowledge": "800÷70",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "quotient": "11",
+      "remainder": "30"
+    },
+    "explanation": {
+      "analysis": "先看被除数的前两位够不够除，再逐位计算。余数应比除数小。",
+      "steps": ["70×11＝770。", "800−770＝30，30＜70。", "验算：70×11＋30＝800。"],
+      "answer": "商：11，余数：30",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p18-03",
+    "unitId": "U02",
+    "title": "铁丝改围正方形",
+    "stem": "铁丝正好围成长6分米、宽3分米的长方形。改围正方形后还余2分米。正方形边长是多少分米？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "分米"
+      }
+    ],
+    "hint": "先求铁丝总长，再扣掉未使用的2分米，最后平均分成4条边。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-cut"],
+    "sources": [
+      {
+        "paperId": "P18",
+        "page": 3,
+        "number": "19"
+      }
+    ],
+    "knowledge": "铁丝改围正方形",
+    "pages": [18, 43],
+    "hasVisual": false,
+    "expected": {
+      "value": "4"
+    },
+    "explanation": {
+      "analysis": "先求铁丝总长，再扣掉未使用的2分米，最后平均分成4条边。",
+      "steps": ["总长：(6＋3)×2＝18分米。", "正方形周长：18−2＝16分米。", "边长：16÷4＝4分米。"],
+      "answer": "4分米",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p18-04",
+    "unitId": "U02",
+    "title": "扩建后面积",
+    "stem": "长方形花园宽12米，面积336平方米。宽增到21米，长不变。新面积是多少平方米？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "平方米"
+      }
+    ],
+    "hint": "先从原面积除以宽，找出不变的长。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-compare"],
+    "sources": [
+      {
+        "paperId": "P18",
+        "page": 4,
+        "number": "24"
+      }
+    ],
+    "knowledge": "扩建后面积",
+    "pages": [18, 43],
+    "hasVisual": false,
+    "expected": {
+      "value": "588"
+    },
+    "explanation": {
+      "analysis": "先从原面积除以宽，找出不变的长。",
+      "steps": ["长：336÷12＝28米。", "新面积：28×21＝588平方米。"],
+      "answer": "588平方米",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p18-05",
+    "unitId": "U01",
+    "title": "人数改变，任务量不变",
+    "stem": "70人建浮桥需要9天，每人每天完成的工作相同。增加20人，多少天能完成？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "天"
+      }
+    ],
+    "hint": "总工作量可以用“人数×天数”表示，再除以新人数。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-groups"],
+    "sources": [
+      {
+        "paperId": "P18",
+        "page": 4,
+        "number": "25"
+      }
+    ],
+    "knowledge": "人数改变，任务量不变",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "value": "7"
+    },
+    "explanation": {
+      "analysis": "总工作量可以用“人数×天数”表示，再除以新人数。",
+      "steps": ["总工作量：70×9＝630人·天。", "新人数：70＋20＝90人。", "630÷90＝7天。"],
+      "answer": "7天",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "人数改变，任务量不变",
+        "labels": [],
+        "values": [],
+        "captions": ["总工作量：70×9＝630人·天。", "新人数：70＋20＝90人。", "630÷90＝7天。"],
+        "stages": [
+          {
+            "kind": "bars",
+            "headings": ["原人数", "新人数"],
+            "values": [70, 90],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["固定任务量", "70×9＝630人·天"],
+            "rows": [["新人数", "90人"]]
+          },
+          {
+            "kind": "table",
+            "headings": ["新时间", "630÷90＝7天"],
+            "rows": [["检验", "90×7＝630"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p18-06",
+    "unitId": "U01",
+    "title": "损坏一件，少收入多少",
+    "stem": "运25件玻璃，每件运费20元。损坏一件拿不到这件运费，还要赔55元。最后得到275元，损坏几件？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "件"
+      }
+    ],
+    "hint": "每损坏一件，不仅要赔55元，还少收20元运费，合计少75元。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-restore"],
+    "sources": [
+      {
+        "paperId": "P18",
+        "page": 4,
+        "number": "26"
+      }
+    ],
+    "knowledge": "损坏一件，少收入多少",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "value": "3"
+    },
+    "explanation": {
+      "analysis": "每损坏一件，不仅要赔55元，还少收20元运费，合计少75元。",
+      "steps": [
+        "全好时应收：25×20＝500元。",
+        "收入减少：500−275＝225元。",
+        "每件损失20＋55＝75元，225÷75＝3件。"
+      ],
+      "answer": "3件",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "损坏一件，少收入多少",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "全好时应收：25×20＝500元。",
+          "收入减少：500−275＝225元。",
+          "每件损失20＋55＝75元，225÷75＝3件。"
+        ],
+        "stages": [
+          {
+            "kind": "bars",
+            "headings": ["全部完好应收", "实际收入", "收入减少"],
+            "values": [500, 275, 225],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["损坏1件", "少收20元＋赔55元＝75元"],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["损坏件数", "225÷75＝3"],
+            "rows": [["检查", "22×20−3×55＝275"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p18-07",
+    "unitId": "U01",
+    "title": "重量相等，袋数不相等",
+    "stem": "面粉每袋20千克，大米每袋30千克，两种粮食总重量相等，面粉比大米多6袋。面粉、大米各有几袋？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "面粉袋数",
+        "label": "面粉袋数",
+        "suffix": ""
+      },
+      {
+        "key": "大米袋数",
+        "label": "大米袋数",
+        "suffix": ""
+      }
+    ],
+    "hint": "把相同重量的两种粮食配成一组。60千克面粉3袋，60千克大米2袋，每组袋数相差1。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-changes"],
+    "sources": [
+      {
+        "paperId": "P18",
+        "page": 5,
+        "number": "28"
+      }
+    ],
+    "knowledge": "重量相等，袋数不相等",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "面粉袋数": "18",
+      "大米袋数": "12"
+    },
+    "explanation": {
+      "analysis": "把相同重量的两种粮食配成一组。60千克面粉3袋，60千克大米2袋，每组袋数相差1。",
+      "steps": [
+        "20和30的倍数中，60可以同时整除。每组面粉3袋、大米2袋。",
+        "每组相差1袋，差6袋就有6组。",
+        "面粉3×6＝18袋，大米2×6＝12袋；两者都是360千克。"
+      ],
+      "answer": "面粉袋数：18，大米袋数：12",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "重量相等，袋数不相等",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "20和30的倍数中，60可以同时整除。每组面粉3袋、大米2袋。",
+          "每组相差1袋，差6袋就有6组。",
+          "面粉3×6＝18袋，大米2×6＝12袋；两者都是360千克。"
+        ],
+        "stages": [
+          {
+            "kind": "table",
+            "headings": ["每组重量", "面粉袋数", "大米袋数", "相差"],
+            "rows": [["60千克", "3", "2", "1"]]
+          },
+          {
+            "kind": "bars",
+            "headings": ["面粉袋数", "大米袋数"],
+            "values": [18, 12],
+            "rows": []
+          },
+          {
+            "kind": "bars",
+            "headings": ["面粉总重量", "大米总重量"],
+            "values": [360, 360],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p18-08",
+    "unitId": "U01",
+    "title": "制作速度改变",
+    "stem": "4天做72盏花灯。按原速度做108盏要几天？每天比原来多做9盏后，做108盏要几天？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "原来天数",
+        "label": "原来天数",
+        "suffix": ""
+      },
+      {
+        "key": "提高后天数",
+        "label": "提高后天数",
+        "suffix": ""
+      }
+    ],
+    "hint": "先求每天原产量，再分别计算两种情况下的天数。",
+    "sourceKind": "collected",
+    "topicIds": ["u1-groups"],
+    "sources": [
+      {
+        "paperId": "P18",
+        "page": 5,
+        "number": "29"
+      }
+    ],
+    "knowledge": "制作速度改变",
+    "pages": [2, 16],
+    "hasVisual": false,
+    "expected": {
+      "原来天数": "6",
+      "提高后天数": "4"
+    },
+    "explanation": {
+      "analysis": "先求每天原产量，再分别计算两种情况下的天数。",
+      "steps": ["原来每天72÷4＝18盏；108÷18＝6天。", "提高后每天18＋9＝27盏；108÷27＝4天。"],
+      "answer": "原来天数：6，提高后天数：4",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p18-09",
+    "unitId": "U02",
+    "title": "剪走最大正方形后的面积",
+    "stem": "长方形地宽15米，先划出一个最大的正方形，余下165平方米。原长方形面积是多少平方米？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "平方米"
+      }
+    ],
+    "hint": "最大正方形的边长就是15米，原面积由正方形面积和余下部分组成。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-cut"],
+    "sources": [
+      {
+        "paperId": "P18",
+        "page": 6,
+        "number": "30（2）"
+      }
+    ],
+    "knowledge": "剪走最大正方形后的面积",
+    "pages": [18, 43],
+    "hasVisual": false,
+    "expected": {
+      "value": "390"
+    },
+    "explanation": {
+      "analysis": "最大正方形的边长就是15米，原面积由正方形面积和余下部分组成。",
+      "steps": ["正方形面积：15×15＝225平方米。", "原面积：225＋165＝390平方米。"],
+      "answer": "390平方米",
+      "pitfall": ""
+    }
+  },
+  {
+    "id": "p18-10",
+    "unitId": "U01",
+    "title": "双箱优惠，最多买多少小盒",
+    "stem": "牛奶每箱15小盒，单买每箱59元，两箱合购99元。用300元，最多得到多少小盒？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "小盒"
+      }
+    ],
+    "hint": "先按两箱一组计算，判断余款能否再买一箱，最后换算成小盒数。",
+    "sourceKind": "adapted",
+    "topicIds": ["u1-changes"],
+    "sources": [
+      {
+        "paperId": "P18",
+        "page": 6,
+        "number": "31"
+      }
+    ],
+    "knowledge": "双箱优惠，最多买多少小盒",
+    "pages": [2, 16],
+    "hasVisual": true,
+    "expected": {
+      "value": "90"
+    },
+    "explanation": {
+      "analysis": "先按两箱一组计算，判断余款能否再买一箱，最后换算成小盒数。",
+      "steps": [
+        "300÷99＝3……3，可买3组共6箱。",
+        "买7箱至少要3×99＋59＝356元，超过300元。",
+        "最多6×15＝90小盒。"
+      ],
+      "answer": "90小盒",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "双箱优惠，最多买多少小盒",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "300÷99＝3……3，可买3组共6箱。",
+          "买7箱至少要3×99＋59＝356元，超过300元。",
+          "最多6×15＝90小盒。"
+        ],
+        "stages": [
+          {
+            "kind": "table",
+            "headings": ["优惠组数", "箱数", "总价"],
+            "rows": [
+              ["3", "6", "297元"],
+              ["3组＋1箱", "7", "356元"]
+            ]
+          },
+          {
+            "kind": "bars",
+            "headings": ["预算", "6箱费用", "7箱费用"],
+            "values": [300, 297, 356],
+            "rows": []
+          },
+          {
+            "kind": "table",
+            "headings": ["最多箱数", "6"],
+            "rows": [["小盒数", "6×15＝90"]]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p18-11",
+    "unitId": "U02",
+    "title": "剪手帕，可以转方向",
+    "stem": "长23厘米、宽9厘米的彩布，剪成每块长5厘米、宽3厘米的长方形手帕，可旋转，最多剪多少块？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案",
+        "suffix": "块"
+      }
+    ],
+    "hint": "面积给出最多块数的上限，还要给出实际能摆下的方案，不能只按一种方向排。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-cut"],
+    "sources": [
+      {
+        "paperId": "P18",
+        "page": 6,
+        "number": "32"
+      }
+    ],
+    "knowledge": "剪手帕，可以转方向",
+    "pages": [18, 43],
+    "hasVisual": true,
+    "expected": {
+      "value": "13"
+    },
+    "explanation": {
+      "analysis": "面积给出最多块数的上限，还要给出实际能摆下的方案，不能只按一种方向排。",
+      "steps": [
+        "彩布面积23×9＝207，手帕面积5×3＝15，207÷15＝13……12，所以不超过13块。",
+        "先用20×9的区域：每排4块、3排，共12块。剩下3×9的条带，可把一块手帕旋转成3×5，再剪1块。",
+        "实际能剪12＋1＝13块，达到上限。"
+      ],
+      "answer": "13块",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "剪手帕，可以转方向",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "彩布面积23×9＝207，手帕面积5×3＝15，207÷15＝13……12，所以不超过13块。",
+          "先用20×9的区域：每排4块、3排，共12块。剩下3×9的条带，可把一块手帕旋转成3×5，再剪1块。",
+          "实际能剪12＋1＝13块，达到上限。"
+        ],
+        "stages": [
+          {
+            "kind": "table",
+            "headings": ["整布面积", "每块面积", "面积上限"],
+            "rows": [["207", "15", "13块"]]
+          },
+          {
+            "kind": "packing",
+            "headings": ["12块", "normal"],
+            "rows": [],
+            "values": []
+          },
+          {
+            "kind": "packing",
+            "headings": ["旋转补充", "rotated"],
+            "rows": [],
+            "values": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p01-11",
+    "unitId": "U02",
+    "title": "折形的周长和面积",
+    "stem": "图中每个方格边长1厘米，求图形的周长（厘米）和面积（平方厘米）。",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "perimeter",
+        "label": "周长",
+        "suffix": ""
+      },
+      {
+        "key": "area",
+        "label": "面积",
+        "suffix": ""
+      }
+    ],
+    "hint": "面积数方格，周长只数外边界。相邻格子的公共边不计入周长。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-grid"],
+    "sources": [
+      {
+        "paperId": "P01",
+        "page": 2,
+        "number": "一7（1）"
+      }
+    ],
+    "knowledge": "折形的周长和面积",
+    "pages": [18, 43],
+    "hasVisual": true,
+    "expected": {
+      "perimeter": "12",
+      "area": "5"
+    },
+    "explanation": {
+      "analysis": "面积数方格，周长只数外边界。相邻格子的公共边不计入周长。",
+      "steps": [
+        "有5个单位方格，所以面积5平方厘米。",
+        "5个正方形共有20条单位边，内部4条公共边各重复算了2次。",
+        "周长：20−4×2＝12厘米。"
+      ],
+      "answer": "周长：12，面积：5",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "折形的周长和面积",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "有5个单位方格，所以面积5平方厘米。",
+          "5个正方形共有20条单位边，内部4条公共边各重复算了2次。",
+          "周长：20−4×2＝12厘米。"
+        ],
+        "stages": [
+          {
+            "kind": "grid",
+            "headings": ["数单位方格", "area"],
+            "rows": [],
+            "values": [1, 0, 2, 0, 1, 1, 0, 2, 1, 2]
+          },
+          {
+            "kind": "grid",
+            "headings": ["只数外边界", "boundary"],
+            "rows": [],
+            "values": [1, 0, 2, 0, 1, 1, 0, 2, 1, 2]
+          },
+          {
+            "kind": "table",
+            "headings": ["单位方格", "内部公共边", "周长"],
+            "rows": [["5", "4", "5×4−4×2＝12"]]
+          }
+        ]
+      }
+    },
+    "figure": {
+      "columns": 3,
+      "rows": 3,
+      "unitLabel": "每格1平方厘米",
+      "shapes": [
+        {
+          "label": "折形",
+          "cells": [
+            [1, 0],
+            [2, 0],
+            [1, 1],
+            [0, 2],
+            [1, 2]
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "p01-12",
+    "unitId": "U02",
+    "title": "十字形的周长和面积",
+    "stem": "图中每个方格边长1厘米，求图形的周长（厘米）和面积（平方厘米）。",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "perimeter",
+        "label": "周长",
+        "suffix": ""
+      },
+      {
+        "key": "area",
+        "label": "面积",
+        "suffix": ""
+      }
+    ],
+    "hint": "面积数方格，周长只数外边界。相邻格子的公共边不计入周长。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-grid"],
+    "sources": [
+      {
+        "paperId": "P01",
+        "page": 2,
+        "number": "一7（2）"
+      }
+    ],
+    "knowledge": "十字形的周长和面积",
+    "pages": [18, 43],
+    "hasVisual": true,
+    "expected": {
+      "perimeter": "12",
+      "area": "5"
+    },
+    "explanation": {
+      "analysis": "面积数方格，周长只数外边界。相邻格子的公共边不计入周长。",
+      "steps": [
+        "有5个单位方格，所以面积5平方厘米。",
+        "5个正方形共有20条单位边，内部4条公共边各重复算了2次。",
+        "周长：20−4×2＝12厘米。"
+      ],
+      "answer": "周长：12，面积：5",
+      "pitfall": "",
+      "visual": {
+        "kind": "reasoning",
+        "title": "十字形的周长和面积",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "有5个单位方格，所以面积5平方厘米。",
+          "5个正方形共有20条单位边，内部4条公共边各重复算了2次。",
+          "周长：20−4×2＝12厘米。"
+        ],
+        "stages": [
+          {
+            "kind": "grid",
+            "headings": ["数单位方格", "area"],
+            "rows": [],
+            "values": [1, 0, 0, 1, 1, 1, 2, 1, 1, 2]
+          },
+          {
+            "kind": "grid",
+            "headings": ["只数外边界", "boundary"],
+            "rows": [],
+            "values": [1, 0, 0, 1, 1, 1, 2, 1, 1, 2]
+          },
+          {
+            "kind": "table",
+            "headings": ["单位方格", "内部公共边", "周长"],
+            "rows": [["5", "4", "5×4−4×2＝12"]]
+          }
+        ]
+      }
+    },
+    "figure": {
+      "columns": 3,
+      "rows": 3,
+      "unitLabel": "每格1平方厘米",
+      "shapes": [
+        {
+          "label": "十字形",
+          "cells": [
+            [1, 0],
+            [0, 1],
+            [1, 1],
+            [2, 1],
+            [1, 2]
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "p15-draw",
+    "unitId": "U02",
+    "title": "画一个面积18的长方形",
+    "stem": "在方格纸中画一个面积18平方厘米的长方形。每格表示1平方厘米。",
+    "type": "drawing",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "cells",
+        "label": "方格作图"
+      }
+    ],
+    "hint": "点选方格作图。面积就是选中的方格数；长方形每行的格数相同。",
+    "sourceKind": "collected",
+    "topicIds": ["u2-grid"],
+    "sources": [
+      {
+        "paperId": "P15",
+        "page": 3,
+        "number": "四"
+      }
+    ],
+    "knowledge": "方格面积与图形构成",
+    "pages": [27, 33],
+    "hasVisual": true,
+    "construction": {
+      "columns": 10,
+      "rows": 6,
+      "area": 18,
+      "rectangle": true,
+      "given": []
+    },
+    "expected": {
+      "cells": "111111000011111100001111110000000000000000000000000000000000"
+    },
+    "explanation": {
+      "analysis": "先确定要选多少格，再检查形状；画法不唯一。",
+      "steps": [
+        "选6列、3行的长方形，每个格子1平方厘米。",
+        "面积6×3＝18平方厘米。",
+        "长方形可以平移，也可画9列、2行，面积同样是18。"
+      ],
+      "answer": "符合面积和形状条件的作图均可。",
+      "pitfall": "只有格数正确还不够，题目要求画成长方形。",
+      "visual": {
+        "kind": "reasoning",
+        "title": "画一个面积18的长方形",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "选6列、3行的长方形，每个格子1平方厘米。",
+          "面积6×3＝18平方厘米。",
+          "长方形可以平移，也可画9列、2行，面积同样是18。"
+        ],
+        "stages": [
+          {
+            "kind": "grid",
+            "headings": ["一种画法", "area"],
+            "rows": [],
+            "values": [
+              0, 0, 1, 0, 2, 0, 3, 0, 4, 0, 5, 0, 0, 1, 1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 0, 2, 1, 2, 2,
+              2, 3, 2, 4, 2, 5, 2
+            ]
+          },
+          {
+            "kind": "grid",
+            "headings": ["一种画法", "boundary"],
+            "rows": [],
+            "values": [
+              0, 0, 1, 0, 2, 0, 3, 0, 4, 0, 5, 0, 0, 1, 1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 0, 2, 1, 2, 2,
+              2, 3, 2, 4, 2, 5, 2
+            ]
+          },
+          {
+            "kind": "grid",
+            "headings": ["一种画法", "area"],
+            "rows": [],
+            "values": [
+              0, 0, 1, 0, 2, 0, 3, 0, 4, 0, 5, 0, 0, 1, 1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 0, 2, 1, 2, 2,
+              2, 3, 2, 4, 2, 5, 2
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "p18-draw",
+    "unitId": "U02",
+    "title": "补成面积14的图形",
+    "stem": "在方格纸中保留深色的5格，把图形补成面积14平方厘米、边相连的一个图形。每格表示1平方厘米。",
+    "type": "drawing",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "cells",
+        "label": "方格作图"
+      }
+    ],
+    "hint": "点选方格作图。面积就是选中的方格数；长方形每行的格数相同。",
+    "sourceKind": "adapted",
+    "topicIds": ["u2-grid"],
+    "sources": [
+      {
+        "paperId": "P18",
+        "page": 4,
+        "number": "23（2）"
+      }
+    ],
+    "knowledge": "方格面积与图形构成",
+    "pages": [27, 33],
+    "hasVisual": true,
+    "construction": {
+      "columns": 10,
+      "rows": 6,
+      "area": 14,
+      "rectangle": false,
+      "given": [0, 1, 2, 10, 20]
+    },
+    "expected": {
+      "cells": "111111111111100000001000000000000000000000000000000000000000"
+    },
+    "explanation": {
+      "analysis": "先确定要选多少格，再检查形状；画法不唯一。",
+      "steps": [
+        "原来已有5格，不能删掉。",
+        "还需要14−5＝9格。",
+        "补后的14格应连成一个整体；符合条件的画法不唯一。"
+      ],
+      "answer": "符合面积和形状条件的作图均可。",
+      "pitfall": "深色已知方格必须保留。",
+      "visual": {
+        "kind": "reasoning",
+        "title": "补成面积14的图形",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "原来已有5格，不能删掉。",
+          "还需要14−5＝9格。",
+          "补后的14格应连成一个整体；符合条件的画法不唯一。"
+        ],
+        "stages": [
+          {
+            "kind": "grid",
+            "headings": ["一种画法", "area"],
+            "rows": [],
+            "values": [
+              0, 0, 1, 0, 2, 0, 3, 0, 4, 0, 5, 0, 6, 0, 7, 0, 8, 0, 9, 0, 0, 1, 1, 1, 2, 1, 0, 2
+            ]
+          },
+          {
+            "kind": "grid",
+            "headings": ["一种画法", "boundary"],
+            "rows": [],
+            "values": [
+              0, 0, 1, 0, 2, 0, 3, 0, 4, 0, 5, 0, 6, 0, 7, 0, 8, 0, 9, 0, 0, 1, 1, 1, 2, 1, 0, 2
+            ]
+          },
+          {
+            "kind": "grid",
+            "headings": ["一种画法", "area"],
+            "rows": [],
+            "values": [
+              0, 0, 1, 0, 2, 0, 3, 0, 4, 0, 5, 0, 6, 0, 7, 0, 8, 0, 9, 0, 0, 1, 1, 1, 2, 1, 0, 2
+            ]
+          }
+        ]
+      }
+    }
+  }
+]

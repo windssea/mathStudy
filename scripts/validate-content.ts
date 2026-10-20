@@ -1,4 +1,4 @@
-import { textbook, lessons, questions } from '@mathstudy/content';
+import { textbook, lessons, questions, practice } from '@mathstudy/content';
 import { lessonSchema, visualSchema } from '@mathstudy/contracts';
 import {
   arithmeticScenes,
@@ -8,7 +8,7 @@ import {
   approximationFrames,
 } from '@mathstudy/animation-engine';
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 
 const issues: string[] = [];
 const ids = new Set<string>();
@@ -82,6 +82,21 @@ for (const scene of arithmeticScenes) {
 for (const summary of textbook.catalog.flatMap((n) => n.lessons))
   if (summary.available !== lessons.some((l) => l.id === summary.id))
     issues.push(`Invalid availability: ${summary.id}`);
+for (const topic of practice.topics) {
+  if (!topic.questionIds.length) issues.push(`Empty topic: ${topic.id}`);
+  for (const id of topic.questionIds)
+    if (questions.find((q) => q.id === id)?.unitId !== topic.unitId)
+      issues.push(`Wrong topic unit: ${id}`);
+}
+for (const paper of practice.papers) {
+  if (!paper.questionIds.length) issues.push(`Empty paper: ${paper.id}`);
+  for (const page of paper.pages)
+    if (!existsSync(`apps/web/public${page.image}`)) issues.push(`Missing scan: ${page.image}`);
+  for (const id of paper.questionIds) {
+    const source = questions.find((q) => q.id === id)?.sources?.find((s) => s.paperId === paper.id);
+    if (!source || source.page > paper.pages.length) issues.push(`Invalid paper source: ${id}`);
+  }
+}
 const manifest = JSON.parse(readFileSync('doc/specs/textbook-manifest.example.json', 'utf8'));
 const skipSource = process.argv.includes('--skip-source');
 if (!skipSource) {
@@ -104,6 +119,6 @@ if (issues.length) {
   process.exitCode = 1;
 } else {
   console.log(
-    `Content valid: ${textbook.catalog.length} catalog entries, ${lessons.length} open lessons, ${questions.length} original questions, ${questions.filter((q) => q.hasVisual).length} visual explanations. ${skipSource ? 'Source PDF hash check explicitly skipped (CI).' : 'Source SHA-256 verified.'}`,
+    `Content valid: ${textbook.catalog.length} catalog entries, ${lessons.length} open lessons, ${questions.length} questions, ${questions.filter((q) => q.hasVisual).length} visual explanations. ${skipSource ? 'Source PDF hash check explicitly skipped (CI).' : 'Source SHA-256 verified.'}`,
   );
 }

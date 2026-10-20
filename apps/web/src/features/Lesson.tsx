@@ -1,15 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import type { Lesson, QuestionPublic } from '@mathstudy/contracts';
 import { useCourse } from '../app/course';
 import { useRemote } from '../lib/api';
-import {
-  visitLesson,
-  completeLesson,
-  useProgress,
-  useAccount,
-  progressMessage,
-} from '../lib/progress';
+import { visitLesson, completeLesson, useProgress, useAccount } from '../lib/progress';
 import { Icon, Loading, ErrorState } from '../components/ui';
 import DemoPlayer from '../components/DemoPlayer';
 import GeometryLessonPlayer from '../components/GeometryLessonPlayer';
@@ -36,6 +30,15 @@ export default function LessonPage() {
 }
 function LessonContent({ lesson, questions }: { lesson: Lesson; questions: QuestionPublic[] }) {
   const { textbook: book } = useCourse();
+  const navigate = useNavigate();
+  const extension = useRemote<{ items: QuestionPublic[] }>(
+    `/questions?unit=${lesson.unitId === 'A01' ? 'U02' : lesson.unitId}`,
+  );
+  const deeper =
+    extension.data?.items.filter(
+      (q) =>
+        q.lessonId === lesson.id && !lesson.questionIds.includes(q.id) && q.difficulty !== 'basic',
+    ) ?? [];
   const progress = useProgress();
   useAccount();
   const [tab, setTab] = useState<'explore' | 'practice'>('explore');
@@ -69,7 +72,24 @@ function LessonContent({ lesson, questions }: { lesson: Lesson; questions: Quest
           {unitLabel} · 第 {index + 1} 课<span>课本 p.{lesson.pages.join('–')}</span>
         </div>
         <h1>{lesson.title}</h1>
-        <p>{lesson.summary}</p>
+      </div>
+      <div className="lesson-navigation">
+        <label>
+          本单元课节
+          <select
+            value={lesson.id}
+            onChange={(e) => navigate(`/books/${book.id}/lessons/${e.target.value}`)}
+          >
+            {available.map((l, i) => (
+              <option key={l.id} value={l.id}>
+                {i + 1}. {l.title}
+              </option>
+            ))}
+          </select>
+        </label>
+        <Link className="text-link" to={`/questions?unit=${questions[0]?.unitId ?? lesson.unitId}`}>
+          进入本单元题库 <Icon name="ArrowRight" size={16} />
+        </Link>
       </div>
       <div className="lesson-layout">
         <div className="lesson-content">
@@ -104,6 +124,15 @@ function LessonContent({ lesson, questions }: { lesson: Lesson; questions: Quest
             aria-labelledby="explore-tab"
             hidden={tab !== 'explore'}
           >
+            <section className="lesson-knowledge" aria-label="本课知识说明">
+              <h2>知识说明</h2>
+              {lesson.concepts.map((c) => (
+                <div key={c.title}>
+                  <h3>{c.title}</h3>
+                  <p>{c.text}</p>
+                </div>
+              ))}
+            </section>
             {'dividend' in lesson.demo ? (
               <DemoPlayer demo={lesson.demo} onExplored={onExplored} />
             ) : 'unitValue' in lesson.demo ? (
@@ -115,33 +144,6 @@ function LessonContent({ lesson, questions }: { lesson: Lesson; questions: Quest
             ) : (
               <GeometryLessonPlayer demo={lesson.demo} onExplored={onExplored} />
             )}
-            <section className="concept-section">
-              <div className="section-heading">
-                <div>
-                  <Icon name="Lightbulb" />
-                  <h2>把发现记下来</h2>
-                </div>
-              </div>
-              {lesson.concepts.map((c, i) => (
-                <div className="concept-block" key={c.title}>
-                  <span>0{i + 1}</span>
-                  <div>
-                    <h3>{c.title}</h3>
-                    <p>{c.text}</p>
-                  </div>
-                </div>
-              ))}
-              <button
-                className="button primary"
-                onClick={() => {
-                  setTab('practice');
-                  window.scrollTo({ top: 150, behavior: 'instant' });
-                }}
-              >
-                理解了，做几道题
-                <Icon name="ArrowRight" size={18} />
-              </button>
-            </section>
           </div>
           <div
             role="tabpanel"
@@ -149,10 +151,7 @@ function LessonContent({ lesson, questions }: { lesson: Lesson; questions: Quest
             aria-labelledby="practice-tab"
             hidden={tab !== 'practice'}
           >
-            <div className="practice-intro">
-              <h2>自己想一想，再动笔</h2>
-              <p>遇到困难可以先看提示，难题还能一步一步看图解。</p>
-            </div>
+            <h2 className="practice-title">本课练习</h2>
             {questions.map((q) => (
               <div className="practice-question panel" key={q.id}>
                 <QuestionRunner
@@ -161,17 +160,24 @@ function LessonContent({ lesson, questions }: { lesson: Lesson; questions: Quest
                 />
               </div>
             ))}
+            {deeper.length > 0 && (
+              <section className="lesson-extension panel">
+                <h2>进一步练习</h2>
+                {deeper.map((q) => (
+                  <Link key={q.id} className="text-link" to={`/questions/${q.id}`}>
+                    {q.title} <Icon name="ArrowRight" size={16} />
+                  </Link>
+                ))}
+              </section>
+            )}
             <section className="lesson-finish panel">
               {celebrating || completed ? (
                 <>
                   <span className="finish-icon">
                     <Icon name="CheckCircle2" size={32} />
                   </span>
-                  <h2>这一课，又多懂了一点</h2>
-                  <p>
-                    {progressMessage()}
-                    你可以继续探索下一课。
-                  </p>
+                  <h2>本课已完成</h2>
+                  <p>学习记录已保存。</p>
                   <Link
                     className="button primary"
                     to={
@@ -186,13 +192,13 @@ function LessonContent({ lesson, questions }: { lesson: Lesson; questions: Quest
                 </>
               ) : (
                 <>
-                  <h2>回顾一下，今天的收获</h2>
+                  <h2>记录本课完成</h2>
                   <p>
                     {!explored
-                      ? '先把交互演示看到最后一步，或阅读静态步骤。'
+                      ? '请完成演示或阅读静态步骤。'
                       : attempted.length < questions.length
-                        ? '完成上面的练习尝试，就可以记录这一课的学习。'
-                        : '完成了探索与练习，为这一课画一个小句号吧。'}
+                        ? '请尝试本课全部练习。'
+                        : '演示与练习均已完成。'}
                   </p>
                   <button
                     className="button primary"
@@ -207,57 +213,6 @@ function LessonContent({ lesson, questions }: { lesson: Lesson; questions: Quest
             </section>
           </div>
         </div>
-        <aside className="lesson-aside">
-          <section className="panel lesson-goals">
-            <div className="small-panel-heading">
-              <h2>这节课的小目标</h2>
-              <Icon name="Target" />
-            </div>
-            <ol>
-              {lesson.goals.map((g, i) => (
-                <li key={g}>
-                  <span>{i + 1}</span>
-                  {g}
-                </li>
-              ))}
-            </ol>
-            <div className="lesson-time">
-              <Icon name="Clock3" size={17} />约 {lesson.minutes} 分钟 · 按自己的节奏学
-            </div>
-          </section>
-          <section className="panel unit-roadmap">
-            <h2>{unitLabel}的探索路线</h2>
-            {available.map((l, i) => (
-              <Link
-                className={l.id === lesson.id ? 'current' : ''}
-                to={`/books/${book.id}/lessons/${l.id}`}
-                key={l.id}
-              >
-                <span>
-                  {progress.completed.includes(l.id) ? <Icon name="Check" size={13} /> : i + 1}
-                </span>
-                <span>{l.title}</span>
-                {l.id === lesson.id && <Icon name="Play" size={12} />}
-              </Link>
-            ))}
-          </section>
-          <Link
-            className="unit-practice-link"
-            to={`/questions?unit=${questions[0]?.unitId ?? lesson.unitId}`}
-          >
-            <Icon name="NotebookPen" size={18} />
-            进入本单元题库
-            <Icon name="ArrowRight" size={16} />
-          </Link>
-          <div className="gentle-note">
-            <Icon name="Lightbulb" size={24} />
-            <p>
-              会做一道题很棒，
-              <br />
-              <b>能讲清为什么更棒。</b>
-            </p>
-          </div>
-        </aside>
       </div>
     </>
   );
