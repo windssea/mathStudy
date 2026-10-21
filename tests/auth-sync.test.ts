@@ -85,6 +85,55 @@ function attempt(value: string, assisted = false, offset = 0): LearningEvent {
   };
 }
 describe('account authentication and private D1 learning records', () => {
+  it('syncs new topic answers, strict codes and corrections idempotently across devices', async () => {
+    const a = device(),
+      b = device('192.0.2.2');
+    await a.provision();
+    await b.login();
+    const stamp = Date.now();
+    const make = (
+      entityId: string,
+      answers: Record<string, string>,
+      offset: number,
+    ): Extract<LearningEvent, { kind: 'attempt' }> => ({
+      id: crypto.randomUUID(),
+      kind: 'attempt',
+      entityId,
+      answers,
+      assisted: false,
+      occurredAt: new Date(stamp + offset).toISOString(),
+    });
+    const shopping = make('bank-u3-compare-04', { a1: '84', a2: '2', a3: '2' }, 0);
+    const wrong = make('bank-u5-codes-02', { a1: '0202706008' }, 10);
+    const right = make('bank-u5-codes-02', { a1: '202706008' }, 20);
+    const rounding = make('bank-u5-rounding-04', { a1: '1950000', a2: '1954999' }, 30);
+    const vehicles = make('bank-u4-budget-05', { a1: '780', a2: '2', a3: '1' }, 40);
+    await a.sync([shopping, wrong]);
+    const received = (await b.sync()).snapshot;
+    expect(received.answers[shopping.entityId]).toMatchObject({
+      attemptCount: 1,
+      needsReview: false,
+    });
+    expect(received.answers[wrong.entityId]).toMatchObject({ attemptCount: 1, needsReview: true });
+    await b.sync([right, rounding, vehicles]);
+    const result = (await a.sync([shopping, wrong, right, rounding, vehicles])).snapshot;
+    expect(result.answers[wrong.entityId]).toMatchObject({
+      attemptCount: 2,
+      wrongCount: 1,
+      needsReview: false,
+      source: 'verified',
+    });
+    for (const record of [shopping, rounding, vehicles]) {
+      expect(result.answers[record.entityId]).toMatchObject({
+        attemptCount: 1,
+        needsReview: false,
+        source: 'verified',
+      });
+      expect(result.history.find((row: { id: string }) => row.id === record.id).answers).toEqual(
+        record.answers,
+      );
+    }
+  });
   it('persists flexible grid answers and correction history across two authenticated D1 sessions', async () => {
     const a = device(),
       b = device('192.0.2.2');

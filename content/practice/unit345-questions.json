@@ -1,0 +1,3280 @@
+[
+  {
+    "id": "bank-u3-inverse-01",
+    "unitId": "U03",
+    "lessonId": "U03-L01",
+    "title": "由积求另一个乘数",
+    "stem": "已知24×18＝432，填空：432÷24＝（ ），432÷18＝（ ）。",
+    "type": "fill",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "第一个商",
+        "inputMode": "numeric"
+      },
+      {
+        "key": "a2",
+        "label": "第二个商",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "积除以其中一个乘数，得到另一个乘数。",
+    "sourceKind": "original",
+    "topicIds": ["u3-inverse"],
+    "knowledge": "乘除关系与未知量",
+    "pages": [45, 47],
+    "hasVisual": false,
+    "expected": {
+      "a1": "18",
+      "a2": "24"
+    },
+    "explanation": {
+      "analysis": "积除以其中一个乘数，得到另一个乘数。",
+      "steps": ["24乘18得到432，所以432里面有18个24。", "432÷24＝18；432÷18＝24。"],
+      "answer": "第一个商：18；第二个商：24",
+      "pitfall": "两个乘数的位置可以交换，除法的被除数仍是432。"
+    }
+  },
+  {
+    "id": "bank-u3-inverse-02",
+    "unitId": "U03",
+    "lessonId": "U03-L01",
+    "title": "同一总数，改变每组人数",
+    "stem": "团体操原来排成12行，每行18人。改排成9行，每行人数相同，每行应比原来多几人？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "每行多",
+        "suffix": "人",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "队形改变，总人数不变。先求总人数，再求新队形每行人数。",
+    "sourceKind": "original",
+    "topicIds": ["u3-inverse"],
+    "knowledge": "乘除关系与未知量",
+    "pages": [45, 47],
+    "hasVisual": false,
+    "expected": {
+      "a1": "6"
+    },
+    "explanation": {
+      "analysis": "队形改变，总人数不变。先求总人数，再求新队形每行人数。",
+      "steps": ["总人数12×18＝216人。", "新队形每行216÷9＝24人。", "24−18＝6人，每行多6人。"],
+      "answer": "每行多：6人",
+      "pitfall": "行数少3行，不表示每行只多3人。"
+    }
+  },
+  {
+    "id": "bank-u3-inverse-03",
+    "unitId": "U03",
+    "lessonId": "U03-L01",
+    "title": "两种书都与同一总量比较",
+    "stem": "故事书有72本，是科普书的3倍，也是历史书的6倍。下面哪句话正确？",
+    "type": "choice",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "选择",
+        "inputMode": "numeric"
+      }
+    ],
+    "options": [
+      "历史书比科普书多12本",
+      "科普书比历史书多12本",
+      "两种书一样多",
+      "科普书比历史书多36本"
+    ],
+    "hint": "分别用同一个总数72除以各自倍数，再比较。",
+    "sourceKind": "original",
+    "topicIds": ["u3-inverse"],
+    "knowledge": "乘除关系与未知量",
+    "pages": [45, 47],
+    "hasVisual": false,
+    "expected": {
+      "value": "1"
+    },
+    "explanation": {
+      "analysis": "分别用同一个总数72除以各自倍数，再比较。",
+      "steps": ["科普书72÷3＝24本，历史书72÷6＝12本。", "24−12＝12本，科普书多12本，选第二项。"],
+      "answer": "科普书比历史书多12本",
+      "pitfall": "倍数6较大，反而意味着对应的历史书本数较少。"
+    }
+  },
+  {
+    "id": "bank-u3-inverse-04",
+    "unitId": "U03",
+    "lessonId": "U03-L01",
+    "title": "两次换装，总量不变",
+    "stem": "一批彩笔原来每盒装12支，正好装24盒。改成每盒装18支，从这些彩笔中先拿出72支，其余还能装满多少盒？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "装满",
+        "suffix": "盒",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "先恢复彩笔总数，再扣除拿走的部分；换装只改变每盒数量。",
+    "sourceKind": "original",
+    "topicIds": ["u3-inverse"],
+    "knowledge": "乘除关系与未知量",
+    "pages": [45, 47],
+    "hasVisual": true,
+    "expected": {
+      "a1": "12"
+    },
+    "explanation": {
+      "analysis": "先恢复彩笔总数，再扣除拿走的部分；换装只改变每盒数量。",
+      "steps": [
+        "原总数12×24＝288支。",
+        "拿走72支后，剩288−72＝216支。",
+        "216÷18＝12盒；检验18×12＋72＝288支。"
+      ],
+      "answer": "装满：12盒",
+      "pitfall": "不能用24盒减去72支，也不能把288支全部按18支分盒。",
+      "visual": {
+        "kind": "reasoning",
+        "title": "两次换装，总量不变",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "原总数12×24＝288支。",
+          "拿走72支后，剩288−72＝216支。",
+          "216÷18＝12盒；检验18×12＋72＝288支。"
+        ],
+        "stages": [
+          {
+            "kind": "image",
+            "image": "/figures/bank-u3-inverse-04-step1.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u3-inverse-04-step2.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u3-inverse-04-step3.svg",
+            "headings": [],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "bank-u3-shopping-01",
+    "unitId": "U03",
+    "lessonId": "U03-L02",
+    "title": "购物清单缺一个总价",
+    "stem": "笔记本每本9元，买7本；橡皮每块3元，买4块。分别填写两种商品的总价。",
+    "type": "fill",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "笔记本总价",
+        "suffix": "元",
+        "inputMode": "numeric"
+      },
+      {
+        "key": "a2",
+        "label": "橡皮总价",
+        "suffix": "元",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "每种商品分别用单价乘数量。",
+    "sourceKind": "original",
+    "topicIds": ["u3-shopping"],
+    "knowledge": "购物与找零",
+    "pages": [48, 49],
+    "hasVisual": false,
+    "expected": {
+      "a1": "63",
+      "a2": "12"
+    },
+    "explanation": {
+      "analysis": "每种商品分别用单价乘数量。",
+      "steps": ["笔记本9×7＝63元。", "橡皮3×4＝12元。"],
+      "answer": "笔记本总价：63元；橡皮总价：12元",
+      "pitfall": "不同商品的单价和数量不能交叉相乘。"
+    }
+  },
+  {
+    "id": "bank-u3-shopping-02",
+    "unitId": "U03",
+    "lessonId": "U03-L02",
+    "title": "先买必须用品，再买笔",
+    "stem": "文具盒每个28元。小宁有180元，先买3个文具盒，再买每支8元的笔，最多买几支笔？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "最多买笔",
+        "suffix": "支",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "先扣除必须购买的文具盒费用，余款才是买笔的总价。",
+    "sourceKind": "original",
+    "topicIds": ["u3-shopping"],
+    "knowledge": "购物与找零",
+    "pages": [48, 49],
+    "hasVisual": false,
+    "expected": {
+      "a1": "12"
+    },
+    "explanation": {
+      "analysis": "先扣除必须购买的文具盒费用，余款才是买笔的总价。",
+      "steps": ["文具盒28×3＝84元。", "剩余180−84＝96元。", "96÷8＝12支，恰好用完。"],
+      "answer": "最多买笔：12支",
+      "pitfall": "不能直接用180÷8，因为文具盒还没有付款。"
+    }
+  },
+  {
+    "id": "bank-u3-shopping-03",
+    "unitId": "U03",
+    "lessonId": "U03-L02",
+    "title": "从找零单上求单价",
+    "stem": "小明买了6本相同的练习本和一支14元的笔，付100元，找回20元。每本练习本多少钱？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "练习本单价",
+        "suffix": "元/本",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "实付总价先扣除找零，再从总价中扣除笔钱。",
+    "sourceKind": "original",
+    "topicIds": ["u3-shopping"],
+    "knowledge": "购物与找零",
+    "pages": [48, 49],
+    "hasVisual": false,
+    "expected": {
+      "a1": "11"
+    },
+    "explanation": {
+      "analysis": "实付总价先扣除找零，再从总价中扣除笔钱。",
+      "steps": ["实际购物用100−20＝80元。", "练习本共用80−14＝66元。", "每本66÷6＝11元。"],
+      "answer": "练习本单价：11元/本",
+      "pitfall": "找回的钱没有花掉，不能加进总价。"
+    }
+  },
+  {
+    "id": "bank-u3-shopping-04",
+    "unitId": "U03",
+    "lessonId": "U03-L02",
+    "title": "退款以后，原来买了多少",
+    "stem": "一本画册18元。小华买了一些画册，付300元，先找回84元。随后退掉2本，商店按原价退款。最后留下多少本画册？手中一共有多少元？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "留下画册",
+        "suffix": "本",
+        "inputMode": "numeric"
+      },
+      {
+        "key": "a2",
+        "label": "手中钱数",
+        "suffix": "元",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "先用第一次实付款还原原来买的本数，再分别处理本数和退款。",
+    "sourceKind": "original",
+    "topicIds": ["u3-shopping"],
+    "knowledge": "购物与找零",
+    "pages": [48, 49],
+    "hasVisual": true,
+    "expected": {
+      "a1": "10",
+      "a2": "120"
+    },
+    "explanation": {
+      "analysis": "先用第一次实付款还原原来买的本数，再分别处理本数和退款。",
+      "steps": [
+        "第一次实付300−84＝216元，原买216÷18＝12本。",
+        "退2本后剩12−2＝10本；退款18×2＝36元。",
+        "手中有84＋36＝120元。检验10×18＋120＝300元。"
+      ],
+      "answer": "留下画册：10本；手中钱数：120元",
+      "pitfall": "84元只是第一次找零，不包括后来退回的36元。",
+      "visual": {
+        "kind": "reasoning",
+        "title": "退款以后，原来买了多少",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "第一次实付300−84＝216元，原买216÷18＝12本。",
+          "退2本后剩12−2＝10本；退款18×2＝36元。",
+          "手中有84＋36＝120元。检验10×18＋120＝300元。"
+        ],
+        "stages": [
+          {
+            "kind": "image",
+            "image": "/figures/bank-u3-shopping-04-step1.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u3-shopping-04-step2.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u3-shopping-04-step3.svg",
+            "headings": [],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "bank-u3-compare-01",
+    "unitId": "U03",
+    "lessonId": "U03-L02",
+    "title": "先统一到每本价格",
+    "stem": "甲店4本笔记本共36元，乙店6本同样的笔记本共48元，单买也按各店相同单价。各店每本多少钱？",
+    "type": "application",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "甲店单价",
+        "suffix": "元/本",
+        "inputMode": "numeric"
+      },
+      {
+        "key": "a2",
+        "label": "乙店单价",
+        "suffix": "元/本",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "两家给出的数量不同，不能直接比36和48。",
+    "sourceKind": "original",
+    "topicIds": ["u3-compare"],
+    "knowledge": "单价与购买方案",
+    "pages": [48, 49],
+    "hasVisual": false,
+    "expected": {
+      "a1": "9",
+      "a2": "8"
+    },
+    "explanation": {
+      "analysis": "两家给出的数量不同，不能直接比36和48。",
+      "steps": ["甲店36÷4＝9元/本。", "乙店48÷6＝8元/本，乙店单价较低。"],
+      "answer": "甲店单价：9元/本；乙店单价：8元/本",
+      "pitfall": "总价较高，不一定单价较高。"
+    }
+  },
+  {
+    "id": "bank-u3-compare-02",
+    "unitId": "U03",
+    "lessonId": "U03-L02",
+    "title": "同样预算，降价后多买",
+    "stem": "240元原来正好买20个文件夹。每个降价2元后，用240元能比原来多买几个？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "多买",
+        "suffix": "个",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "预算不变，先求原单价，再计算降价后的数量。",
+    "sourceKind": "original",
+    "topicIds": ["u3-compare"],
+    "knowledge": "单价与购买方案",
+    "pages": [48, 49],
+    "hasVisual": false,
+    "expected": {
+      "a1": "4"
+    },
+    "explanation": {
+      "analysis": "预算不变，先求原单价，再计算降价后的数量。",
+      "steps": [
+        "原单价240÷20＝12元/个。",
+        "新单价12−2＝10元/个，可买240÷10＝24个。",
+        "24−20＝4个。"
+      ],
+      "answer": "多买：4个",
+      "pitfall": "每个降2元不等于多买2个。"
+    }
+  },
+  {
+    "id": "bank-u3-compare-03",
+    "unitId": "U03",
+    "lessonId": "U03-L02",
+    "title": "批量购买是否更省钱",
+    "stem": "一本字帖单买12元，3本一包30元，两种购买方式可以混用。买8本字帖，买2包再买2本，比全部单买节省多少元？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "节省",
+        "suffix": "元",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "两种方案都买8本，分别计算总价再比较。",
+    "sourceKind": "original",
+    "topicIds": ["u3-compare"],
+    "knowledge": "单价与购买方案",
+    "pages": [48, 49],
+    "hasVisual": false,
+    "expected": {
+      "a1": "12"
+    },
+    "explanation": {
+      "analysis": "两种方案都买8本，分别计算总价再比较。",
+      "steps": ["全部单买12×8＝96元。", "混合买：30×2＋12×2＝84元，共6＋2＝8本。", "96−84＝12元。"],
+      "answer": "节省：12元",
+      "pitfall": "包数不能当作本数，2包是6本。"
+    }
+  },
+  {
+    "id": "bank-u3-compare-04",
+    "unitId": "U03",
+    "lessonId": "U03-L02",
+    "title": "凑够数量的最低费用",
+    "stem": "一本字帖单买12元，3本一包30元，可以混合买。至少需要8本，也允许买多。最少花多少元？用几包、几本单买？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "最少费用",
+        "suffix": "元",
+        "inputMode": "numeric"
+      },
+      {
+        "key": "a2",
+        "label": "整包数",
+        "suffix": "包",
+        "inputMode": "numeric"
+      },
+      {
+        "key": "a3",
+        "label": "单买本数",
+        "suffix": "本",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "按整包数分类，比够8本的费用；同时检查买9本会不会更便宜。",
+    "sourceKind": "original",
+    "topicIds": ["u3-compare"],
+    "knowledge": "单价与购买方案",
+    "pages": [48, 49],
+    "hasVisual": true,
+    "expected": {
+      "a1": "84",
+      "a2": "2",
+      "a3": "2"
+    },
+    "explanation": {
+      "analysis": "按整包数分类，比够8本的费用；同时检查买9本会不会更便宜。",
+      "steps": [
+        "0包要单买8本，花96元；1包还缺5本，花30＋12×5＝90元。",
+        "2包有6本，再单买2本，共30×2＋12×2＝84元。",
+        "3包有9本，花90元；4包及以上至少120元。最少84元。"
+      ],
+      "answer": "最少费用：84元；整包数：2包；单买本数：2本",
+      "pitfall": "至少8本不等于必须正好8本，9本方案也要比较。",
+      "visual": {
+        "kind": "reasoning",
+        "title": "凑够数量的最低费用",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "0包要单买8本，花96元；1包还缺5本，花30＋12×5＝90元。",
+          "2包有6本，再单买2本，共30×2＋12×2＝84元。",
+          "3包有9本，花90元；4包及以上至少120元。最少84元。"
+        ],
+        "stages": [
+          {
+            "kind": "image",
+            "image": "/figures/bank-u3-compare-04-step1.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u3-compare-04-step2.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u3-compare-04-step3.svg",
+            "headings": [],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "bank-u3-speed-01",
+    "unitId": "U03",
+    "lessonId": "U03-L03",
+    "title": "把速度单位补完整",
+    "stem": "小宇10分钟走650米。平均每分钟走多少米？照这样，14分钟走多少米？",
+    "type": "fill",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "速度",
+        "suffix": "米/分",
+        "inputMode": "numeric"
+      },
+      {
+        "key": "a2",
+        "label": "14分钟路程",
+        "suffix": "米",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "先求每1分钟的路程，再求14分钟的路程。",
+    "sourceKind": "original",
+    "topicIds": ["u3-speed"],
+    "knowledge": "速度与行程表",
+    "pages": [50, 53],
+    "hasVisual": false,
+    "expected": {
+      "a1": "65",
+      "a2": "910"
+    },
+    "explanation": {
+      "analysis": "先求每1分钟的路程，再求14分钟的路程。",
+      "steps": ["650÷10＝65米/分。", "65×14＝910米。"],
+      "answer": "速度：65米/分；14分钟路程：910米",
+      "pitfall": "650米是10分钟的路程，不是每分钟的速度。"
+    }
+  },
+  {
+    "id": "bank-u3-speed-02",
+    "unitId": "U03",
+    "lessonId": "U03-L03",
+    "title": "谁走得更快",
+    "stem": "甲12分钟走840米，乙15分钟走900米，两人行走时都匀速。谁走得快？",
+    "type": "choice",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "选择",
+        "inputMode": "numeric"
+      }
+    ],
+    "options": [
+      "甲，每分钟比乙多走10米",
+      "乙，每分钟比甲多走10米",
+      "一样快",
+      "仅看路程无法计算速度"
+    ],
+    "hint": "时间不同，要统一比较每分钟走的米数。",
+    "sourceKind": "original",
+    "topicIds": ["u3-speed"],
+    "knowledge": "速度与行程表",
+    "pages": [50, 53],
+    "hasVisual": false,
+    "expected": {
+      "value": "0"
+    },
+    "explanation": {
+      "analysis": "时间不同，要统一比较每分钟走的米数。",
+      "steps": ["甲840÷12＝70米/分。", "乙900÷15＝60米/分。", "70−60＝10米/分，甲快。"],
+      "answer": "甲，每分钟比乙多走10米",
+      "pitfall": "乙走的总路程更长，不表示乙速度更快。"
+    }
+  },
+  {
+    "id": "bank-u3-speed-03",
+    "unitId": "U03",
+    "lessonId": "U03-L03",
+    "title": "时与分先统一",
+    "stem": "自行车每分钟行250米，连续骑20分钟。汽车每小时行60千米，连续行5分钟。两者行的路程相差多少米？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "路程差",
+        "suffix": "米",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "汽车速度先换成每分钟的米数，再分别求路程。",
+    "sourceKind": "original",
+    "topicIds": ["u3-speed"],
+    "knowledge": "速度与行程表",
+    "pages": [50, 53],
+    "hasVisual": false,
+    "expected": {
+      "a1": "0"
+    },
+    "explanation": {
+      "analysis": "汽车速度先换成每分钟的米数，再分别求路程。",
+      "steps": [
+        "60千米＝60000米，1小时＝60分钟，所以汽车每分钟行1000米。",
+        "自行车250×20＝5000米；汽车1000×5＝5000米。",
+        "路程相差0米。"
+      ],
+      "answer": "路程差：0米",
+      "pitfall": "不能用60千米/时直接乘5分钟。"
+    }
+  },
+  {
+    "id": "bank-u3-speed-04",
+    "unitId": "U03",
+    "lessonId": "U03-L03",
+    "title": "行走时间与休息时间",
+    "stem": "小林以75米/分的速度，16分钟走完一条路。小周走同一条路，速度100米/分。两人同时出发，小周要比小林早到2分钟，途中最多能休息几分钟？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "最多休息",
+        "suffix": "分钟",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "同一路程先算小周真正走路的时间，再从允许的总用时中扣除。",
+    "sourceKind": "original",
+    "topicIds": ["u3-speed"],
+    "knowledge": "速度与行程表",
+    "pages": [50, 53],
+    "hasVisual": true,
+    "expected": {
+      "a1": "2"
+    },
+    "explanation": {
+      "analysis": "同一路程先算小周真正走路的时间，再从允许的总用时中扣除。",
+      "steps": [
+        "路程75×16＝1200米。",
+        "小周行走需1200÷100＝12分钟。",
+        "比小林早2分钟，总用时应为16−2＝14分钟，因此最多休息14−12＝2分钟。"
+      ],
+      "answer": "最多休息：2分钟",
+      "pitfall": "速度只对应行走时间，不能把休息也乘100米/分。",
+      "visual": {
+        "kind": "reasoning",
+        "title": "行走时间与休息时间",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "路程75×16＝1200米。",
+          "小周行走需1200÷100＝12分钟。",
+          "比小林早2分钟，总用时应为16−2＝14分钟，因此最多休息14−12＝2分钟。"
+        ],
+        "stages": [
+          {
+            "kind": "image",
+            "image": "/figures/bank-u3-speed-04-step1.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u3-speed-04-step2.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u3-speed-04-step3.svg",
+            "headings": [],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "bank-u3-journey-01",
+    "unitId": "U03",
+    "lessonId": "U03-L03",
+    "title": "同路返回求速度",
+    "stem": "汽车去图书馆每小时行60千米，3小时到达。沿原路返回用了2小时，返回速度是多少千米/时？",
+    "type": "application",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "返回速度",
+        "suffix": "千米/时",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "往返的路程相同，先求单程路程。",
+    "sourceKind": "original",
+    "topicIds": ["u3-journey"],
+    "knowledge": "分段与往返行程",
+    "pages": [50, 55],
+    "hasVisual": false,
+    "expected": {
+      "a1": "90"
+    },
+    "explanation": {
+      "analysis": "往返的路程相同，先求单程路程。",
+      "steps": ["单程60×3＝180千米。", "返回速度180÷2＝90千米/时。"],
+      "answer": "返回速度：90千米/时",
+      "pitfall": "不能把去、回时间相加后作为返回时间。"
+    }
+  },
+  {
+    "id": "bank-u3-journey-02",
+    "unitId": "U03",
+    "lessonId": "U03-L03",
+    "title": "中途换速，逐段计算",
+    "stem": "一辆汽车先以60千米/时行2小时，再以45千米/时行2小时。全程路程是多少千米？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "全程",
+        "suffix": "千米",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "每段分别用该段速度乘该段时间，再合并路程。",
+    "sourceKind": "original",
+    "topicIds": ["u3-journey"],
+    "knowledge": "分段与往返行程",
+    "pages": [50, 55],
+    "hasVisual": false,
+    "expected": {
+      "a1": "210"
+    },
+    "explanation": {
+      "analysis": "每段分别用该段速度乘该段时间，再合并路程。",
+      "steps": ["第一段60×2＝120千米。", "第二段45×2＝90千米。", "全程120＋90＝210千米。"],
+      "answer": "全程：210千米",
+      "pitfall": "不能任选一个速度乘4小时。"
+    }
+  },
+  {
+    "id": "bank-u3-journey-03",
+    "unitId": "U03",
+    "lessonId": "U03-L03",
+    "title": "往返用时，别漏休息",
+    "stem": "小诚去距家900米的书店，每分钟走60米，在书店停留8分钟。返回走原路，每分钟走75米。从离家到回家共多少分钟？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "共用时",
+        "suffix": "分钟",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "把去程、停留、返程分开，最后相加。",
+    "sourceKind": "original",
+    "topicIds": ["u3-journey"],
+    "knowledge": "分段与往返行程",
+    "pages": [50, 55],
+    "hasVisual": false,
+    "expected": {
+      "a1": "35"
+    },
+    "explanation": {
+      "analysis": "把去程、停留、返程分开，最后相加。",
+      "steps": ["去程900÷60＝15分钟。", "返程900÷75＝12分钟。", "共15＋8＋12＝35分钟。"],
+      "answer": "共用时：35分钟",
+      "pitfall": "900米是单程距离；停留8分钟也属于离家总用时。"
+    }
+  },
+  {
+    "id": "bank-u3-journey-04",
+    "unitId": "U03",
+    "lessonId": "U03-L03",
+    "title": "用剩余时间安排后半程",
+    "stem": "一条步道全长1500米。小宁先以60米/分走10分钟，休息5分钟。要在出发后30分钟内到达终点，后半程至少每分钟走多少米？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "至少速度",
+        "suffix": "米/分",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "先分别求剩余路程和可用的行走时间，再求速度。",
+    "sourceKind": "original",
+    "topicIds": ["u3-journey"],
+    "knowledge": "分段与往返行程",
+    "pages": [50, 55],
+    "hasVisual": true,
+    "expected": {
+      "a1": "60"
+    },
+    "explanation": {
+      "analysis": "先分别求剩余路程和可用的行走时间，再求速度。",
+      "steps": [
+        "已走60×10＝600米，剩1500−600＝900米。",
+        "30分钟内已经用了10＋5＝15分钟，还能走15分钟。",
+        "至少速度900÷15＝60米/分。用60走15分钟恰好到达。"
+      ],
+      "answer": "至少速度：60米/分",
+      "pitfall": "剩余时间不是30−10，必须扣掉休息的5分钟。",
+      "visual": {
+        "kind": "reasoning",
+        "title": "用剩余时间安排后半程",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "已走60×10＝600米，剩1500−600＝900米。",
+          "30分钟内已经用了10＋5＝15分钟，还能走15分钟。",
+          "至少速度900÷15＝60米/分。用60走15分钟恰好到达。"
+        ],
+        "stages": [
+          {
+            "kind": "image",
+            "image": "/figures/bank-u3-journey-04-step1.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u3-journey-04-step2.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u3-journey-04-step3.svg",
+            "headings": [],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "bank-u3-conditions-01",
+    "unitId": "U03",
+    "lessonId": "U03-L04",
+    "title": "按记录表找每分钟产量",
+    "stem": "一条生产线匀速生产，2分钟产8件，4分钟产16件，6分钟产24件。照这样，15分钟产多少件？",
+    "type": "application",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "产量",
+        "suffix": "件",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "记录中的总件数与时间对应，先求每分钟产量。",
+    "sourceKind": "original",
+    "topicIds": ["u3-conditions"],
+    "knowledge": "整理条件与不变量",
+    "pages": [54, 56],
+    "hasVisual": false,
+    "expected": {
+      "a1": "60"
+    },
+    "explanation": {
+      "analysis": "记录中的总件数与时间对应，先求每分钟产量。",
+      "steps": ["8÷2＝4件/分，16÷4和24÷6也都等于4。", "15分钟产4×15＝60件。"],
+      "answer": "产量：60件",
+      "pitfall": "表中每一列都是从开始计时的累计量，不能把8、16、24相加。"
+    }
+  },
+  {
+    "id": "bank-u3-conditions-02",
+    "unitId": "U03",
+    "lessonId": "U03-L04",
+    "title": "多余条件不参与计算",
+    "stem": "小林买4本同样的笔记本共28元，小晴带50元，小鹏买6本同样的笔记本。每人都单独付款，小鹏需要付多少元？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "小鹏付款",
+        "suffix": "元",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "只用同种笔记本的单价和小鹏的本数，小晴带的钱与问题无关。",
+    "sourceKind": "original",
+    "topicIds": ["u3-conditions"],
+    "knowledge": "整理条件与不变量",
+    "pages": [54, 56],
+    "hasVisual": false,
+    "expected": {
+      "a1": "42"
+    },
+    "explanation": {
+      "analysis": "只用同种笔记本的单价和小鹏的本数，小晴带的钱与问题无关。",
+      "steps": ["每本28÷4＝7元。", "小鹏6本需7×6＝42元。"],
+      "answer": "小鹏付款：42元",
+      "pitfall": "不能把小晴的50元加入或扣出小鹏的费用。"
+    }
+  },
+  {
+    "id": "bank-u3-conditions-03",
+    "unitId": "U03",
+    "lessonId": "U03-L04",
+    "title": "装法改变，总质量不变",
+    "stem": "一批水果每箱装9千克，可装40箱。改成每箱装12千克后，可少用多少箱？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "少用",
+        "suffix": "箱",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "水果总质量保持不变，先求换装后的箱数，再比较。",
+    "sourceKind": "original",
+    "topicIds": ["u3-conditions"],
+    "knowledge": "整理条件与不变量",
+    "pages": [54, 56],
+    "hasVisual": false,
+    "expected": {
+      "a1": "10"
+    },
+    "explanation": {
+      "analysis": "水果总质量保持不变，先求换装后的箱数，再比较。",
+      "steps": ["总质量9×40＝360千克。", "新装法360÷12＝30箱。", "少用40−30＝10箱。"],
+      "answer": "少用：10箱",
+      "pitfall": "每箱多装3千克，不等于少用3箱。"
+    }
+  },
+  {
+    "id": "bank-u3-conditions-04",
+    "unitId": "U03",
+    "lessonId": "U03-L04",
+    "title": "任务增加，效率也改变",
+    "stem": "手工组前6分钟做了24朵纸花。接着速度提高到每分钟比原来多做2朵。总共要做84朵，从开始到全部完成要多少分钟？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "总用时",
+        "suffix": "分钟",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "前后效率不同。先把已做与未做分开，再计算后一段用时。",
+    "sourceKind": "original",
+    "topicIds": ["u3-conditions"],
+    "knowledge": "整理条件与不变量",
+    "pages": [54, 56],
+    "hasVisual": true,
+    "expected": {
+      "a1": "16"
+    },
+    "explanation": {
+      "analysis": "前后效率不同。先把已做与未做分开，再计算后一段用时。",
+      "steps": [
+        "原效率24÷6＝4朵/分，后来效率4＋2＝6朵/分。",
+        "后段还需做84−24＝60朵。",
+        "后段需60÷6＝10分钟，总用时6＋10＝16分钟。"
+      ],
+      "answer": "总用时：16分钟",
+      "pitfall": "不能用84直接除以后来的效率，前6分钟已经按原效率完成了24朵。",
+      "visual": {
+        "kind": "reasoning",
+        "title": "任务增加，效率也改变",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "原效率24÷6＝4朵/分，后来效率4＋2＝6朵/分。",
+          "后段还需做84−24＝60朵。",
+          "后段需60÷6＝10分钟，总用时6＋10＝16分钟。"
+        ],
+        "stages": [
+          {
+            "kind": "image",
+            "image": "/figures/bank-u3-conditions-04-step1.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u3-conditions-04-step2.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u3-conditions-04-step3.svg",
+            "headings": [],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "bank-u4-order-01",
+    "unitId": "U04",
+    "lessonId": "U04-L01",
+    "title": "乘除同级，从左往右",
+    "stem": "计算：96÷4×3−18。",
+    "type": "calculation",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "得数",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "先按从左往右的顺序算除法、乘法，再算减法。",
+    "sourceKind": "original",
+    "topicIds": ["u4-order"],
+    "knowledge": "运算顺序与纠错",
+    "pages": [58, 59],
+    "hasVisual": false,
+    "expected": {
+      "a1": "54"
+    },
+    "explanation": {
+      "analysis": "先按从左往右的顺序算除法、乘法，再算减法。",
+      "steps": ["96÷4＝24，原式变成24×3−18。", "24×3＝72，72−18＝54。"],
+      "answer": "得数：54",
+      "pitfall": "不能先算4×3，把原式变成96÷12−18。"
+    }
+  },
+  {
+    "id": "bank-u4-order-02",
+    "unitId": "U04",
+    "lessonId": "U04-L01",
+    "title": "找第一处运算错误",
+    "stem": "小军算360÷6×3＋20，先算6×3＝18，再算360÷18＋20。要改正第一处错误，应该先算哪一步？",
+    "type": "choice",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "选择",
+        "inputMode": "numeric"
+      }
+    ],
+    "options": ["6×3", "360÷6", "3＋20", "360÷3"],
+    "hint": "乘法和除法同级，前面的除法应先完成。",
+    "sourceKind": "original",
+    "topicIds": ["u4-order"],
+    "knowledge": "运算顺序与纠错",
+    "pages": [58, 59],
+    "hasVisual": false,
+    "expected": {
+      "value": "1"
+    },
+    "explanation": {
+      "analysis": "乘法和除法同级，前面的除法应先完成。",
+      "steps": ["第一处错误是把6×3先合在一起。", "应先算360÷6＝60，然后60×3＋20＝200。"],
+      "answer": "360÷6",
+      "pitfall": "不能把“先乘除”误读成乘法永远先于除法。"
+    }
+  },
+  {
+    "id": "bank-u4-order-03",
+    "unitId": "U04",
+    "lessonId": "U04-L01",
+    "title": "三组人数的关系",
+    "stem": "书法组24人，绘画组人数是书法组的3倍，合唱组比这两组合计少8人。合唱组有多少人？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "合唱组",
+        "suffix": "人",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "“这两组合计”指书法组与绘画组的人数和。",
+    "sourceKind": "original",
+    "topicIds": ["u4-order"],
+    "knowledge": "运算顺序与纠错",
+    "pages": [58, 59],
+    "hasVisual": false,
+    "expected": {
+      "a1": "88"
+    },
+    "explanation": {
+      "analysis": "“这两组合计”指书法组与绘画组的人数和。",
+      "steps": ["绘画组24×3＝72人。", "两组合计24＋72＝96人。", "合唱组96−8＝88人。"],
+      "answer": "合唱组：88人",
+      "pitfall": "不能只从绘画组的72人中减8。"
+    }
+  },
+  {
+    "id": "bank-u4-order-04",
+    "unitId": "U04",
+    "lessonId": "U04-L01",
+    "title": "算得通，也可能顺序错",
+    "stem": "计算360−180÷6×3。小方先算6×3，再算180÷18，得到350。正确结果是多少？小方的结果比正确结果多多少？",
+    "type": "calculation",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "正确结果",
+        "inputMode": "numeric"
+      },
+      {
+        "key": "a2",
+        "label": "多算",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "先检查他改变了哪一组运算关系，再按同级从左往右计算。",
+    "sourceKind": "original",
+    "topicIds": ["u4-order"],
+    "knowledge": "运算顺序与纠错",
+    "pages": [58, 59],
+    "hasVisual": true,
+    "expected": {
+      "a1": "270",
+      "a2": "80"
+    },
+    "explanation": {
+      "analysis": "先检查他改变了哪一组运算关系，再按同级从左往右计算。",
+      "steps": [
+        "原式应先算180÷6＝30，再算30×3＝90。",
+        "360−90＝270，正确结果是270。",
+        "350−270＝80。错误方法把应减的90错算成10，所以多了80。"
+      ],
+      "answer": "正确结果：270；多算：80",
+      "pitfall": "每一步都能算出整数，不代表计算顺序正确。",
+      "visual": {
+        "kind": "reasoning",
+        "title": "算得通，也可能顺序错",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "原式应先算180÷6＝30，再算30×3＝90。",
+          "360−90＝270，正确结果是270。",
+          "350−270＝80。错误方法把应减的90错算成10，所以多了80。"
+        ],
+        "stages": [
+          {
+            "kind": "image",
+            "image": "/figures/bank-u4-order-04-step1.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u4-order-04-step2.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u4-order-04-step3.svg",
+            "headings": [],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "bank-u4-order-05",
+    "unitId": "U04",
+    "lessonId": "U04-L01",
+    "title": "先乘除，再比较两组产量",
+    "stem": "甲组每小时做48件，做3小时；乙组每小时做40件，做2小时。甲组比乙组多做多少件？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "多做",
+        "suffix": "件",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "先分别求两组各自完成的件数，再相减。",
+    "sourceKind": "original",
+    "topicIds": ["u4-order"],
+    "knowledge": "运算顺序与纠错",
+    "pages": [58, 59],
+    "hasVisual": false,
+    "expected": {
+      "a1": "64"
+    },
+    "explanation": {
+      "analysis": "先分别求两组各自完成的件数，再相减。",
+      "steps": ["甲组48×3＝144件。", "乙组40×2＝80件。", "甲组多144−80＝64件。综合算式48×3−40×2。"],
+      "answer": "多做：64件",
+      "pitfall": "工作时间不同，不能用每小时产量差直接乘其中一个时间。"
+    }
+  },
+  {
+    "id": "bank-u4-brackets-01",
+    "unitId": "U04",
+    "lessonId": "U04-L02",
+    "title": "从最里面的小括号开始",
+    "stem": "计算：840÷[(52−32)×3]。",
+    "type": "calculation",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "得数",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "小括号先算，中括号中的整体是除数。",
+    "sourceKind": "original",
+    "topicIds": ["u4-brackets"],
+    "knowledge": "小括号与中括号",
+    "pages": [60, 61],
+    "hasVisual": false,
+    "expected": {
+      "a1": "14"
+    },
+    "explanation": {
+      "analysis": "小括号先算，中括号中的整体是除数。",
+      "steps": ["52−32＝20，原式变成840÷[20×3]。", "20×3＝60，840÷60＝14。"],
+      "answer": "得数：14",
+      "pitfall": "不能先算840÷20，再乘3。"
+    }
+  },
+  {
+    "id": "bank-u4-brackets-02",
+    "unitId": "U04",
+    "lessonId": "U04-L02",
+    "title": "多一层括号，除数不同",
+    "stem": "分别计算：甲600÷(25−5)×2；乙600÷[(25−5)×2]。",
+    "type": "calculation",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "甲式",
+        "inputMode": "numeric"
+      },
+      {
+        "key": "a2",
+        "label": "乙式",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "两个式子的小括号都得20，但乙式把20×2整个作为除数。",
+    "sourceKind": "original",
+    "topicIds": ["u4-brackets"],
+    "knowledge": "小括号与中括号",
+    "pages": [60, 61],
+    "hasVisual": false,
+    "expected": {
+      "a1": "60",
+      "a2": "15"
+    },
+    "explanation": {
+      "analysis": "两个式子的小括号都得20，但乙式把20×2整个作为除数。",
+      "steps": ["甲：600÷20×2＝30×2＝60。", "乙：600÷[20×2]＝600÷40＝15。"],
+      "answer": "甲式：60；乙式：15",
+      "pitfall": "去掉中括号会改变除法所对应的整体。"
+    }
+  },
+  {
+    "id": "bank-u4-brackets-03",
+    "unitId": "U04",
+    "lessonId": "U04-L02",
+    "title": "每日总量必须先合并",
+    "stem": "学校有720张彩纸，每天给4个班各发18张，还给美术社团发8张。每天都这样发，正好能发几天？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "天数",
+        "suffix": "天",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "先求一天全部发出的张数，再用总数除以每天用量。",
+    "sourceKind": "original",
+    "topicIds": ["u4-brackets"],
+    "knowledge": "小括号与中括号",
+    "pages": [60, 61],
+    "hasVisual": false,
+    "expected": {
+      "a1": "9"
+    },
+    "explanation": {
+      "analysis": "先求一天全部发出的张数，再用总数除以每天用量。",
+      "steps": [
+        "4个班每天共18×4＝72张。",
+        "每天全部用72＋8＝80张。",
+        "720÷80＝9天，综合算式720÷(18×4＋8)。"
+      ],
+      "answer": "天数：9天",
+      "pitfall": "8张是每天额外给社团的用量，不能等除完再加8。"
+    }
+  },
+  {
+    "id": "bank-u4-brackets-04",
+    "unitId": "U04",
+    "lessonId": "U04-L02",
+    "title": "括号放在哪里才得到90",
+    "stem": "在240÷12−4×3中添加一对小括号，哪种写法的结果是90？",
+    "type": "choice",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "value",
+        "label": "选择",
+        "inputMode": "numeric"
+      }
+    ],
+    "options": ["(240÷12−4)×3", "240÷(12−4)×3", "240÷(12−4×3)", "240÷12−(4×3)"],
+    "hint": "分别看括号圈住了什么；有的写法还会使除数变成0，不能计算。",
+    "sourceKind": "original",
+    "topicIds": ["u4-brackets"],
+    "knowledge": "小括号与中括号",
+    "pages": [60, 61],
+    "hasVisual": true,
+    "expected": {
+      "value": "1"
+    },
+    "explanation": {
+      "analysis": "分别看括号圈住了什么；有的写法还会使除数变成0，不能计算。",
+      "steps": [
+        "第一项先得240÷12−4＝16，再乘3得48。",
+        "第二项12−4＝8，240÷8×3＝30×3＝90。",
+        "第三项括号内为0，不能作除数；第四项为20−12＝8。只有第二项符合。"
+      ],
+      "answer": "240÷(12−4)×3",
+      "pitfall": "括号能改变顺序，但不能使除数为0。",
+      "visual": {
+        "kind": "reasoning",
+        "title": "括号放在哪里才得到90",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "第一项先得240÷12−4＝16，再乘3得48。",
+          "第二项12−4＝8，240÷8×3＝30×3＝90。",
+          "第三项括号内为0，不能作除数；第四项为20−12＝8。只有第二项符合。"
+        ],
+        "stages": [
+          {
+            "kind": "image",
+            "image": "/figures/bank-u4-brackets-04-step1.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u4-brackets-04-step2.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u4-brackets-04-step3.svg",
+            "headings": [],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "bank-u4-brackets-05",
+    "unitId": "U04",
+    "lessonId": "U04-L02",
+    "title": "从结果倒推括号内的数",
+    "stem": "960÷[(□−16)×4]＝8。□里应该填多少？用分步倒推说明。",
+    "type": "fill",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "方框里的数",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "先由被除数和商求除数，再逐层还原中括号、小括号。",
+    "sourceKind": "original",
+    "topicIds": ["u4-brackets"],
+    "knowledge": "小括号与中括号",
+    "pages": [60, 61],
+    "hasVisual": true,
+    "expected": {
+      "a1": "46"
+    },
+    "explanation": {
+      "analysis": "先由被除数和商求除数，再逐层还原中括号、小括号。",
+      "steps": [
+        "除数整体应是960÷8＝120。",
+        "小括号的数应是120÷4＝30。",
+        "□比30多16，因此填30＋16＝46。检验(46−16)×4＝120，960÷120＝8。"
+      ],
+      "answer": "方框里的数：46",
+      "pitfall": "倒推时顺序与正算相反，每层都要把所对应的整体找准。",
+      "visual": {
+        "kind": "reasoning",
+        "title": "从结果倒推括号内的数",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "除数整体应是960÷8＝120。",
+          "小括号的数应是120÷4＝30。",
+          "□比30多16，因此填30＋16＝46。检验(46−16)×4＝120，960÷120＝8。"
+        ],
+        "stages": [
+          {
+            "kind": "image",
+            "image": "/figures/bank-u4-brackets-05-step1.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u4-brackets-05-step2.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u4-brackets-05-step3.svg",
+            "headings": [],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "bank-u4-model-01",
+    "unitId": "U04",
+    "lessonId": "U04-L03",
+    "title": "哪道算式符合购物过程",
+    "stem": "带600元，先买4件每件84元的模型，余款全部买每本24元的书。求能买几本书，应该列哪道算式？",
+    "type": "choice",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "value",
+        "label": "选择",
+        "inputMode": "numeric"
+      }
+    ],
+    "options": ["600−84×4÷24", "600÷24−84×4", "(600−84×4)÷24", "600−(84×4÷24)"],
+    "hint": "先从预算中扣除模型总价，剩余钱数才拿去除以书的单价。",
+    "sourceKind": "original",
+    "topicIds": ["u4-model"],
+    "knowledge": "算式与数量关系",
+    "pages": [62, 63],
+    "hasVisual": false,
+    "expected": {
+      "value": "2"
+    },
+    "explanation": {
+      "analysis": "先从预算中扣除模型总价，剩余钱数才拿去除以书的单价。",
+      "steps": [
+        "模型总价84×4＝336元，余款600−336＝264元。",
+        "书的本数264÷24＝11本，所以选第三项。"
+      ],
+      "answer": "(600−84×4)÷24",
+      "pitfall": "没有括号就会先做除法，改变余款买书的意义。"
+    }
+  },
+  {
+    "id": "bank-u4-model-02",
+    "unitId": "U04",
+    "lessonId": "U04-L03",
+    "title": "总量、每份与份数",
+    "stem": "6个班各交来18幅作品，展出36幅，剩下的平均放入8个相册。每个相册放几幅？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "每个相册",
+        "suffix": "幅",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "先求收来的总数，再扣除展出部分，最后平均分。",
+    "sourceKind": "original",
+    "topicIds": ["u4-model"],
+    "knowledge": "算式与数量关系",
+    "pages": [62, 63],
+    "hasVisual": false,
+    "expected": {
+      "a1": "9"
+    },
+    "explanation": {
+      "analysis": "先求收来的总数，再扣除展出部分，最后平均分。",
+      "steps": ["收来18×6＝108幅。", "剩108−36＝72幅。", "每册72÷8＝9幅，综合算式(18×6−36)÷8。"],
+      "answer": "每个相册：9幅",
+      "pitfall": "36是展出总数，不能在每个班的18幅中都减36。"
+    }
+  },
+  {
+    "id": "bank-u4-model-03",
+    "unitId": "U04",
+    "lessonId": "U04-L03",
+    "title": "算式中的先后关系",
+    "stem": "算式(480−24×5)÷12中的“480−24×5”表示什么？情境：480颗珠子，先做5串，每串用24颗，再把剩下的每12颗装一袋。",
+    "type": "choice",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "选择",
+        "inputMode": "numeric"
+      }
+    ],
+    "options": ["每袋的颗数", "做完5串后剩下的颗数", "5串用掉的颗数", "最后装好的袋数"],
+    "hint": "先将每步计算对应到一个具体的量。",
+    "sourceKind": "original",
+    "topicIds": ["u4-model"],
+    "knowledge": "算式与数量关系",
+    "pages": [62, 63],
+    "hasVisual": false,
+    "expected": {
+      "value": "1"
+    },
+    "explanation": {
+      "analysis": "先将每步计算对应到一个具体的量。",
+      "steps": ["24×5表示5串用掉120颗。", "480−120表示剩余360颗。", "再除以12，才得到30袋。"],
+      "answer": "做完5串后剩下的颗数",
+      "pitfall": "带括号的整体是剩余颗数，不是已经算出的袋数。"
+    }
+  },
+  {
+    "id": "bank-u4-model-04",
+    "unitId": "U04",
+    "lessonId": "U04-L03",
+    "title": "两次使用后才能分配",
+    "stem": "有8包彩纸，每包45张。先做40朵花，每朵用3张；再做12个灯笼，每个用10张。剩下的纸，每组分24张，够分给几组？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "可分组数",
+        "suffix": "组",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "总张数中有两笔支出，分别算清后再平均分配余量。",
+    "sourceKind": "original",
+    "topicIds": ["u4-model"],
+    "knowledge": "算式与数量关系",
+    "pages": [62, 63],
+    "hasVisual": true,
+    "expected": {
+      "a1": "5"
+    },
+    "explanation": {
+      "analysis": "总张数中有两笔支出，分别算清后再平均分配余量。",
+      "steps": [
+        "共有45×8＝360张；做花用40×3＝120张。",
+        "做灯笼用12×10＝120张，剩360−120−120＝120张。",
+        "120÷24＝5组。检验120＋120＋24×5＝360张。"
+      ],
+      "answer": "可分组数：5组",
+      "pitfall": "做花、做灯笼是两笔不同的用量，即使恰好相等也不能只扣一次。",
+      "visual": {
+        "kind": "reasoning",
+        "title": "两次使用后才能分配",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "共有45×8＝360张；做花用40×3＝120张。",
+          "做灯笼用12×10＝120张，剩360−120−120＝120张。",
+          "120÷24＝5组。检验120＋120＋24×5＝360张。"
+        ],
+        "stages": [
+          {
+            "kind": "image",
+            "image": "/figures/bank-u4-model-04-step1.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u4-model-04-step2.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u4-model-04-step3.svg",
+            "headings": [],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "bank-u4-model-05",
+    "unitId": "U04",
+    "lessonId": "U04-L03",
+    "title": "把相同的人数整理到同一行",
+    "stem": "四年级有3个班，每班32人，五年级有2个班，每班36人。两年级合计后，每8人一组做实验，可分几组？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "组数",
+        "suffix": "组",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "先合并两年级人数，再按每组8人分组。",
+    "sourceKind": "original",
+    "topicIds": ["u4-model"],
+    "knowledge": "算式与数量关系",
+    "pages": [62, 63],
+    "hasVisual": false,
+    "expected": {
+      "a1": "21"
+    },
+    "explanation": {
+      "analysis": "先合并两年级人数，再按每组8人分组。",
+      "steps": ["四年级32×3＝96人，五年级36×2＝72人。", "合计96＋72＝168人。", "168÷8＝21组。"],
+      "answer": "组数：21组",
+      "pitfall": "不能先把3个班与2个班相加，再统一乘同一个班额。"
+    }
+  },
+  {
+    "id": "bank-u4-steps-01",
+    "unitId": "U04",
+    "lessonId": "U04-L03",
+    "title": "从最后剩余还原开始数量",
+    "stem": "一捆绳子用去5段，每段8米，最后剩17米。这捆绳子原来长多少米？",
+    "type": "application",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "原长",
+        "suffix": "米",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "原来的长度等于已经用掉的长度加剩余长度。",
+    "sourceKind": "original",
+    "topicIds": ["u4-steps"],
+    "knowledge": "多步分析与倒推",
+    "pages": [62, 63],
+    "hasVisual": false,
+    "expected": {
+      "a1": "57"
+    },
+    "explanation": {
+      "analysis": "原来的长度等于已经用掉的长度加剩余长度。",
+      "steps": ["用去8×5＝40米。", "原长40＋17＝57米。"],
+      "answer": "原长：57米",
+      "pitfall": "还原原总量时用加法，不是再从17中减40。"
+    }
+  },
+  {
+    "id": "bank-u4-steps-02",
+    "unitId": "U04",
+    "lessonId": "U04-L03",
+    "title": "最后一天不必读满",
+    "stem": "一本书320页，前5天每天读28页。以后每天最多读25页，还需几天读完？最后一天读几页？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "还需天数",
+        "suffix": "天",
+        "inputMode": "numeric"
+      },
+      {
+        "key": "a2",
+        "label": "最后一天",
+        "suffix": "页",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "先求余页数，再用除法与余数安排最后一天。",
+    "sourceKind": "original",
+    "topicIds": ["u4-steps"],
+    "knowledge": "多步分析与倒推",
+    "pages": [62, 63],
+    "hasVisual": false,
+    "expected": {
+      "a1": "8",
+      "a2": "5"
+    },
+    "explanation": {
+      "analysis": "先求余页数，再用除法与余数安排最后一天。",
+      "steps": [
+        "已读28×5＝140页，剩320−140＝180页。",
+        "180÷25＝7……5，7天最多读175页，还剩5页。",
+        "因此还需8天，最后一天读5页。"
+      ],
+      "answer": "还需天数：8天；最后一天：5页",
+      "pitfall": "有余数表示还需一天，不能说7天已经读完。"
+    }
+  },
+  {
+    "id": "bank-u4-steps-03",
+    "unitId": "U04",
+    "lessonId": "U04-L03",
+    "title": "分装前先拿走了一部分",
+    "stem": "一批种子先拿出32袋，剩下的装入6个箱子，每箱12袋。这批种子原来有多少袋？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "原有",
+        "suffix": "袋",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "先把剩下的总量算出来，再把先拿出的32袋加回来。",
+    "sourceKind": "original",
+    "topicIds": ["u4-steps"],
+    "knowledge": "多步分析与倒推",
+    "pages": [62, 63],
+    "hasVisual": false,
+    "expected": {
+      "a1": "104"
+    },
+    "explanation": {
+      "analysis": "先把剩下的总量算出来，再把先拿出的32袋加回来。",
+      "steps": ["剩余总量12×6＝72袋。", "原来72＋32＝104袋。"],
+      "answer": "原有：104袋",
+      "pitfall": "32袋没有包含在6箱中，必须加回去。"
+    }
+  },
+  {
+    "id": "bank-u4-steps-04",
+    "unitId": "U04",
+    "lessonId": "U04-L03",
+    "title": "提前一天，后段每天做多少",
+    "stem": "原计划每天做60件，9天完成一批零件。实际前4天仍每天做60件，准备比原计划提前1天完成。余下每天做同样多，应每天做多少件？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "后段每天",
+        "suffix": "件",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "总任务不变。先求剩余件数，再求实际剩余天数。",
+    "sourceKind": "original",
+    "topicIds": ["u4-steps"],
+    "knowledge": "多步分析与倒推",
+    "pages": [62, 63],
+    "hasVisual": true,
+    "expected": {
+      "a1": "75"
+    },
+    "explanation": {
+      "analysis": "总任务不变。先求剩余件数，再求实际剩余天数。",
+      "steps": [
+        "总任务60×9＝540件，前4天做60×4＝240件。",
+        "剩540−240＝300件；实际总天数9−1＝8天，还剩8−4＝4天。",
+        "后段每天300÷4＝75件。检验60×4＋75×4＝540件。"
+      ],
+      "answer": "后段每天：75件",
+      "pitfall": "提前1天是总工期少1天，不是后段只剩1天。",
+      "visual": {
+        "kind": "reasoning",
+        "title": "提前一天，后段每天做多少",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "总任务60×9＝540件，前4天做60×4＝240件。",
+          "剩540−240＝300件；实际总天数9−1＝8天，还剩8−4＝4天。",
+          "后段每天300÷4＝75件。检验60×4＋75×4＝540件。"
+        ],
+        "stages": [
+          {
+            "kind": "image",
+            "image": "/figures/bank-u4-steps-04-step1.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u4-steps-04-step2.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u4-steps-04-step3.svg",
+            "headings": [],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "bank-u4-steps-05",
+    "unitId": "U04",
+    "lessonId": "U04-L03",
+    "title": "平均分后发现每组少了",
+    "stem": "把一批卡片平均分给8组，每组发12张，还剩24张。现在要让每组都拿到15张，这批卡片是否够？如果刚好够，需要再补多少张？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "需补",
+        "suffix": "张",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "先还原全部卡片数，再求每组15张的总需求；刚好够时补0张。",
+    "sourceKind": "original",
+    "topicIds": ["u4-steps"],
+    "knowledge": "多步分析与倒推",
+    "pages": [62, 63],
+    "hasVisual": true,
+    "expected": {
+      "a1": "0"
+    },
+    "explanation": {
+      "analysis": "先还原全部卡片数，再求每组15张的总需求；刚好够时补0张。",
+      "steps": [
+        "原总数12×8＋24＝120张。",
+        "每组改成15张，共需15×8＝120张。",
+        "两者相等，刚好够，不用补卡片，填0。也可看每组多3张，8组共多24张。"
+      ],
+      "answer": "需补：0张",
+      "pitfall": "剩下的24张正好补给8组，不能漏掉这部分。",
+      "visual": {
+        "kind": "reasoning",
+        "title": "平均分后发现每组少了",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "原总数12×8＋24＝120张。",
+          "每组改成15张，共需15×8＝120张。",
+          "两者相等，刚好够，不用补卡片，填0。也可看每组多3张，8组共多24张。"
+        ],
+        "stages": [
+          {
+            "kind": "image",
+            "image": "/figures/bank-u4-steps-05-step1.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u4-steps-05-step2.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u4-steps-05-step3.svg",
+            "headings": [],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "bank-u4-budget-01",
+    "unitId": "U04",
+    "lessonId": "U04-L03",
+    "title": "两种物品算完再找零",
+    "stem": "买5盒彩笔，每盒24元；买3本画册，每本18元。付200元，应找回多少元？",
+    "type": "application",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "找回",
+        "suffix": "元",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "两种商品的总价相加后，从付款中扣除。",
+    "sourceKind": "original",
+    "topicIds": ["u4-budget"],
+    "knowledge": "费用与分配方案",
+    "pages": [62, 63],
+    "hasVisual": false,
+    "expected": {
+      "a1": "26"
+    },
+    "explanation": {
+      "analysis": "两种商品的总价相加后，从付款中扣除。",
+      "steps": ["彩笔24×5＝120元，画册18×3＝54元。", "总价120＋54＝174元，找回200−174＝26元。"],
+      "answer": "找回：26元",
+      "pitfall": "不能只扣一种商品，也不能把数量与单价交叉配对。"
+    }
+  },
+  {
+    "id": "bank-u4-budget-02",
+    "unitId": "U04",
+    "lessonId": "U04-L03",
+    "title": "余款最多还能买几个",
+    "stem": "带500元，先买4件每件68元的用品，余款买每个35元的球。最多还能买几个球？剩多少钱？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "最多买球",
+        "suffix": "个",
+        "inputMode": "numeric"
+      },
+      {
+        "key": "a2",
+        "label": "剩余",
+        "suffix": "元",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "除法的商表示可买个数，余数表示没花完的钱。",
+    "sourceKind": "original",
+    "topicIds": ["u4-budget"],
+    "knowledge": "费用与分配方案",
+    "pages": [62, 63],
+    "hasVisual": false,
+    "expected": {
+      "a1": "6",
+      "a2": "18"
+    },
+    "explanation": {
+      "analysis": "除法的商表示可买个数，余数表示没花完的钱。",
+      "steps": [
+        "用品费68×4＝272元，余款500−272＝228元。",
+        "228÷35＝6……18，能买6个球，剩18元。",
+        "第7个还需35元，18元不够。"
+      ],
+      "answer": "最多买球：6个；剩余：18元",
+      "pitfall": "余款不足一件商品，不能把商再进一。"
+    }
+  },
+  {
+    "id": "bank-u4-budget-03",
+    "unitId": "U04",
+    "lessonId": "U04-L03",
+    "title": "每组材料费与公共费用",
+    "stem": "8个小组活动，每组买2张每张12元的板材和3盒彩泥，每盒8元。另付公共工具费36元，合计需要多少元？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "合计",
+        "suffix": "元",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "先算每组的费用，再乘组数；公共费用只付一次。",
+    "sourceKind": "original",
+    "topicIds": ["u4-budget"],
+    "knowledge": "费用与分配方案",
+    "pages": [62, 63],
+    "hasVisual": false,
+    "expected": {
+      "a1": "420"
+    },
+    "explanation": {
+      "analysis": "先算每组的费用，再乘组数；公共费用只付一次。",
+      "steps": [
+        "每组板材12×2＝24元，彩泥8×3＝24元，每组共48元。",
+        "8组共48×8＝384元。",
+        "再加公共费36元，合计420元。"
+      ],
+      "answer": "合计：420元",
+      "pitfall": "公共工具费不能重复算8次。"
+    }
+  },
+  {
+    "id": "bank-u4-budget-04",
+    "unitId": "U04",
+    "lessonId": "U04-L03",
+    "title": "两种材料同时限制套数",
+    "stem": "有4包乒乓球，每包24个；3包羽毛球，每包30个。每套活动材料用3个乒乓球、5个羽毛球，最多配成几套？剩多少个乒乓球？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "最多配成",
+        "suffix": "套",
+        "inputMode": "numeric"
+      },
+      {
+        "key": "a2",
+        "label": "剩乒乓球",
+        "suffix": "个",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "分别计算两种球最多能供几套，取较小值，再按实际套数求余量。",
+    "sourceKind": "original",
+    "topicIds": ["u4-budget"],
+    "knowledge": "费用与分配方案",
+    "pages": [62, 63],
+    "hasVisual": true,
+    "expected": {
+      "a1": "18",
+      "a2": "42"
+    },
+    "explanation": {
+      "analysis": "分别计算两种球最多能供几套，取较小值，再按实际套数求余量。",
+      "steps": [
+        "乒乓球24×4＝96个，可供96÷3＝32套。",
+        "羽毛球30×3＝90个，可供90÷5＝18套，所以最多18套。",
+        "乒乓球剩96−3×18＝42个。若做19套，需95个羽毛球，已不够。"
+      ],
+      "answer": "最多配成：18套；剩乒乓球：42个",
+      "pitfall": "一套同时需要两种球，32套和18套不能相加。",
+      "visual": {
+        "kind": "reasoning",
+        "title": "两种材料同时限制套数",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "乒乓球24×4＝96个，可供96÷3＝32套。",
+          "羽毛球30×3＝90个，可供90÷5＝18套，所以最多18套。",
+          "乒乓球剩96−3×18＝42个。若做19套，需95个羽毛球，已不够。"
+        ],
+        "stages": [
+          {
+            "kind": "image",
+            "image": "/figures/bank-u4-budget-04-step1.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u4-budget-04-step2.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u4-budget-04-step3.svg",
+            "headings": [],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "bank-u4-budget-05",
+    "unitId": "U04",
+    "lessonId": "U04-L03",
+    "title": "最多三辆车，怎样租更省",
+    "stem": "70人外出，最多租3辆车。大车每辆32座、租金300元，小车每辆18座、租金180元。每人一座，可以有空座。至少要花多少元？大、小车各租几辆？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "最少租金",
+        "suffix": "元",
+        "inputMode": "numeric"
+      },
+      {
+        "key": "a2",
+        "label": "大车",
+        "suffix": "辆",
+        "inputMode": "numeric"
+      },
+      {
+        "key": "a3",
+        "label": "小车",
+        "suffix": "辆",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "先筛掉座位不够的方案，再在不超过3辆的可行方案中比费用。",
+    "sourceKind": "original",
+    "topicIds": ["u4-budget"],
+    "knowledge": "费用与分配方案",
+    "pages": [62, 63],
+    "hasVisual": true,
+    "expected": {
+      "a1": "780",
+      "a2": "2",
+      "a3": "1"
+    },
+    "explanation": {
+      "analysis": "先筛掉座位不够的方案，再在不超过3辆的可行方案中比费用。",
+      "steps": [
+        "2辆最多只有32×2＝64座，不够70人，所以必须租3辆。",
+        "3小车54座、1大2小车68座，都不够；2大1小车82座、3大车96座，都够。",
+        "2大1小车300×2＋180＝780元，3大车900元。因此最少780元，租2辆大车、1辆小车。"
+      ],
+      "answer": "最少租金：780元；大车：2辆；小车：1辆",
+      "pitfall": "4辆小车虽然有72座，却违反最多3辆的条件，不能列为可行方案。",
+      "visual": {
+        "kind": "reasoning",
+        "title": "最多三辆车，怎样租更省",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "2辆最多只有32×2＝64座，不够70人，所以必须租3辆。",
+          "3小车54座、1大2小车68座，都不够；2大1小车82座、3大车96座，都够。",
+          "2大1小车300×2＋180＝780元，3大车900元。因此最少780元，租2辆大车、1辆小车。"
+        ],
+        "stages": [
+          {
+            "kind": "image",
+            "image": "/figures/bank-u4-budget-05-step1.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u4-budget-05-step2.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u4-budget-05-step3.svg",
+            "headings": [],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "bank-u5-place-01",
+    "unitId": "U05",
+    "lessonId": "U05-L04",
+    "title": "换一个计数单位",
+    "stem": "填空：100个千是（ ）万；10个千万是（ ）亿。",
+    "type": "fill",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "第一个空",
+        "inputMode": "numeric"
+      },
+      {
+        "key": "a2",
+        "label": "第二个空",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "先把数量按原计数单位组成，再换成新的计数单位。",
+    "sourceKind": "original",
+    "topicIds": ["u5-place"],
+    "knowledge": "计数单位与数位",
+    "pages": [77, 79],
+    "hasVisual": false,
+    "expected": {
+      "a1": "10",
+      "a2": "1"
+    },
+    "explanation": {
+      "analysis": "先把数量按原计数单位组成，再换成新的计数单位。",
+      "steps": ["100个千＝100000＝10万。", "10个千万＝100000000＝1亿。"],
+      "answer": "第一个空：10；第二个空：1",
+      "pitfall": "相邻计数单位进率是10，“千”到“万”只相隔一位。"
+    }
+  },
+  {
+    "id": "bank-u5-place-02",
+    "unitId": "U05",
+    "lessonId": "U05-L04",
+    "title": "计数卡合成总量",
+    "stem": "计数卡有23张“十万”、15张“万”、8张“千”。它们合起来表示多少个千？",
+    "type": "fill",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "千的个数",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "统一改用“千”计数，十万里有100个千，万里有10个千。",
+    "sourceKind": "original",
+    "topicIds": ["u5-place"],
+    "knowledge": "计数单位与数位",
+    "pages": [77, 79],
+    "hasVisual": false,
+    "expected": {
+      "a1": "2458"
+    },
+    "explanation": {
+      "analysis": "统一改用“千”计数，十万里有100个千，万里有10个千。",
+      "steps": [
+        "23个十万相当于23×100＝2300个千。",
+        "15个万相当于15×10＝150个千。",
+        "2300＋150＋8＝2458个千，表示2458000。"
+      ],
+      "answer": "千的个数：2458",
+      "pitfall": "不能把23、15和8直接相加，因为原来的计数单位不同。"
+    }
+  },
+  {
+    "id": "bank-u5-place-03",
+    "unitId": "U05",
+    "lessonId": "U05-L04",
+    "title": "两个相同数字，数值差多大",
+    "stem": "6000600中两个数字6所表示的数值，相差多少？",
+    "type": "fill",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "相差",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "先找两个6所在数位，再比较它们表示的值。",
+    "sourceKind": "original",
+    "topicIds": ["u5-place"],
+    "knowledge": "计数单位与数位",
+    "pages": [77, 79],
+    "hasVisual": false,
+    "expected": {
+      "a1": "5999400"
+    },
+    "explanation": {
+      "analysis": "先找两个6所在数位，再比较它们表示的值。",
+      "steps": ["左边6在百万位，表示6000000；右边6在百位，表示600。", "6000000−600＝5999400。"],
+      "answer": "相差：5999400",
+      "pitfall": "两个数字相同，不代表所表示的数值相同。"
+    }
+  },
+  {
+    "id": "bank-u5-place-04",
+    "unitId": "U05",
+    "lessonId": "U05-L04",
+    "title": "交换两个数位，数值少了多少",
+    "stem": "一个六位数是87□056。把万位与千位交换后，数值比原数小27000。□里是什么数字？",
+    "type": "fill",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "方框里的数字",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "只比较被交换的万位和千位。两位上的数字每相差1，交换后就相差9000。",
+    "sourceKind": "original",
+    "topicIds": ["u5-place"],
+    "knowledge": "计数单位与数位",
+    "pages": [77, 79],
+    "hasVisual": true,
+    "expected": {
+      "a1": "4"
+    },
+    "explanation": {
+      "analysis": "只比较被交换的万位和千位。两位上的数字每相差1，交换后就相差9000。",
+      "steps": [
+        "万位与千位的计数单位相差10000−1000＝9000。",
+        "数值少27000，说明原万位数字比原千位数字大27000÷9000＝3。",
+        "原万位是7，所以千位是7−3＝4。检验874056−847056＝27000。"
+      ],
+      "answer": "方框里的数字：4",
+      "pitfall": "27000不能直接当作两个数字的差，先扣清数位权重的不同。",
+      "visual": {
+        "kind": "reasoning",
+        "title": "交换两个数位，数值少了多少",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "万位与千位的计数单位相差10000−1000＝9000。",
+          "数值少27000，说明原万位数字比原千位数字大27000÷9000＝3。",
+          "原万位是7，所以千位是7−3＝4。检验874056−847056＝27000。"
+        ],
+        "stages": [
+          {
+            "kind": "image",
+            "image": "/figures/bank-u5-place-04-step1.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u5-place-04-step2.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u5-place-04-step3.svg",
+            "headings": [],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "bank-u5-reading-01",
+    "unitId": "U05",
+    "lessonId": "U05-L02",
+    "title": "中间的零应该怎样读",
+    "stem": "40060008的正确读法是哪一个？",
+    "type": "choice",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "value",
+        "label": "选择",
+        "inputMode": "numeric"
+      }
+    ],
+    "options": ["四千零六万八", "四千六万零八", "四千零六万零八", "四千万六千零八"],
+    "hint": "从右起四位分级：4006｜0008。",
+    "sourceKind": "original",
+    "topicIds": ["u5-reading"],
+    "knowledge": "分级读写与零",
+    "pages": [71, 76],
+    "hasVisual": false,
+    "expected": {
+      "value": "2"
+    },
+    "explanation": {
+      "analysis": "从右起四位分级：4006｜0008。",
+      "steps": ["万级4006读“四千零六万”。", "个级0008接着读“零八”，合起来是“四千零六万零八”。"],
+      "answer": "四千零六万零八",
+      "pitfall": "每级末尾的零不读，但跨级时个级不足四位，需要读零衔接。"
+    }
+  },
+  {
+    "id": "bank-u5-reading-02",
+    "unitId": "U05",
+    "lessonId": "U05-L03",
+    "title": "把读法写成分级数字",
+    "stem": "把“六亿零三百万零九十”写成阿拉伯数字。",
+    "type": "fill",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "写数",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "按亿级、万级、个级对齐，没说出的数位用0占位。",
+    "sourceKind": "original",
+    "topicIds": ["u5-reading"],
+    "knowledge": "分级读写与零",
+    "pages": [74, 76],
+    "hasVisual": false,
+    "expected": {
+      "a1": "603000090"
+    },
+    "explanation": {
+      "analysis": "按亿级、万级、个级对齐，没说出的数位用0占位。",
+      "steps": ["亿级是6，万级是0300，个级是0090。", "合写6｜0300｜0090，得到603000090。"],
+      "answer": "写数：603000090",
+      "pitfall": "不能把“六、三、九十”直接拼接。"
+    }
+  },
+  {
+    "id": "bank-u5-reading-03",
+    "unitId": "U05",
+    "lessonId": "U05-L03",
+    "title": "把资料总数写准、读准",
+    "stem": "一次自拟资料统计中，总数由4个亿、6个十万和8个一组成。写出这个数，再填写它的中文读法。",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "总数",
+        "inputMode": "numeric"
+      },
+      {
+        "key": "a2",
+        "label": "读法",
+        "inputMode": "text"
+      }
+    ],
+    "hint": "先按各数位放入数字，再用每四位一级的方式读数。",
+    "sourceKind": "original",
+    "topicIds": ["u5-reading"],
+    "knowledge": "分级读写与零",
+    "pages": [74, 76],
+    "hasVisual": false,
+    "expected": {
+      "a1": "400600008",
+      "a2": "四亿零六十万零八"
+    },
+    "explanation": {
+      "analysis": "先按各数位放入数字，再用每四位一级的方式读数。",
+      "steps": [
+        "4个亿是400000000，6个十万是600000，另有8个一。",
+        "合成400600008，分成4｜0060｜0008。",
+        "读作“四亿零六十万零八”。"
+      ],
+      "answer": "总数：400600008；读法：四亿零六十万零八",
+      "pitfall": "万级0060表示六十万，不能读成六万。"
+    }
+  },
+  {
+    "id": "bank-u5-reading-04",
+    "unitId": "U05",
+    "lessonId": "U05-L02",
+    "title": "读两个零的最小八位数",
+    "stem": "用数字卡片0、0、0、0、2、3、5、8各一次，组成一个八位数，读数时恰好读出两个“零”。最小的数是多少？",
+    "type": "fill",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "最小的数",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "先把数分成万级和个级，在保证读两个零的前提下让万级尽量小。",
+    "sourceKind": "original",
+    "topicIds": ["u5-reading"],
+    "knowledge": "分级读写与零",
+    "pages": [71, 76],
+    "hasVisual": true,
+    "expected": {
+      "a1": "20030058"
+    },
+    "explanation": {
+      "analysis": "先把数分成万级和个级，在保证读两个零的前提下让万级尽量小。",
+      "steps": [
+        "最小首位是2。若万级为2000，剩下0、3、5、8，个级无论把0放开头还是中间，整句只读一个零。",
+        "所以万级至少还要一个非零数字。最小可用3，万级最小排成2003。",
+        "个级剩0、0、5、8，最小排成0058。合起来20030058，读“二千零三万零五十八”，恰好两个零。"
+      ],
+      "answer": "最小的数：20030058",
+      "pitfall": "有四个数字0，不代表读四个零；还要先满足最小数与正确读法两个条件。",
+      "visual": {
+        "kind": "reasoning",
+        "title": "读两个零的最小八位数",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "最小首位是2。若万级为2000，剩下0、3、5、8，个级无论把0放开头还是中间，整句只读一个零。",
+          "所以万级至少还要一个非零数字。最小可用3，万级最小排成2003。",
+          "个级剩0、0、5、8，最小排成0058。合起来20030058，读“二千零三万零五十八”，恰好两个零。"
+        ],
+        "stages": [
+          {
+            "kind": "image",
+            "image": "/figures/bank-u5-reading-04-step1.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u5-reading-04-step2.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u5-reading-04-step3.svg",
+            "headings": [],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "bank-u5-compare-01",
+    "unitId": "U05",
+    "lessonId": "U05-L07",
+    "title": "先比较第一处不同的数位",
+    "stem": "下面哪一个数最大？",
+    "type": "choice",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "value",
+        "label": "选择",
+        "inputMode": "numeric"
+      }
+    ],
+    "options": ["60809000", "60890000", "60800900", "60809900"],
+    "hint": "位数相同，从最高位依次比较，第一处不同就能确定大小。",
+    "sourceKind": "original",
+    "topicIds": ["u5-compare"],
+    "knowledge": "大数比较与数字组数",
+    "pages": [86, 88],
+    "hasVisual": false,
+    "expected": {
+      "value": "1"
+    },
+    "explanation": {
+      "analysis": "位数相同，从最高位依次比较，第一处不同就能确定大小。",
+      "steps": [
+        "四个数的前三位都是608。",
+        "接着比较万位，第二项是9，其他项都是0，所以60890000最大。"
+      ],
+      "answer": "60890000",
+      "pitfall": "不能因为末尾某个数字较大就判断整个数较大。"
+    }
+  },
+  {
+    "id": "bank-u5-compare-02",
+    "unitId": "U05",
+    "lessonId": "U05-L07",
+    "title": "比较条件限制空缺数字",
+    "stem": "6□90500＞6480000，□可以填哪些数字？填写最小与最大可填数字。",
+    "type": "fill",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "最小数字",
+        "inputMode": "numeric"
+      },
+      {
+        "key": "a2",
+        "label": "最大数字",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "先比较百万位，再比较十万位；十万位相同时还要继续比。",
+    "sourceKind": "original",
+    "topicIds": ["u5-compare"],
+    "knowledge": "大数比较与数字组数",
+    "pages": [86, 88],
+    "hasVisual": false,
+    "expected": {
+      "a1": "4",
+      "a2": "9"
+    },
+    "explanation": {
+      "analysis": "先比较百万位，再比较十万位；十万位相同时还要继续比。",
+      "steps": [
+        "百万位同为6；□小于4时，左数小于右数。",
+        "□为4时，6490500＞6480000，已经符合。",
+        "所以可填4、5、6、7、8、9，最小4、最大9。"
+      ],
+      "answer": "最小数字：4；最大数字：9",
+      "pitfall": "不能认为□必须大于4；等于4时下一数位也可能使左数更大。"
+    }
+  },
+  {
+    "id": "bank-u5-compare-03",
+    "unitId": "U05",
+    "lessonId": "U05-L07",
+    "title": "从统计表中找中间数量",
+    "stem": "自拟图书统计中，甲馆2008000册、乙馆2080000册、丙馆2000800册。按册数从多到少排列，中间那家有多少册？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "中间数量",
+        "suffix": "册",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "按数位比较三数，先排顺序，再选中间的数。",
+    "sourceKind": "original",
+    "topicIds": ["u5-compare"],
+    "knowledge": "大数比较与数字组数",
+    "pages": [86, 88],
+    "hasVisual": false,
+    "expected": {
+      "a1": "2008000"
+    },
+    "explanation": {
+      "analysis": "按数位比较三数，先排顺序，再选中间的数。",
+      "steps": [
+        "乙馆2080000最大，因为十万位同为0时，它的万位8最大。",
+        "甲馆2008000比丙馆2000800大，第一处不同在千位。",
+        "顺序乙、甲、丙，中间数量2008000册。"
+      ],
+      "answer": "中间数量：2008000册",
+      "pitfall": "不要只数零的多少，也不要把图书馆在题干中的顺序当成数量顺序。"
+    }
+  },
+  {
+    "id": "bank-u5-compare-04",
+    "unitId": "U05",
+    "lessonId": "U05-L07",
+    "title": "数字卡片还要满足近似数条件",
+    "stem": "用0、0、3、4、6、8各一次组成六位数。要求大于830000，而且四舍五入到万位约是83万。符合条件的最大数是多少？",
+    "type": "fill",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "最大数",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "先用近似数确定范围，再在范围内按从高位到低位安排数字。",
+    "sourceKind": "original",
+    "topicIds": ["u5-compare"],
+    "knowledge": "大数比较与数字组数",
+    "pages": [86, 88],
+    "hasVisual": true,
+    "expected": {
+      "a1": "834600"
+    },
+    "explanation": {
+      "analysis": "先用近似数确定范围，再在范围内按从高位到低位安排数字。",
+      "steps": [
+        "约83万的整数在825000到834999之间，再加“大于830000”，应取830001到834999。",
+        "最高两位必须是83。剩0、0、4、6；千位放6会超过834999，只能先放4。",
+        "余下把6、0、0从大到小排成600，得到834600。它大于830000，千位4，约为83万。"
+      ],
+      "answer": "最大数：834600",
+      "pitfall": "836400虽然用了同样卡片，却会四舍五入成84万。",
+      "visual": {
+        "kind": "reasoning",
+        "title": "数字卡片还要满足近似数条件",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "约83万的整数在825000到834999之间，再加“大于830000”，应取830001到834999。",
+          "最高两位必须是83。剩0、0、4、6；千位放6会超过834999，只能先放4。",
+          "余下把6、0、0从大到小排成600，得到834600。它大于830000，千位4，约为83万。"
+        ],
+        "stages": [
+          {
+            "kind": "image",
+            "image": "/figures/bank-u5-compare-04-step1.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u5-compare-04-step2.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u5-compare-04-step3.svg",
+            "headings": [],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "bank-u5-rewrite-01",
+    "unitId": "U05",
+    "lessonId": "U05-L04",
+    "title": "改写时数的大小不变",
+    "stem": "精确改写：4050000＝（ ）万；1200000000＝（ ）亿。",
+    "type": "fill",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "万的个数",
+        "inputMode": "numeric"
+      },
+      {
+        "key": "a2",
+        "label": "亿的个数",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "整万数按万计数，整亿数按亿计数。",
+    "sourceKind": "original",
+    "topicIds": ["u5-rewrite"],
+    "knowledge": "整万整亿与单位改写",
+    "pages": [77, 79],
+    "hasVisual": false,
+    "expected": {
+      "a1": "405",
+      "a2": "12"
+    },
+    "explanation": {
+      "analysis": "整万数按万计数，整亿数按亿计数。",
+      "steps": ["4050000有405个万，写成405万。", "1200000000有12个亿，写成12亿。"],
+      "answer": "万的个数：405；亿的个数：12",
+      "pitfall": "精确改写用等号，不是求近似数。"
+    }
+  },
+  {
+    "id": "bank-u5-rewrite-02",
+    "unitId": "U05",
+    "lessonId": "U05-L04",
+    "title": "精确改写该用哪个符号",
+    "stem": "只改变计数单位、不改变4860000的大小，下面哪种表示是精确改写？",
+    "type": "choice",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "选择",
+        "inputMode": "numeric"
+      }
+    ],
+    "options": ["4860000＝486万", "4860000≈486万", "4860000＝4860万", "4860000≈490万"],
+    "hint": "精确改写必须数值相等，使用等号。",
+    "sourceKind": "original",
+    "topicIds": ["u5-rewrite"],
+    "knowledge": "整万整亿与单位改写",
+    "pages": [77, 79],
+    "hasVisual": false,
+    "expected": {
+      "value": "0"
+    },
+    "explanation": {
+      "analysis": "精确改写必须数值相等，使用等号。",
+      "steps": ["4860000里面有486个万。", "因此写4860000＝486万，选第一项。"],
+      "answer": "4860000＝486万",
+      "pitfall": "虽然数值可能很接近，近似号不能用来表达题目要求的精确改写。"
+    }
+  },
+  {
+    "id": "bank-u5-rewrite-03",
+    "unitId": "U05",
+    "lessonId": "U05-L04",
+    "title": "两个资料库先统一单位",
+    "stem": "自拟资料库统计，甲库有2亿条，乙库有19000万条。甲库精确改写成多少万条？哪库多？填“甲”或“乙”。",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "甲库改写",
+        "suffix": "万条",
+        "inputMode": "numeric"
+      },
+      {
+        "key": "a2",
+        "label": "较多资料库",
+        "suffix": "",
+        "inputMode": "text"
+      }
+    ],
+    "hint": "把亿与万统一以后，才能比较前面的数。",
+    "sourceKind": "original",
+    "topicIds": ["u5-rewrite"],
+    "knowledge": "整万整亿与单位改写",
+    "pages": [77, 79],
+    "hasVisual": false,
+    "expected": {
+      "a1": "20000",
+      "a2": "甲"
+    },
+    "explanation": {
+      "analysis": "把亿与万统一以后，才能比较前面的数。",
+      "steps": ["1亿＝10000万，2亿＝20000万。", "20000万＞19000万，所以甲库多。"],
+      "answer": "甲库改写：20000万条；较多资料库：甲",
+      "pitfall": "不能直接比2和19000而忽略计数单位。"
+    }
+  },
+  {
+    "id": "bank-u5-rewrite-04",
+    "unitId": "U05",
+    "lessonId": "U05-L04",
+    "title": "三张记录表，哪张错了一位",
+    "stem": "同一批资料，甲表记“3亿40万条”，乙表记“30040万条”，丙表记“300040000条”。哪张表与另两张不一致？应把总数写成多少条？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "不一致的表",
+        "suffix": "",
+        "inputMode": "text"
+      },
+      {
+        "key": "a2",
+        "label": "正确总数",
+        "suffix": "条",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "统一按亿级、万级、个级对齐，尤其分清40万与4万。",
+    "sourceKind": "original",
+    "topicIds": ["u5-rewrite"],
+    "knowledge": "整万整亿与单位改写",
+    "pages": [77, 79],
+    "hasVisual": true,
+    "expected": {
+      "a1": "丙",
+      "a2": "300400000"
+    },
+    "explanation": {
+      "analysis": "统一按亿级、万级、个级对齐，尤其分清40万与4万。",
+      "steps": [
+        "甲表3亿40万＝3｜0040｜0000，即300400000条。",
+        "乙表30040万＝300400000条，与甲表相同。",
+        "丙表300040000分成3｜0004｜0000，表示3亿4万。丙表不一致，正确总数300400000条。"
+      ],
+      "answer": "不一致的表：丙；正确总数：300400000条",
+      "pitfall": "0040与0004只差一个数位位置，表示的量相差10倍。",
+      "visual": {
+        "kind": "reasoning",
+        "title": "三张记录表，哪张错了一位",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "甲表3亿40万＝3｜0040｜0000，即300400000条。",
+          "乙表30040万＝300400000条，与甲表相同。",
+          "丙表300040000分成3｜0004｜0000，表示3亿4万。丙表不一致，正确总数300400000条。"
+        ],
+        "stages": [
+          {
+            "kind": "image",
+            "image": "/figures/bank-u5-rewrite-04-step1.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u5-rewrite-04-step2.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u5-rewrite-04-step3.svg",
+            "headings": [],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "bank-u5-rounding-01",
+    "unitId": "U05",
+    "lessonId": "U05-L05",
+    "title": "参观人数约多少万",
+    "stem": "一次自拟展览记录有486500人参观。四舍五入到万位，约是多少万人？",
+    "type": "application",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "约",
+        "suffix": "万人",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "保留万位，看下一位千位决定舍还是入。",
+    "sourceKind": "original",
+    "topicIds": ["u5-rounding"],
+    "knowledge": "近似数与取值范围",
+    "pages": [80, 81],
+    "hasVisual": false,
+    "expected": {
+      "a1": "49"
+    },
+    "explanation": {
+      "analysis": "保留万位，看下一位千位决定舍还是入。",
+      "steps": ["486500的千位是6，万位8向上进1。", "486500≈490000＝49万。"],
+      "answer": "约：49万人",
+      "pitfall": "不能只删去最后四位而不看千位。"
+    }
+  },
+  {
+    "id": "bank-u5-rounding-02",
+    "unitId": "U05",
+    "lessonId": "U05-L05",
+    "title": "近似数限制原来的数字",
+    "stem": "39□8500四舍五入到万位后约是400万，□里应填什么数字？",
+    "type": "fill",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "方框里的数字",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "千位固定为8，必定向万位进1，因此原万位应能进成400万。",
+    "sourceKind": "original",
+    "topicIds": ["u5-rounding"],
+    "knowledge": "近似数与取值范围",
+    "pages": [80, 81],
+    "hasVisual": false,
+    "expected": {
+      "a1": "9"
+    },
+    "explanation": {
+      "analysis": "千位固定为8，必定向万位进1，因此原万位应能进成400万。",
+      "steps": [
+        "39□8500的千位8需要进1。",
+        "要由万级39□进位到400，原万级必须是399，所以□填9。",
+        "3998500≈4000000＝400万，检验成立。"
+      ],
+      "answer": "方框里的数字：9",
+      "pitfall": "这里有连续进位，结果400万中的零不是原数对应位全为零。"
+    }
+  },
+  {
+    "id": "bank-u5-rounding-03",
+    "unitId": "U05",
+    "lessonId": "U05-L05",
+    "title": "近似数还要满足整百",
+    "stem": "一个整数四舍五入到万位约是72万，而且是整百数。符合条件的数最小与最大各是多少？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "最小",
+        "inputMode": "numeric"
+      },
+      {
+        "key": "a2",
+        "label": "最大",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "先找近似数范围，再要求末尾两位是00。",
+    "sourceKind": "original",
+    "topicIds": ["u5-rounding"],
+    "knowledge": "近似数与取值范围",
+    "pages": [80, 81],
+    "hasVisual": false,
+    "expected": {
+      "a1": "715000",
+      "a2": "724900"
+    },
+    "explanation": {
+      "analysis": "先找近似数范围，再要求末尾两位是00。",
+      "steps": [
+        "约72万的整数范围是715000到724999。",
+        "最小715000末尾是00，已经是整百数。",
+        "最大不能取724999，应取724900；下一个整百数725000约为73万。"
+      ],
+      "answer": "最小：715000；最大：724900",
+      "pitfall": "最大整数与最大的整百数不同。"
+    }
+  },
+  {
+    "id": "bank-u5-rounding-04",
+    "unitId": "U05",
+    "lessonId": "U05-L05",
+    "title": "两次四舍五入，求共同范围",
+    "stem": "同一个整数，四舍五入到万位约是195万，到十万位约是200万。这个整数最小与最大各是多少？两次都直接对原数四舍五入。",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "最小",
+        "inputMode": "numeric"
+      },
+      {
+        "key": "a2",
+        "label": "最大",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "分别找两次近似对应的范围，再取两者重合的整数。",
+    "sourceKind": "original",
+    "topicIds": ["u5-rounding"],
+    "knowledge": "近似数与取值范围",
+    "pages": [80, 81],
+    "hasVisual": true,
+    "expected": {
+      "a1": "1950000",
+      "a2": "1954999"
+    },
+    "explanation": {
+      "analysis": "分别找两次近似对应的范围，再取两者重合的整数。",
+      "steps": [
+        "约195万，对应1945000至1954999。",
+        "约200万（到十万位），对应1950000至2049999。",
+        "两范围共同部分从1950000起，到1954999止。",
+        "检验1954999可分别约为195万、200万；1955000约到万位变为196万，不能再取。"
+      ],
+      "answer": "最小：1950000；最大：1954999",
+      "pitfall": "不是先约到万位，再对近似结果约到十万位；两次必须各自使用原数。",
+      "visual": {
+        "kind": "reasoning",
+        "title": "两次四舍五入，求共同范围",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "约195万，对应1945000至1954999。",
+          "约200万（到十万位），对应1950000至2049999。",
+          "两范围共同部分从1950000起，到1954999止。",
+          "检验1954999可分别约为195万、200万；1955000约到万位变为196万，不能再取。"
+        ],
+        "stages": [
+          {
+            "kind": "image",
+            "image": "/figures/bank-u5-rounding-04-step1.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u5-rounding-04-step2.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u5-rounding-04-step3.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u5-rounding-04-step4.svg",
+            "headings": [],
+            "rows": []
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "bank-u5-codes-01",
+    "unitId": "U05",
+    "lessonId": "U05-L06",
+    "title": "按固定长度拆开编号",
+    "stem": "自拟图书编号规则：入库年份4位｜书架号2位｜序号3位。编号202703042分别表示哪年入库、几号书架、第几本？",
+    "type": "fill",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "年份",
+        "inputMode": "numeric"
+      },
+      {
+        "key": "a2",
+        "label": "书架号",
+        "inputMode": "numeric"
+      },
+      {
+        "key": "a3",
+        "label": "序号",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "按4、2、3位分段，每段含义由规则确定。",
+    "sourceKind": "original",
+    "topicIds": ["u5-codes"],
+    "knowledge": "编码与分组编号",
+    "pages": [82, 85],
+    "hasVisual": false,
+    "expected": {
+      "a1": "2027",
+      "a2": "3",
+      "a3": "42"
+    },
+    "explanation": {
+      "analysis": "按4、2、3位分段，每段含义由规则确定。",
+      "steps": ["拆成2027｜03｜042。", "表示2027年入库、3号书架、第42本。"],
+      "answer": "年份：2027；书架号：3；序号：42",
+      "pitfall": "03与042中的零用于保持编码长度，读含义时分别是3与42。"
+    }
+  },
+  {
+    "id": "bank-u5-codes-02",
+    "unitId": "U05",
+    "lessonId": "U05-L06",
+    "title": "把规则写成完整编号",
+    "stem": "图书编号用年份4位｜书架号2位｜序号3位。写出2027年入库、6号书架、第8本图书的完整编号，不加分隔符。",
+    "type": "fill",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "完整编号",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "每段不足位数时，必须在该段前面补零。",
+    "sourceKind": "original",
+    "topicIds": ["u5-codes"],
+    "knowledge": "编码与分组编号",
+    "pages": [82, 85],
+    "hasVisual": false,
+    "expected": {
+      "a1": "202706008"
+    },
+    "answerRules": {
+      "a1": {
+        "kind": "literal",
+        "values": ["202706008"]
+      }
+    },
+    "explanation": {
+      "analysis": "每段不足位数时，必须在该段前面补零。",
+      "steps": ["年份2027占4位。书架6写成06，序号8写成008。", "连接2027｜06｜008，得到202706008。"],
+      "answer": "完整编号：202706008",
+      "pitfall": "不能写202768，也不能在整个编号前额外加零。"
+    }
+  },
+  {
+    "id": "bank-u5-codes-03",
+    "unitId": "U05",
+    "lessonId": "U05-L06",
+    "title": "已用序号与剩余容量",
+    "stem": "同一年、同一书架的图书序号固定3位，从001编到999，不用000。现在已经连续编到248，还可以给多少本新书分配不同的序号？",
+    "type": "application",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "还可编号",
+        "suffix": "本",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "001到248正好用了248个号，剩余可用号总数减已用数。",
+    "sourceKind": "original",
+    "topicIds": ["u5-codes"],
+    "knowledge": "编码与分组编号",
+    "pages": [82, 85],
+    "hasVisual": false,
+    "expected": {
+      "a1": "751"
+    },
+    "explanation": {
+      "analysis": "001到248正好用了248个号，剩余可用号总数减已用数。",
+      "steps": ["全部可用序号001至999，共999个。", "已用248个，剩999−248＝751个。"],
+      "answer": "还可编号：751本",
+      "pitfall": "下一本从249开始；000不在规定范围内。"
+    }
+  },
+  {
+    "id": "bank-u5-codes-04",
+    "unitId": "U05",
+    "lessonId": "U05-L06",
+    "title": "从最后一组反推总本数",
+    "stem": "自拟图书编号为年份4位｜书架号2位｜序号3位，每架从001连续编号，每30本一组。编号202705128属于该架最后一组。该架至少、最多有多少本？这一组第一本的完整编号是什么？",
+    "type": "application",
+    "difficulty": "challenge",
+    "fields": [
+      {
+        "key": "a1",
+        "label": "至少",
+        "suffix": "本",
+        "inputMode": "numeric"
+      },
+      {
+        "key": "a2",
+        "label": "最多",
+        "suffix": "本",
+        "inputMode": "numeric"
+      },
+      {
+        "key": "a3",
+        "label": "本组首个编号",
+        "suffix": "",
+        "inputMode": "numeric"
+      }
+    ],
+    "hint": "先读出序号128，再确定它所在组的起止序号；最后一组允许没满。",
+    "sourceKind": "original",
+    "topicIds": ["u5-codes"],
+    "knowledge": "编码与分组编号",
+    "pages": [82, 85],
+    "hasVisual": true,
+    "expected": {
+      "a1": "128",
+      "a2": "150",
+      "a3": "202705121"
+    },
+    "answerRules": {
+      "a3": {
+        "kind": "literal",
+        "values": ["202705121"]
+      }
+    },
+    "explanation": {
+      "analysis": "先读出序号128，再确定它所在组的起止序号；最后一组允许没满。",
+      "steps": [
+        "拆开2027｜05｜128，序号是128。",
+        "前4组共30×4＝120本，第5组序号从121到150，128在第5组。",
+        "既然128已存在，至少128本；它所在组是最后一组，不能出现151，所以最多150本。",
+        "本组首本序号121，年份与书架不变，完整编号202705121。"
+      ],
+      "answer": "至少：128本；最多：150本；本组首个编号：202705121",
+      "pitfall": "“最后一组”不表示该组已满30本；完整编号还必须保留年份和书架段。",
+      "visual": {
+        "kind": "reasoning",
+        "title": "从最后一组反推总本数",
+        "labels": [],
+        "values": [],
+        "captions": [
+          "拆开2027｜05｜128，序号是128。",
+          "前4组共30×4＝120本，第5组序号从121到150，128在第5组。",
+          "既然128已存在，至少128本；它所在组是最后一组，不能出现151，所以最多150本。",
+          "本组首本序号121，年份与书架不变，完整编号202705121。"
+        ],
+        "stages": [
+          {
+            "kind": "image",
+            "image": "/figures/bank-u5-codes-04-step1.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u5-codes-04-step2.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u5-codes-04-step3.svg",
+            "headings": [],
+            "rows": []
+          },
+          {
+            "kind": "image",
+            "image": "/figures/bank-u5-codes-04-step4.svg",
+            "headings": [],
+            "rows": []
+          }
+        ]
+      }
+    }
+  }
+]

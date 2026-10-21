@@ -219,9 +219,29 @@ app.get('/api/v1/practice', (c) => {
 app.get('/api/v1/practice/:kind/:id', (c) => {
   const content = c.get('content'),
     kind = c.req.param('kind');
-  const set = (kind === 'topics' ? content.practice.topics : []).find(
+  let set = (kind === 'topics' ? content.practice.topics : []).find(
     (s) => s.id === c.req.param('id'),
   );
+  // Existing general-topic deep links remain useful without reappearing in the catalog.
+  const legacyUnits = { 'u3-general': 'U03', 'u4-general': 'U04', 'u5-general': 'U05' };
+  const legacyId = c.req.param('id');
+  const legacyUnit = Object.hasOwn(legacyUnits, legacyId)
+    ? legacyUnits[legacyId as keyof typeof legacyUnits]
+    : undefined;
+  if (!set && kind === 'topics' && legacyUnit) {
+    set = {
+      id: c.req.param('id'),
+      unitId: legacyUnit,
+      title: content.textbook.catalog.find((node) => node.id === legacyUnit)!.title,
+      questionIds: [
+        ...new Set(
+          content.practice.topics
+            .filter((t) => t.unitId === legacyUnit)
+            .flatMap((t) => t.questionIds),
+        ),
+      ],
+    };
+  }
   if (!set) return c.json({ error: { code: 'NOT_FOUND', message: '未找到这组练习。' } }, 404);
   const { difficulty, type } = c.req.query();
   const items = set.questionIds

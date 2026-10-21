@@ -2,7 +2,7 @@ import { z } from 'zod';
 export * from './learning';
 
 export const editionId = 'sj-math-g4-upper-2026-v1';
-export const releaseId = 'practice-2026-10-topic-bank-r1';
+export const releaseId = 'practice-2026-10-u345-topics-r1';
 export const difficultySchema = z.enum(['basic', 'advanced', 'challenge']);
 export type Difficulty = z.infer<typeof difficultySchema>;
 export const questionTypeSchema = z.enum([
@@ -214,7 +214,7 @@ export interface Explanation {
 export interface Question extends QuestionPublic {
   sources?: { paperId: string; page: number; number: string }[];
   expected: Record<string, string>;
-  answerRules?: Record<string, { kind: 'oneOf' | 'set'; values: string[] }>;
+  answerRules?: Record<string, { kind: 'oneOf' | 'set' | 'literal'; values: string[] }>;
   explanation: Explanation;
 }
 export interface GridFigure {
@@ -276,7 +276,7 @@ export const questionSchema = z.object({
   answerRules: z
     .record(
       z.string(),
-      z.object({ kind: z.enum(['oneOf', 'set']), values: z.array(z.string()).min(1) }),
+      z.object({ kind: z.enum(['oneOf', 'set', 'literal']), values: z.array(z.string()).min(1) }),
     )
     .optional(),
   promptImage: z

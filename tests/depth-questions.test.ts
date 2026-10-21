@@ -8,6 +8,7 @@ it('adds three original reasoning exercises to each unit without changing existi
   for (let unit = 1; unit <= 6; unit++) {
     const group = questions.filter(
       (q) =>
+        /^u[1-6]-\d{2}$/.test(q.id) &&
         q.unitId === `U0${unit}` &&
         q.sourceKind === 'original' &&
         q.explanation.visual?.kind === 'reasoning',

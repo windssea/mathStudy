@@ -80,19 +80,89 @@
     "title": "条件与方案"
   },
   {
-    "id": "u3-general",
+    "id": "u3-inverse",
     "unitId": "U03",
-    "title": "乘法数量关系"
+    "title": "乘除关系与未知量"
   },
   {
-    "id": "u4-general",
+    "id": "u3-shopping",
+    "unitId": "U03",
+    "title": "购物与找零"
+  },
+  {
+    "id": "u3-compare",
+    "unitId": "U03",
+    "title": "单价与购买方案"
+  },
+  {
+    "id": "u3-speed",
+    "unitId": "U03",
+    "title": "速度与行程表"
+  },
+  {
+    "id": "u3-journey",
+    "unitId": "U03",
+    "title": "分段与往返行程"
+  },
+  {
+    "id": "u3-conditions",
+    "unitId": "U03",
+    "title": "整理条件与不变量"
+  },
+  {
+    "id": "u4-order",
     "unitId": "U04",
-    "title": "混合运算"
+    "title": "运算顺序与纠错"
   },
   {
-    "id": "u5-general",
+    "id": "u4-brackets",
+    "unitId": "U04",
+    "title": "小括号与中括号"
+  },
+  {
+    "id": "u4-model",
+    "unitId": "U04",
+    "title": "算式与数量关系"
+  },
+  {
+    "id": "u4-steps",
+    "unitId": "U04",
+    "title": "多步分析与倒推"
+  },
+  {
+    "id": "u4-budget",
+    "unitId": "U04",
+    "title": "费用与分配方案"
+  },
+  {
+    "id": "u5-place",
     "unitId": "U05",
-    "title": "多位数"
+    "title": "计数单位与数位"
+  },
+  {
+    "id": "u5-reading",
+    "unitId": "U05",
+    "title": "分级读写与零"
+  },
+  {
+    "id": "u5-compare",
+    "unitId": "U05",
+    "title": "大数比较与数字组数"
+  },
+  {
+    "id": "u5-rewrite",
+    "unitId": "U05",
+    "title": "整万整亿与单位改写"
+  },
+  {
+    "id": "u5-rounding",
+    "unitId": "U05",
+    "title": "近似数与取值范围"
+  },
+  {
+    "id": "u5-codes",
+    "unitId": "U05",
+    "title": "编码与分组编号"
   },
   {
     "id": "u6-general",

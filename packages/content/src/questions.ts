@@ -1,6 +1,8 @@
 import { questionSchema } from '@mathstudy/contracts';
 import collectedData from '../../../content/practice/collected-questions.json';
 import fullPaperData from '../../../content/practice/full-questions.json';
+import unit345Data from '../../../content/practice/unit345-questions.json';
+import unit345LegacyTopics from '../../../content/practice/unit345-legacy-topics.json';
 import type { Question, QuestionType, Difficulty, Visual } from '@mathstudy/contracts';
 import { unit2Questions, unit2VisualOverrides } from './unit2-questions';
 import { depthQuestions } from './depth-questions';
@@ -937,6 +939,7 @@ export const questions: Question[] = [
   ...baseQuestions,
   ...unit2Questions,
   ...depthQuestions,
+  ...unit345Data.map((q) => questionSchema.parse(q)),
   ...collectedData.map((q) => questionSchema.parse(q)),
   ...fullPaperData.map((q) => questionSchema.parse(q)),
 ].map((q) =>
@@ -949,6 +952,8 @@ export const questions: Question[] = [
     : q,
 );
 for (const q of questions) {
+  const mapped = (unit345LegacyTopics as Record<string, string>)[q.id];
+  if (mapped) q.topicIds = [mapped];
   if (q.topicIds?.length) continue;
   const text = q.title + q.stem;
   let topic = 'general';

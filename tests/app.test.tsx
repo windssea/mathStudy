@@ -13,6 +13,28 @@ afterEach(() => {
   vi.unstubAllGlobals();
   vi.restoreAllMocks();
 });
+it('grades a new bracket choice and keeps its step diagrams collapsed until requested', async () => {
+  window.history.replaceState({}, '', '/questions/bank-u4-brackets-04');
+  vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
+  vi.stubGlobal('fetch', (input: string, init?: RequestInit) =>
+    app.request(new URL(input, 'http://localhost').href, init),
+  );
+  render(<App />);
+  const radios = await screen.findAllByRole('radio');
+  expect(radios).toHaveLength(4);
+  expect(screen.queryByRole('img')).toBeNull();
+  fireEvent.click(radios[1]);
+  fireEvent.click(screen.getByRole('button', { name: '核对答案' }));
+  await screen.findByText('答对了。');
+  expect(screen.queryByRole('img')).toBeNull();
+  fireEvent.click(screen.getByRole('button', { name: '展开解析' }));
+  const first = screen.getByRole('img').querySelector('image')?.getAttribute('href');
+  expect(first).toContain('bank-u4-brackets-04-step1.svg');
+  fireEvent.click(screen.getByRole('button', { name: '下一步' }));
+  expect(screen.getByRole('img').querySelector('image')?.getAttribute('href')).toContain(
+    'bank-u4-brackets-04-step2.svg',
+  );
+}, 15000);
 it('keeps a new reasoning exercise focused until its explanation is requested', async () => {
   window.history.replaceState({}, '', '/questions/u1-17');
   vi.spyOn(window, 'scrollTo').mockImplementation(() => {});

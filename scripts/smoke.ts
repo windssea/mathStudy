@@ -51,14 +51,14 @@ for (const id of ['U03-L01', 'U03-L02', 'U03-L03', 'U03-L04']) {
   assert.ok(!JSON.stringify(third).includes('"expected"'));
 }
 const thirdBank = await api('/questions?unit=U03');
-assert.equal(thirdBank.total, 12);
+assert.equal(thirdBank.total, 36);
 for (const id of ['U04-L01', 'U04-L02', 'U04-L03']) {
   const fourth = await api(`/textbooks/${editionId}/lessons/${id}`);
   assert.equal((fourth.lesson as { id: string }).id, id);
   assert.equal((fourth.questions as unknown[]).length, 3);
   assert.ok(!JSON.stringify(fourth).includes('"expected"'));
 }
-assert.equal((await api('/questions?unit=U04')).total, 12);
+assert.equal((await api('/questions?unit=U04')).total, 37);
 for (const [questionId, value] of [
   ['u4-03', '7'],
   ['u4-07', '6'],
@@ -83,7 +83,7 @@ for (let index = 1; index <= 7; index++) {
   assert.equal((fifth.questions as unknown[]).length, 3);
   assert.ok(!JSON.stringify(fifth).includes('"expected"'));
 }
-assert.equal((await api('/questions?unit=U05')).total, 21);
+assert.equal((await api('/questions?unit=U05')).total, 45);
 for (const [questionId, value] of [
   ['u5-07', '355000'],
   ['u5-08', '364999'],
@@ -119,8 +119,16 @@ const grade = await api('/questions/u2-08/check', {
 assert.equal(grade.correct, true);
 const catalog = await api('/practice');
 assert.equal((catalog.papers as unknown[]).length, 0);
-assert.equal((catalog.topics as unknown[]).length, 20);
-for (const id of ['u1-calculation', 'u1-restore', 'u2-grid', 'u2-cut']) {
+assert.equal((catalog.topics as unknown[]).length, 34);
+for (const id of [
+  'u1-calculation',
+  'u1-restore',
+  'u2-grid',
+  'u2-cut',
+  'u3-compare',
+  'u4-brackets',
+  'u5-rounding',
+]) {
   const pack = await api(`/practice/topics/${id}`);
   assert.equal(
     (pack.items as unknown[]).length,
@@ -129,6 +137,35 @@ for (const id of ['u1-calculation', 'u1-restore', 'u2-grid', 'u2-cut']) {
   assert.ok(!JSON.stringify(pack).includes('"expected"'));
   assert.ok(!JSON.stringify(pack).includes('"explanation"'));
   assert.ok(!JSON.stringify(pack).includes('"sources"'));
+}
+for (const [id, answers] of [
+  ['bank-u3-compare-04', { a1: '84', a2: '2', a3: '2' }],
+  ['bank-u4-budget-05', { a1: '780', a2: '2', a3: '1' }],
+  ['bank-u5-rounding-04', { a1: '1950000', a2: '1954999' }],
+] as const) {
+  const result = await api(`/questions/${id}/check`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Origin: origin.origin },
+    body: JSON.stringify({ answers }),
+  });
+  assert.equal(result.correct, true, id);
+  const image = await fetch(new URL(`/figures/${id}-step1.svg`, origin), {
+    signal: AbortSignal.timeout(15000),
+  });
+  assert.equal(image.status, 200);
+  assert.match(image.headers.get('content-type') ?? '', /image\/svg\+xml/);
+  assert.doesNotMatch(await image.text(), /<image|data:image|<script/);
+}
+for (const [value, correct] of [
+  ['0202706008', false],
+  ['202706008', true],
+] as const) {
+  const result = await api('/questions/bank-u5-codes-02/check', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Origin: origin.origin },
+    body: JSON.stringify({ answers: { a1: value } }),
+  });
+  assert.equal(result.correct, correct, 'Fixed-length library code');
 }
 const pageImage = await fetch(new URL('/papers/P01/1.webp', origin), {
   signal: AbortSignal.timeout(15000),
@@ -151,7 +188,7 @@ assert.equal(vector.status, 200);
 assert.match(vector.headers.get('content-type') ?? '', /image\/svg\+xml/);
 assert.doesNotMatch(await vector.text(), /<image|data:image|<script/);
 const history = await api('/questions?scope=history');
-assert.equal(history.total, 797);
+assert.equal(history.total, 870);
 assert.ok((history.items as { id: string }[]).some((q) => q.id === 'p15-draw'));
 const deepLink = await fetch(new URL(`/books/${editionId}/lessons/U05-L05`, origin), {
   signal: AbortSignal.timeout(15000),
@@ -160,5 +197,5 @@ assert.equal(deepLink.status, 200);
 assert.ok(deepLink.headers.get('content-type')?.includes('text/html'));
 assert.ok((await deepLink.text()).includes('id="root"'));
 console.log(
-  `Smoke checks passed: ${origin.origin} (D1, current content hash, 20 topics, classified question bank, original scans unavailable, grading, registration closed, SPA deep link)`,
+  `Smoke checks passed: ${origin.origin} (D1, current content hash, 34 topics, classified question bank, original scans unavailable, grading, registration closed, SPA deep link)`,
 );

@@ -136,7 +136,7 @@ export function gradeAnswers(
   question: {
     expected: Record<string, string>;
     sourceIssue?: string;
-    answerRules?: Record<string, { kind: 'oneOf' | 'set'; values: string[] }>;
+    answerRules?: Record<string, { kind: 'oneOf' | 'set' | 'literal'; values: string[] }>;
     construction?: {
       columns: number;
       rows: number;
@@ -155,6 +155,8 @@ export function gradeAnswers(
       const rule = question.answerRules?.[key],
         actual = answers[key] ?? '';
       if (!rule) return sameAnswer(actual, question.expected[key]);
+      if (rule.kind === 'literal')
+        return rule.values.some((value) => actual.trim().normalize('NFKC') === value);
       if (rule.kind === 'oneOf') return rule.values.some((value) => sameAnswer(actual, value));
       const parts = actual
         .trim()
