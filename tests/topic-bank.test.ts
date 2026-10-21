@@ -94,3 +94,20 @@ it('checks the actual redrawn half-grid polygons independently against the area 
   expect(areas[3]).toBe(Number(q.expected.a2));
   expect(areas[4]).toBe(Number(q.expected.a3));
 });
+
+it('has exactly one triangle with two equal shorter sides in the redrawn choice question', () => {
+  const q = questions.find((q) => q.id === 'full-p16-s2-q4')!;
+  const svg = readFileSync(`apps/web/public${q.promptImage!.src}`, 'utf8');
+  const matches = [...svg.matchAll(/<polygon points="([^"]+)"/g)].map((m) => {
+    const points = m[1].split(' ').map((p) => p.split(',').map(Number));
+    const sides = points
+      .map((p, i) => {
+        const next = points[(i + 1) % 3];
+        return (p[0] - next[0]) ** 2 + (p[1] - next[1]) ** 2;
+      })
+      .sort((a, b) => a - b);
+    return sides[0] === sides[1] && sides[1] < sides[2];
+  });
+  expect(matches).toEqual([false, false, false, true]);
+  expect(q.expected.value).toBe('3');
+});
