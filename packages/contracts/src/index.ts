@@ -2,7 +2,7 @@ import { z } from 'zod';
 export * from './learning';
 
 export const editionId = 'sj-math-g4-upper-2026-v1';
-export const releaseId = 'practice-2026-10-full-papers-r2';
+export const releaseId = 'practice-2026-10-topic-bank-r1';
 export const difficultySchema = z.enum(['basic', 'advanced', 'challenge']);
 export type Difficulty = z.infer<typeof difficultySchema>;
 export const questionTypeSchema = z.enum([
@@ -123,7 +123,6 @@ export interface QuestionPublic {
   hint: string;
   sourceKind: 'original' | 'collected' | 'adapted';
   topicIds?: string[];
-  sources?: { paperId: string; page: number; number: string }[];
   promptImage?: { src: string; alt: string };
   responseMode?: 'selfReview';
   sourceIssue?: string;
@@ -174,7 +173,7 @@ export const visualSchema = z
           ]),
           image: z
             .string()
-            .regex(/^\/papers\/diagrams\/[a-zA-Z0-9_.-]+\.svg$/)
+            .regex(/^\/figures\/[a-zA-Z0-9_.-]+\.svg$/)
             .optional(),
           headings: z.array(z.string()),
           rows: z.array(z.array(z.string())),
@@ -213,6 +212,7 @@ export interface Explanation {
   visual?: Visual;
 }
 export interface Question extends QuestionPublic {
+  sources?: { paperId: string; page: number; number: string }[];
   expected: Record<string, string>;
   answerRules?: Record<string, { kind: 'oneOf' | 'set'; values: string[] }>;
   explanation: Explanation;
@@ -280,7 +280,7 @@ export const questionSchema = z.object({
     )
     .optional(),
   promptImage: z
-    .object({ src: z.string().regex(/^\/papers\/[a-zA-Z0-9_./-]+\.webp$/), alt: z.string().min(1) })
+    .object({ src: z.string().regex(/^\/figures\/[a-zA-Z0-9_-]+\.svg$/), alt: z.string().min(1) })
     .optional(),
   responseMode: z.literal('selfReview').optional(),
   sourceIssue: z.string().min(1).optional(),

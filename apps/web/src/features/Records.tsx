@@ -9,7 +9,7 @@ import { Icon, Loading, ErrorState } from '../components/ui';
 export default function Records() {
   const { textbook: book } = useCourse(),
     progress = useProgress();
-  const remote = useRemote<{ items: QuestionPublic[] }>('/questions');
+  const remote = useRemote<{ items: QuestionPublic[] }>('/questions?scope=history');
   const attempted = Object.entries(progress.answers);
   const account = useAccount();
   const [reviewFilter, setReviewFilter] = useState<'pending' | 'resolved' | 'all'>('pending');

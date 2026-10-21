@@ -112,7 +112,7 @@ it('connects the homepage, catalog, first lesson, and visual question explanatio
     app.request(new URL(input, 'http://localhost').href, init),
   );
   render(<App />);
-  await screen.findByRole('heading', { name: '数学练习' });
+  await screen.findByRole('heading', { name: '数学题库' });
   fireEvent.click(screen.getByRole('link', { name: '课程目录' }));
   await screen.findByRole('heading', { name: '课程目录' });
   fireEvent.click(screen.getByRole('link', { name: /1 整十数除法与分组意义/ }));

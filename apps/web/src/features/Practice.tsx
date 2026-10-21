@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams, useSearchParams } from 'react-router-dom';
-import type { PracticePaper, PracticeTopic, QuestionPublic } from '@mathstudy/contracts';
+import { Link, Navigate, useParams, useSearchParams } from 'react-router-dom';
+import type { PracticeTopic, QuestionPublic } from '@mathstudy/contracts';
 import { useRemote } from '../lib/api';
 import { Loading, ErrorState } from '../components/ui';
 import QuestionRunner from '../components/QuestionRunner';
@@ -8,41 +8,45 @@ import QuestionRunner from '../components/QuestionRunner';
 type Result = { status: 'correct' | 'incorrect' | 'revealed' | 'skipped'; assisted: boolean };
 export default function Practice() {
   const { kind, id } = useParams();
-  const remote = useRemote<{ set: PracticeTopic | PracticePaper; items: QuestionPublic[] }>(
-    `/practice/${kind}/${id}`,
+  const [params] = useSearchParams();
+  const selection = new URLSearchParams();
+  for (const key of ['difficulty', 'type'])
+    if (params.get(key)) selection.set(key, params.get(key)!);
+  const remote = useRemote<{ set: PracticeTopic; items: QuestionPublic[] }>(
+    kind === 'topics' ? `/practice/topics/${id}?${selection}` : '/practice',
   );
+  if (kind !== 'topics') return <Navigate to="/" replace />;
   if (remote.loading) return <Loading />;
   if (remote.error || !remote.data)
     return <ErrorState message={remote.error ?? '未找到练习'} retry={remote.retry} />;
-  return <PracticeContent key={`${kind}-${id}`} {...remote.data} />;
+  return <PracticeContent key={`${kind}-${id}-${selection}`} {...remote.data} />;
 }
-function PracticeContent({
-  set,
-  items,
-}: {
-  set: PracticeTopic | PracticePaper;
-  items: QuestionPublic[];
-}) {
-  const [params, setParams] = useSearchParams();
+function PracticeContent({ set, items }: { set: PracticeTopic; items: QuestionPublic[] }) {
+  const [params] = useSearchParams();
   const [index, setIndex] = useState(0),
     [round, setRound] = useState(0);
   const [results, setResults] = useState<Record<string, Result>>({});
   const [ids, setIds] = useState(items.map((q) => q.id));
-  const [page, setPage] = useState(0);
-  const [zoom, setZoom] = useState(false);
-  const paper = 'pages' in set ? set : undefined;
-  const original = !!paper && params.get('original') === '1';
   const question = items.find((q) => q.id === ids[index]);
   const done = index >= ids.length;
   const independent = ids.filter(
     (id) => results[id]?.status === 'correct' && !results[id]?.assisted,
   ).length;
   const review = ids.filter((id) => results[id]?.status !== 'correct' || results[id]?.assisted);
-  const back = paper ? '/?view=papers' : `/?unit=${'unitId' in set ? set.unitId : 'U01'}`;
-  const source = question?.sources?.find((s) => s.paperId === paper?.id);
+  const back = `/?unit=${set.unitId}&${params}`;
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
-  }, [index, original]);
+  }, [index]);
+  if (!items.length)
+    return (
+      <section className="practice-result panel">
+        <h1>{set.title}</h1>
+        <p>没有符合条件的题目。</p>
+        <Link className="button secondary" to={back}>
+          调整筛选
+        </Link>
+      </section>
+    );
   function retry(questions: string[]) {
     setIds(questions);
     setIndex(0);
@@ -55,59 +59,9 @@ function PracticeContent({
         <Link className="text-link" to={back}>
           返回
         </Link>
-        <h1>
-          {paper ? `试卷${paper.id.slice(1)} · ` : ''}
-          {set.title}
-        </h1>
-        {paper && (
-          <button
-            className="button secondary"
-            onClick={() => setParams(original ? {} : { original: '1' })}
-          >
-            {original ? '回到练习' : '原卷'}
-          </button>
-        )}
+        <h1>{set.title}</h1>
       </div>
-      {original && paper && (
-        <section className="original-paper panel">
-          <div className="original-controls">
-            <button
-              className="button secondary"
-              disabled={page === 0}
-              onClick={() => setPage((p) => p - 1)}
-            >
-              上一张
-            </button>
-            <span>
-              {page + 1} / {paper.pages.length}
-            </span>
-            <button
-              className="button secondary"
-              disabled={page === paper.pages.length - 1}
-              onClick={() => setPage((p) => p + 1)}
-            >
-              下一张
-            </button>
-            <button className="button subtle" aria-pressed={zoom} onClick={() => setZoom(!zoom)}>
-              {zoom ? '适合宽度' : '放大'}
-            </button>
-          </div>
-          <div
-            className="paper-image"
-            data-zoom={zoom}
-            tabIndex={zoom ? 0 : undefined}
-            aria-label={zoom ? '放大的原卷，可滚动查看' : undefined}
-          >
-            <img
-              src={paper.pages[page].image}
-              alt={`试卷${paper.id.slice(1)}，原卷第${page + 1}张`}
-              width="1264"
-              height="1848"
-            />
-          </div>
-        </section>
-      )}
-      <div hidden={original}>
+      <div>
         {done ? (
           <section className="practice-result panel">
             <h2>本次练习</h2>
@@ -165,25 +119,13 @@ function PracticeContent({
               >
                 {ids.map((id, i) => (
                   <option key={id} value={i}>
-                    第{i + 1}题 ·{' '}
-                    {items.find((q) => q.id === id)?.sources?.find((s) => s.paperId === paper?.id)
-                      ?.number ?? items.find((q) => q.id === id)?.title}
+                    第{i + 1}题 · {items.find((q) => q.id === id)?.title}
                   </option>
                 ))}
               </select>
               <span>
                 第 {index + 1} / {ids.length} 题
               </span>
-              {source && (
-                <button
-                  onClick={() => {
-                    setPage(source.page - 1);
-                    setParams({ original: '1' });
-                  }}
-                >
-                  原卷第{source.page}张 · {source.number}
-                </button>
-              )}
               <progress value={index} max={ids.length} aria-label="本次练习进度" />
             </div>
             <section className="practice-current panel">

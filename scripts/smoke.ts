@@ -110,7 +110,7 @@ const registration = await fetch(new URL('/api/auth/sign-up/email', origin), {
 assert.equal(registration.status, 403);
 await registration.arrayBuffer();
 const bank = await api('/questions?unit=U02');
-assert.equal(bank.total, 260);
+assert.equal(bank.total, 209);
 const grade = await api('/questions/u2-08/check', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json', Origin: origin.origin },
@@ -118,23 +118,41 @@ const grade = await api('/questions/u2-08/check', {
 });
 assert.equal(grade.correct, true);
 const catalog = await api('/practice');
-assert.equal((catalog.papers as unknown[]).length, 18);
+assert.equal((catalog.papers as unknown[]).length, 0);
 assert.equal((catalog.topics as unknown[]).length, 20);
-for (const id of ['P01', 'P07', 'P18']) {
-  const pack = await api(`/practice/papers/${id}`);
+for (const id of ['u1-calculation', 'u1-restore', 'u2-grid', 'u2-cut']) {
+  const pack = await api(`/practice/topics/${id}`);
   assert.equal(
     (pack.items as unknown[]).length,
-    practice.papers.find((p) => p.id === id)!.questionIds.length,
+    practice.topics.find((p) => p.id === id)!.questionIds.length,
   );
   assert.ok(!JSON.stringify(pack).includes('"expected"'));
   assert.ok(!JSON.stringify(pack).includes('"explanation"'));
+  assert.ok(!JSON.stringify(pack).includes('"sources"'));
 }
 const pageImage = await fetch(new URL('/papers/P01/1.webp', origin), {
   signal: AbortSignal.timeout(15000),
 });
-assert.equal(pageImage.status, 200);
-assert.match(pageImage.headers.get('content-type') ?? '', /image\/webp/);
+assert.equal(pageImage.status, 404);
 await pageImage.arrayBuffer();
+const retiredPaper = await fetch(new URL('/api/v1/practice/papers/P15', origin), {
+  signal: AbortSignal.timeout(15000),
+});
+assert.equal(retiredPaper.status, 404);
+await retiredPaper.arrayBuffer();
+const redrawn = await api('/questions/full-p15-s1-q2');
+const redrawnQuestion = (redrawn.items as { promptImage: { src: string }; sources?: unknown }[])[0];
+assert.equal(redrawnQuestion.sources, undefined);
+assert.equal(redrawnQuestion.promptImage.src, '/figures/full-p15-s1-q2.svg');
+const vector = await fetch(new URL(redrawnQuestion.promptImage.src, origin), {
+  signal: AbortSignal.timeout(15000),
+});
+assert.equal(vector.status, 200);
+assert.match(vector.headers.get('content-type') ?? '', /image\/svg\+xml/);
+assert.doesNotMatch(await vector.text(), /<image|data:image|<script/);
+const history = await api('/questions?scope=history');
+assert.equal(history.total, 797);
+assert.ok((history.items as { id: string }[]).some((q) => q.id === 'p15-draw'));
 const deepLink = await fetch(new URL(`/books/${editionId}/lessons/U05-L05`, origin), {
   signal: AbortSignal.timeout(15000),
 });
@@ -142,5 +160,5 @@ assert.equal(deepLink.status, 200);
 assert.ok(deepLink.headers.get('content-type')?.includes('text/html'));
 assert.ok((await deepLink.text()).includes('id="root"'));
 console.log(
-  `Smoke checks passed: ${origin.origin} (D1, current content hash, units two to five, 27 lessons, 797 questions, bank grading, registration closed, SPA deep link)`,
+  `Smoke checks passed: ${origin.origin} (D1, current content hash, 20 topics, classified question bank, original scans unavailable, grading, registration closed, SPA deep link)`,
 );

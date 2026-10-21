@@ -1,5 +1,5 @@
 import { Link, useSearchParams } from 'react-router-dom';
-import type { PracticeCatalog } from '@mathstudy/contracts';
+import { difficultyLabels, typeLabels, type PracticeCatalog } from '@mathstudy/contracts';
 import { useCourse } from '../app/course';
 import { useRemote } from '../lib/api';
 import { useProgress } from '../lib/progress';
@@ -7,13 +7,23 @@ import { Loading, ErrorState } from '../components/ui';
 
 export default function Home() {
   const { textbook: book } = useCourse();
-  const remote = useRemote<PracticeCatalog>('/practice');
   const [params, setParams] = useSearchParams();
-  const papers = params.get('view') === 'papers';
-  const unit = params.get('unit') ?? (papers ? '' : 'U01');
+  const unit = params.get('unit') ?? 'U01';
+  const difficulty = params.get('difficulty') ?? '',
+    type = params.get('type') ?? '';
+  const selection = new URLSearchParams();
+  if (difficulty) selection.set('difficulty', difficulty);
+  if (type) selection.set('type', type);
+  const remote = useRemote<PracticeCatalog>(`/practice?${selection}`);
   const progress = useProgress();
-  function selectUnit(value: string) {
-    setParams({ ...(papers ? { view: 'papers' } : {}), unit: value });
+  function filter(key: string, value: string) {
+    setParams((previous) => {
+      const next = new URLSearchParams(previous);
+      next.delete('view');
+      if (value || key === 'unit') next.set(key, value);
+      else next.delete(key);
+      return next;
+    });
   }
   if (remote.loading) return <Loading />;
   if (remote.error || !remote.data)
@@ -21,25 +31,16 @@ export default function Home() {
   const topics = remote.data.topics.filter(
     (t) => (!unit || t.unitId === unit) && t.questionIds.length,
   );
-  const sets = remote.data.papers.filter((p) => !unit || p.unitIds.includes(unit));
   return (
     <>
       <div className="practice-page-head">
-        <h1>数学练习</h1>
+        <h1>数学题库</h1>
         <span>苏教版 · 四年级上册</span>
       </div>
       <div className="practice-toolbar">
-        <div className="practice-modes" role="group" aria-label="练习方式">
-          <button aria-pressed={!papers} onClick={() => setParams({ unit: 'U01' })}>
-            专题练习
-          </button>
-          <button aria-pressed={papers} onClick={() => setParams({ view: 'papers' })}>
-            试卷练习
-          </button>
-        </div>
         <label className="practice-unit">
           单元
-          <select value={unit} onChange={(e) => selectUnit(e.target.value)}>
+          <select value={unit} onChange={(e) => filter('unit', e.target.value)}>
             <option value="">全部单元</option>
             {book.catalog
               .filter((n) => n.kind === 'unit')
@@ -50,46 +51,46 @@ export default function Home() {
               ))}
           </select>
         </label>
+        <label className="practice-unit">
+          题型
+          <select value={type} onChange={(e) => filter('type', e.target.value)}>
+            <option value="">全部题型</option>
+            {Object.entries(typeLabels).map(([key, label]) => (
+              <option key={key} value={key}>
+                {label}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="practice-unit">
+          难度
+          <select value={difficulty} onChange={(e) => filter('difficulty', e.target.value)}>
+            <option value="">全部难度</option>
+            {Object.entries(difficultyLabels).map(([key, label]) => (
+              <option key={key} value={key}>
+                {label}
+              </option>
+            ))}
+          </select>
+        </label>
       </div>
-      {papers ? (
-        <div className="paper-list">
-          {sets.map((p) => (
-            <section className="practice-entry panel" key={p.id}>
-              <span className="paper-number">{p.id.slice(1)}</span>
-              <div>
-                <h2>{p.title}</h2>
-                <span>
-                  {p.pages.length}张原卷 · {p.questionIds.length}题
-                </span>
-              </div>
-              <Link className="button secondary" to={`/practice/papers/${p.id}?original=1`}>
-                原卷
-              </Link>
-              <Link className="button primary" to={`/practice/papers/${p.id}`}>
-                练习
-              </Link>
-            </section>
-          ))}
-        </div>
-      ) : (
-        <div className="topic-list">
-          {topics.map((t) => (
-            <section className="practice-entry panel" key={t.id}>
-              <div>
-                <h2>{t.title}</h2>
-                <span>
-                  已练 {t.questionIds.filter((id) => progress.answers[id]).length} /{' '}
-                  {t.questionIds.length}题
-                </span>
-              </div>
-              <Link className="button primary" to={`/practice/topics/${t.id}`}>
-                练习
-              </Link>
-            </section>
-          ))}
-        </div>
-      )}
-      {papers && sets.length === 0 && <p className="practice-empty">该单元暂无收集试卷。</p>}
+      <div className="topic-list">
+        {topics.map((t) => (
+          <section className="practice-entry panel" key={t.id}>
+            <div>
+              <h2>{t.title}</h2>
+              <span>
+                已练 {t.questionIds.filter((id) => progress.answers[id]).length} /{' '}
+                {t.questionIds.length}题
+              </span>
+            </div>
+            <Link className="button primary" to={`/practice/topics/${t.id}?${selection}`}>
+              练习
+            </Link>
+          </section>
+        ))}
+      </div>
+      {topics.length === 0 && <p className="practice-empty">没有符合条件的题目，请调整筛选。</p>}
       <div className="practice-bottom">
         <Link to="/records">错题与记录</Link>
         <Link to="/questions">全部题目</Link>

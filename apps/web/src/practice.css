@@ -104,8 +104,7 @@
 .practice-current,
 .practice-progress,
 .practice-next,
-.practice-result,
-.original-paper {
+.practice-result {
   max-width: 900px;
   margin-inline: auto;
 }
@@ -184,21 +183,6 @@
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
-}
-.original-paper {
-  padding: 18px;
-}
-.original-controls {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  align-items: center;
-  padding: 0 0 18px;
-}
-.original-paper img {
-  width: 100%;
-  height: auto;
-  display: block;
 }
 .question-figure {
   margin: 20px 0;
@@ -349,23 +333,24 @@
   color: var(--muted);
 }
 
-.paper-image[data-zoom='true'] {
-  overflow: auto;
-  max-height: 75vh;
-  border: 1px solid var(--border);
-}
-.paper-image[data-zoom='true'] img {
-  width: 1100px;
-  max-width: none;
-}
-
-.question-source-image {
+.question-diagram {
   display: block;
+  width: 720px;
   max-width: 100%;
   max-height: 420px;
   object-fit: contain;
   object-position: left;
   margin: 16px 0;
+}
+.practice-toolbar {
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.practice-toolbar .practice-unit {
+  width: auto;
+}
+.practice-toolbar select {
+  min-height: 44px;
 }
 .question-stem {
   white-space: pre-line;

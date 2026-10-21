@@ -8,18 +8,35 @@ const section = (n: string) =>
     : /^[一二三四五六七八九十]/.test(n)
       ? '一二三四五六七八九十'.indexOf(n[0]) + 1
       : 0;
+export function practiceQuestions(questions: Question[]) {
+  const seen = new Set<string>();
+  return questions
+    .filter((q) => !q.sourceIssue && (!q.sources?.length || q.id.startsWith('full-')))
+    .filter((q) => {
+      const key = JSON.stringify([
+        q.unitId,
+        q.type,
+        q.stem,
+        q.expected,
+        q.fields.map((f) => f.label),
+      ]);
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    })
+    .sort((a, b) => {
+      const rank = { basic: 0, advanced: 1, challenge: 2 };
+      return (
+        rank[a.difficulty] - rank[b.difficulty] || a.id.localeCompare(b.id, 'en', { numeric: true })
+      );
+    });
+}
 export function buildPracticeCatalog(questions: Question[]): PracticeCatalog {
+  const bank = practiceQuestions(questions);
   return {
     topics: topicData.map((topic) => ({
       ...topic,
-      questionIds: questions
-        .filter(
-          (q) =>
-            !q.sourceIssue &&
-            (!q.sources?.length || q.id.startsWith('full-')) &&
-            q.topicIds?.includes(topic.id),
-        )
-        .map((q) => q.id),
+      questionIds: bank.filter((q) => q.topicIds?.includes(topic.id)).map((q) => q.id),
     })),
     papers: paperData.map((paper) => ({
       ...paper,

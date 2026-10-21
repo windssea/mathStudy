@@ -15,6 +15,7 @@ import { saveLearningEvents } from './learning-repository';
 import type { WorkerEnvironment } from './environment';
 
 const app = new Hono<WorkerEnvironment>();
+app.all('/papers/*', (c) => c.json({ error: { code: 'NOT_FOUND', message: '资源不存在。' } }, 404));
 app.use('/api/*', async (c, next) => {
   c.set('requestId', crypto.randomUUID());
   c.header('Cache-Control', 'no-store');
@@ -180,21 +181,57 @@ app.get('/api/v1/textbooks/:edition/lessons/:lesson', (c) => {
     ),
   );
 });
-app.get('/api/v1/practice', (c) => c.json(envelope(c.get('content').practice, c.get('requestId'))));
-app.get('/api/v1/practice/:kind/:id', (c) => {
-  const content = c.get('content'),
-    kind = c.req.param('kind');
-  const set = (
-    kind === 'topics' ? content.practice.topics : kind === 'papers' ? content.practice.papers : []
-  ).find((s) => s.id === c.req.param('id'));
-  if (!set) return c.json({ error: { code: 'NOT_FOUND', message: '未找到这组练习。' } }, 404);
+app.use('/api/v1/practice/*', async (c, next) => {
+  const { difficulty, type } = c.req.query();
+  if (
+    (difficulty && !difficultySchema.safeParse(difficulty).success) ||
+    (type && !questionTypeSchema.safeParse(type).success)
+  )
+    return c.json({ error: { code: 'INVALID_FILTER', message: '请检查筛选条件。' } }, 400);
+  await next();
+});
+app.get('/api/v1/practice', (c) => {
+  const content = c.get('content');
+  const { difficulty, type } = c.req.query();
+  if (
+    (difficulty && !difficultySchema.safeParse(difficulty).success) ||
+    (type && !questionTypeSchema.safeParse(type).success)
+  )
+    return c.json({ error: { code: 'INVALID_FILTER', message: '请检查筛选条件。' } }, 400);
+  const allowed = new Set(
+    content.questions
+      .filter((q) => (!difficulty || q.difficulty === difficulty) && (!type || q.type === type))
+      .map((q) => q.id),
+  );
   return c.json(
     envelope(
       {
-        set,
-        items: set.questionIds.map((id) =>
-          publicQuestion(content.questions.find((q) => q.id === id)!),
-        ),
+        topics: content.practice.topics.map((topic) => ({
+          ...topic,
+          questionIds: topic.questionIds.filter((id) => allowed.has(id)),
+        })),
+        papers: [],
+      },
+      c.get('requestId'),
+    ),
+  );
+});
+app.get('/api/v1/practice/:kind/:id', (c) => {
+  const content = c.get('content'),
+    kind = c.req.param('kind');
+  const set = (kind === 'topics' ? content.practice.topics : []).find(
+    (s) => s.id === c.req.param('id'),
+  );
+  if (!set) return c.json({ error: { code: 'NOT_FOUND', message: '未找到这组练习。' } }, 404);
+  const { difficulty, type } = c.req.query();
+  const items = set.questionIds
+    .map((id) => content.questions.find((q) => q.id === id)!)
+    .filter((q) => (!difficulty || q.difficulty === difficulty) && (!type || q.type === type));
+  return c.json(
+    envelope(
+      {
+        set: { ...set, questionIds: items.map((q) => q.id) },
+        items: items.map(publicQuestion),
       },
       c.get('requestId'),
     ),
@@ -202,12 +239,13 @@ app.get('/api/v1/practice/:kind/:id', (c) => {
 });
 app.get('/api/v1/questions', (c) => {
   const { textbook, questions } = c.get('content');
-  const { unit, difficulty, type, search = '' } = c.req.query();
+  const { unit, difficulty, type, search = '', scope = 'practice' } = c.req.query();
   if (
     (unit && !textbook.catalog.some((n) => n.kind === 'unit' && n.id === unit)) ||
     (difficulty && !difficultySchema.safeParse(difficulty).success) ||
     (type && !questionTypeSchema.safeParse(type).success) ||
-    search.length > 100
+    search.length > 100 ||
+    !['practice', 'history'].includes(scope)
   ) {
     return c.json(
       {
@@ -217,8 +255,10 @@ app.get('/api/v1/questions', (c) => {
       400,
     );
   }
+  const active = new Set(c.get('content').practice.topics.flatMap((t) => t.questionIds));
   const matches = questions.filter(
     (q) =>
+      (scope === 'history' || active.has(q.id)) &&
       (!unit || q.unitId === unit) &&
       (!difficulty || q.difficulty === difficulty) &&
       (!type || q.type === type) &&
@@ -227,6 +267,11 @@ app.get('/api/v1/questions', (c) => {
   return c.json(
     envelope({ items: matches.map(publicQuestion), total: matches.length }, c.get('requestId')),
   );
+});
+app.get('/api/v1/questions/:id', (c) => {
+  const question = c.get('content').questions.find((q) => q.id === c.req.param('id'));
+  if (!question) return c.json({ error: { code: 'NOT_FOUND', message: '没有找到这道题。' } }, 404);
+  return c.json(envelope({ items: [publicQuestion(question)], total: 1 }, c.get('requestId')));
 });
 app.post('/api/v1/questions/:id/check', async (c) => {
   const { questions } = c.get('content');

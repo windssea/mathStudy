@@ -106,8 +106,6 @@ for (const paper of practice.papers) {
   )
     issues.push(`Original question coverage mismatch: ${paper.id}`);
   if (!paper.questionIds.length) issues.push(`Empty paper: ${paper.id}`);
-  for (const page of paper.pages)
-    if (!existsSync(`apps/web/public${page.image}`)) issues.push(`Missing scan: ${page.image}`);
   for (const id of paper.questionIds) {
     const source = questions.find((q) => q.id === id)?.sources?.find((s) => s.paperId === paper.id);
     if (!source || source.page > paper.pages.length) issues.push(`Invalid paper source: ${id}`);

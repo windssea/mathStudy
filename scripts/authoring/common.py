@@ -11,11 +11,8 @@ def table(headings,rows):return {'kind':'table','headings':headings,'rows':[[str
 def flow(text):return {'kind':'flow','headings':[],'rows':[['推导',text]]}
 def bars(labels,values):return {'kind':'bars','headings':labels,'rows':[],'values':values}
 def crop(q,box):
- from PIL import Image
- original=ROOT/'apps/web/public'/PAPERS[P-1]['pages'][PAGE-1]['image'].lstrip('/')
- im=Image.open(original); w,h=im.size
- target=ROOT/f'apps/web/public/papers/crops/{q["id"]}.webp';target.parent.mkdir(parents=True,exist_ok=True)
- im.crop(tuple(round(v*(w if i%2==0 else h)) for i,v in enumerate(box))).save(target,'WEBP',quality=92)
+ # Retain the authoring marker; bank.py supplies a vector redraw or explicit text.
+ # Original scans remain local reference material and are not build inputs.
  q['promptImage']={'src':f'/papers/crops/{q["id"]}.webp','alt':f'原卷第{PAGE}页{q["sources"][0]["number"]}的题图'}
 
 def ident(no):
@@ -112,9 +109,9 @@ def old(p,no):
  return question(no,q['stem'],q['expected'],q['explanation']['steps'],analysis=q['explanation']['analysis'],labels=[f['label'] for f in q['fields']],kind=q['type'],topic=q['topicIds'][0].split('-',1)[1],diff=q['difficulty'],options=q.get('options'),stages=q['explanation'].get('visual',{}).get('stages'))
 
 def svg(name,body):
- dest=ROOT/f'apps/web/public/papers/diagrams/{name}.svg';dest.parent.mkdir(parents=True,exist_ok=True)
+ dest=ROOT/f'apps/web/public/figures/{name}.svg';dest.parent.mkdir(parents=True,exist_ok=True)
  dest.write_text(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 340"><rect width="720" height="340" fill="white"/>{body}</svg>',encoding='utf-8')
- return {'kind':'image','image':f'/papers/diagrams/{name}.svg','headings':[],'rows':[]}
+ return {'kind':'image','image':f'/figures/{name}.svg','headings':[],'rows':[]}
 def text(x,y,s,size=22):return f'<text x="{x}" y="{y}" font-family="sans-serif" font-size="{size}" fill="#243754">{html.escape(str(s))}</text>'
 def rectangle(x,y,w,h,fill='#e6eeff',stroke='#3563e9'):return f'<rect x="{x}" y="{y}" width="{w}" height="{h}" fill="{fill}" stroke="{stroke}" stroke-width="3"/>'
 def rect_steps(name,l,w,unit='米'):

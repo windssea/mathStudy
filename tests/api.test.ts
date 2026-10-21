@@ -81,7 +81,7 @@ describe('public course and grading API', () => {
   it('filters questions without leaking answer keys', async () => {
     const r = await app.request(`${base}/questions?unit=U02&difficulty=challenge&type=application`);
     const b = await r.json();
-    expect(b.data.total).toBe(33);
+    expect(b.data.total).toBe(14);
     for (const q of b.data.items) {
       expect(q).not.toHaveProperty('expected');
       expect(q).not.toHaveProperty('explanation');

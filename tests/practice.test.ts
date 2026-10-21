@@ -7,7 +7,7 @@ import { app } from '../apps/web/worker';
 import { acceptLearningEvent } from '../apps/web/worker/learning-repository';
 import { loadCourseContent } from '../apps/web/worker/content-repository';
 
-it('preserves all 70 captures in chronological sets, including repeated-paper provenance', () => {
+it('keeps source provenance private without deploying the 70 original captures', () => {
   expect(practice.papers).toHaveLength(18);
   const files = practice.papers.flatMap((p) => p.pages.map((page) => page.sourceFile));
   expect(files).toHaveLength(70);
@@ -18,7 +18,7 @@ it('preserves all 70 captures in chronological sets, including repeated-paper pr
   );
   for (const p of practice.papers) {
     expect(p.questionIds.length).toBeGreaterThan(0);
-    for (const page of p.pages) expect(existsSync(`apps/web/public${page.image}`)).toBe(true);
+    for (const page of p.pages) expect(existsSync(`apps/web/public${page.image}`)).toBe(false);
     if (p.duplicateOf)
       expect(p.questionIds).toEqual(
         practice.papers.find((s) => s.id === p.duplicateOf)!.questionIds,
@@ -99,8 +99,11 @@ it('uses the same flexible drawing grader in the live check API and D1 sync acce
   expect(event.correct).toBe(true);
   expect(event.verified).toBe(true);
 });
-it('serves topic and paper selections without private answer or explanation data', async () => {
-  for (const path of ['/practice/topics/u1-restore', '/practice/papers/P18']) {
+it('serves classified topics without source papers or private answer data', async () => {
+  const catalog = await (await app.request('/api/v1/practice')).json();
+  expect(catalog.data.papers).toEqual([]);
+  expect((await app.request('/api/v1/practice/papers/P18')).status).toBe(404);
+  for (const path of ['/practice/topics/u1-restore', '/practice/topics/u2-cut']) {
     const r = await app.request(`/api/v1${path}`);
     const { data } = await r.json();
     expect(r.status).toBe(200);
@@ -108,6 +111,7 @@ it('serves topic and paper selections without private answer or explanation data
     expect(data.items.map((q: { id: string }) => q.id)).toEqual(data.set.questionIds);
     expect(JSON.stringify(data)).not.toContain('"expected"');
     expect(JSON.stringify(data)).not.toContain('"explanation"');
+    expect(JSON.stringify(data)).not.toContain('"sources"');
   }
   expect((await app.request('/api/v1/practice/unknown/P18')).status).toBe(404);
 });

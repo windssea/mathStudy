@@ -23,7 +23,7 @@ export default function QuestionBank() {
   if (type) apiParams.set('type', type);
   if (params.get('search')) apiParams.set('search', params.get('search')!);
   const remote = useRemote<{ items: QuestionPublic[]; total: number }>(
-    `/questions${questionId ? '' : `?${apiParams.toString()}`}`,
+    `/questions${questionId ? `/${questionId}` : `?${apiParams.toString()}`}`,
   );
   const question = remote.data?.items.find((q) => q.id === questionId);
   function filter(key: string, value: string) {

@@ -37,6 +37,7 @@ export function publicQuestion(question: (typeof questions)[number]): QuestionPu
     expected: _expected,
     explanation: _explanation,
     answerRules: _answerRules,
+    sources: _sources,
     ...safe
   } = question;
   return safe;

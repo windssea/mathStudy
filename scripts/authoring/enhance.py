@@ -1,6 +1,5 @@
-"""Audit additions; diagrams retain the supplied scan and expose one derivation at a time."""
+"""Audit additions and expose one derivation at a time without source bitmaps."""
 from common import *
-import base64
 
 def enhance():
  for q in OUT:
@@ -9,16 +8,7 @@ def enhance():
   if q.get('responseMode')=='selfReview' and not any(word in q['stem'] for word in ['画','方格','展开','连线','竖式','表格','表，']):q['type']='application'
   if q['promptImage'] if 'promptImage' in q else False:
    if not q['hasVisual']:
-    data=base64.b64encode((ROOT/'apps/web/public'/q['promptImage']['src'].lstrip('/')).read_bytes()).decode()
-    stages=[]
-    for i,step in enumerate(q['explanation']['steps']):
-     equations=re.findall(r'\d+(?:[×÷＋+−＝=]\d+)+',step)[:2]
-     # The source stays in view while the calculation for this step is added below it.
-     body=f'<image href="data:image/webp;base64,{data}" x="35" y="10" width="650" height="{220 if equations else 320}" preserveAspectRatio="xMidYMid meet"/>'
-     if equations:
-      body+='<rect x="20" y="240" width="680" height="90" rx="6" fill="#edf3ff"/>'
-      body+=''.join(text(70,274+j*33,line,24) for j,line in enumerate(equations))
-     stages.append(svg(q['id']+f'-step{i+1}',body))
+    stages=[flow(step) for step in q['explanation']['steps']]
     q['hasVisual']=True
     q['explanation']['visual']={'kind':'reasoning','title':q['title'],'labels':[],'values':[],'captions':q['explanation']['steps'],'stages':stages}
   if source['paperId']=='P18' and source['number'] in ['25','26','27','28','32']:

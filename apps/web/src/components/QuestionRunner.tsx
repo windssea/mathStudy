@@ -113,7 +113,7 @@ export default function QuestionRunner({
       <Heading>{q.title}</Heading>
       <p className="question-stem">{q.stem}</p>
       {q.promptImage && (
-        <img className="question-source-image" src={q.promptImage.src} alt={q.promptImage.alt} />
+        <img className="question-diagram" src={q.promptImage.src} alt={q.promptImage.alt} />
       )}
       {q.figure && <GridFigureView figure={q.figure} />}
       <form onSubmit={submit}>

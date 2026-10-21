@@ -66,7 +66,7 @@ describe('Cloudflare D1 content integration', () => {
       .run(JSON.stringify(question), releaseId, 'u2-08');
     const response = await app.request('/api/v1/questions?unit=U02', {}, { DB: db });
     const body = await response.json();
-    expect(body.data.items).toHaveLength(260);
+    expect(body.data.items).toHaveLength(209);
     expect(body.data.items.find((q: { id: string }) => q.id === 'u2-08').title).toBe('D1 专用标题');
     expect(JSON.stringify(body)).not.toContain('expected');
     expect(JSON.stringify(body)).not.toContain('explanation');
