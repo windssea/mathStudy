@@ -2,7 +2,7 @@ import { z } from 'zod';
 export * from './learning';
 
 export const editionId = 'sj-math-g4-upper-2026-v1';
-export const releaseId = 'practice-2026-10-u345-topics-r1';
+export const releaseId = 'practice-2026-10-teaching-r1';
 export const difficultySchema = z.enum(['basic', 'advanced', 'challenge']);
 export type Difficulty = z.infer<typeof difficultySchema>;
 export const questionTypeSchema = z.enum([
@@ -223,11 +223,43 @@ export interface GridFigure {
   unitLabel: string;
   shapes: { label: string; cells: [number, number][] }[];
 }
+export const teachingGroupLabels = {
+  foundation: '基础与概念',
+  strategy: '计算与方法',
+  application: '应用与推理',
+} as const;
+export const topicGuideSchema = z.object({
+  group: z.enum(['foundation', 'strategy', 'application']),
+  recognize: z.string().min(1),
+  steps: z
+    .array(z.object({ title: z.string().min(1), detail: z.string().min(1) }))
+    .min(2)
+    .max(4),
+  example: z.object({
+    prompt: z.string().min(1),
+    steps: z.array(z.string().min(1)).min(2),
+    answer: z.string().min(1),
+    checks: z
+      .array(z.object({ expression: z.string().min(1), result: z.number().finite() }))
+      .min(1),
+  }),
+  pitfall: z.string().min(1),
+  selfCheck: z.string().min(1),
+});
+export type TopicGuide = z.infer<typeof topicGuideSchema>;
+export const unitTeachingSchema = z.object({
+  unitId: z.string(),
+  goal: z.string().min(1),
+  connections: z.array(z.string().min(1)).min(2),
+  selfCheck: z.array(z.string().min(1)).min(2),
+});
+export type UnitTeaching = z.infer<typeof unitTeachingSchema>;
 export interface PracticeTopic {
   id: string;
   unitId: string;
   title: string;
   questionIds: string[];
+  guide?: TopicGuide;
 }
 export interface PracticePaper {
   id: string;
@@ -241,6 +273,7 @@ export interface PracticePaper {
 export interface PracticeCatalog {
   topics: PracticeTopic[];
   papers: PracticePaper[];
+  units: UnitTeaching[];
 }
 export const questionSchema = z.object({
   id: z.string(),

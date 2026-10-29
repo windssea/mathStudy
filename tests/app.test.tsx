@@ -67,14 +67,20 @@ it('connects fifth-unit reading exploration, fill-in/choice grading and completi
   fireEvent.change(screen.getByRole('slider', { name: '演示步骤' }), {
     target: { value: screen.getByRole('slider').getAttribute('max') },
   });
-  fireEvent.click(screen.getByRole('tab', { name: /自己试一试/ }));
-  const articles = screen.getAllByRole('article');
+  fireEvent.keyDown(screen.getByRole('tab', { name: /自己试一试/ }), { key: 'Enter' });
+  expect(screen.getAllByRole('article')).toHaveLength(1);
   fireEvent.click(screen.getByRole('radio', { name: /78900000/ }));
-  fireEvent.submit(articles[0].querySelector('form')!);
+  fireEvent.submit(screen.getByRole('article').querySelector('form')!);
+  await screen.findByText('答对了。');
+  fireEvent.click(screen.getByRole('button', { name: '下一题' }));
   fireEvent.click(screen.getByRole('radio', { name: /三百万八千零七/ }));
-  fireEvent.submit(articles[1].querySelector('form')!);
-  fireEvent.change(articles[2].querySelector('input')!, { target: { value: '20022000' } });
-  fireEvent.submit(articles[2].querySelector('form')!);
+  fireEvent.submit(screen.getByRole('article').querySelector('form')!);
+  await waitFor(() => expect(screen.getAllByText('答对了。')).toHaveLength(2));
+  fireEvent.click(screen.getByRole('button', { name: '下一题' }));
+  fireEvent.change(screen.getByRole('article').querySelector('input')!, {
+    target: { value: '20022000' },
+  });
+  fireEvent.submit(screen.getByRole('article').querySelector('form')!);
   await waitFor(() => expect(screen.getAllByText('答对了。')).toHaveLength(3));
   fireEvent.click(screen.getByRole('button', { name: '完成本课' }));
   expect(screen.getByRole('link', { name: '继续下一课' }).getAttribute('href')).toContain(
@@ -91,11 +97,13 @@ it('connects fourth-unit bracket exploration, grading and completion to the shar
   await screen.findByRole('heading', { name: '小括号与中括号' });
   expect(screen.getByRole('combobox', { name: '本单元课节' })).toBeTruthy();
   fireEvent.change(screen.getByRole('slider', { name: /演示步骤/ }), { target: { value: '3' } });
-  fireEvent.click(screen.getByRole('tab', { name: /自己试一试/ }));
-  const articles = screen.getAllByRole('article');
+  fireEvent.keyDown(screen.getByRole('tab', { name: /自己试一试/ }), { key: 'Enter' });
   for (const [index, value] of ['7', '9', '8'].entries()) {
-    fireEvent.change(articles[index].querySelector('input')!, { target: { value } });
-    fireEvent.submit(articles[index].querySelector('form')!);
+    expect(screen.getAllByRole('article')).toHaveLength(1);
+    fireEvent.change(screen.getByRole('article').querySelector('input')!, { target: { value } });
+    fireEvent.submit(screen.getByRole('article').querySelector('form')!);
+    await waitFor(() => expect(screen.getAllByText('答对了。')).toHaveLength(index + 1));
+    if (index < 2) fireEvent.click(screen.getByRole('button', { name: '下一题' }));
   }
   await waitFor(() => expect(screen.getAllByText('答对了。')).toHaveLength(3));
   fireEvent.click(screen.getByRole('button', { name: '完成本课' }));
@@ -113,14 +121,21 @@ it('connects third-unit exploration, existing exercises and course completion', 
   await screen.findByRole('heading', { name: '速度、时间与路程' });
   expect(screen.getByRole('combobox', { name: '本单元课节' })).toBeTruthy();
   fireEvent.click(screen.getByRole('button', { name: '查看静态步骤' }));
-  fireEvent.click(screen.getByRole('tab', { name: /自己试一试/ }));
-  const articles = screen.getAllByRole('article');
-  fireEvent.change(articles[0].querySelector('input')!, { target: { value: '280' } });
-  fireEvent.submit(articles[0].querySelector('form')!);
+  fireEvent.keyDown(screen.getByRole('tab', { name: /自己试一试/ }), { key: 'Enter' });
+  fireEvent.change(screen.getByRole('article').querySelector('input')!, {
+    target: { value: '280' },
+  });
+  fireEvent.submit(screen.getByRole('article').querySelector('form')!);
+  await screen.findByText('答对了。');
+  fireEvent.click(screen.getByRole('button', { name: '下一题' }));
   fireEvent.click(screen.getByLabelText(/路程 ÷ 速度/));
-  fireEvent.submit(articles[1].querySelector('form')!);
-  fireEvent.change(articles[2].querySelector('input')!, { target: { value: '180' } });
-  fireEvent.submit(articles[2].querySelector('form')!);
+  fireEvent.submit(screen.getByRole('article').querySelector('form')!);
+  await waitFor(() => expect(screen.getAllByText('答对了。')).toHaveLength(2));
+  fireEvent.click(screen.getByRole('button', { name: '下一题' }));
+  fireEvent.change(screen.getByRole('article').querySelector('input')!, {
+    target: { value: '180' },
+  });
+  fireEvent.submit(screen.getByRole('article').querySelector('form')!);
   await waitFor(() => expect(screen.getAllByText('答对了。')).toHaveLength(3));
   fireEvent.click(screen.getByRole('button', { name: '完成本课' }));
   expect(screen.getByRole('link', { name: '继续下一课' }).getAttribute('href')).toContain(
@@ -139,7 +154,7 @@ it('connects the homepage, catalog, first lesson, and visual question explanatio
   await screen.findByRole('heading', { name: '课程目录' });
   fireEvent.click(screen.getByRole('link', { name: /1 整十数除法与分组意义/ }));
   await screen.findByRole('heading', { name: '整十数除法与分组意义' });
-  fireEvent.click(await screen.findByRole('tab', { name: /自己试一试/ }));
+  fireEvent.keyDown(await screen.findByRole('tab', { name: /自己试一试/ }), { key: 'Enter' });
   const first = screen.getAllByRole('article')[0];
   fireEvent.change(first.querySelector('input[name="u1-01-quotient"]')!, {
     target: { value: '3' },
@@ -178,11 +193,13 @@ it('connects unit two exploration, bank grading, and the activity through the sh
   fireEvent.click(screen.getByRole('button', { name: '铺满方格' }));
   fireEvent.click(screen.getByRole('button', { name: '下一步' }));
   expect(screen.getByText('S = 8 × 5 = 40 平方厘米')).toBeTruthy();
-  fireEvent.click(screen.getByRole('tab', { name: /自己试一试/ }));
-  const articles = screen.getAllByRole('article');
+  fireEvent.keyDown(screen.getByRole('tab', { name: /自己试一试/ }), { key: 'Enter' });
   for (const [i, value] of ['54', '360', '132'].entries()) {
-    fireEvent.change(articles[i].querySelector('input')!, { target: { value } });
-    fireEvent.submit(articles[i].querySelector('form')!);
+    expect(screen.getAllByRole('article')).toHaveLength(1);
+    fireEvent.change(screen.getByRole('article').querySelector('input')!, { target: { value } });
+    fireEvent.submit(screen.getByRole('article').querySelector('form')!);
+    await waitFor(() => expect(screen.getAllByText('答对了。')).toHaveLength(i + 1));
+    if (i < 2) fireEvent.click(screen.getByRole('button', { name: '下一题' }));
   }
   await waitFor(() => expect(screen.getAllByText('答对了。')).toHaveLength(3));
   fireEvent.click(screen.getByRole('button', { name: '完成本课' }));

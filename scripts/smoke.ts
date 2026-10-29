@@ -119,9 +119,9 @@ const grade = await api('/questions/u2-08/check', {
 assert.equal(grade.correct, true);
 const catalog = await api('/practice');
 assert.equal((catalog.papers as unknown[]).length, 0);
-assert.equal((catalog.topics as unknown[]).length, 34);
+assert.equal((catalog.topics as unknown[]).length, 42);
 for (const id of [
-  'u1-calculation',
+  'u1-mental',
   'u1-restore',
   'u2-grid',
   'u2-cut',
@@ -188,7 +188,7 @@ assert.equal(vector.status, 200);
 assert.match(vector.headers.get('content-type') ?? '', /image\/svg\+xml/);
 assert.doesNotMatch(await vector.text(), /<image|data:image|<script/);
 const history = await api('/questions?scope=history');
-assert.equal(history.total, 870);
+assert.equal(history.total, 884);
 assert.ok((history.items as { id: string }[]).some((q) => q.id === 'p15-draw'));
 const deepLink = await fetch(new URL(`/books/${editionId}/lessons/U05-L05`, origin), {
   signal: AbortSignal.timeout(15000),
@@ -197,5 +197,5 @@ assert.equal(deepLink.status, 200);
 assert.ok(deepLink.headers.get('content-type')?.includes('text/html'));
 assert.ok((await deepLink.text()).includes('id="root"'));
 console.log(
-  `Smoke checks passed: ${origin.origin} (D1, current content hash, 34 topics, classified question bank, original scans unavailable, grading, registration closed, SPA deep link)`,
+  `Smoke checks passed: ${origin.origin} (D1, current content hash, 42 topics, classified question bank, original scans unavailable, grading, registration closed, SPA deep link)`,
 );

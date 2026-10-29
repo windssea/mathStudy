@@ -1,5 +1,12 @@
 import { divide, longDivision, type DivisionColumn } from '@mathstudy/math-core';
 export { perimeterSteps, areaSteps, type GeometryStep } from './geometry';
+export {
+  methodStories,
+  methodStory,
+  type MethodStory,
+  type MethodFrame,
+  type MethodNode,
+} from './methods';
 
 export interface Frame {
   id: string;

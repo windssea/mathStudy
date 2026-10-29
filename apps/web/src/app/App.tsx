@@ -4,6 +4,7 @@ import { DataContext, type HomeData } from './course';
 import { useRemote } from '../lib/api';
 import { Icon, Loading, ErrorState } from '../components/ui';
 import { startLearningSync, useAccount } from '../lib/progress';
+import ThemeSwitch from '../components/ThemeSwitch';
 
 const Home = lazy(() => import('../features/Home'));
 const Catalog = lazy(() => import('../features/Catalog'));
@@ -23,6 +24,10 @@ function Shell() {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, [location.pathname]);
   const lesson = location.pathname.includes('/lessons/');
+  const focused =
+    lesson ||
+    location.pathname.startsWith('/practice/') ||
+    /^\/questions\/[^/]+/.test(location.pathname);
   const title = lesson
     ? '知识讲解'
     : location.pathname.startsWith('/questions')
@@ -40,7 +45,7 @@ function Shell() {
         跳到主要内容
       </a>
       <aside className={`sidebar ${menu ? 'is-open' : ''}`}>
-        <Link to="/" className="brand">
+        <Link to="/" className="brand" aria-label="数趣 MathStudy 首页">
           <span className="brand-mark">
             <Icon name="BookOpen" size={25} />
           </span>
@@ -50,29 +55,48 @@ function Shell() {
         </Link>
 
         <nav aria-label="主要导航">
-          <NavLink to="/" end>
+          <NavLink
+            to="/"
+            end
+            aria-label="练习"
+            title="练习"
+            className={({ isActive }) =>
+              isActive || location.pathname.startsWith('/practice/') ? 'active' : ''
+            }
+          >
             <Icon name="LayoutDashboard" />
-            练习
+            <span>练习</span>
           </NavLink>
 
-          <NavLink to="/questions">
+          <NavLink to="/questions" aria-label="全部题目" title="全部题目">
             <Icon name="NotebookPen" />
-            全部题目
+            <span>全部题目</span>
           </NavLink>
-          <NavLink to="/records">
+          <NavLink to="/records" aria-label="练习记录" title="练习记录">
             <Icon name="ListChecks" />
-            练习记录
+            <span>练习记录</span>
           </NavLink>
-          <NavLink to={remote.data ? `/books/${remote.data.textbook.id}` : '/books'}>
+          <NavLink
+            to={remote.data ? `/books/${remote.data.textbook.id}` : '/books'}
+            aria-label="课程目录"
+            title="课程目录"
+          >
             <Icon name="BookOpen" />
-            课程目录
+            <span>课程目录</span>
           </NavLink>
         </nav>
+        <div className="sidebar-course">
+          <Icon name="GraduationCap" size={22} />
+          <div>
+            <strong>四年级上册</strong>
+            <small>苏教版数学</small>
+          </div>
+        </div>
       </aside>
       {menu && (
         <button className="menu-scrim" aria-label="关闭菜单" onClick={() => setMenu(false)} />
       )}
-      <div className="workspace">
+      <div className={`workspace ${focused ? 'is-focused' : ''}`}>
         <header className="topbar">
           <div className="topbar-left">
             <button
@@ -88,6 +112,7 @@ function Shell() {
             </span>
           </div>
           <div className="topbar-right">
+            <ThemeSwitch />
             <span className="local-label">
               <span />
               {account.user
@@ -103,7 +128,11 @@ function Shell() {
             </Link>
           </div>
         </header>
-        <main id="main" className={`main-content ${lesson ? 'lesson-main' : ''}`} tabIndex={-1}>
+        <main
+          id="main"
+          className={`main-content ${lesson ? 'lesson-main' : ''} ${focused ? 'focus-main' : ''}`}
+          tabIndex={-1}
+        >
           {remote.loading ? (
             <Loading />
           ) : remote.error || !remote.data ? (

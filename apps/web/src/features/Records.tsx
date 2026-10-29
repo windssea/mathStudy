@@ -1,3 +1,4 @@
+import { Button } from '../components/ui/button';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useCourse } from '../app/course';
@@ -33,13 +34,14 @@ export default function Records() {
           <Icon name="ArrowRight" size={16} />
         </Link>
         {account.user && (
-          <button
+          <Button
+            variant="outline"
             className="button secondary small-button"
             disabled={account.syncing}
             onClick={() => void synchronize().catch(() => {})}
           >
             立即同步{account.pending > 0 && `（${account.pending} 条待同步）`}
-          </button>
+          </Button>
         )}
       </div>
       <section className="record-summary panel">
@@ -176,7 +178,8 @@ export default function Records() {
                             ? `方格作图：选中${[...(a.answers.cells ?? '')].filter((c) => c === '1').length}格`
                             : (q?.fields
                                 .map(
-                                  (f) => `${f.label}：${a.answers[f.key] ?? '—'}${f.suffix ?? ''}`,
+                                  (f) =>
+                                    `${f.label}：${a.answers[f.key] ?? '未填'}${f.suffix ?? ''}`,
                                 )
                                 .join('，') ?? Object.values(a.answers).join('，'))}
                     </p>

@@ -1,5 +1,10 @@
 import { textbook, lessons, questions, practice } from '@mathstudy/content';
-import { lessonSchema, visualSchema } from '@mathstudy/contracts';
+import {
+  lessonSchema,
+  visualSchema,
+  topicGuideSchema,
+  unitTeachingSchema,
+} from '@mathstudy/contracts';
 import {
   arithmeticScenes,
   calculationFrames,
@@ -89,10 +94,25 @@ for (const summary of textbook.catalog.flatMap((n) => n.lessons))
   if (summary.available !== lessons.some((l) => l.id === summary.id))
     issues.push(`Invalid availability: ${summary.id}`);
 for (const topic of practice.topics) {
+  if (!topicGuideSchema.safeParse(topic.guide).success)
+    issues.push(`Missing teaching guide: ${topic.id}`);
+  for (const check of topic.guide?.example.checks ?? []) {
+    try {
+      const root = calculationFrames(check.expression).at(-1)!.root;
+      if (root.kind !== 'number' || root.value !== check.result)
+        issues.push(`Incorrect teaching example: ${topic.id}: ${check.expression}`);
+    } catch {
+      issues.push(`Invalid teaching calculation: ${topic.id}: ${check.expression}`);
+    }
+  }
   if (!topic.questionIds.length) issues.push(`Empty topic: ${topic.id}`);
   for (const id of topic.questionIds)
     if (questions.find((q) => q.id === id)?.unitId !== topic.unitId)
       issues.push(`Wrong topic unit: ${id}`);
+}
+for (const node of textbook.catalog.filter((n) => n.kind === 'unit')) {
+  if (!unitTeachingSchema.safeParse(practice.units.find((u) => u.unitId === node.id)).success)
+    issues.push(`Missing unit teaching roadmap: ${node.id}`);
 }
 for (const paper of practice.papers) {
   const inventory = coverage.find((item) => item.paperId === paper.id);

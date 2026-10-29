@@ -1,3 +1,4 @@
+import { Button } from './ui/button';
 import StepControls from './StepControls';
 import { useEffect, useState } from 'react';
 import type { GeometryDemo } from '@mathstudy/contracts';
@@ -554,7 +555,8 @@ export default function GeometryLessonPlayer({
             )}
             {isTiling && (
               <div className="tile-actions">
-                <button
+                <Button
+                  variant="outline"
                   className="button secondary"
                   disabled={tileCount >= tiles.count}
                   onClick={() => {
@@ -564,8 +566,9 @@ export default function GeometryLessonPlayer({
                   }}
                 >
                   铺一格
-                </button>
-                <button
+                </Button>
+                <Button
+                  variant="outline"
                   className="button secondary"
                   disabled={tileCount >= tiles.count}
                   onClick={() => {
@@ -577,8 +580,9 @@ export default function GeometryLessonPlayer({
                   }}
                 >
                   铺一排
-                </button>
-                <button
+                </Button>
+                <Button
+                  variant="outline"
                   className="button secondary"
                   onClick={() => {
                     setPlaying(false);
@@ -587,8 +591,9 @@ export default function GeometryLessonPlayer({
                   }}
                 >
                   铺满方格
-                </button>
-                <button
+                </Button>
+                <Button
+                  variant="ghost"
                   className="button subtle"
                   onClick={() => {
                     setPlaying(false);
@@ -597,7 +602,7 @@ export default function GeometryLessonPlayer({
                   }}
                 >
                   清空方格
-                </button>
+                </Button>
               </div>
             )}
             {demo.kind === 'perimeterAreaCompare' && (
@@ -730,10 +735,11 @@ export function RectangleCanvas({
   const tile = cell * tileSide,
     columns = a / tileSide,
     rows = b / tileSide;
+  const viewWidth = Math.min(640, Math.max(w + 90, formula ? 600 : filled ? 420 : 240));
   return (
     <svg
       className="geometry-svg rectangle-canvas"
-      viewBox="0 0 640 330"
+      viewBox={`${(640 - viewWidth) / 2} 0 ${viewWidth} ${formula ? 330 : filled ? 290 : 250}`}
       role="img"
       aria-label={`${labelDimensions ? `长${a}${unit}、宽${b}${unit}` : '教室形状示意'}，已铺${filled}格${formula ? `，${formula}` : ''}`}
     >

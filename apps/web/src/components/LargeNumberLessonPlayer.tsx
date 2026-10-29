@@ -1,3 +1,5 @@
+import { Button } from './ui/button';
+import { Input } from './ui/input';
 import StepControls from './StepControls';
 import { useEffect, useId, useState } from 'react';
 import type { LargeNumberDemo } from '@mathstudy/contracts';
@@ -24,10 +26,10 @@ import {
 
 type Workspace = 'counter' | 'reading' | 'rounding' | 'encoding';
 const sourcePages: Record<Workspace, string> = {
-  counter: '教材 p.68–69、77',
-  reading: '教材 p.71–76、86–88',
-  rounding: '教材 p.80–81；范围题为原创拓展',
-  encoding: '参考教材 p.82–83 · 自拟图书编号',
+  counter: '教材 p.68-69、77',
+  reading: '教材 p.71-76、86-88',
+  rounding: '教材 p.80-81；范围题为原创拓展',
+  encoding: '参考教材 p.82-83 · 自拟图书编号',
 };
 type NumberExample = { value: number; label: string; power?: number };
 const presets: Record<Exclude<Workspace, 'encoding'>, NumberExample[]> = {
@@ -310,7 +312,7 @@ export default function LargeNumberLessonPlayer({
                   : readingMode === 'write' && workspace === 'reading'
                     ? '写出阿拉伯数字'
                     : '输入整数'}
-                <input
+                <Input
                   id={`${id}-number`}
                   inputMode="numeric"
                   maxLength={12}
@@ -318,9 +320,9 @@ export default function LargeNumberLessonPlayer({
                   onChange={(e) => setDraft(e.target.value)}
                 />
               </label>
-              <button className="button" type="submit">
+              <Button variant="outline" className="button" type="submit">
                 写到数位表
-              </button>
+              </Button>
             </form>
           </details>
         </>
@@ -351,7 +353,8 @@ export default function LargeNumberLessonPlayer({
       {workspace === 'reading' && (
         <div className="arithmetic-actions number-mode-buttons">
           {(['read', 'write', 'compare'] as const).map((mode, index) => (
-            <button
+            <Button
+              variant="outline"
               key={mode}
               className="button"
               aria-pressed={readingMode === mode}
@@ -367,7 +370,7 @@ export default function LargeNumberLessonPlayer({
               }}
             >
               {['分级读数', '练习写数', '比较大小'][index]}
-            </button>
+            </Button>
           ))}
         </div>
       )}
@@ -375,14 +378,15 @@ export default function LargeNumberLessonPlayer({
         <>
           <div className="arithmetic-actions number-mode-buttons">
             {(['round', 'exact', 'range'] as const).map((mode, index) => (
-              <button
+              <Button
+                variant="outline"
                 key={mode}
                 className="button"
                 aria-pressed={roundingMode === mode}
                 onClick={() => chooseRoundingMode(mode)}
               >
                 {['四舍五入', '精确改写', '反推整数范围'][index]}
-              </button>
+              </Button>
             ))}
           </div>
           <label className="arithmetic-selector">
@@ -432,7 +436,8 @@ export default function LargeNumberLessonPlayer({
           <div className="writing-task">
             <strong>请写出：{readChineseNumber(writingTarget)}</strong>
 
-            <button
+            <Button
+              variant="default"
               className="button primary"
               onClick={() => {
                 if (value === writingTarget) {
@@ -442,7 +447,7 @@ export default function LargeNumberLessonPlayer({
               }}
             >
               核对写数
-            </button>
+            </Button>
             {feedback && <p className="writing-feedback">{feedback}</p>}
           </div>
         )}
@@ -462,14 +467,16 @@ export default function LargeNumberLessonPlayer({
             >
               <label>
                 右边的数
-                <input
+                <Input
                   inputMode="numeric"
                   maxLength={12}
                   value={otherDraft}
                   onChange={(e) => setOtherDraft(e.target.value)}
                 />
               </label>
-              <button className="button">更新右边的数</button>
+              <Button variant="outline" className="button">
+                更新右边的数
+              </Button>
             </form>
             <div className="number-comparison" aria-label="逐位比较两个数">
               {[value, other].map((number, index) => (
@@ -532,7 +539,7 @@ export default function LargeNumberLessonPlayer({
                               onClick={() => setSelectedPower(power)}
                             >
                               <small>{place.position}</small>
-                              <strong>{used ? counts[power] : '—'}</strong>
+                              <strong>{used ? counts[power] : '未填'}</strong>
                               <span>{counts[power] > 9 ? '待进位' : place.unit}</span>
                             </button>
                           );
@@ -618,7 +625,8 @@ export default function LargeNumberLessonPlayer({
               const range = roundingRange(value, retainPower);
               return [range.lower - 1, range.lower, range.upper, range.excludedUpper].map(
                 (number, index) => (
-                  <button
+                  <Button
+                    variant="outline"
                     className="button"
                     key={index}
                     disabled={number < 0 || number > MAX_CLASSROOM_NUMBER}
@@ -633,7 +641,7 @@ export default function LargeNumberLessonPlayer({
                   >
                     <small>{['下界之前', '最小整数', '最大整数', '上界之外'][index]}</small>
                     {number}
-                  </button>
+                  </Button>
                 ),
               );
             })()}
@@ -668,7 +676,7 @@ export default function LargeNumberLessonPlayer({
               {(['year', 'shelf', 'serial'] as const).map((key, index) => (
                 <label key={key}>
                   {['入库年份', '书架号', '图书序号'][index]}
-                  <input
+                  <Input
                     inputMode="numeric"
                     maxLength={[4, 2, 3][index]}
                     value={codeDraft[key]}
@@ -676,7 +684,9 @@ export default function LargeNumberLessonPlayer({
                   />
                 </label>
               ))}
-              <button className="button">生成编号</button>
+              <Button variant="outline" className="button">
+                生成编号
+              </Button>
             </form>
             <div className="encoding-segments" aria-label="分段图书编号">
               {[code.slice(0, 4), code.slice(4, 6), code.slice(6)].map((segment, index) => (
@@ -724,14 +734,16 @@ export default function LargeNumberLessonPlayer({
               >
                 <label>
                   要解读的编号
-                  <input
+                  <Input
                     inputMode="numeric"
                     maxLength={9}
                     value={decodeDraft}
                     onChange={(e) => setDecodeDraft(e.target.value)}
                   />
                 </label>
-                <button className="button">解读编号</button>
+                <Button variant="outline" className="button">
+                  解读编号
+                </Button>
               </form>
               <form
                 className="number-input-form"
@@ -752,14 +764,16 @@ export default function LargeNumberLessonPlayer({
               >
                 <label>
                   另一本书的编号
-                  <input
+                  <Input
                     inputMode="numeric"
                     maxLength={9}
                     value={otherCode}
                     onChange={(e) => setOtherCode(e.target.value)}
                   />
                 </label>
-                <button className="button">检查重复</button>
+                <Button variant="outline" className="button">
+                  检查重复
+                </Button>
               </form>
             </details>
           </>

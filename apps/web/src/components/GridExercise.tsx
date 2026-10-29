@@ -1,3 +1,5 @@
+import { Button } from './ui/button';
+import type { CSSProperties } from 'react';
 import type { GridFigure, QuestionPublic } from '@mathstudy/contracts';
 
 export function CellDrawing({
@@ -82,7 +84,7 @@ export function GridEditor({
   onChange: (value: string) => void;
 }) {
   return (
-    <div className="grid-exercise">
+    <div className="grid-exercise" style={{ '--grid-columns': task.columns } as CSSProperties}>
       <div
         className="drawing-board"
         role="group"
@@ -105,13 +107,14 @@ export function GridEditor({
       </div>
       <div className="drawing-actions">
         <output aria-live="polite">已选{[...value].filter((c) => c === '1').length}格</output>
-        <button
+        <Button
+          variant="ghost"
           className="button subtle"
           type="button"
           onClick={() => onChange(initialDrawing(task))}
         >
           清空作图
-        </button>
+        </Button>
       </div>
     </div>
   );

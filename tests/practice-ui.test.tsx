@@ -21,10 +21,10 @@ function open(path: string) {
 it('guides a student from a topic into one question at a time', async () => {
   open('/');
   await screen.findByRole('heading', { name: '数学题库' });
-  const heading = await screen.findByRole('heading', { name: '口算与笔算' });
+  const heading = await screen.findByRole('heading', { name: '口算与估算' });
   fireEvent.click(heading.closest('section')!.querySelector('a')!);
   const first = questions.find(
-    (q) => q.id === practice.topics.find((t) => t.id === 'u1-calculation')!.questionIds[0],
+    (q) => q.id === practice.topics.find((t) => t.id === 'u1-mental')!.questionIds[0],
   )!;
   await screen.findByRole('heading', { name: first.title });
   expect(screen.getAllByRole('article')).toHaveLength(1);
@@ -42,6 +42,26 @@ it('redirects old paper links to classified practice without original scans', as
   expect(screen.queryByRole('button', { name: '原卷' })).toBeNull();
   expect(screen.queryByRole('button', { name: '试卷练习' })).toBeNull();
   expect(screen.queryByRole('img')).toBeNull();
+}, 15000);
+it('preserves drafts, hints and graded answers when jumping between questions', async () => {
+  open('/practice/topics/u1-calculation');
+  const jump = await screen.findByRole('combobox', { name: '跳转题目' });
+  fireEvent.change(screen.getByRole('textbox', { name: '得数' }), { target: { value: '12' } });
+  fireEvent.click(screen.getByRole('button', { name: /^提示$/ }));
+  fireEvent.change(jump, { target: { value: '1' } });
+  expect(screen.getAllByRole('article')).toHaveLength(1);
+  fireEvent.change(screen.getByRole('textbox', { name: '得数' }), { target: { value: '322' } });
+  fireEvent.click(screen.getByRole('button', { name: '核对答案' }));
+  await screen.findByText('答对了。');
+  fireEvent.change(jump, { target: { value: '0' } });
+  expect((screen.getByRole('textbox', { name: '得数' }) as HTMLInputElement).value).toBe('12');
+  expect(screen.getByRole('button', { name: '收起提示' })).toBeTruthy();
+  fireEvent.change(jump, { target: { value: '1' } });
+  expect((screen.getByRole('textbox', { name: '得数' }) as HTMLInputElement).value).toBe('322');
+  expect(screen.getByRole('status').textContent).toBe('答对了。');
+  expect((screen.getByRole('button', { name: '下一题' }) as HTMLButtonElement).disabled).toBe(
+    false,
+  );
 }, 15000);
 it('grades a rectangle drawn on the board using individual keyboard-accessible cells', async () => {
   open('/questions/p15-draw');

@@ -1,8 +1,23 @@
 [
   {
-    "id": "u1-calculation",
+    "id": "u1-mental",
     "unitId": "U01",
-    "title": "口算与笔算"
+    "title": "口算与估算"
+  },
+  {
+    "id": "u1-written",
+    "unitId": "U01",
+    "title": "除法竖式"
+  },
+  {
+    "id": "u1-order",
+    "unitId": "U01",
+    "title": "连除与运算顺序"
+  },
+  {
+    "id": "u1-units",
+    "unitId": "U01",
+    "title": "时间与长度单位换算"
   },
   {
     "id": "u1-trial",
@@ -165,8 +180,33 @@
     "title": "编码与分组编号"
   },
   {
-    "id": "u6-general",
+    "id": "u6-written",
     "unitId": "U06",
-    "title": "大数运算"
+    "title": "三位数乘两位数"
+  },
+  {
+    "id": "u6-zero",
+    "unitId": "U06",
+    "title": "乘数中间与末尾的零"
+  },
+  {
+    "id": "u6-tools",
+    "unitId": "U06",
+    "title": "选择算法与计算器核对"
+  },
+  {
+    "id": "u6-patterns",
+    "unitId": "U06",
+    "title": "计算与规律探索"
+  },
+  {
+    "id": "u6-error",
+    "unitId": "U06",
+    "title": "部分积与错题分析"
+  },
+  {
+    "id": "u6-application",
+    "unitId": "U06",
+    "title": "大数应用与预算"
   }
 ]

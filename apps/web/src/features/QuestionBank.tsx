@@ -1,6 +1,8 @@
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
-import type { QuestionPublic } from '@mathstudy/contracts';
+import type { QuestionPublic, PracticeTopic } from '@mathstudy/contracts';
 import { difficultyLabels, typeLabels } from '@mathstudy/contracts';
 import { useCourse } from '../app/course';
 import { useRemote } from '../lib/api';
@@ -22,7 +24,7 @@ export default function QuestionBank() {
   if (difficulty) apiParams.set('difficulty', difficulty);
   if (type) apiParams.set('type', type);
   if (params.get('search')) apiParams.set('search', params.get('search')!);
-  const remote = useRemote<{ items: QuestionPublic[]; total: number }>(
+  const remote = useRemote<{ items: QuestionPublic[]; total: number; topics?: PracticeTopic[] }>(
     `/questions${questionId ? `/${questionId}` : `?${apiParams.toString()}`}`,
   );
   const question = remote.data?.items.find((q) => q.id === questionId);
@@ -42,16 +44,23 @@ export default function QuestionBank() {
     if (!question || remote.error) return <ErrorState message={remote.error ?? '没有找到这道题'} />;
     const unitNode = book.catalog.find((n) => n.id === question.unitId);
     return (
-      <>
-        <Link to={`/questions?unit=${question.unitId}`} className="back-link">
-          <Icon name="ArrowLeft" size={16} />
-          返回本单元题库
-        </Link>
-        <p className="question-unit-label">{unitNode?.title}</p>
-        <div className="question-detail panel">
-          <QuestionRunner key={question.id} question={question} standalone />
+      <div className="question-detail-page">
+        <header className="question-detail-header">
+          <Link to={`/questions?unit=${question.unitId}`} className="back-link">
+            <Icon name="ArrowLeft" size={16} />
+            返回本单元题库
+          </Link>
+          <p className="question-unit-label">{unitNode?.title}</p>
+        </header>
+        <div className="question-detail">
+          <QuestionRunner
+            key={question.id}
+            question={question}
+            standalone
+            method={remote.data?.topics?.find((topic) => question.topicIds?.includes(topic.id))}
+          />
         </div>
-      </>
+      </div>
     );
   }
   return (
@@ -110,7 +119,7 @@ export default function QuestionBank() {
           >
             <label className="search-box">
               <Icon name="Search" size={18} />
-              <input
+              <Input
                 aria-label="搜索题目"
                 placeholder="搜索题目或知识点"
                 maxLength={100}
@@ -118,9 +127,9 @@ export default function QuestionBank() {
                 onChange={(e) => setSearch(e.target.value)}
               />
             </label>
-            <button className="button secondary" type="submit">
+            <Button variant="outline" className="button secondary" type="submit">
               搜索
-            </button>
+            </Button>
           </form>
         </div>
       </section>
@@ -179,7 +188,8 @@ export default function QuestionBank() {
           </div>
           {pageCount > 1 && (
             <nav className="bank-pagination" aria-label="题库分页">
-              <button
+              <Button
+                variant="outline"
                 className="button secondary"
                 disabled={page <= 1}
                 onClick={() =>
@@ -191,11 +201,12 @@ export default function QuestionBank() {
                 }
               >
                 上一页
-              </button>
+              </Button>
               <span>
                 第 {page} / {pageCount} 页 · 每页12题
               </span>
-              <button
+              <Button
+                variant="outline"
                 className="button secondary"
                 disabled={page >= pageCount}
                 onClick={() =>
@@ -207,7 +218,7 @@ export default function QuestionBank() {
                 }
               >
                 下一页
-              </button>
+              </Button>
             </nav>
           )}
           {remote.data?.total === 0 && (
@@ -215,7 +226,8 @@ export default function QuestionBank() {
               <Icon name="Search" size={32} />
               <h2>这个组合暂时没有题目</h2>
               <p>试着放宽难度或题型筛选。</p>
-              <button
+              <Button
+                variant="outline"
                 className="button secondary"
                 onClick={() => {
                   setParams({});
@@ -223,7 +235,7 @@ export default function QuestionBank() {
                 }}
               >
                 重置筛选
-              </button>
+              </Button>
             </div>
           )}
         </>

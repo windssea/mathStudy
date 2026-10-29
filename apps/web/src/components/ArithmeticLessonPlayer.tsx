@@ -1,3 +1,4 @@
+import { Button } from './ui/button';
 import StepControls from './StepControls';
 import { useEffect, useId, useState } from 'react';
 import type { ArithmeticDemo } from '@mathstudy/contracts';
@@ -155,12 +156,22 @@ export default function ArithmeticLessonPlayer({
         {problem && (step >= 1 || staticMode) && (
           <div className="relation-analysis">
             <div className="arithmetic-actions">
-              <button className="button" aria-pressed={!forward} onClick={() => setForward(false)}>
+              <Button
+                variant="outline"
+                className="button"
+                aria-pressed={!forward}
+                onClick={() => setForward(false)}
+              >
                 从问题倒推
-              </button>
-              <button className="button" aria-pressed={forward} onClick={() => setForward(true)}>
+              </Button>
+              <Button
+                variant="outline"
+                className="button"
+                aria-pressed={forward}
+                onClick={() => setForward(true)}
+              >
                 从条件推算
-              </button>
+              </Button>
             </div>
             <ol
               className="relation-chain"
@@ -184,7 +195,8 @@ export default function ArithmeticLessonPlayer({
           <fieldset className="expression-choices">
             <legend>哪种列式符合题意？可以比较不同方法。</legend>
             {problem.choices.map((choice) => (
-              <button
+              <Button
+                variant="outline"
                 className="button"
                 key={choice.expression}
                 onClick={() => {
@@ -201,7 +213,7 @@ export default function ArithmeticLessonPlayer({
                   ? '✓ '
                   : ''}
                 {choice.expression.replaceAll('*', '×').replaceAll('/', '÷').replaceAll('-', '−')}
-              </button>
+              </Button>
             ))}
           </fieldset>
         )}

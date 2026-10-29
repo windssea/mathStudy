@@ -1,3 +1,4 @@
+import { Button } from './ui/button';
 import { useState } from 'react';
 import type { Visual } from '@mathstudy/contracts';
 import { Icon } from './ui';
@@ -238,14 +239,15 @@ export default function VisualExplanation({
         {visual.captions[step]}
       </p>
       <div className="visual-controls">
-        <button
+        <Button
+          variant="outline"
           className="button secondary small-button"
           disabled={step === 0}
           onClick={() => setStep(step - 1)}
         >
           <Icon name="ArrowLeft" size={16} />
           上一步
-        </button>
+        </Button>
         <div className="step-dots">
           {visual.captions.map((_, i) => (
             <button
@@ -257,14 +259,15 @@ export default function VisualExplanation({
             />
           ))}
         </div>
-        <button
+        <Button
+          variant="outline"
           className="button secondary small-button"
           disabled={step === visual.captions.length - 1}
           onClick={() => setStep(step + 1)}
         >
           下一步
           <Icon name="ArrowRight" size={16} />
-        </button>
+        </Button>
       </div>
     </section>
   );

@@ -40,8 +40,8 @@ describe('textbook-driven content', () => {
     }
   });
   it('covers all six units, every difficulty, fill-ins and applications', () => {
-    expect(questions).toHaveLength(870);
-    expect(new Set(questions.map((q) => q.id)).size).toBe(870);
+    expect(questions).toHaveLength(884);
+    expect(new Set(questions.map((q) => q.id)).size).toBe(884);
     for (const unit of textbook.catalog.filter((n) => n.kind === 'unit')) {
       const group = questions.filter((q) => q.unitId === unit.id);
       expect(group.length).toBeGreaterThanOrEqual(9);

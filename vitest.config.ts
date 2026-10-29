@@ -10,5 +10,9 @@ export default defineConfig({
       ]),
     ),
   },
-  test: { include: ['tests/**/*.test.{ts,tsx}'], environment: 'node' },
+  test: {
+    include: ['tests/**/*.test.{ts,tsx}'],
+    environment: 'node',
+    setupFiles: ['tests/setup.ts'],
+  },
 });

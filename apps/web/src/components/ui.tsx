@@ -1,3 +1,4 @@
+import { Button } from './ui/button';
 import {
   ArrowRight,
   ArrowLeft,
@@ -32,8 +33,10 @@ import {
   NotebookPen,
   StepForward,
   Volume2,
+  Sun,
+  Moon,
+  Monitor,
 } from 'lucide-react';
-import type { CSSProperties } from 'react';
 const icons = {
   ArrowRight,
   ArrowLeft,
@@ -68,6 +71,9 @@ const icons = {
   NotebookPen,
   StepForward,
   Volume2,
+  Sun,
+  Moon,
+  Monitor,
 };
 export function Icon({
   name,
@@ -83,9 +89,13 @@ export function Icon({
 }
 export function Loading() {
   return (
-    <div className="loading-state" role="status">
-      <span className="loader" />
-      <p>加载中…</p>
+    <div className="loading-state" role="status" aria-label="加载中">
+      <span className="sr-only">加载中…</span>
+      <div className="skeleton skeleton-title" />
+      <div className="skeleton-workspace">
+        <div className="skeleton" />
+        <div className="skeleton" />
+      </div>
     </div>
   );
 }
@@ -95,80 +105,10 @@ export function ErrorState({ message, retry }: { message: string; retry?: () => 
       <Icon name="CircleHelp" size={36} />
       <h2>{message}</h2>
       {retry && (
-        <button className="button primary" onClick={retry}>
+        <Button variant="default" className="button primary" onClick={retry}>
           重新加载
-        </button>
+        </Button>
       )}
-    </div>
-  );
-}
-export function BookArt({ small = false }: { small?: boolean }) {
-  return (
-    <div
-      className={`book-art ${small ? 'small' : ''}`}
-      aria-label="自制数学教材封面插画"
-      role="img"
-    >
-      <div className="book-spine" />
-      <div className="book-cover">
-        <div className="cover-top">义务教育 · 苏教版</div>
-        <strong>数学</strong>
-        <span className="cover-en">MATHEMATICS</span>
-        <svg viewBox="0 0 200 145" aria-hidden="true">
-          <defs>
-            <pattern id="book-grid" width="18" height="18" patternUnits="userSpaceOnUse">
-              <path d="M18 0H0V18" fill="none" stroke="#c4d8ed" strokeWidth=".7" />
-            </pattern>
-          </defs>
-          <rect x="5" y="4" width="190" height="135" fill="url(#book-grid)" />
-          <path d="M24 122 94 16l75 106Z" fill="#fbd46c" stroke="#213b6c" strokeWidth="2" />
-          <circle
-            cx="132"
-            cy="70"
-            r="42"
-            fill="#78aadd"
-            fillOpacity=".8"
-            stroke="#213b6c"
-            strokeWidth="2"
-          />
-          <path
-            d="m61 116 58-76 52 76Z"
-            fill="#fff"
-            fillOpacity=".5"
-            stroke="#213b6c"
-            strokeWidth="1.5"
-          />
-          <path d="M20 123h160" stroke="#213b6c" strokeWidth="2" />
-          <text x="12" y="27" fill="#213b6c" fontSize="16">
-            ÷
-          </text>
-          <text x="166" y="37" fill="#213b6c" fontSize="18">
-            ×
-          </text>
-        </svg>
-        <div className="cover-bottom">
-          <b>四年级</b>
-          <span>上册</span>
-        </div>
-        <div className="cover-publisher">江苏凤凰教育出版社</div>
-      </div>
-      <div className="book-pages" />
-    </div>
-  );
-}
-export function ProgressRing({ value, total }: { value: number; total: number }) {
-  return (
-    <div
-      className="progress-ring"
-      style={{ '--progress': `${(value / total) * 100}%` } as CSSProperties}
-    >
-      <div>
-        <b>
-          {value}
-          <span>/{total}</span>
-        </b>
-        <small>课节完成</small>
-      </div>
     </div>
   );
 }

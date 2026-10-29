@@ -1,3 +1,4 @@
+import { Input } from '../components/ui/input';
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { useCourse } from '../app/course';
@@ -24,12 +25,12 @@ export default function Catalog() {
       (!onlyOpen || n.lessons.some((l) => l.available)) &&
       (!search || `${n.title}${n.lessons.map((l) => l.title).join('')}`.includes(search)),
   );
+  const selected = nodes.find((n) => n.id === expanded) ?? nodes[0];
   return (
     <>
       <div className="page-heading">
         <div>
           <h1>课程目录</h1>
-          <p>按教材顺序学习，或搜索课节。</p>
         </div>
       </div>
       <section className="catalog-book panel">
@@ -43,13 +44,13 @@ export default function Catalog() {
           <strong>
             {availableLessons} <small>/ {book.catalog.flatMap((n) => n.lessons).length}</small>
           </strong>
-          <span>已开放课节 / 规划课节</span>
+          <span>已开放 / 全部课节</span>
         </div>
       </section>
       <div className="filter-toolbar">
         <label className="search-box">
           <Icon name="Search" size={19} />
-          <input
+          <Input
             aria-label="搜索课程"
             placeholder="搜索单元或课节"
             value={search}
@@ -66,55 +67,40 @@ export default function Catalog() {
         </label>
         <span className="results-count">{nodes.length} 个目录项目</span>
       </div>
-      <div className="catalog-list">
-        {nodes.length === 0 && (
-          <div className="empty-state">
-            <Icon name="Search" size={30} />
-            <h2>没有找到匹配的课程</h2>
-            <p>换个关键词，或关闭“只看已开放”。</p>
-          </div>
-        )}
-        {nodes.map((n) => (
-          <section
-            className={`catalog-node panel ${n.id === expanded ? 'expanded' : ''}`}
-            key={n.id}
-            id={n.id}
-          >
+      <div className="catalog-workbench collection-layout">
+        <aside className="collection-nav" aria-label="课程单元">
+          <h2>单元目录</h2>
+          {nodes.map((n, i) => (
             <button
-              className="catalog-node-head"
-              onClick={() => setExpanded(n.id === expanded ? '' : n.id)}
-              aria-expanded={n.id === expanded}
-              aria-controls={`content-${n.id}`}
+              id={n.id}
+              key={n.id}
+              className={selected?.id === n.id ? 'selected' : ''}
+              aria-pressed={selected?.id === n.id}
+              onClick={() => setExpanded(n.id)}
             >
-              <span className={`catalog-node-icon ${n.kind !== 'unit' ? 'activity-icon' : ''}`}>
-                {n.kind === 'unit' ? (
-                  n.id.slice(1)
-                ) : (
-                  <Icon name={n.kind === 'activity' ? 'Lightbulb' : 'Flag'} />
-                )}
+              <span className="unit-index" data-tone={i % 4}>
+                {n.kind === 'unit' ? i + 1 : <Icon name="Shapes" size={15} />}
               </span>
-              <span className="catalog-node-title">
-                <span className="overline">
-                  {n.kind === 'unit'
-                    ? `第${['一', '二', '三', '四', '五', '六'][Number(n.id.slice(1)) - 1]}单元`
-                    : n.kind === 'activity'
-                      ? '动手探索 · 综合实践'
-                      : '回顾与整理'}
-                </span>
-                <h2>{n.title}</h2>
-              </span>
-              <span className="catalog-node-meta">
-                p.{n.printedRange.join('–')}
-                <span>
-                  {n.lessons.length} 个课节
-                  {!n.lessons.some((l) => l.available) ? ' · 建设中' : ' · 已开放'}
-                </span>
-              </span>
-              <Icon name="ChevronDown" className="expand-icon" />
+              <span>{n.title}</span>
+              <Icon name="ChevronRight" size={15} />
             </button>
-            {expanded === n.id && (
-              <div id={`content-${n.id}`} className="catalog-lessons">
-                {n.lessons.map((l, index) =>
+          ))}
+        </aside>
+        <section className="catalog-selected panel pane-scroll" aria-label="本单元课节">
+          {!selected ? (
+            <div className="empty-state">
+              <Icon name="Search" size={30} />
+              <h2>没有找到匹配的课程</h2>
+              <p>换个关键词再试。</p>
+            </div>
+          ) : (
+            <>
+              <div className="catalog-selected-heading">
+                <h2>{selected.title}</h2>
+                <span>{selected.lessons.length} 个课节</span>
+              </div>
+              <div className="catalog-lessons">
+                {selected.lessons.map((l, index) =>
                   l.available ? (
                     <Link
                       to={`/books/${book.id}/lessons/${l.id}`}
@@ -130,9 +116,8 @@ export default function Catalog() {
                       </span>
                       <div>
                         <h3>{l.title}</h3>
-
                         <span>
-                          课本 p.{l.pages.join('–')} · {l.minutes} 分钟
+                          课本 p.{l.pages.join('-')} · {l.minutes} 分钟
                         </span>
                       </div>
                       <span className="lesson-action">
@@ -145,24 +130,23 @@ export default function Catalog() {
                       <span className="lesson-number">{index + 1}</span>
                       <div>
                         <h3>{l.title}</h3>
-
-                        <span>课本 p.{l.pages.join('–')}</span>
+                        <span>课本 p.{l.pages.join('-')}</span>
                       </div>
                       <span className="chip neutral">建设中</span>
                     </div>
                   ),
                 )}
-                {n.kind === 'unit' && (
-                  <Link to={`/questions?unit=${n.id}`} className="unit-practice-link">
+                {selected.kind === 'unit' && (
+                  <Link to={`/questions?unit=${selected.id}`} className="unit-practice-link">
                     <Icon name="NotebookPen" size={18} />
                     本单元练习
                     <Icon name="ArrowRight" size={16} />
                   </Link>
                 )}
               </div>
-            )}
-          </section>
-        ))}
+            </>
+          )}
+        </section>
       </div>
     </>
   );

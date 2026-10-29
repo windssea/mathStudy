@@ -1,6 +1,8 @@
 import type { PracticeCatalog, Question } from '@mathstudy/contracts';
 import paperData from '../../../content/practice/papers.json';
 import topicData from '../../../content/practice/topics.json';
+import teaching from '../../../content/practice/teaching.json';
+import { topicGuideSchema, unitTeachingSchema } from '@mathstudy/contracts';
 
 const section = (n: string) =>
   n.startsWith('附')
@@ -34,8 +36,10 @@ export function practiceQuestions(questions: Question[]) {
 export function buildPracticeCatalog(questions: Question[]): PracticeCatalog {
   const bank = practiceQuestions(questions);
   return {
+    units: teaching.units.map((unit) => unitTeachingSchema.parse(unit)),
     topics: topicData.map((topic) => ({
       ...topic,
+      guide: topicGuideSchema.parse(teaching.topics[topic.id as keyof typeof teaching.topics]),
       questionIds: bank.filter((q) => q.topicIds?.includes(topic.id)).map((q) => q.id),
     })),
     papers: paperData.map((paper) => ({

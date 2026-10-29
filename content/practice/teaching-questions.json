@@ -1,0 +1,443 @@
+[
+  {
+    "id": "teach-u6-01",
+    "unitId": "U06",
+    "topicIds": ["u6-written"],
+    "title": "部分积要按数位相加",
+    "stem": "计算214×23。",
+    "type": "calculation",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案"
+      }
+    ],
+    "hint": "把23分成20和3，分别乘214。",
+    "sourceKind": "original",
+    "knowledge": "部分积要按数位相加",
+    "pages": [95, 103],
+    "hasVisual": false,
+    "expected": {
+      "value": "4922"
+    },
+    "explanation": {
+      "analysis": "把23分成20和3，分别乘214。",
+      "steps": ["214×3＝642，214×20＝4280。", "642＋4280＝4922。"],
+      "answer": "4922",
+      "pitfall": "十位的2表示20，第二行不能只表示2倍。"
+    }
+  },
+  {
+    "id": "teach-u6-02",
+    "unitId": "U06",
+    "topicIds": ["u6-written"],
+    "title": "乘数里有占位零",
+    "stem": "计算302×17。",
+    "type": "calculation",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案"
+      }
+    ],
+    "hint": "分别计算7倍和10倍，再相加。",
+    "sourceKind": "original",
+    "knowledge": "乘数里有占位零",
+    "pages": [95, 103],
+    "hasVisual": false,
+    "expected": {
+      "value": "5134"
+    },
+    "explanation": {
+      "analysis": "分别计算7倍和10倍，再相加。",
+      "steps": ["302×7＝2114，302×10＝3020。", "2114＋3020＝5134。"],
+      "answer": "5134",
+      "pitfall": "302中间的0仍占十位，不能删成32。"
+    }
+  },
+  {
+    "id": "teach-u6-03",
+    "unitId": "U06",
+    "topicIds": ["u6-written"],
+    "title": "分解两位数再核对",
+    "stem": "计算125×48。",
+    "type": "calculation",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案"
+      }
+    ],
+    "hint": "把48分成40和8，检查两部分相加。",
+    "sourceKind": "original",
+    "knowledge": "分解两位数再核对",
+    "pages": [95, 103],
+    "hasVisual": false,
+    "expected": {
+      "value": "6000"
+    },
+    "explanation": {
+      "analysis": "把48分成40和8，检查两部分相加。",
+      "steps": ["125×40＝5000，125×8＝1000。", "5000＋1000＝6000；也可用125×(50−2)核对。"],
+      "answer": "6000",
+      "pitfall": "末尾的0来自计算结果，不是只数乘数中有几个0。"
+    }
+  },
+  {
+    "id": "teach-u6-04",
+    "unitId": "U06",
+    "topicIds": ["u6-zero"],
+    "title": "中间有零，末尾也有零",
+    "stem": "计算208×40。",
+    "type": "calculation",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案"
+      }
+    ],
+    "hint": "先算208的4倍，再算10倍。",
+    "sourceKind": "original",
+    "knowledge": "中间有零，末尾也有零",
+    "pages": [95, 103],
+    "hasVisual": false,
+    "expected": {
+      "value": "8320"
+    },
+    "explanation": {
+      "analysis": "先算208的4倍，再算10倍。",
+      "steps": ["208×4＝832。", "40是4个十，再乘10，得8320。"],
+      "answer": "8320",
+      "pitfall": "不能把208变成28，也不能漏掉40中的10倍。"
+    }
+  },
+  {
+    "id": "teach-u6-05",
+    "unitId": "U06",
+    "topicIds": ["u6-zero"],
+    "title": "两个乘数末尾都有零",
+    "stem": "计算360×50。",
+    "type": "calculation",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案"
+      }
+    ],
+    "hint": "先把360和50分别看成36×10、5×10。",
+    "sourceKind": "original",
+    "knowledge": "两个乘数末尾都有零",
+    "pages": [95, 103],
+    "hasVisual": false,
+    "expected": {
+      "value": "18000"
+    },
+    "explanation": {
+      "analysis": "先把360和50分别看成36×10、5×10。",
+      "steps": ["360×50＝36×5×100。", "36×5＝180，180×100＝18000。"],
+      "answer": "18000",
+      "pitfall": "两个10相乘是100，补零前要保留36×5算出的末尾0。"
+    }
+  },
+  {
+    "id": "teach-u6-06",
+    "unitId": "U06",
+    "topicIds": ["u6-tools"],
+    "title": "计算器结果怎样复核",
+    "stem": "要核对计算器上306×24＝7344，哪道算式能完整复核原计算？",
+    "type": "choice",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "value",
+        "label": "选择一个答案"
+      }
+    ],
+    "options": ["306×20＋306×4", "300×24", "306＋24", "306×2＋306×4"],
+    "hint": "选择与原式完全相等的分解式。",
+    "sourceKind": "original",
+    "knowledge": "计算器结果怎样复核",
+    "pages": [95, 103],
+    "hasVisual": false,
+    "expected": {
+      "value": "0"
+    },
+    "explanation": {
+      "analysis": "选择与原式完全相等的分解式。",
+      "steps": [
+        "24＝20＋4，可把原计算分成306×20和306×4。",
+        "6120＋1224＝7344，能完整复核原结果；300×24只能估算。"
+      ],
+      "answer": "306×20＋306×4",
+      "pitfall": "估算结果接近，只能筛查明显错误。"
+    }
+  },
+  {
+    "id": "teach-u6-07",
+    "unitId": "U06",
+    "topicIds": ["u6-tools"],
+    "title": "先检查输入是否正确",
+    "stem": "原题是307×42，却在计算器上输入307×24。应怎样处理？",
+    "type": "choice",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "value",
+        "label": "选择一个答案"
+      }
+    ],
+    "options": [
+      "交换最后结果的两位数字",
+      "对照原题清除并重新输入",
+      "原样记录屏幕结果",
+      "在结果后面补0"
+    ],
+    "hint": "先比较屏幕上的每个数字与原题，不要把错式的结果当作原式结果。",
+    "sourceKind": "original",
+    "knowledge": "先检查输入是否正确",
+    "pages": [95, 103],
+    "hasVisual": false,
+    "expected": {
+      "value": "1"
+    },
+    "explanation": {
+      "analysis": "先比较屏幕上的每个数字与原题，不要把错式的结果当作原式结果。",
+      "steps": [
+        "42和24表示不同的乘数，输入算式已改变。",
+        "应清除错误输入，对照原题重新输入307×42，再用估算或分解法核对。"
+      ],
+      "answer": "对照原题清除并重新输入",
+      "pitfall": "计算器只计算输入的式子，不会替你判断是否抄对。"
+    }
+  },
+  {
+    "id": "teach-u6-08",
+    "unitId": "U06",
+    "topicIds": ["u6-tools"],
+    "title": "估算能证明每一位都对吗",
+    "stem": "498×21的计算器结果接近10000。只凭500×20＝10000，能认定每一位都正确吗？",
+    "type": "choice",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "选择一个答案"
+      }
+    ],
+    "options": [
+      "能，接近就一定对",
+      "不能，还要核对输入并精确复核",
+      "能，只要位数相同",
+      "不能，所以所有估算都没用"
+    ],
+    "hint": "估算检验大致大小，精确复核检验每个数位。",
+    "sourceKind": "original",
+    "knowledge": "估算能证明每一位都对吗",
+    "pages": [95, 103],
+    "hasVisual": false,
+    "expected": {
+      "value": "1"
+    },
+    "explanation": {
+      "analysis": "估算检验大致大小，精确复核检验每个数位。",
+      "steps": [
+        "500×20＝10000只能说明结果大致应在一万附近。",
+        "还需核对输入，再用498×20＋498＝10458复核。"
+      ],
+      "answer": "不能，还要核对输入并精确复核",
+      "pitfall": "接近估算值的错误结果也可能存在。"
+    }
+  },
+  {
+    "id": "teach-u6-09",
+    "unitId": "U06",
+    "topicIds": ["u6-patterns"],
+    "title": "换一个新算式验证规律",
+    "stem": "观察：12×11＝132，13×11＝143，14×11＝154。先预测，再计算15×11。",
+    "type": "calculation",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案"
+      }
+    ],
+    "hint": "同时看乘数如何变化、乘积增加了多少。",
+    "sourceKind": "original",
+    "knowledge": "换一个新算式验证规律",
+    "pages": [95, 103],
+    "hasVisual": false,
+    "expected": {
+      "value": "165"
+    },
+    "explanation": {
+      "analysis": "同时看乘数如何变化、乘积增加了多少。",
+      "steps": [
+        "前一个乘数每增加1，乘积增加11。",
+        "154＋11＝165；独立算15×(10＋1)＝150＋15＝165。"
+      ],
+      "answer": "165",
+      "pitfall": "只照着末尾数字排样子，不等于验证了规律。"
+    }
+  },
+  {
+    "id": "teach-u6-10",
+    "unitId": "U06",
+    "topicIds": ["u6-patterns"],
+    "title": "成组算式里的倍数关系",
+    "stem": "123×9＝1107，123×18＝2214，123×27＝3321。照规律预测并核对123×36。",
+    "type": "calculation",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案"
+      }
+    ],
+    "hint": "先看第二个乘数是原来的几倍。",
+    "sourceKind": "original",
+    "knowledge": "成组算式里的倍数关系",
+    "pages": [95, 103],
+    "hasVisual": false,
+    "expected": {
+      "value": "4428"
+    },
+    "explanation": {
+      "analysis": "先看第二个乘数是原来的几倍。",
+      "steps": [
+        "第二个乘数依次为9、18、27、36，相当于9的1、2、3、4倍。",
+        "1107×4＝4428；直接算123×(30＋6)＝3690＋738＝4428。"
+      ],
+      "answer": "4428",
+      "pitfall": "根据规律预测后，还要用计算核对新例子。"
+    }
+  },
+  {
+    "id": "teach-u6-11",
+    "unitId": "U06",
+    "topicIds": ["u6-patterns"],
+    "title": "两个乘数都变大",
+    "stem": "两个非零乘数都乘2，积变为原来的几倍？填倍数。",
+    "type": "calculation",
+    "difficulty": "basic",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案"
+      }
+    ],
+    "hint": "每个乘数各贡献一个2倍。",
+    "sourceKind": "original",
+    "knowledge": "两个乘数都变大",
+    "pages": [95, 103],
+    "hasVisual": false,
+    "expected": {
+      "value": "4"
+    },
+    "explanation": {
+      "analysis": "每个乘数各贡献一个2倍。",
+      "steps": ["例如24×15＝360。", "48×30＝1440，1440÷360＝4，两个2倍共同作用使积乘4。"],
+      "answer": "4",
+      "pitfall": "两个乘数都乘2，不能只把积乘2。"
+    }
+  },
+  {
+    "id": "teach-u6-12",
+    "unitId": "U06",
+    "topicIds": ["u6-patterns"],
+    "title": "一个反例检验“一定”",
+    "stem": "“同一个数乘两个不同的自然数，两个积一定不同。”哪一组能说明这句话不总成立？",
+    "type": "choice",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "选择一个答案"
+      }
+    ],
+    "options": ["0×3与0×5", "2×3与2×5", "4×3与4×5", "6×3与6×5"],
+    "hint": "先想特殊的自然数0，检查“一定”是否有例外。",
+    "sourceKind": "original",
+    "knowledge": "一个反例检验“一定”",
+    "pages": [95, 103],
+    "hasVisual": false,
+    "expected": {
+      "value": "0"
+    },
+    "explanation": {
+      "analysis": "先想特殊的自然数0，检查“一定”是否有例外。",
+      "steps": [
+        "同一个数若是0，乘3和乘5都得0。",
+        "两个乘数3和5不同，但两个积相同，足以推翻“一定不同”。"
+      ],
+      "answer": "0×3与0×5",
+      "pitfall": "几个成立的例子不能代替所有情况；一个反例即可推翻“一定”。"
+    }
+  },
+  {
+    "id": "teach-u6-13",
+    "unitId": "U06",
+    "topicIds": ["u6-error"],
+    "title": "十位的部分积少了什么",
+    "stem": "计算304×21，错把304×1与304×2直接相加。错积比正确积少多少？",
+    "type": "calculation",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案"
+      }
+    ],
+    "hint": "把正确式与错式分别写出来，再比较。",
+    "sourceKind": "original",
+    "knowledge": "十位的部分积少了什么",
+    "pages": [95, 103],
+    "hasVisual": false,
+    "expected": {
+      "value": "5472"
+    },
+    "explanation": {
+      "analysis": "把正确式与错式分别写出来，再比较。",
+      "steps": [
+        "正确积304×21＝6384；错积304＋608＝912。",
+        "6384−912＝5472，漏掉的是304×20与304×2之间的差。"
+      ],
+      "answer": "5472",
+      "pitfall": "第二个乘数十位的2表示20，不是2。"
+    }
+  },
+  {
+    "id": "teach-u6-14",
+    "unitId": "U06",
+    "topicIds": ["u6-error"],
+    "title": "乘数看错，多算多少",
+    "stem": "计算125×24时，把24看成42，得到的积比正确积多多少？",
+    "type": "calculation",
+    "difficulty": "advanced",
+    "fields": [
+      {
+        "key": "value",
+        "label": "你的答案"
+      }
+    ],
+    "hint": "被乘数不变，乘数多了几，就多算几个被乘数。",
+    "sourceKind": "original",
+    "knowledge": "乘数看错，多算多少",
+    "pages": [95, 103],
+    "hasVisual": false,
+    "expected": {
+      "value": "2250"
+    },
+    "explanation": {
+      "analysis": "被乘数不变，乘数多了几，就多算几个被乘数。",
+      "steps": ["42比24多18，多算的是125的18倍。", "125×18＝125×(20−2)＝2500−250＝2250。"],
+      "answer": "2250",
+      "pitfall": "多算的差不是42−24本身，还要乘125。"
+    }
+  }
+]

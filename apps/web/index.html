@@ -3,10 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#3563e9" />
+    <meta name="theme-color" content="#147866" />
     <meta name="description" content="跟着苏教版数学教材，动手探索、理解算理，让数学看得见。" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>数趣 · 数学练习</title>
+    <script>
+      try {
+        const theme = localStorage.getItem('mathstudy-theme');
+        document.documentElement.dataset.theme =
+          theme === 'dark' ||
+          (theme !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches)
+            ? 'dark'
+            : 'light';
+      } catch {}
+    </script>
   </head>
   <body>
     <div id="root"></div>

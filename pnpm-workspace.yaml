@@ -4,3 +4,5 @@ packages:
 allowBuilds:
   esbuild: true
   workerd: true
+minimumReleaseAgeExclude:
+  - react-resizable-panels@4.15.1

@@ -1,3 +1,4 @@
+import { Button } from './ui/button';
 import { useId, useState } from 'react';
 
 /** The next step is primary; automatic playback and settings are optional. */
@@ -29,13 +30,14 @@ export default function StepControls({
   return (
     <div className="step-controls">
       <div className="step-primary">
-        <button
+        <Button
+          variant="outline"
           className="button secondary"
           disabled={step === 0 || staticMode}
           onClick={() => onStep(step - 1)}
         >
           上一步
-        </button>
+        </Button>
         <label className="step-timeline" htmlFor={id}>
           <span>
             {step + 1} / {last + 1} 步
@@ -51,26 +53,33 @@ export default function StepControls({
             onChange={(e) => onStep(Number(e.target.value))}
           />
         </label>
-        <button
+        <Button
+          variant="default"
           className="button primary"
           disabled={step === last || staticMode}
           onClick={() => onStep(step + 1)}
         >
           下一步
-        </button>
-        <button
+        </Button>
+        <Button
+          variant="ghost"
           className="button subtle"
           aria-expanded={settings}
           onClick={() => setSettings(!settings)}
         >
           演示设置
-        </button>
+        </Button>
       </div>
       {settings && (
         <div className="step-settings">
-          <button className="button secondary" disabled={staticMode} onClick={onPlay}>
+          <Button
+            variant="outline"
+            className="button secondary"
+            disabled={staticMode}
+            onClick={onPlay}
+          >
             {playing ? '暂停' : '播放演示'}
-          </button>
+          </Button>
           <label>
             播放速度
             <select value={speed} onChange={(e) => onSpeed(Number(e.target.value))}>
@@ -79,13 +88,18 @@ export default function StepControls({
               <option value={1.5}>1.5倍</option>
             </select>
           </label>
-          <button className="button subtle" onClick={onReset}>
+          <Button variant="ghost" className="button subtle" onClick={onReset}>
             重新演示
-          </button>
+          </Button>
           {onStatic && (
-            <button className="button subtle" aria-pressed={staticMode} onClick={onStatic}>
+            <Button
+              variant="ghost"
+              className="button subtle"
+              aria-pressed={staticMode}
+              onClick={onStatic}
+            >
               {staticMode ? '返回动态演示' : '查看静态步骤'}
-            </button>
+            </Button>
           )}
         </div>
       )}

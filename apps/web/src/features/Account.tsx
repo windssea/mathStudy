@@ -1,3 +1,5 @@
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
 import { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import {
@@ -70,7 +72,8 @@ export default function Account() {
               </p>
             )}
             <div className="account-actions">
-              <button
+              <Button
+                variant="default"
                 className="button primary"
                 disabled={busy || account.syncing}
                 onClick={() =>
@@ -82,14 +85,15 @@ export default function Account() {
               >
                 <Icon name="RotateCcw" size={17} />
                 立即同步
-              </button>
-              <button
+              </Button>
+              <Button
+                variant="outline"
                 className="button secondary"
                 disabled={busy}
                 onClick={() => void run(signOut)}
               >
                 退出登录
-              </button>
+              </Button>
             </div>
             <Link className="text-link" to="/records">
               查看学习记录
@@ -105,7 +109,8 @@ export default function Account() {
             <p className="account-note">
               同一个内置账号在不同设备共享记录。合并不会删除本机原记录；旧版没有原始答案的条目标为“本机导入”。
             </p>
-            <button
+            <Button
+              variant="outline"
               className="button secondary"
               disabled={busy || account.syncing || guest.events === 0}
               onClick={() =>
@@ -116,7 +121,7 @@ export default function Account() {
               }
             >
               {guest.events ? '合并本机学习记录' : '本机记录已合并'}
-            </button>
+            </Button>
           </section>
         </div>
       ) : (
@@ -126,7 +131,7 @@ export default function Account() {
           <form onSubmit={submit}>
             <label>
               账号
-              <input
+              <Input
                 required
                 maxLength={32}
                 autoComplete="username"
@@ -140,7 +145,7 @@ export default function Account() {
             <label>
               密码
               <span className="password-field">
-                <input
+                <Input
                   required
                   type={visible ? 'text' : 'password'}
                   maxLength={128}
@@ -154,10 +159,15 @@ export default function Account() {
                 </button>
               </span>
             </label>
-            <button className="button primary" type="submit" disabled={busy || !account.ready}>
+            <Button
+              variant="default"
+              className="button primary"
+              type="submit"
+              disabled={busy || !account.ready}
+            >
               {busy ? '正在处理…' : '登录并同步'}
               <Icon name="ArrowRight" size={17} />
-            </button>
+            </Button>
           </form>
           <p className="account-note">
             未登录也可以学习；游客记录留在本机，登录后由你选择是否合并。

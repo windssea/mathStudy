@@ -6,7 +6,7 @@ import {
   questionTypeSchema,
 } from '@mathstudy/contracts';
 import { publicQuestion } from '@mathstudy/content';
-import { loadCourseContent } from './content-repository';
+import { loadCourseContent, type CourseContent } from './content-repository';
 import { gradeAnswers } from '@mathstudy/math-core';
 import { bodyLimit } from 'hono/body-limit';
 import { builtInEmail, getAuth, sessionUser } from './auth';
@@ -15,6 +15,10 @@ import { saveLearningEvents } from './learning-repository';
 import type { WorkerEnvironment } from './environment';
 
 const app = new Hono<WorkerEnvironment>();
+function teachingTopics(content: CourseContent, items: { topicIds?: string[] }[]) {
+  const ids = new Set(items.flatMap((q) => q.topicIds ?? []));
+  return content.practice.topics.filter((topic) => ids.has(topic.id));
+}
 app.all('/papers/*', (c) => c.json({ error: { code: 'NOT_FOUND', message: '资源不存在。' } }, 404));
 app.use('/api/*', async (c, next) => {
   c.set('requestId', crypto.randomUUID());
@@ -176,6 +180,10 @@ app.get('/api/v1/textbooks/:edition/lessons/:lesson', (c) => {
         questions: lesson.questionIds.map((id) =>
           publicQuestion(questions.find((q) => q.id === id)!),
         ),
+        topics: teachingTopics(
+          c.get('content'),
+          questions.filter((q) => lesson.questionIds.includes(q.id)),
+        ),
       },
       c.get('requestId'),
     ),
@@ -210,6 +218,7 @@ app.get('/api/v1/practice', (c) => {
           ...topic,
           questionIds: topic.questionIds.filter((id) => allowed.has(id)),
         })),
+        units: content.practice.units,
         papers: [],
       },
       c.get('requestId'),
@@ -223,7 +232,13 @@ app.get('/api/v1/practice/:kind/:id', (c) => {
     (s) => s.id === c.req.param('id'),
   );
   // Existing general-topic deep links remain useful without reappearing in the catalog.
-  const legacyUnits = { 'u3-general': 'U03', 'u4-general': 'U04', 'u5-general': 'U05' };
+  const legacyUnits = {
+    'u1-calculation': 'U01',
+    'u3-general': 'U03',
+    'u4-general': 'U04',
+    'u5-general': 'U05',
+    'u6-general': 'U06',
+  };
   const legacyId = c.req.param('id');
   const legacyUnit = Object.hasOwn(legacyUnits, legacyId)
     ? legacyUnits[legacyId as keyof typeof legacyUnits]
@@ -232,7 +247,10 @@ app.get('/api/v1/practice/:kind/:id', (c) => {
     set = {
       id: c.req.param('id'),
       unitId: legacyUnit,
-      title: content.textbook.catalog.find((node) => node.id === legacyUnit)!.title,
+      title:
+        legacyId === 'u1-calculation'
+          ? '口算与笔算'
+          : content.textbook.catalog.find((node) => node.id === legacyUnit)!.title,
       questionIds: [
         ...new Set(
           content.practice.topics
@@ -252,6 +270,7 @@ app.get('/api/v1/practice/:kind/:id', (c) => {
       {
         set: { ...set, questionIds: items.map((q) => q.id) },
         items: items.map(publicQuestion),
+        topics: teachingTopics(content, items),
       },
       c.get('requestId'),
     ),
@@ -291,7 +310,16 @@ app.get('/api/v1/questions', (c) => {
 app.get('/api/v1/questions/:id', (c) => {
   const question = c.get('content').questions.find((q) => q.id === c.req.param('id'));
   if (!question) return c.json({ error: { code: 'NOT_FOUND', message: '没有找到这道题。' } }, 404);
-  return c.json(envelope({ items: [publicQuestion(question)], total: 1 }, c.get('requestId')));
+  return c.json(
+    envelope(
+      {
+        items: [publicQuestion(question)],
+        total: 1,
+        topics: teachingTopics(c.get('content'), [question]),
+      },
+      c.get('requestId'),
+    ),
+  );
 });
 app.post('/api/v1/questions/:id/check', async (c) => {
   const { questions } = c.get('content');
