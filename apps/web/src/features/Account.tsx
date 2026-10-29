@@ -1,6 +1,6 @@
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import {
   authenticate,
@@ -12,6 +12,7 @@ import {
   useAccount,
 } from '../lib/progress';
 import { Icon } from '../components/ui';
+import { safeReturnTo } from '../lib/navigation';
 
 export default function Account() {
   const account = useAccount(),
@@ -36,14 +37,18 @@ export default function Account() {
     }
   }
   const guest = guestImportInfo();
+  const errorRef = useRef<HTMLParagraphElement>(null);
+  useEffect(() => {
+    if (error) errorRef.current?.focus();
+  }, [error]);
+  const returnTo = params.get('returnTo');
+  const practiceTarget = safeReturnTo(returnTo);
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     await run(async () => {
       await authenticate(username, password);
       setPassword('');
-      const target = params.get('returnTo');
-      if (target?.startsWith('/') && !target.startsWith('//') && !target.startsWith('/account'))
-        navigate(target, { replace: true });
+      if (params.has('returnTo')) navigate(practiceTarget, { replace: true });
     });
   }
   return (
@@ -51,7 +56,7 @@ export default function Account() {
       <div className="page-heading">
         <div>
           <h1>{account.user ? '我的账号' : '账号登录'}</h1>
-          <p>使用内置账号登录，在其他设备继续学习、查看答题记录和错题。</p>
+          <p>登录后，可在其他设备继续学习。</p>
         </div>
       </div>
       {account.user ? (
@@ -59,7 +64,6 @@ export default function Account() {
           <section className="panel account-panel">
             <span className="account-avatar">{account.user.name.slice(0, 1)}</span>
             <h2>{account.user.name}</h2>
-            <p>内置学习账号</p>
             <p className="sync-status" role="status">
               {progressMessage()}
             </p>
@@ -126,20 +130,20 @@ export default function Account() {
         </div>
       ) : (
         <section className="panel account-panel account-form-panel">
-          <h2>登录学习空间</h2>
-          <p className="account-note">仅使用已配置的内置账号，不开放注册。</p>
-          <form onSubmit={submit}>
+          <p className="account-note">使用老师或家长提供的账号。</p>
+          <form onSubmit={submit} aria-describedby={error ? 'account-form-error' : undefined}>
             <label>
               账号
               <Input
                 required
+                name="username"
                 maxLength={32}
                 autoComplete="username"
                 autoCapitalize="none"
                 spellCheck={false}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="请输入内置账号"
+                placeholder="请输入账号"
               />
             </label>
             <label>
@@ -147,6 +151,7 @@ export default function Account() {
               <span className="password-field">
                 <Input
                   required
+                  name="password"
                   type={visible ? 'text' : 'password'}
                   maxLength={128}
                   autoComplete="current-password"
@@ -159,6 +164,17 @@ export default function Account() {
                 </button>
               </span>
             </label>
+            {error && (
+              <p
+                id="account-form-error"
+                ref={errorRef}
+                tabIndex={-1}
+                className="inline-error"
+                role="alert"
+              >
+                {error}
+              </p>
+            )}
             <Button
               variant="default"
               className="button primary"
@@ -172,13 +188,17 @@ export default function Account() {
           <p className="account-note">
             未登录也可以学习；游客记录留在本机，登录后由你选择是否合并。
           </p>
+          <Link className="text-link" to={practiceTarget}>
+            继续练习
+            <Icon name="ArrowRight" size={17} />
+          </Link>
           {!account.available && account.ready && (
             <p className="inline-error">登录服务暂未配置，请稍后再试。</p>
           )}
         </section>
       )}
-      {error && (
-        <p className="inline-error account-feedback" role="alert">
+      {error && account.user && (
+        <p ref={errorRef} tabIndex={-1} className="inline-error account-feedback" role="alert">
           {error}
         </p>
       )}

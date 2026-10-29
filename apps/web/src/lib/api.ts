@@ -23,12 +23,16 @@ export async function request<T>(path: string, init?: RequestInit): Promise<T> {
     throw new ApiError(body.error?.message ?? '暂时无法加载，请稍后重试。', response.status);
   return body.data;
 }
-export function useRemote<T>(path: string) {
+export function useRemote<T>(path: string | null) {
   const [state, setState] = useState<{ data?: T; error?: string; loading: boolean }>({
     loading: true,
   });
   const [retry, setRetry] = useState(0);
   useEffect(() => {
+    if (path === null) {
+      setState({ loading: false });
+      return;
+    }
     const controller = new AbortController();
     setState({ loading: true });
     request<T>(path, { signal: controller.signal })

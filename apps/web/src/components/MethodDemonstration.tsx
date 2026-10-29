@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { methodStory } from '@mathstudy/animation-engine';
 import { Dialog } from 'radix-ui';
 import { Button } from './ui/button';
@@ -9,17 +9,29 @@ export default function MethodDemonstration({
   topicId,
   title,
   active = true,
+  questionId,
 }: {
   topicId: string;
   title: string;
   active?: boolean;
+  questionId?: string;
 }) {
-  const story = methodStory(topicId);
+  const story = methodStory(topicId, questionId);
   const [step, setStep] = useState(0);
   const [mistake, setMistake] = useState(false);
+  const [transfer, setTransfer] = useState(false);
   const [choice, setChoice] = useState<string>();
   const [playing, setPlaying] = useState(false);
   const [expanded, setExpanded] = useState(false);
+  const expandTrigger = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    setStep(0);
+    setMistake(false);
+    setTransfer(false);
+    setChoice(undefined);
+    setPlaying(false);
+    setExpanded(false);
+  }, [topicId, questionId]);
   useEffect(() => {
     if (!active) {
       setPlaying(false);
@@ -35,18 +47,20 @@ export default function MethodDemonstration({
     return () => window.clearTimeout(timer);
   }, [playing, step, story]);
   if (!story) return null;
-  const current = story.frames[step];
+  const current = story.frames[Math.min(step, story.frames.length - 1)];
   const go = (n: number) => {
     setStep(n);
     setMistake(false);
+    setTransfer(false);
     setPlaying(false);
   };
   // TopicMethod is keyed by topic ID: the current step and mistake answer reset on topic change.
-  const content = (
+  const check = transfer && story.transfer ? story.transfer : story.mistake;
+  const content = (inDialog: boolean) => (
     <div className={`method-demonstration ${expanded ? 'is-expanded' : ''}`}>
       <div className="demo-topline">
         <p className="demo-mode">
-          {mistake ? '易错对照' : '分步图解'}
+          {mistake ? (transfer ? '例题自查' : '易错对照') : '分步图解'}
           <span>{mistake ? '先选，再看原因' : `${step + 1} / ${story.frames.length}`}</span>
         </p>
         <div className="demo-step-nav" aria-label="演示步骤">
@@ -64,23 +78,26 @@ export default function MethodDemonstration({
           ))}
         </div>
         <Button
+          ref={inDialog ? undefined : expandTrigger}
           variant="ghost"
           size="sm"
-          aria-label={expanded ? '收起演示' : '放大演示'}
+          className="method-expand-trigger"
+          aria-label={inDialog ? '收起演示' : '放大演示'}
+          aria-haspopup={inDialog ? undefined : 'dialog'}
           onClick={() => {
             setPlaying(false);
             setExpanded(!expanded);
           }}
         >
-          <Icon name={expanded ? 'X' : 'MoveUpRight'} size={19} />
-          {expanded ? '收起' : '放大'}
+          <Icon name={inDialog ? 'X' : 'MoveUpRight'} size={19} />
+          {inDialog ? '收起' : '放大'}
         </Button>
       </div>
       <div className={`demo-stage pane-scroll ${mistake ? 'is-mistake' : ''}`}>
         <div className="demo-visual">
           <MethodDiagram
-            nodes={mistake ? story.mistake.nodes : current.nodes}
-            label={mistake ? story.mistake.question : current.title}
+            nodes={mistake ? check.nodes : current.nodes}
+            label={mistake ? check.question : current.title}
           />
           <div className="diagram-key" aria-label="图例">
             <span className="key-known">已知</span>
@@ -90,37 +107,50 @@ export default function MethodDemonstration({
           </div>
         </div>
         <div className="demo-reason" aria-live="polite" aria-atomic="true">
-          <h4>{mistake ? story.mistake.question : current.title}</h4>
+          <h4>{mistake ? check.question : current.title}</h4>
           {mistake ? (
             <>
               <div className="mistake-options" role="group" aria-label="易错判断">
                 {/* Position alternates deterministically: the right answer is not always the second choice. */}
-                {(topicId.length % 2
-                  ? [story.mistake.right, story.mistake.wrong]
-                  : [story.mistake.wrong, story.mistake.right]
-                ).map((option) => (
-                  <Button
-                    type="button"
-                    variant="outline"
-                    key={option}
-                    className={choice === option ? 'is-picked' : ''}
-                    aria-pressed={choice === option}
-                    onClick={() => setChoice(option)}
-                  >
-                    {option}
-                  </Button>
-                ))}
+                {(topicId.length % 2 ? [check.right, check.wrong] : [check.wrong, check.right]).map(
+                  (option) => (
+                    <Button
+                      type="button"
+                      variant="outline"
+                      key={option}
+                      className={choice === option ? 'is-picked' : ''}
+                      aria-pressed={choice === option}
+                      onClick={() => setChoice(option)}
+                    >
+                      {option}
+                    </Button>
+                  ),
+                )}
               </div>
               {choice && (
                 <div
-                  className={`mistake-feedback ${choice === story.mistake.right ? 'is-correct' : 'try-again'}`}
+                  className={`mistake-feedback ${choice === check.right ? 'is-correct' : 'try-again'}`}
                   role="status"
                 >
                   <strong>
-                    {choice === story.mistake.right ? '对，关键就在这里' : '再看图，换个角度想'}
+                    {choice === check.right ? '对，关键就在这里' : '再看图，换个角度想'}
                   </strong>
-                  <p>{story.mistake.why}</p>
-                  {choice !== story.mistake.right && <p>正确的想法：{story.mistake.right}</p>}
+                  <p>{check.why}</p>
+                  {choice !== check.right && <p>正确的想法：{check.right}</p>}
+                </div>
+              )}
+              {choice && story.transfer && !transfer && (
+                <div className="method-transfer">
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setTransfer(true);
+                      setChoice(undefined);
+                    }}
+                  >
+                    换一组数试试
+                    <Icon name="ArrowRight" size={18} />
+                  </Button>
                 </div>
               )}
             </>
@@ -136,7 +166,9 @@ export default function MethodDemonstration({
         <Button
           variant="outline"
           disabled={step === 0 && !mistake}
-          onClick={() => (mistake ? (setMistake(false), setChoice(undefined)) : go(step - 1))}
+          onClick={() =>
+            mistake ? (setMistake(false), setTransfer(false), setChoice(undefined)) : go(step - 1)
+          }
         >
           <Icon name="ArrowLeft" size={18} />
           上一步
@@ -147,6 +179,7 @@ export default function MethodDemonstration({
           aria-label={playing ? '暂停演示' : '播放演示'}
           onClick={() => {
             setMistake(false);
+            setTransfer(false);
             setChoice(undefined);
             if (!playing && step === story.frames.length - 1) setStep(0);
             setPlaying(!playing);
@@ -165,6 +198,7 @@ export default function MethodDemonstration({
             } else if (step < story.frames.length - 1) go(step + 1);
             else {
               setMistake(true);
+              setTransfer(false);
               setChoice(undefined);
             }
           }}
@@ -176,8 +210,10 @@ export default function MethodDemonstration({
     </div>
   );
   return (
-    <>
-      {!expanded && content}
+    <div className="method-demo-shell">
+      <div className="method-inline" hidden={expanded}>
+        {content(false)}
+      </div>
       <Dialog.Root
         open={expanded}
         onOpenChange={(open) => {
@@ -187,13 +223,20 @@ export default function MethodDemonstration({
       >
         <Dialog.Portal>
           <Dialog.Overlay className="method-dialog-overlay" />
-          <Dialog.Content className="method-dialog" aria-describedby={undefined}>
+          <Dialog.Content
+            className="method-dialog"
+            aria-describedby={undefined}
+            onCloseAutoFocus={(event) => {
+              event.preventDefault();
+              window.setTimeout(() => expandTrigger.current?.focus(), 0);
+            }}
+          >
             <Dialog.Title className="method-dialog-title">{title}</Dialog.Title>
             <Dialog.Description className="method-dialog-prompt">{story.prompt}</Dialog.Description>
-            {expanded && content}
+            {expanded && content(true)}
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
-    </>
+    </div>
   );
 }

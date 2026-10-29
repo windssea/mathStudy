@@ -1,6 +1,6 @@
 import { Button } from './ui/button';
 import { Input } from './ui/input';
-import { useId, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import SplitWorkspace from './layout/SplitWorkspace';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './ui/tabs';
 import type { QuestionPublic, Explanation, Grade, PracticeTopic } from '@mathstudy/contracts';
@@ -18,6 +18,7 @@ import { Icon } from './ui';
 import VisualExplanation from './VisualExplanation';
 import { GridEditor, GridFigureView, initialDrawing } from './GridExercise';
 import TopicMethod from './TopicMethod';
+import { questionDraftSchema, readDraft, writeDraft } from '../lib/practice-drafts';
 
 function initialAnswers(q: QuestionPublic): Record<string, string> {
   return q.construction
@@ -34,27 +35,62 @@ export default function QuestionRunner({
   onResult,
   headingLevel,
   method,
+  draftScope = 'question',
 }: {
   question: QuestionPublic;
   standalone?: boolean;
   headingLevel?: 2 | 3;
   method?: PracticeTopic;
+  draftScope?: string;
   onResult?: (result: 'correct' | 'incorrect' | 'revealed', assisted: boolean) => void;
   onAttempt?: (id: string) => void;
 }) {
   const formId = useId();
-  const [answers, setAnswers] = useState<Record<string, string>>(() => initialAnswers(q));
-  const [hint, setHint] = useState(false);
+  const [owner] = useState(currentLearningOwner);
+  const draftId = `${draftScope}:${q.id}`;
+  const [draft] = useState(() => readDraft(owner, draftId, questionDraftSchema));
+  const [answers, setAnswers] = useState<Record<string, string>>(
+    () => draft?.answers ?? initialAnswers(q),
+  );
+  const [hint, setHint] = useState(draft?.hint ?? false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
-  const [grade, setGrade] = useState<Grade>();
-  const [explanation, setExplanation] = useState<Explanation>();
-  const [revealed, setRevealed] = useState(false);
-  const [view, setView] = useState('answer');
+  const [grade, setGrade] = useState<Grade | undefined>(
+    draft?.grade && draft.explanation
+      ? { ...draft.grade, explanation: draft.explanation }
+      : undefined,
+  );
+  const [explanation, setExplanation] = useState<Explanation | undefined>(draft?.explanation);
+  const [revealed, setRevealed] = useState(draft?.revealed ?? false);
+  const [view, setView] = useState<string>(draft?.view ?? 'answer');
   const details = view === 'explanation';
-  const setDetails = (expanded: boolean) => setView(expanded ? 'explanation' : 'answer');
-  const [usedHint, setUsedHint] = useState(false);
+  const setDetails = (expanded: boolean) => {
+    if (expanded) markHelp();
+    setView(expanded ? 'explanation' : 'answer');
+  };
+  const [usedHint, setUsedHint] = useState(draft?.usedHelp ?? false);
+  const helpViewed = useRef(draft?.usedHelp ?? false);
   useAccount();
+  useEffect(() => {
+    if (owner !== currentLearningOwner()) return;
+    writeDraft(owner, draftId, {
+      answers,
+      hint,
+      usedHelp: usedHint,
+      revealed,
+      view,
+      grade: grade ? { correct: grade.correct, feedback: grade.feedback } : undefined,
+      explanation,
+    });
+  }, [owner, draftId, answers, hint, usedHint, revealed, view, grade, explanation]);
+  function markHelp() {
+    if (!helpViewed.current && !q.sourceIssue) {
+      helpViewed.current = true;
+      setUsedHint(true);
+      recordAssistance(q.id, owner);
+      if (grade) onResult?.(grade.correct ? 'correct' : 'incorrect', true);
+    }
+  }
   async function submit(event?: React.FormEvent, override?: Record<string, string>) {
     event?.preventDefault();
     const submitted = override ?? answers;
@@ -65,7 +101,7 @@ export default function QuestionRunner({
       'attempt',
       q.id,
       submitted,
-      q.responseMode === 'selfReview' || revealed || usedHint || !!explanation,
+      q.responseMode === 'selfReview' || revealed || helpViewed.current,
     );
     try {
       const g = await request<Grade>(`/questions/${q.id}/check`, {
@@ -83,7 +119,7 @@ export default function QuestionRunner({
       if (q.responseMode === 'selfReview') setDetails(false);
       recordAnswer(q.id, g.correct, eventData.assisted, eventData, owner);
       onAttempt?.(q.id);
-      onResult?.(g.correct ? 'correct' : 'incorrect', eventData.assisted);
+      onResult?.(g.correct ? 'correct' : 'incorrect', eventData.assisted || helpViewed.current);
     } catch (e) {
       setError((e as Error).message);
     } finally {
@@ -98,8 +134,8 @@ export default function QuestionRunner({
       const e = await request<Explanation>(`/questions/${q.id}/explanation`, { method: 'POST' });
       setExplanation(e);
       setRevealed(true);
-      setDetails(true);
-      if (!q.sourceIssue) recordAssistance(q.id, owner);
+      setView('explanation');
+      markHelp();
       onAttempt?.(q.id);
       onResult?.('revealed', true);
     } catch (e) {
@@ -115,6 +151,7 @@ export default function QuestionRunner({
       .replace(/[。.]$/, '')
       .trim() === q.title.trim();
   const titleIsStemPreview = q.title.endsWith('…') && q.stem.startsWith(q.title.slice(0, -1));
+  const compactEquation = repeatsTitle && /^[\d\s+＋\-－×xX*÷/＝=()（）□？?·.]+$/.test(q.title);
   return (
     <article className="question-runner">
       <SplitWorkspace
@@ -141,9 +178,11 @@ export default function QuestionRunner({
               className={
                 titleIsStemPreview
                   ? 'sr-only'
-                  : repeatsTitle
+                  : compactEquation
                     ? 'question-equation-title'
-                    : undefined
+                    : repeatsTitle
+                      ? 'question-stem-title'
+                      : undefined
               }
             >
               {q.title}
@@ -160,10 +199,7 @@ export default function QuestionRunner({
             className="answer-workspace"
             value={view}
             onValueChange={(value) => {
-              if (value === 'method' && !usedHint && !q.sourceIssue) {
-                setUsedHint(true);
-                recordAssistance(q.id);
-              }
+              if (value === 'method' || value === 'explanation') markHelp();
               setView(value);
             }}
           >
@@ -351,10 +387,7 @@ export default function QuestionRunner({
                       className="button subtle"
                       aria-expanded={hint}
                       onClick={() => {
-                        if (!hint && !usedHint) {
-                          setUsedHint(true);
-                          recordAssistance(q.id);
-                        }
+                        if (!hint) markHelp();
                         setHint(!hint);
                       }}
                     >
@@ -386,6 +419,7 @@ export default function QuestionRunner({
                 <p className="method-assistance-note">本题已使用方法辅助</p>
                 <TopicMethod
                   topicId={method.id}
+                  questionId={q.id}
                   title={method.title}
                   guide={method.guide}
                   active={view === 'method'}
@@ -423,6 +457,7 @@ export default function QuestionRunner({
                         setAnswers(initialAnswers(q));
                         setHint(false);
                         setUsedHint(false);
+                        helpViewed.current = false;
                         setGrade(undefined);
                         setExplanation(undefined);
                         setRevealed(false);

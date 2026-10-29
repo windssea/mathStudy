@@ -102,7 +102,7 @@ export default function Home() {
             <label>
               作答形式
               <select value={type} onChange={(e) => filter('type', e.target.value)}>
-                <option value="">全部题型</option>
+                <option value="">全部形式</option>
                 {Object.entries(typeLabels).map(([key, label]) => (
                   <option key={key} value={key}>
                     {label}
@@ -177,57 +177,49 @@ export default function Home() {
               )}
             </div>
             <TabsContent value="practice" className="topic-groups pane-scroll">
-              {Object.entries(teachingGroupLabels).map(([group, label], i) => {
-                const grouped = topics.filter((t) => t.guide?.group === group);
-                return (
-                  grouped.length > 0 && (
-                    <section className="topic-group" key={group}>
-                      <h3 className="topic-group-heading">
-                        <span>{label}</span>
-                        <small>{grouped.length} 类</small>
-                      </h3>
-                      <div className="topic-list">
-                        {grouped.map((t) => (
-                          <section className="practice-entry teaching-topic-card panel" key={t.id}>
-                            <span className="practice-entry-icon" data-tone={i}>
-                              <Icon
-                                name={(['Lightbulb', 'NotebookPen', 'Target'] as const)[i]}
-                                size={21}
-                              />
-                            </span>
-                            <div className="topic-card-copy">
-                              <h4>{t.title}</h4>
-                              <p>{t.guide?.recognize}</p>
-                              <span>
-                                独立答对{' '}
-                                {
-                                  t.questionIds.filter(
-                                    (id) =>
-                                      progress.answers[id]?.independentCorrect &&
-                                      !progress.answers[id]?.needsReview,
-                                  ).length
-                                }{' '}
-                                / {t.questionIds.length}题
-                              </span>
-                            </div>
-                            <div className="topic-card-actions">
-                              <Button variant="ghost" onClick={() => showMethod(t.id)}>
-                                学方法
-                              </Button>
-                              <Button asChild>
-                                <Link to={`/practice/topics/${t.id}?${selection}`}>
-                                  练习
-                                  <Icon name="ArrowRight" size={16} />
-                                </Link>
-                              </Button>
-                            </div>
-                          </section>
-                        ))}
+              <div className="topic-list topic-learning-sequence">
+                {topics.map((t) => {
+                  const group = t.guide?.group ?? 'foundation';
+                  const tone = Math.max(0, Object.keys(teachingGroupLabels).indexOf(group));
+                  return (
+                    <section className="practice-entry teaching-topic-card" key={t.id}>
+                      <span className="practice-entry-icon" data-tone={tone}>
+                        <Icon
+                          name={(['Lightbulb', 'NotebookPen', 'Target'] as const)[tone % 3]}
+                          size={21}
+                        />
+                      </span>
+                      <div className="topic-card-copy">
+                        <h4>{t.title}</h4>
+                        <p>{t.guide?.recognize}</p>
+                        <span>
+                          {teachingGroupLabels[group as keyof typeof teachingGroupLabels]} ·
+                          独立答对{' '}
+                          {
+                            t.questionIds.filter(
+                              (id) =>
+                                progress.answers[id]?.independentCorrect &&
+                                !progress.answers[id]?.needsReview,
+                            ).length
+                          }
+                          /{t.questionIds.length}题
+                        </span>
+                      </div>
+                      <div className="topic-card-actions">
+                        <Button variant="ghost" onClick={() => showMethod(t.id)}>
+                          学方法
+                        </Button>
+                        <Button asChild>
+                          <Link to={`/practice/topics/${t.id}?${selection}`}>
+                            练习
+                            <Icon name="ArrowRight" size={16} />
+                          </Link>
+                        </Button>
                       </div>
                     </section>
-                  )
-                );
-              })}
+                  );
+                })}
+              </div>
             </TabsContent>
             <TabsContent value="methods" className="method-library">
               {selectedTopic?.guide && (

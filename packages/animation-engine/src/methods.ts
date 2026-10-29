@@ -33,6 +33,7 @@ export interface MethodStory {
   prompt: string;
   frames: MethodFrame[];
   mistake: { question: string; wrong: string; right: string; why: string; nodes: MethodNode[] };
+  transfer?: { question: string; wrong: string; right: string; why: string; nodes: MethodNode[] };
 }
 const text = (
   x: number,
@@ -74,7 +75,7 @@ const bars = (
     text(200, 49, heading),
     ...parts.flatMap((p) => {
       const w = (352 * p.weight) / sum;
-      const n = rect(x, 88, w - 3, 64, p.tone ?? 'known', p.label);
+      const n = rect(x, 88, w - Math.min(3, w * 0.15), 64, p.tone ?? 'known', p.label);
       x += w;
       return [n];
     }),
@@ -187,14 +188,162 @@ const division = (n: number, d: number, stage: number): MethodNode[] => {
         `总量 ${n}`,
       )
     : stage === 1
-      ? cards([`${d} × ${q} = ${d * q}`, `余下 ${n} − ${d * q} = ${r}`], 1)
+      ? grouping(q, d, r)
       : bars(
           [
             { label: `${q} 份，共 ${d * q}`, weight: d * q, tone: 'focus' },
-            ...(r ? [{ label: `余 ${r}`, weight: Math.max(r, n / 5), tone: 'warm' as const }] : []),
+            ...(r ? [{ label: `余 ${r}`, weight: r, tone: 'warm' as const }] : []),
           ],
           `${d} × ${q} + ${r} = ${n}`,
         );
+};
+
+/** Every outlined box is one whole group. Dots are single leftover objects, not decorative marks. */
+const grouping = (
+  groups: number,
+  each: number,
+  remainder: number,
+  focusLast = false,
+): MethodNode[] => [
+  text(200, 27, `${groups} 份，每份 ${each}`, 'known', 22),
+  ...Array.from({ length: groups }, (_, i) =>
+    rect(
+      23 + (i % 7) * 51,
+      45 + Math.floor(i / 7) * 53,
+      46,
+      43,
+      focusLast && i === groups - 1 ? 'focus' : 'known',
+      String(each),
+    ),
+  ),
+  text(200, 177, `剩下 ${remainder} 个`, 'warm', 22),
+  ...Array.from(
+    { length: remainder },
+    (_, i): MethodNode => ({
+      kind: 'dot',
+      x: 38 + (i % 18) * 18,
+      y: 201 + Math.floor(i / 18) * 23,
+      tone: 'warm',
+    }),
+  ),
+];
+
+const regroupRemainder = (each: number, left: number, regrouped: boolean): MethodNode[] => [
+  text(
+    200,
+    27,
+    regrouped ? `再圈出 ${each} 个，成为 1 份` : `剩下 ${left} 个，每份要 ${each} 个`,
+    'focus',
+    21,
+  ),
+  rect(23, 53, 287, 115, regrouped ? 'focus' : 'quiet', undefined, !regrouped),
+  ...Array.from(
+    { length: left },
+    (_, i): MethodNode => ({
+      kind: 'dot',
+      x: i < each ? 44 + (i % 6) * 47 : 350,
+      y: i < each ? 78 + Math.floor(i / 6) * 33 : 111,
+      tone: i < each ? (regrouped ? 'focus' : 'known') : 'warm',
+    }),
+  ),
+  text(166, 211, `这一圈：${each} 个`, 'focus', 22),
+  text(350, 211, `剩 ${left - each}`, 'warm', 22),
+];
+
+const equalGroups = (
+  count: number,
+  each: number,
+  heading: string,
+  tone: MethodTone = 'known',
+): MethodNode[] => [
+  text(200, 28, heading, 'quiet', 21),
+  ...Array.from({ length: count }, (_, i) =>
+    rect(23 + (i % 7) * 51, 49 + Math.floor(i / 7) * 48, 46, 40, tone, String(each)),
+  ),
+  text(200, 229, `${count} 份 × 每份 ${each} = ${count * each}`, tone, 22),
+];
+
+/** Connecting lines show which two quantities an operation needs; future results stay hidden. */
+const operationTree = (stage: number, bracket = false): MethodNode[] => {
+  const first = bracket ? 20 : 24;
+  const second = bracket ? 60 : 72;
+  return [
+    rect(28, 16, 70, 42, 'known', bracket ? '68' : '96'),
+    rect(122, 16, 70, 42, 'known', bracket ? '48' : '4'),
+    line(63, 58, 110, 83, stage === 0 ? 'focus' : 'known'),
+    line(157, 58, 110, 83, stage === 0 ? 'focus' : 'known'),
+    rect(53, 83, 115, 45, stage === 0 ? 'focus' : 'known', `${bracket ? '−' : '÷'} 得 ${first}`),
+    rect(229, 83, 60, 45, stage === 0 ? 'quiet' : 'known', '3'),
+    line(110, 128, 210, 150, stage === 1 ? 'focus' : 'known'),
+    line(259, 128, 210, 150, stage === 1 ? 'focus' : 'quiet'),
+    rect(
+      155,
+      150,
+      115,
+      43,
+      stage === 1 ? 'focus' : stage > 1 ? 'known' : 'quiet',
+      stage > 0 ? `× 得 ${second}` : '再做乘法',
+    ),
+    rect(318, 150, 67, 43, stage === 2 ? 'known' : 'quiet', bracket ? '840' : '18'),
+    line(210, 193, 290, 209, stage === 2 ? 'focus' : 'quiet'),
+    line(351, 193, 290, 209, stage === 2 ? 'focus' : 'quiet'),
+    rect(
+      215,
+      209,
+      165,
+      40,
+      stage === 2 ? 'focus' : 'quiet',
+      stage > 1
+        ? bracket
+          ? '840 ÷ 60 = 14'
+          : '72 − 18 = 54'
+        : bracket
+          ? '最后做除法'
+          : '最后做减法',
+    ),
+  ];
+};
+
+/** Wall is dashed; only solid highlighted lines consume fencing. Coordinates are schematic. */
+const fenceModel = (
+  long: number,
+  wide: number,
+  stage: number,
+  wallOnShortSide = false,
+): MethodNode[] => {
+  const wall = wallOnShortSide
+    ? line(70, 60, 70, 175, 'quiet', true)
+    : line(70, 60, 330, 60, 'quiet', true);
+  const sides = wallOnShortSide
+    ? [
+        line(70, 60, 330, 60, 'focus'),
+        line(330, 60, 330, 175, 'focus'),
+        line(330, 175, 70, 175, 'focus'),
+      ]
+    : [
+        line(70, 60, 70, 175, 'focus'),
+        line(330, 60, 330, 175, 'focus'),
+        line(70, 175, 330, 175, stage > 0 ? 'focus' : 'known'),
+      ];
+  return [
+    rect(70, 60, 260, 115, stage >= 2 ? 'focus' : 'quiet'),
+    wall,
+    ...sides,
+    text(200, 33, wallOnShortSide ? '宽边靠墙：左边不用围' : '长边靠墙：上边不用围', 'quiet', 20),
+    text(37, 123, String(wide), 'known', 22),
+    text(361, 123, String(wide), 'known', 22),
+    text(200, 208, stage === 0 && !wallOnShortSide ? '长 ? 米' : `长 ${long} 米`, 'focus', 22),
+    text(
+      200,
+      124,
+      stage >= 2 ? `面积 ${long * wide} 平方米` : `宽 ${wide} 米`,
+      stage >= 2 ? 'focus' : 'known',
+      22,
+    ),
+    ...(stage === 3
+      ? [line(70, 60, 330, 60, 'error', true), text(200, 242, '× 墙边不需要围栏', 'error', 20)]
+      : []),
+  ];
 };
 const multiplication = (
   n: number,
@@ -276,7 +425,7 @@ export const methodStories: Record<string, MethodStory> = {
         bars(
           [
             { label: '已分 480', weight: 480 },
-            { label: '24', weight: 70, tone: 'focus' },
+            { label: '24', weight: 24, tone: 'focus' },
           ],
           '504',
         ),
@@ -288,7 +437,7 @@ export const methodStories: Record<string, MethodStory> = {
         bars(
           [
             { label: '20 份', weight: 20 },
-            { label: '1', weight: 2, tone: 'focus' },
+            { label: '1', weight: 1, tone: 'focus' },
           ],
           '商 21 = 20 + 1',
         ),
@@ -309,7 +458,7 @@ export const methodStories: Record<string, MethodStory> = {
         bars(
           [
             { label: '140', weight: 140 },
-            { label: '余 32', weight: 48, tone: 'warm' },
+            { label: '余 32', weight: 32, tone: 'warm' },
           ],
           '共 172',
         ),
@@ -321,7 +470,7 @@ export const methodStories: Record<string, MethodStory> = {
         bars(
           [
             { label: '再分 28', weight: 28, tone: 'focus' },
-            { label: '4', weight: 5, tone: 'warm' },
+            { label: '4', weight: 4, tone: 'warm' },
           ],
           '余下的 32',
         ),
@@ -341,24 +490,42 @@ export const methodStories: Record<string, MethodStory> = {
   'u1-remainder': story(
     '235 ÷ 18，余数为什么不能等于 18？',
     [
-      frame('找能分出的完整份数', '18 乘 13 不超过 235。', '18 × 13 = 234', division(235, 18, 1)),
       frame(
-        '查看剩下的一点',
-        '235 分掉 234，剩 1；已经不够再分一份。',
-        '235 − 234 = 1',
-        division(235, 18, 2),
+        '先分出 12 份，看看剩下什么',
+        '每个框是完整的一份，里面有 18 个。先分 12 份，还剩 19 个。',
+        '235 − 18 × 12 = 19',
+        grouping(12, 18, 19),
       ),
       frame(
-        '乘回去再加余数',
-        '分掉的和剩下的合起来，等于原来的总数。',
+        '剩下的还能再组成一份',
+        '把剩下的 19 个摆出来，其中 18 个正好够一份。余数不能停在 19。',
+        '19 = 18 + 1',
+        regroupRemainder(18, 19, false),
+      ),
+      frame(
+        '多分一份，商就要加 1',
+        '圈出 18 个，放进新的一份。12 份变成 13 份，外面只剩 1 个。',
+        '12 + 1 = 13；19 − 18 = 1',
+        regroupRemainder(18, 19, true),
+      ),
+      frame(
+        '只剩 1 个，已经不够一份',
+        '13 个框共装了 234 个。剩下的 1 个小于每份的 18 个，这才真正分完。',
+        '235 ÷ 18 = 13……1；1 < 18',
+        grouping(13, 18, 1, true),
+      ),
+      frame(
+        '把完整份和剩下的合回去',
+        '验算要同时检查两件事：合起来仍是 235，剩下的又不足一份。',
         '18 × 13 + 1 = 235',
-        cards(['已分 234', '剩下 1', '原来 235'], 2),
+        [...grouping(13, 18, 1), text(200, 242, '整份 234 + 剩下 1 = 原来 235', 'focus', 20)],
       ),
     ],
     '除数是 18，余数最大能是几？',
     '18',
     '17',
-    '如果余下 18，还能再分一份，商就应该加 1。',
+    '如果余下 18，还能再组成一份，商应加 1；所以余数最大是比 18 少 1 的 17。',
+    regroupRemainder(18, 18, true),
   ),
   'u1-order': story(
     '480 ÷ 8 ÷ 6，为什么能除以 8 × 6？',
@@ -425,7 +592,7 @@ export const methodStories: Record<string, MethodStory> = {
         bars(
           [
             { label: '23 × 16 = 368', weight: 368 },
-            { label: '5', weight: 60, tone: 'warm' },
+            { label: '5', weight: 5, tone: 'warm' },
           ],
           '原来的被除数',
         ),
@@ -467,7 +634,7 @@ export const methodStories: Record<string, MethodStory> = {
         bars(
           [
             { label: '144 人已有座位', weight: 144 },
-            { label: '13 人', weight: 48, tone: 'warm' },
+            { label: '13 人', weight: 13, tone: 'warm' },
           ],
           '所有人都要上车',
         ),
@@ -479,7 +646,7 @@ export const methodStories: Record<string, MethodStory> = {
         bars(
           [
             { label: '6 辆坐满', weight: 6 },
-            { label: '再 1 辆', weight: 2, tone: 'focus' },
+            { label: '再 1 辆', weight: 1, tone: 'focus' },
           ],
           '7 辆才能全部坐下',
         ),
@@ -637,7 +804,7 @@ methodStories['u2-units'] = story(
       bars(
         [
           { label: '300', weight: 300 },
-          { label: '40', weight: 80, tone: 'focus' },
+          { label: '40', weight: 40, tone: 'focus' },
         ],
         '全部用平方分米',
       ),
@@ -736,31 +903,58 @@ methodStories['u2-fence'] = story(
       '先划掉不用围的那一边',
       '上面靠墙，只围左、右和下面三条边。',
       '32 米 = 一条长 + 两条宽',
-      rectangle(20, 6, 'fence', 0),
+      fenceModel(20, 6, 0),
     ),
-    frame(
-      '先用掉两条宽',
-      '左边 6 米，右边也是 6 米，剩下才是长。',
-      '长 = 32 − 6 × 2 = 20 米',
-      rectangle(20, 6, 'fence', 1),
-    ),
+    frame('先用掉两条宽', '左边 6 米，右边也是 6 米，剩下才是长。', '长 = 32 − 6 × 2 = 20 米', [
+      ...bars(
+        [
+          { label: '左宽 6', weight: 6 },
+          { label: '长 20', weight: 20, tone: 'focus' },
+          { label: '右宽 6', weight: 6 },
+        ],
+        '把需要围的三边展开',
+      ),
+      text(200, 205, '两条宽先占去 12 米', 'known', 22),
+    ]),
     frame(
       '求面积，再乘回去检查',
       '面积用长乘宽；围栏用三边相加来验算。',
       '20 × 6 = 120 平方米',
-      rectangle(20, 6, 'fence', 2),
+      fenceModel(20, 6, 2),
+    ),
+    frame(
+      '沿着实线走，核对用了多少围栏',
+      '从左上开始，走左宽、下面长、右宽。到墙边就停，不走虚线墙边。',
+      '6 + 20 + 6 = 32 米',
+      [...fenceModel(20, 6, 1), text(200, 242, '左 6 → 下 20 → 右 6', 'focus', 20)],
+    ),
+    frame(
+      '把墙边也算进去，就多算了',
+      '红色虚线是已经有的墙，不需要再买围栏。完整周长 52 米比围栏多出 20 米。',
+      '(20 + 6) × 2 = 52；52 − 20 = 32',
+      fenceModel(20, 6, 3),
     ),
   ],
   '这里的 32 米是长方形完整周长吗？',
   '是，先算 32 ÷ 2',
   '不是，只是另外三边',
   '靠墙的一边没有用围栏，32 里只有一条长、两条宽。',
-  [
-    ...rectangle(20, 6, 'fence', 0),
-    line(70, 55, 330, 55, 'error', true),
-    text(200, 30, '× 这一边不能重复算', 'error', 20),
-  ],
+  fenceModel(20, 6, 3),
 );
+methodStories['u1-remainder'].transfer = {
+  question: '换一组数：203 个，每 16 个一份，怎样才分完？',
+  wrong: '12 份，还剩 16 个',
+  right: '12 份，还剩 11 个',
+  why: '16 × 12 = 192，203 − 192 = 11；11 不够再组成一份。若剩 16 个，还能再分一份，而且总数也不再是 203。',
+  nodes: grouping(12, 16, 11),
+};
+methodStories['u2-fence'].transfer = {
+  question: '换个靠墙方向：长 10 米、宽 8 米，宽边靠墙，需要围几米？',
+  wrong: '26 米：10 + 8 + 8',
+  right: '28 米：10 + 10 + 8',
+  why: '这次靠墙的是宽边。剩下要围的是两条长、一条宽，所以是 10 + 10 + 8 = 28 米。不能照抄“长加两条宽”。',
+  nodes: fenceModel(10, 8, 1, true),
+};
 methodStories['u2-tiling'] = story(
   '6 米 × 4 米，边长 2 分米的砖，每块 3 元。',
   [
@@ -829,13 +1023,13 @@ methodStories['u3-inverse'] = story(
       '先守住总人数',
       '队伍变了行数，人没有增加或减少。',
       '12 × 30 = 360 人',
-      bars([{ label: '12 行 × 30 人', weight: 1 }], '总人数 360'),
+      equalGroups(12, 30, '原来 12 行，每个框是一行'),
     ),
     frame(
       '把同一总量重新分组',
       '现在要把 360 人平均分成 18 行。',
       '360 ÷ 18 = 20 人',
-      bars([{ label: '18 行 × 20 人', weight: 1, tone: 'focus' }], '仍是 360 人'),
+      equalGroups(18, 20, '现在 18 行：框多了，每框少了', 'focus'),
     ),
     frame(
       '乘回去，看总数是否相同',
@@ -865,7 +1059,7 @@ methodStories['u3-shopping'] = story(
       bars(
         [
           { label: '本子 48', weight: 48 },
-          { label: '笔 15', weight: 20, tone: 'focus' },
+          { label: '笔 15', weight: 15, tone: 'focus' },
         ],
         '花掉 63 元',
       ),
@@ -917,7 +1111,7 @@ methodStories['u3-compare'] = story(
       bars(
         [
           { label: '2 包 60', weight: 60 },
-          { label: '2 本 22', weight: 26, tone: 'focus' },
+          { label: '2 本 22', weight: 22, tone: 'focus' },
         ],
         '总价 82 元',
       ),
@@ -935,13 +1129,13 @@ methodStories['u3-speed'] = story(
       '先看每 1 分钟走多少',
       '把 840 米分成 12 份，取其中 1 份。',
       '840 ÷ 12 = 70 米/分',
-      bars([{ label: '12 分钟走 840 米', weight: 1 }], '每分钟都走同样远'),
+      equalGroups(12, 70, '每个框表示 1 分钟走的米数'),
     ),
     frame(
       '21 份同样的距离合起来',
       '70 是每分钟的路程，现在有 21 分钟。',
       '70 × 21 = 1470 米',
-      cards(['每分 70 米', '一共 21 分钟', '路程 1470 米'], 2),
+      equalGroups(21, 70, '现在有 21 个同样的 70 米', 'focus'),
     ),
     frame(
       '用单位检查数量关系',
@@ -1026,24 +1220,14 @@ methodStories['u3-conditions'] = story(
 methodStories['u4-order'] = story(
   '96 ÷ 4 × 3 − 18，第一步算什么？',
   [
-    frame(
-      '同一级，从左往右',
-      '乘除同级，排在左边的除法先算。',
-      '96 ÷ 4 = 24',
-      cards(['96 ÷ 4 × 3 − 18', '24 × 3 − 18'], 0),
-    ),
+    frame('同一级，从左往右', '乘除同级，排在左边的除法先算。', '96 ÷ 4 = 24', operationTree(0)),
     frame(
       '算乘法，保留未算部分',
       '只替换算过的部分，减 18 暂时不动。',
       '24 × 3 = 72',
-      cards(['24 × 3 − 18', '72 − 18'], 1),
+      operationTree(1),
     ),
-    frame(
-      '最后处理加减',
-      '顺序对应每一步得到的中间结果。',
-      '72 − 18 = 54',
-      cards(['96 ÷ 4 × 3 − 18', '= 24 × 3 − 18', '= 72 − 18 = 54'], 2),
-    ),
+    frame('最后处理加减', '顺序对应每一步得到的中间结果。', '72 − 18 = 54', operationTree(2)),
   ],
   '能先算中间的 4 × 3 吗？',
   '能，先乘后除',
@@ -1057,19 +1241,14 @@ methodStories['u4-brackets'] = story(
       '先算最里面的整体',
       '小括号包住一个需要先知道的量。',
       '68 − 48 = 20',
-      cards(['840 ÷ [(68 − 48) × 3]', '840 ÷ [20 × 3]'], 1),
+      operationTree(0, true),
     ),
-    frame(
-      '再算中括号里的整体',
-      '20 乘 3 作为完整的除数。',
-      '20 × 3 = 60',
-      cards(['840 ÷ [20 × 3]', '840 ÷ 60'], 1),
-    ),
+    frame('再算中括号里的整体', '20 乘 3 作为完整的除数。', '20 × 3 = 60', operationTree(1, true)),
     frame(
       '最后再平均分',
       '除以 60，不能在除以 20 后再乘 3。',
       '840 ÷ 60 = 14',
-      cards(['小括号 20', '中括号 60', '840 ÷ 60 = 14'], 2),
+      operationTree(2, true),
     ),
   ],
   '中括号里的 20 × 3 表示什么？',
@@ -1135,7 +1314,7 @@ methodStories['u4-steps'] = story(
       bars(
         [
           { label: '用去 54', weight: 54 },
-          { label: '剩 17', weight: 20, tone: 'focus' },
+          { label: '剩 17', weight: 17, tone: 'focus' },
         ],
         '原来 71 米',
       ),
@@ -1419,7 +1598,7 @@ methodStories['u6-tools'] = story(
       bars(
         [
           { label: '300 × 24 = 7200', weight: 300 },
-          { label: '+6×24', weight: 55, tone: 'focus' },
+          { label: '+6×24', weight: 6, tone: 'focus' },
         ],
         '306 = 300 + 6',
       ),
@@ -1518,7 +1697,7 @@ methodStories['u6-application'] = story(
       bars(
         [
           { label: '实际 6930', weight: 6930 },
-          { label: '多 70', weight: 950, tone: 'warm' },
+          { label: '多 70', weight: 70, tone: 'warm' },
         ],
         '先按 7000 元估算',
       ),
@@ -1536,6 +1715,211 @@ methodStories['u6-application'] = story(
   '35 件，每件都多算了 2 元，总共多算 70 元。',
 );
 
-export function methodStory(topicId: string): MethodStory | undefined {
-  return methodStories[topicId];
+const sameQuantity = story(
+  '24 个圆点，每 24 个分成一份，能分成几份？',
+  [
+    frame(
+      '总数和每份量一样大',
+      '这里总共 24 个，每一份也要 24 个。先把这两个量对应起来。',
+      '总数 24；每份 24',
+      [
+        text(200, 27, '每一个圆点表示 1 个', 'known', 21),
+        ...Array.from(
+          { length: 24 },
+          (_, i): MethodNode => ({
+            kind: 'dot',
+            x: 54 + (i % 6) * 57,
+            y: 58 + Math.floor(i / 6) * 39,
+            tone: 'known',
+          }),
+        ),
+      ],
+    ),
+    frame(
+      '把全部圆点圈成一份',
+      '24 个正好圈满一份，外面没有剩下的圆点。这里每份量大于 0，分组才有意义。',
+      '1 份 × 每份 24 = 总数 24',
+      [
+        rect(28, 36, 340, 157, 'focus'),
+        ...Array.from(
+          { length: 24 },
+          (_, i): MethodNode => ({
+            kind: 'dot',
+            x: 54 + (i % 6) * 57,
+            y: 58 + Math.floor(i / 6) * 39,
+            tone: 'focus',
+          }),
+        ),
+        text(200, 233, '正好 1 份，没有余下', 'focus', 22),
+      ],
+    ),
+    frame(
+      '商数的是份数，不是圆点个数',
+      '商表示“这样的完整份有几份”。总数和每份量相同且不为 0，就正好只有一份。',
+      '24 ÷ 24 = 1，余数 0',
+      grouping(1, 24, 0, true),
+    ),
+  ],
+  '36 个，每 36 个一份，商表示什么？',
+  '36 个圆点，所以商是 36',
+  '能分成 1 份，所以商是 1',
+  '商数完整的份数。36 个圆点只够组成一份每份 36 个的整体，不能把圆点个数直接当份数。',
+  grouping(1, 36, 0),
+);
+sameQuantity.transfer = {
+  question: '换一组数：45 个，每份 45 个，分成几份？',
+  wrong: '45 份',
+  right: '1 份',
+  why: '全部 45 个放进同一份，正好用完。总量和每份量同样大，完整份数仍是 1。',
+  nodes: grouping(1, 45, 0),
+};
+
+const largestRemainder = story(
+  '除数是 14，商是 7，余数最大时，原来有多少个？',
+  [
+    frame(
+      '剩下 14 个，就还能再分一份',
+      '每份要 14 个，剩下的 14 个可以直接圈成一份。商就要增加，不能把它当最后的余数。',
+      '余数必须小于 14',
+      regroupRemainder(14, 14, true),
+    ),
+    frame(
+      '少 1 个，就刚好不够一份',
+      '14 减 1 得 13。剩下 13 个不能凑够每份的 14 个，所以最大余数是 13。',
+      '最大余数 = 14 − 1 = 13',
+      grouping(7, 14, 13),
+    ),
+    frame(
+      '把整份和最大余数合起来',
+      '7 份共 98 个，再把剩下的 13 个接回去，得到原来的总量。商固定不变时，余数越大，总量越大。',
+      '14 × 7 + 13 = 111',
+      bars(
+        [
+          { label: '7 份，共 98', weight: 98 },
+          { label: '剩 13', weight: 13, tone: 'warm' },
+        ],
+        '最多共 111 个',
+      ),
+    ),
+  ],
+  '除数是 14，余数能取 14 吗？',
+  '能，和除数一样大',
+  '不能，最多是 13',
+  '余下 14 个会再组成一份，商必须增加。余数是整数且不足一份，因此最大是 13。',
+  regroupRemainder(14, 14, true),
+);
+largestRemainder.transfer = {
+  question: '换一组数：除数 16，商 4，余数最大时总数是多少？',
+  wrong: '64：只算 16 × 4',
+  right: '79：16 × 4 + 15',
+  why: '余数最大是 15。四个完整份共 64，加上这 15 个，原来的总数是 79。',
+  nodes: grouping(4, 16, 15),
+};
+
+const verifyDivision = story(
+  '有人写 229 ÷ 17 = 13……7，怎样验算这个结果？',
+  [
+    frame(
+      '先把商对应的完整份合起来',
+      '13 份，每份 17 个，共 221 个。乘回去只能得到完整份，还不能代表全部总数。',
+      '17 × 13 = 221',
+      grouping(13, 17, 7),
+    ),
+    frame(
+      '加上写出的余数，比较原数',
+      '221 加 7 是 228，比原来的 229 少 1。虽然 7 小于除数，合回去的总数却不对，所以这个结果仍然错了。',
+      '17 × 13 + 7 = 228 ≠ 229',
+      bars(
+        [
+          { label: '完整份 221', weight: 221 },
+          { label: '错写余 7', weight: 7, tone: 'error' },
+          { label: '还少 1', weight: 1, tone: 'warm' },
+        ],
+        '原来 229 个',
+      ),
+    ),
+    frame(
+      '同时检查总数和余数范围',
+      '229 减 221 剩 8。合起来等于原数，而且 8 小于 17，这两项都通过才算验算成功。',
+      '17 × 13 + 8 = 229；8 < 17',
+      grouping(13, 17, 8),
+    ),
+  ],
+  '验算有余数除法，乘回去以后还要做什么？',
+  '只要乘积不超过原数就可以',
+  '加余数核对原数，再检查余数小于除数',
+  '乘积只对应完整的份，余数也属于原总量。合计要等于原数，而且余数必须不足一份，两个条件缺一不可。',
+);
+verifyDivision.transfer = {
+  question: '换一组数：145 ÷ 12 = 12……1，哪种核对完整？',
+  wrong: '12 × 12 = 144，就算通过',
+  right: '12 × 12 + 1 = 145，且 1 < 12',
+  why: '把完整份与余下的合起来等于 145，再确认 1 不足每份 12，这才完整检查了分组结果。',
+  nodes: grouping(12, 12, 1),
+};
+
+const findDivisor = story(
+  '185 个分成 7 份后剩 10 个，每份有多少个？',
+  [
+    frame(
+      '把剩下的和完整份分开',
+      '原来的 185 个包含完整的 7 份和剩下的 10 个。余数没有放进完整份里。',
+      '185 = 7 个完整份 + 10',
+      bars(
+        [
+          { label: '7 份，尚不知道每份', weight: 175 },
+          { label: '剩 10', weight: 10, tone: 'warm' },
+        ],
+        '原来 185 个',
+      ),
+    ),
+    frame(
+      '先取走没有分进整份的部分',
+      '减去剩下的 10 个，175 个才是平均装进 7 份里的总量。',
+      '185 − 10 = 175',
+      bars([{ label: '7 份共有 175', weight: 175, tone: 'focus' }], '只看完整的 7 份'),
+    ),
+    frame(
+      '用整份总量平均分，再验算',
+      '175 平均分成 7 份，每份 25 个；10 比每份 25 少，结果符合余数的要求。',
+      '(185 − 10) ÷ 7 = 25；25 × 7 + 10 = 185',
+      grouping(7, 25, 10),
+    ),
+  ],
+  '求每份量，185 能直接除以 7 吗？',
+  '能，余数不用管',
+  '不能，先减去剩下的 10',
+  '185 中有 10 个不属于这 7 个完整份。先拿走余数，再把完整份的总量平均分。',
+);
+
+/** Content editors assign stable IDs explicitly; no runtime keyword classification or answer access. */
+export const methodQuestionSubskills: Record<string, Record<string, string>> = {
+  'u1-remainder': {
+    'full-p11-s2-q2': 'same-quantity',
+    'full-p06-s2-q7': 'largest-remainder',
+    'full-p09-s1-q6': 'largest-remainder',
+    'full-p11-s1-q7': 'largest-remainder',
+    'full-p13-s2-q11': 'largest-remainder',
+    'full-p14-s1-q6': 'largest-remainder',
+    'full-p17-s3-q4': 'largest-remainder',
+    'full-p11-s2-q3': 'verify-division',
+    'full-p11-s2-q5': 'verify-division',
+    'full-p18-q11': 'verify-division',
+    'full-p06-s3-q3': 'verify-division',
+    'full-p09-s2-q5': 'verify-division',
+    'full-p13-s2-q7': 'verify-division',
+    'full-p04-s3-q1': 'find-divisor',
+    'full-p09-s2-q1': 'find-divisor',
+  },
+};
+export const methodSubskillStories: Record<string, MethodStory> = {
+  'same-quantity': sameQuantity,
+  'largest-remainder': largestRemainder,
+  'verify-division': verifyDivision,
+  'find-divisor': findDivisor,
+};
+
+export function methodStory(topicId: string, questionId?: string): MethodStory | undefined {
+  const subskill = questionId && methodQuestionSubskills[topicId]?.[questionId];
+  return (subskill && methodSubskillStories[subskill]) || methodStories[topicId];
 }

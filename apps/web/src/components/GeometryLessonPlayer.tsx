@@ -1,5 +1,6 @@
 import { Button } from './ui/button';
 import StepControls from './StepControls';
+import LessonNarration from './LessonNarration';
 import { useEffect, useState } from 'react';
 import type { GeometryDemo } from '@mathstudy/contracts';
 import { areaPairs, perimeterPairs, rectangleMetrics, tilingMetrics } from '@mathstudy/math-core';
@@ -7,7 +8,7 @@ import { areaSteps, perimeterSteps, type GeometryStep } from '@mathstudy/animati
 import { Icon } from './ui';
 
 const unitNames = { cm: '厘米', dm: '分米', m: '米' };
-const colors = ['#3563e9', '#c38b2c', '#4c9679', '#9a78bb'];
+const colors = ['var(--sky)', 'var(--sun)', 'var(--success)', 'var(--coral)'];
 export default function GeometryLessonPlayer({
   demo,
   onExplored,
@@ -239,144 +240,147 @@ export default function GeometryLessonPlayer({
           <Icon name={staticMode ? 'Play' : 'List'} size={15} />
         </button>
       </div>
-      <div className="geometry-parameters">
-        {['boundary', 'perimeterFormula', 'areaTiling'].includes(demo.kind) && (
-          <>
-            <RangeControl
-              label="长"
-              value={a}
-              max={12}
-              suffix={unit}
-              onChange={(v) => {
-                setA(v);
-                resetStage();
-              }}
-            />
-            <RangeControl
-              label="宽"
-              value={b}
-              max={10}
-              suffix={unit}
-              onChange={(v) => {
-                setB(v);
-                resetStage();
-              }}
-            />
-          </>
-        )}
-        {demo.kind === 'perimeterMeasure' && (
-          <label className="geometry-select">
-            选择测量图形
-            <select
-              aria-label="选择测量图形"
-              value={shape}
-              onChange={(e) => {
-                setShape(e.target.value as typeof shape);
-                resetStage();
-              }}
-            >
-              <option value="rectangle">长方形：6厘米 × 4厘米</option>
-              <option value="triangle">三角形：3、4、5厘米</option>
-            </select>
-          </label>
-        )}
-        {demo.kind === 'areaUnits' && (
-          <div className="geometry-toggle" role="group" aria-label="选择单位方格">
-            {[1, 2].map((s) => (
-              <button
-                key={s}
-                aria-pressed={tileSide === s}
-                className={tileSide === s ? 'active' : ''}
-                onClick={() => {
-                  setTileSide(s);
+      <details className="lesson-parameters">
+        <summary>调整图形与条件</summary>
+        <div className="geometry-parameters">
+          {['boundary', 'perimeterFormula', 'areaTiling'].includes(demo.kind) && (
+            <>
+              <RangeControl
+                label="长"
+                value={a}
+                max={12}
+                suffix={unit}
+                onChange={(v) => {
+                  setA(v);
                   resetStage();
-                  setStep(s === 1 ? 1 : 2);
                 }}
-              >
-                边长 {s} 厘米的方格
-              </button>
-            ))}
-          </div>
-        )}
-        {demo.kind === 'areaConversion' && (
-          <>
+              />
+              <RangeControl
+                label="宽"
+                value={b}
+                max={10}
+                suffix={unit}
+                onChange={(v) => {
+                  setB(v);
+                  resetStage();
+                }}
+              />
+            </>
+          )}
+          {demo.kind === 'perimeterMeasure' && (
             <label className="geometry-select">
-              换算模型
+              选择测量图形
               <select
-                aria-label="选择面积单位换算"
-                value={largeUnit}
+                aria-label="选择测量图形"
+                value={shape}
                 onChange={(e) => {
-                  setLargeUnit(e.target.value as typeof largeUnit);
+                  setShape(e.target.value as typeof shape);
                   resetStage();
                 }}
               >
-                <option value="dm">平方分米 → 平方厘米</option>
-                <option value="m">平方米 → 平方分米</option>
+                <option value="rectangle">长方形：6厘米 × 4厘米</option>
+                <option value="triangle">三角形：3、4、5厘米</option>
               </select>
             </label>
-            <RangeControl
-              label="大单位数量"
-              value={quantity}
-              max={9}
-              suffix={`平方${unitNames[largeUnit]}`}
-              onChange={(v) => {
-                setQuantity(v);
-                resetStage();
-              }}
-            />
-          </>
-        )}
-        {demo.kind === 'areaEstimate' && (
-          <>
-            <RangeControl
-              label="估测长"
-              value={estimateA}
-              max={12}
-              suffix="米"
-              onChange={(v) => {
-                setEstimateA(v);
-                resetStage();
-              }}
-            />
-            <RangeControl
-              label="估测宽"
-              value={estimateB}
-              max={10}
-              suffix="米"
-              onChange={(v) => {
-                setEstimateB(v);
-                resetStage();
-              }}
-            />
-          </>
-        )}
-        {demo.kind === 'perimeterAreaCompare' && (
-          <div className="geometry-toggle" role="group" aria-label="比较条件">
-            <button
-              aria-pressed={comparison === 'perimeter'}
-              className={comparison === 'perimeter' ? 'active' : ''}
-              onClick={() => {
-                setComparison('perimeter');
-                setPairIndex(0);
-                resetStage();
-              }}
-            >
-              固定周长 24 厘米
-            </button>
-            <button
-              aria-pressed={comparison === 'area'}
-              className={comparison === 'area' ? 'active' : ''}
-              onClick={() => {
-                setComparison('area');
-                setPairIndex(0);
-                resetStage();
-              }}
-            >
-              固定面积 36 平方厘米
-            </button>
-          </div>
-        )}
-      </div>
+          )}
+          {demo.kind === 'areaUnits' && (
+            <div className="geometry-toggle" role="group" aria-label="选择单位方格">
+              {[1, 2].map((s) => (
+                <button
+                  key={s}
+                  aria-pressed={tileSide === s}
+                  className={tileSide === s ? 'active' : ''}
+                  onClick={() => {
+                    setTileSide(s);
+                    resetStage();
+                    setStep(s === 1 ? 1 : 2);
+                  }}
+                >
+                  边长 {s} 厘米的方格
+                </button>
+              ))}
+            </div>
+          )}
+          {demo.kind === 'areaConversion' && (
+            <>
+              <label className="geometry-select">
+                换算模型
+                <select
+                  aria-label="选择面积单位换算"
+                  value={largeUnit}
+                  onChange={(e) => {
+                    setLargeUnit(e.target.value as typeof largeUnit);
+                    resetStage();
+                  }}
+                >
+                  <option value="dm">平方分米 → 平方厘米</option>
+                  <option value="m">平方米 → 平方分米</option>
+                </select>
+              </label>
+              <RangeControl
+                label="大单位数量"
+                value={quantity}
+                max={9}
+                suffix={`平方${unitNames[largeUnit]}`}
+                onChange={(v) => {
+                  setQuantity(v);
+                  resetStage();
+                }}
+              />
+            </>
+          )}
+          {demo.kind === 'areaEstimate' && (
+            <>
+              <RangeControl
+                label="估测长"
+                value={estimateA}
+                max={12}
+                suffix="米"
+                onChange={(v) => {
+                  setEstimateA(v);
+                  resetStage();
+                }}
+              />
+              <RangeControl
+                label="估测宽"
+                value={estimateB}
+                max={10}
+                suffix="米"
+                onChange={(v) => {
+                  setEstimateB(v);
+                  resetStage();
+                }}
+              />
+            </>
+          )}
+          {demo.kind === 'perimeterAreaCompare' && (
+            <div className="geometry-toggle" role="group" aria-label="比较条件">
+              <button
+                aria-pressed={comparison === 'perimeter'}
+                className={comparison === 'perimeter' ? 'active' : ''}
+                onClick={() => {
+                  setComparison('perimeter');
+                  setPairIndex(0);
+                  resetStage();
+                }}
+              >
+                固定周长 24 厘米
+              </button>
+              <button
+                aria-pressed={comparison === 'area'}
+                className={comparison === 'area' ? 'active' : ''}
+                onClick={() => {
+                  setComparison('area');
+                  setPairIndex(0);
+                  resetStage();
+                }}
+              >
+                固定面积 36 平方厘米
+              </button>
+            </div>
+          )}
+        </div>
+      </details>
       {staticMode ? (
         <ol className="static-steps">
           {frames.map((f, i) => (
@@ -644,13 +648,15 @@ export default function GeometryLessonPlayer({
             )}
             <p className="geometry-scale-note">示意图，非实际尺寸。</p>
           </div>
-          <div className="narration" aria-live="polite">
-            <span className="narration-step">{step + 1}</span>
-            <div>
-              <strong>{frames[step].title}</strong>
-              <p>{frames[step].text}</p>
+          <LessonNarration>
+            <div className="narration" aria-live="polite">
+              <span className="narration-step">{step + 1}</span>
+              <div>
+                <strong>{frames[step].title}</strong>
+                <p>{frames[step].text}</p>
+              </div>
             </div>
-          </div>
+          </LessonNarration>
           <StepControls
             step={step}
             last={frames.length - 1}
@@ -743,7 +749,15 @@ export function RectangleCanvas({
       role="img"
       aria-label={`${labelDimensions ? `长${a}${unit}、宽${b}${unit}` : '教室形状示意'}，已铺${filled}格${formula ? `，${formula}` : ''}`}
     >
-      <rect x={x} y={y} width={w} height={h} fill="#fff" stroke="#aabbd8" strokeWidth={2} />
+      <rect
+        x={x}
+        y={y}
+        width={w}
+        height={h}
+        fill="var(--card)"
+        stroke="var(--input)"
+        strokeWidth={2}
+      />
       {Array.from({ length: columns * rows }, (_, i) => (
         <rect
           className="unit-tile"
@@ -752,8 +766,14 @@ export function RectangleCanvas({
           y={y + Math.floor(i / columns) * tile}
           width={tile}
           height={tile}
-          fill={i < filled ? (Math.floor(i / columns) % 2 ? '#a8d4c6' : '#c8e3d9') : 'transparent'}
-          stroke={filled > 0 ? '#9eb9bc' : 'transparent'}
+          fill={
+            i < filled
+              ? Math.floor(i / columns) % 2
+                ? 'var(--success-soft)'
+                : 'var(--accent)'
+              : 'transparent'
+          }
+          stroke={filled > 0 ? 'var(--border)' : 'transparent'}
           strokeWidth={1}
         />
       ))}
@@ -764,7 +784,7 @@ export function RectangleCanvas({
           width={w}
           height={h}
           fill="none"
-          stroke="#3563e9"
+          stroke="var(--sky)"
           strokeWidth={4}
           className="highlight-boundary"
         />
@@ -787,7 +807,7 @@ export function RectangleCanvas({
       )}
       {filled > 0 && (
         <>
-          <rect x="228" y="264" width="18" height="18" fill="#c8e3d9" stroke="#91b2a8" />
+          <rect x="228" y="264" width="18" height="18" fill="var(--accent)" stroke="var(--input)" />
           <text x="254" y="278" fontSize="14">
             1格＝{tileSide * tileSide}平方{unit}
           </text>
@@ -843,8 +863,8 @@ function MeasurementCanvas({
     >
       <polygon
         points={vertices.map((p) => p.join(',')).join(' ')}
-        fill="#f0f5ff"
-        stroke="#c1d0e7"
+        fill="var(--sky-soft)"
+        stroke="var(--input)"
       />
       {edges.map((edge, i) => {
         const start = vertices[i],
@@ -858,7 +878,7 @@ function MeasurementCanvas({
               y1={start[1]}
               x2={end[0]}
               y2={end[1]}
-              stroke={measured.includes(i) ? colors[i] : '#aabbd8'}
+              stroke={measured.includes(i) ? colors[i] : 'var(--input)'}
               strokeWidth={active === i && step === 1 ? 6 : 3}
             />
             <text
@@ -904,7 +924,7 @@ function MeasurementCanvas({
       <text x="480" y="100" textAnchor="middle" className="dimension-label">
         {step < 2 ? '先逐边量一量' : '每一段与原边等长'}
       </text>
-      <text x="480" y="129" textAnchor="middle" fontSize="12" fill="#63718a">
+      <text x="480" y="129" textAnchor="middle" fontSize="12" fill="var(--muted)">
         {measured.length} / {edges.length} 条边已记录
       </text>
       {step === 1 && (
@@ -914,12 +934,12 @@ function MeasurementCanvas({
             y="249"
             width={edges[active] * scale}
             height="35"
-            fill="#fff0cc"
-            stroke="#d2b778"
+            fill="var(--sun-soft)"
+            stroke="var(--sun)"
           />
           {Array.from({ length: edges[active] + 1 }, (_, i) => (
             <g key={i}>
-              <line x1={60 + i * scale} x2={60 + i * scale} y1="249" y2="260" stroke="#806940" />
+              <line x1={60 + i * scale} x2={60 + i * scale} y1="249" y2="260" stroke="var(--sun)" />
               <text x={60 + i * scale} y="278" fontSize="12" textAnchor="middle">
                 {i}
               </text>
@@ -945,7 +965,7 @@ function MeasurementCanvas({
             y1="255"
             x2={60 + perimeter * scale}
             y2="280"
-            stroke="#63718a"
+            stroke="var(--muted)"
           />
           <text x="320" y="318" textAnchor="middle" className="geometry-formula">
             {edges.join('＋')}＝{perimeter} 厘米

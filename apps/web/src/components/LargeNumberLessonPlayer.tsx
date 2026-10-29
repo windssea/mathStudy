@@ -1,6 +1,7 @@
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import StepControls from './StepControls';
+import LessonNarration from './LessonNarration';
 import { useEffect, useId, useState } from 'react';
 import type { LargeNumberDemo } from '@mathstudy/contracts';
 import {
@@ -238,186 +239,196 @@ export default function LargeNumberLessonPlayer({
         </div>
         <span className="source-label">{sourcePages[workspace]}</span>
       </div>
-      {demo.kind === 'largeReview' && (
-        <label className="arithmetic-selector">
-          综合实验
-          <select value={workspace} onChange={(e) => changeWorkspace(e.target.value as Workspace)}>
-            <option value="reading">数位、读写与比较</option>
-            <option value="rounding">近似数与范围</option>
-            <option value="counter">计数单位进位</option>
-            <option value="encoding">数字编码</option>
-          </select>
-        </label>
-      )}
-      {workspace !== 'encoding' && (
-        <>
+      <details
+        className="lesson-parameters"
+        key={`${workspace}-${readingMode}`}
+        open={workspace === 'reading' && readingMode === 'write'}
+      >
+        <summary>调整数字与学习方式</summary>
+        {demo.kind === 'largeReview' && (
           <label className="arithmetic-selector">
-            选择演示例题
+            综合实验
             <select
-              value={readingMode === 'write' ? writingTarget : value}
-              onChange={(e) => {
-                try {
-                  const next = Number(e.target.value);
-                  if (readingMode === 'write' && workspace === 'reading') {
-                    setWritingTarget(next);
-                    commit(0);
-                  } else {
-                    const example = examples.find((item) => item.value === next);
-                    commit(next, {
-                      counter: workspace === 'counter' ? example?.power : undefined,
-                      retain: workspace === 'rounding' ? example?.power : undefined,
-                    });
+              value={workspace}
+              onChange={(e) => changeWorkspace(e.target.value as Workspace)}
+            >
+              <option value="reading">数位、读写与比较</option>
+              <option value="rounding">近似数与范围</option>
+              <option value="counter">计数单位进位</option>
+              <option value="encoding">数字编码</option>
+            </select>
+          </label>
+        )}
+        {workspace !== 'encoding' && (
+          <>
+            <label className="arithmetic-selector">
+              选择演示例题
+              <select
+                value={readingMode === 'write' ? writingTarget : value}
+                onChange={(e) => {
+                  try {
+                    const next = Number(e.target.value);
+                    if (readingMode === 'write' && workspace === 'reading') {
+                      setWritingTarget(next);
+                      commit(0);
+                    } else {
+                      const example = examples.find((item) => item.value === next);
+                      commit(next, {
+                        counter: workspace === 'counter' ? example?.power : undefined,
+                        retain: workspace === 'rounding' ? example?.power : undefined,
+                      });
+                    }
+                  } catch (error) {
+                    setFeedback((error as Error).message);
                   }
-                } catch (error) {
-                  setFeedback((error as Error).message);
-                }
+                }}
+              >
+                {!examples.some(
+                  (item) => item.value === (readingMode === 'write' ? writingTarget : value),
+                ) && (
+                  <option value={readingMode === 'write' ? writingTarget : value}>
+                    自己设置：{readingMode === 'write' ? writingTarget : value}
+                  </option>
+                )}
+                {examples.map((item) => (
+                  <option key={item.value} value={item.value}>
+                    {item.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <details
+              className="number-customize"
+              open={workspace === 'reading' && readingMode === 'write'}
+              key={`${workspace}-${readingMode}`}
+            >
+              <summary>
+                {workspace === 'reading' && readingMode === 'write' ? '写数作答' : '自定义数字'}
+              </summary>
+              <form
+                className="number-input-form"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  try {
+                    commit(parseLargeNumber(draft));
+                  } catch (error) {
+                    setFeedback((error as Error).message);
+                  }
+                }}
+              >
+                <label htmlFor={`${id}-number`}>
+                  {workspace === 'rounding' && roundingMode === 'range'
+                    ? '目标近似数（整万或整亿）'
+                    : readingMode === 'write' && workspace === 'reading'
+                      ? '写出阿拉伯数字'
+                      : '输入整数'}
+                  <Input
+                    id={`${id}-number`}
+                    inputMode="numeric"
+                    maxLength={12}
+                    value={draft}
+                    onChange={(e) => setDraft(e.target.value)}
+                  />
+                </label>
+                <Button variant="outline" className="button" type="submit">
+                  写到数位表
+                </Button>
+              </form>
+            </details>
+          </>
+        )}
+        {workspace === 'counter' && (
+          <label className="arithmetic-selector">
+            本次添的计数单位
+            <select
+              value={counterPower}
+              onChange={(e) => {
+                setCounterPower(Number(e.target.value));
+                setSelectedPower(Number(e.target.value));
+                reset();
               }}
             >
-              {!examples.some(
-                (item) => item.value === (readingMode === 'write' ? writingTarget : value),
-              ) && (
-                <option value={readingMode === 'write' ? writingTarget : value}>
-                  自己设置：{readingMode === 'write' ? writingTarget : value}
-                </option>
-              )}
-              {examples.map((item) => (
-                <option key={item.value} value={item.value}>
-                  {item.label}
+              {countingUnits.map((unit, power) => (
+                <option
+                  key={unit}
+                  value={power}
+                  disabled={value + 10 ** power > MAX_CLASSROOM_NUMBER}
+                >
+                  添1个{unit}（{10 ** power}）
                 </option>
               ))}
             </select>
           </label>
-          <details
-            className="number-customize"
-            open={workspace === 'reading' && readingMode === 'write'}
-            key={`${workspace}-${readingMode}`}
-          >
-            <summary>
-              {workspace === 'reading' && readingMode === 'write' ? '写数作答' : '自定义数字'}
-            </summary>
-            <form
-              className="number-input-form"
-              onSubmit={(e) => {
-                e.preventDefault();
-                try {
-                  commit(parseLargeNumber(draft));
-                } catch (error) {
-                  setFeedback((error as Error).message);
-                }
-              }}
-            >
-              <label htmlFor={`${id}-number`}>
-                {workspace === 'rounding' && roundingMode === 'range'
-                  ? '目标近似数（整万或整亿）'
-                  : readingMode === 'write' && workspace === 'reading'
-                    ? '写出阿拉伯数字'
-                    : '输入整数'}
-                <Input
-                  id={`${id}-number`}
-                  inputMode="numeric"
-                  maxLength={12}
-                  value={draft}
-                  onChange={(e) => setDraft(e.target.value)}
-                />
-              </label>
-              <Button variant="outline" className="button" type="submit">
-                写到数位表
-              </Button>
-            </form>
-          </details>
-        </>
-      )}
-      {workspace === 'counter' && (
-        <label className="arithmetic-selector">
-          本次添的计数单位
-          <select
-            value={counterPower}
-            onChange={(e) => {
-              setCounterPower(Number(e.target.value));
-              setSelectedPower(Number(e.target.value));
-              reset();
-            }}
-          >
-            {countingUnits.map((unit, power) => (
-              <option
-                key={unit}
-                value={power}
-                disabled={value + 10 ** power > MAX_CLASSROOM_NUMBER}
-              >
-                添1个{unit}（{10 ** power}）
-              </option>
-            ))}
-          </select>
-        </label>
-      )}
-      {workspace === 'reading' && (
-        <div className="arithmetic-actions number-mode-buttons">
-          {(['read', 'write', 'compare'] as const).map((mode, index) => (
-            <Button
-              variant="outline"
-              key={mode}
-              className="button"
-              aria-pressed={readingMode === mode}
-              onClick={() => {
-                if (readingMode === mode) return;
-                setReadingMode(mode);
-                reset();
-                if (mode === 'write') {
-                  setWritingTarget(value);
-                  setValue(0);
-                  setDraft('0');
-                }
-              }}
-            >
-              {['分级读数', '练习写数', '比较大小'][index]}
-            </Button>
-          ))}
-        </div>
-      )}
-      {workspace === 'rounding' && (
-        <>
+        )}
+        {workspace === 'reading' && (
           <div className="arithmetic-actions number-mode-buttons">
-            {(['round', 'exact', 'range'] as const).map((mode, index) => (
+            {(['read', 'write', 'compare'] as const).map((mode, index) => (
               <Button
                 variant="outline"
                 key={mode}
                 className="button"
-                aria-pressed={roundingMode === mode}
-                onClick={() => chooseRoundingMode(mode)}
+                aria-pressed={readingMode === mode}
+                onClick={() => {
+                  if (readingMode === mode) return;
+                  setReadingMode(mode);
+                  reset();
+                  if (mode === 'write') {
+                    setWritingTarget(value);
+                    setValue(0);
+                    setDraft('0');
+                  }
+                }}
               >
-                {['四舍五入', '精确改写', '反推整数范围'][index]}
+                {['分级读数', '练习写数', '比较大小'][index]}
               </Button>
             ))}
           </div>
-          <label className="arithmetic-selector">
-            保留或改写的单位
-            <select
-              value={retainPower}
-              onChange={(e) => {
-                const power = Number(e.target.value);
-                if (roundingMode === 'range') {
-                  const target = roundLargeNumber(value, power).rounded;
-                  if (target > MAX_CLASSROOM_NUMBER) {
-                    setFeedback('这个目标超过12位演示范围，请先换一个较小的数。');
-                    return;
-                  }
-                  setValue(target);
-                  setDraft(String(target));
-                }
-                setRetainPower(power);
-                reset();
-              }}
-            >
-              {(roundingMode === 'round' ? [2, 3, 4, 8] : [4, 8]).map((power) => (
-                <option value={power} key={power}>
-                  {countingUnits[power]}
-                  {roundingMode === 'round' ? '位' : ''}
-                </option>
+        )}
+        {workspace === 'rounding' && (
+          <>
+            <div className="arithmetic-actions number-mode-buttons">
+              {(['round', 'exact', 'range'] as const).map((mode, index) => (
+                <Button
+                  variant="outline"
+                  key={mode}
+                  className="button"
+                  aria-pressed={roundingMode === mode}
+                  onClick={() => chooseRoundingMode(mode)}
+                >
+                  {['四舍五入', '精确改写', '反推整数范围'][index]}
+                </Button>
               ))}
-            </select>
-          </label>
-        </>
-      )}
+            </div>
+            <label className="arithmetic-selector">
+              保留或改写的单位
+              <select
+                value={retainPower}
+                onChange={(e) => {
+                  const power = Number(e.target.value);
+                  if (roundingMode === 'range') {
+                    const target = roundLargeNumber(value, power).rounded;
+                    if (target > MAX_CLASSROOM_NUMBER) {
+                      setFeedback('这个目标超过12位演示范围，请先换一个较小的数。');
+                      return;
+                    }
+                    setValue(target);
+                    setDraft(String(target));
+                  }
+                  setRetainPower(power);
+                  reset();
+                }}
+              >
+                {(roundingMode === 'round' ? [2, 3, 4, 8] : [4, 8]).map((power) => (
+                  <option value={power} key={power}>
+                    {countingUnits[power]}
+                    {roundingMode === 'round' ? '位' : ''}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </>
+        )}
+      </details>
       <div className="large-number-stage">
         <h3>{frame.title}</h3>
         {workspace !== 'encoding' && (
@@ -778,9 +789,12 @@ export default function LargeNumberLessonPlayer({
             </details>
           </>
         )}
-        <div className="arithmetic-reason" role="status" aria-live="polite">
-          {feedback || frame.text}
-        </div>
+        <LessonNarration>
+          <div className="arithmetic-reason" role="status" aria-live="polite">
+            <strong>{frame.title}</strong>
+            <p>{feedback || frame.text}</p>
+          </div>
+        </LessonNarration>
         {frame.result && <div className="number-result">{frame.result}</div>}
       </div>
       <StepControls
@@ -850,20 +864,20 @@ function NumberLine({
             : `${value}位于${rounding.lower}与${rounding.upper}之间，中点${rounding.midpoint}，四舍五入到${rounding.rounded}。`
         }
       >
-        <line x1="60" x2="660" y1="94" y2="94" stroke="#64748b" strokeWidth="2" />
+        <line x1="60" x2="660" y1="94" y2="94" stroke="var(--muted)" strokeWidth="2" />
         {range && step >= 1 && (
           <rect
             x={x(range.lower)}
             y="82"
             width={x(range.excludedUpper) - x(range.lower)}
             height="24"
-            fill="#3563e9"
+            fill="var(--sky)"
             opacity=".18"
           />
         )}
         {[start, (start + end) / 2, end].map((number) => (
           <g key={number}>
-            <line x1={x(number)} x2={x(number)} y1="85" y2="103" stroke="#64748b" />
+            <line x1={x(number)} x2={x(number)} y1="85" y2="103" stroke="var(--muted)" />
             <text
               x={x(number)}
               y="166"
@@ -880,7 +894,7 @@ function NumberLine({
               x2={x(rounding.midpoint)}
               y1="65"
               y2="115"
-              stroke="#c38b2c"
+              stroke="var(--sun)"
               strokeDasharray="4 4"
             />
             <text x={x(rounding.midpoint)} y="194" textAnchor="middle">
@@ -890,7 +904,7 @@ function NumberLine({
         )}
         {range && step >= 1 && (
           <>
-            <circle cx={x(range.lower)} cy="94" r="5" fill="#3563e9" />
+            <circle cx={x(range.lower)} cy="94" r="5" fill="var(--sky)" />
             <text x={x(range.lower)} y="124" textAnchor="middle">
               {range.lower}（含）
             </text>
@@ -903,7 +917,7 @@ function NumberLine({
               cy="94"
               r="5"
               fill="white"
-              stroke="#3563e9"
+              stroke="var(--sky)"
               strokeWidth="2"
             />
             <text x={x(range.excludedUpper)} y="124" textAnchor="middle">
@@ -913,8 +927,8 @@ function NumberLine({
         )}
         {(step >= 2 || probe !== undefined) && (
           <>
-            <line x1={x(current)} x2={x(current)} y1="45" y2="85" stroke="#3563e9" />
-            <circle cx={x(current)} cy={range ? '55' : '94'} r="6" fill="#3563e9" />
+            <line x1={x(current)} x2={x(current)} y1="45" y2="85" stroke="var(--sky)" />
+            <circle cx={x(current)} cy={range ? '55' : '94'} r="6" fill="var(--sky)" />
             <text x={Math.min(620, Math.max(100, x(current)))} y="32" textAnchor="middle">
               原数 {current}
             </text>
@@ -924,7 +938,7 @@ function NumberLine({
           <path
             d={`M ${x(current)} 65 Q ${(x(current) + x(rounding.rounded)) / 2} 5 ${x(rounding.rounded)} 65`}
             fill="none"
-            stroke="#4c9679"
+            stroke="var(--success)"
             strokeWidth="3"
           />
         )}

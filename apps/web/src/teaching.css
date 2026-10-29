@@ -1,7 +1,7 @@
 /* Child-facing teaching: a drawing first, one reason at a time, controls always in reach. */
 .teaching-catalog {
-  height: calc(100dvh - 380px);
-  min-height: 250px;
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -34,25 +34,27 @@
 .collection-content .teaching-topic-card {
   display: grid;
   grid-template-columns: 44px minmax(0, 1fr) auto;
-  gap: 16px;
+  gap: 12px;
   align-items: center;
-  min-height: 156px;
-  padding: 20px;
+  min-height: 92px;
+  padding: 12px 8px;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
 }
 .topic-card-copy {
   min-width: 0;
 }
 .topic-card-copy > h4 {
   font-size: 20px;
-  line-height: 1.5;
+  line-height: 1.4;
 }
 .topic-card-copy > p {
   font-size: var(--text-small);
   color: var(--muted);
-  line-height: 1.65;
-  margin: 8px 0;
+  line-height: 1.5;
+  margin: 2px 0;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -62,7 +64,7 @@
 }
 .teaching-topic-card > .topic-card-actions {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: stretch;
   gap: 8px;
 }
@@ -145,24 +147,30 @@
 .method-tab-content {
   flex: 1;
   min-height: 0;
-  padding: 16px 18px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 12px;
   overflow: hidden;
   position: relative;
 }
 .method-assistance-note {
+  flex-shrink: 0;
   font-size: var(--text-caption);
   color: var(--muted);
-  margin: 0 0 8px;
+  margin: 0;
+  line-height: 1.5;
 }
 .topic-method {
   height: 100%;
   min-height: 0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 6px;
 }
 .method-tab-content .topic-method {
-  height: calc(100% - 31px);
+  flex: 1;
+  height: auto;
 }
 .method-heading {
   flex-shrink: 0;
@@ -196,8 +204,8 @@
 }
 .method-heading p {
   font-size: var(--text-body);
-  line-height: 1.65;
-  margin: 8px 0 0;
+  line-height: 1.5;
+  margin: 0;
   color: var(--ink);
   max-width: 65ch;
 }
@@ -218,7 +226,7 @@
   min-height: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
 }
 .demo-topline {
   flex-shrink: 0;
@@ -246,12 +254,15 @@
   font-size: var(--text-small);
 }
 .demo-step-nav {
-  display: grid;
-  grid-template-columns: repeat(3, 44px);
+  display: flex;
+  overflow-x: auto;
   gap: 4px;
-  flex-shrink: 0;
+  flex-shrink: 1;
+  min-width: 0;
+  scrollbar-width: thin;
 }
 .demo-step-nav button {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -293,7 +304,7 @@
 .demo-stage {
   flex: 1;
   min-height: 0;
-  overflow: auto;
+  overflow: hidden;
   background: var(--background);
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -302,12 +313,24 @@
 .demo-visual {
   padding: 8px 12px 12px;
   border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.method-diagram-wrap {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 .method-diagram {
   display: block;
   width: 100%;
   max-width: 580px;
-  height: clamp(160px, 22dvh, 230px);
+  height: 100%;
+  min-height: 0;
+  max-height: 100%;
+  flex: 1;
   margin: 0 auto;
   overflow: visible;
 }
@@ -373,6 +396,8 @@
   flex-wrap: wrap;
   font-size: var(--text-caption);
   color: var(--muted);
+  flex-shrink: 0;
+  line-height: 1.4;
 }
 .diagram-key > span {
   display: inline-flex;
@@ -403,25 +428,25 @@
   padding: 16px 18px 20px;
 }
 .demo-reason h4 {
-  font-size: 21px;
-  line-height: 1.5;
-  margin: 0 0 8px;
+  font-size: 19px;
+  line-height: 1.4;
+  margin: 0 0 6px;
 }
 .demo-reason > p {
   font-size: var(--text-body);
-  line-height: 1.75;
+  line-height: 1.6;
+  margin: 0;
   color: var(--ink);
 }
 .demo-equation {
-  padding: 12px 14px;
-  margin-top: 14px;
+  padding: 8px 10px;
+  margin-top: 8px;
   background: var(--card);
-  border-left: 4px solid var(--primary);
-  border-radius: 0 8px 8px 0;
-  font-size: 22px;
+  border-radius: 8px;
+  font-size: 20px;
   font-weight: 650;
   color: var(--primary);
-  line-height: 1.65;
+  line-height: 1.5;
   overflow-wrap: anywhere;
   font-variant-numeric: tabular-nums;
 }
@@ -431,12 +456,12 @@
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  padding-top: 4px;
+  padding-top: 0;
 }
 .method-transport [data-slot='button'] {
-  min-height: 48px;
+  min-height: 44px;
   font-size: var(--text-ui);
-  padding: 10px 12px;
+  padding: 8px 12px;
 }
 .mistake-options {
   display: grid;
@@ -616,17 +641,17 @@
   color: var(--muted);
   line-height: 1.7;
 }
-@container (min-width:500px) {
+@container (min-width:320px) {
   .demo-stage {
     display: grid;
-    grid-template-columns: 1.15fr 1fr;
+    grid-template-columns: minmax(0, 1.4fr) minmax(140px, 1fr);
     grid-template-rows: minmax(0, 1fr);
     align-items: stretch;
   }
   .demo-visual {
     border-bottom: 0;
     border-right: 1px solid var(--border);
-    padding: 12px;
+    padding: 8px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -637,32 +662,164 @@
     padding: 24px;
   }
   .method-diagram {
-    height: calc(100% - 36px);
+    height: 100%;
     max-height: 100%;
     min-height: 0;
     flex: 1;
   }
   .demo-reason h4 {
-    font-size: 24px;
+    font-size: 19px;
   }
   .demo-reason {
     align-self: stretch;
-    padding: 16px;
+    padding: 12px;
     min-height: 0;
     overflow-y: auto;
   }
 }
-@container (min-width:500px) and (max-width:650px) {
-  .demo-stage {
-    grid-template-columns: 0.85fr 1.15fr;
-  }
+@container (min-width:320px) and (max-width:750px) {
   .demo-reason h4 {
-    font-size: 21px;
+    font-size: 19px;
   }
   .demo-equation {
     font-size: 20px;
-    padding: 10px;
+    padding: 8px 10px;
   }
+}
+
+/* Compact learning rows preserve the content's curricular order. */
+@media (min-width: 768px) {
+  .home-page {
+    height: calc(100dvh - var(--topbar-height) - 40px);
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .main-content:has(> .home-page) {
+    padding: 20px 24px;
+  }
+  .home-page .practice-page-head {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    margin: 0;
+    min-height: 40px;
+  }
+  .home-page .practice-page-head h1 {
+    font-size: 26px;
+  }
+  .home-page .collection-layout {
+    flex: 1;
+    min-height: 0;
+  }
+  .home-page .collection-content {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .home-page .collection-heading {
+    margin-bottom: 4px;
+    min-height: 44px;
+  }
+  .home-page .collection-filters {
+    padding: 0 0 8px;
+    margin-bottom: 8px;
+    gap: 12px;
+  }
+  .home-page .teaching-catalog {
+    height: auto;
+    min-height: 0;
+    gap: 8px;
+  }
+  .home-page .collection-nav {
+    max-height: 100%;
+  }
+  .home-page .topic-learning-sequence {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    max-height: none;
+    overflow: visible;
+  }
+  .home-page .collection-content .teaching-topic-card {
+    min-height: 96px;
+    padding: 8px 4px;
+    gap: 12px;
+  }
+  .home-page .teaching-topic-card .topic-card-actions [data-slot='button'] {
+    padding: 8px 10px;
+    min-height: 44px;
+  }
+  .home-page.is-teaching {
+    gap: 0;
+  }
+}
+.method-demo-shell,
+.method-inline {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.method-inline[hidden],
+.method-demonstration[hidden] {
+  display: none !important;
+}
+.method-expand-trigger {
+  align-self: flex-end;
+  min-height: 44px;
+  margin-bottom: 0;
+}
+.method-demonstration {
+  overflow: hidden;
+}
+.demo-stage {
+  flex: 1 1 0;
+  min-height: 0;
+}
+.demo-visual {
+  min-height: 0;
+}
+.method-transport {
+  background: var(--card);
+  padding: 0;
+}
+.diagram-labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  list-style: none;
+  padding: 8px 0;
+  margin: 0;
+  color: var(--ink);
+  font-size: var(--text-small);
+  line-height: 1.7;
+}
+.diagram-labels li {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.diagram-labels li > span {
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid currentColor;
+  border-radius: 5px;
+  flex-shrink: 0;
+  font-size: var(--text-small);
+}
+.method-transfer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+.method-transfer [data-slot='button'] {
+  min-height: 44px;
 }
 @container (max-width:370px) {
   .demo-mode > span {
@@ -706,7 +863,7 @@
     padding: 16px;
   }
   .method-tab-content {
-    padding: 12px;
+    padding: 8px 10px;
   }
   .method-dialog {
     inset: 16px;

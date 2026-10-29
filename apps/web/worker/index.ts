@@ -278,11 +278,34 @@ app.get('/api/v1/practice/:kind/:id', (c) => {
 });
 app.get('/api/v1/questions', (c) => {
   const { textbook, questions } = c.get('content');
-  const { unit, difficulty, type, search = '', scope = 'practice' } = c.req.query();
+  const {
+    unit,
+    difficulty,
+    type,
+    topic,
+    search = '',
+    scope = 'practice',
+    ids,
+    page,
+    pageSize,
+  } = c.req.query();
+  const topics = c.get('content').practice.topics;
+  const requestedIds = ids === undefined ? undefined : new Set(ids.split(',').filter(Boolean));
+  const paginated = page !== undefined || pageSize !== undefined;
+  const size = Number(pageSize ?? 12);
+  const requestedPage = Number(page ?? 1);
   if (
     (unit && !textbook.catalog.some((n) => n.kind === 'unit' && n.id === unit)) ||
     (difficulty && !difficultySchema.safeParse(difficulty).success) ||
     (type && !questionTypeSchema.safeParse(type).success) ||
+    (topic && !topics.some((item) => item.id === topic)) ||
+    (requestedIds && requestedIds.size > 100) ||
+    (paginated &&
+      (!Number.isSafeInteger(size) ||
+        size < 1 ||
+        size > 100 ||
+        !Number.isSafeInteger(requestedPage) ||
+        requestedPage < 1)) ||
     search.length > 100 ||
     !['practice', 'history'].includes(scope)
   ) {
@@ -295,16 +318,31 @@ app.get('/api/v1/questions', (c) => {
     );
   }
   const active = new Set(c.get('content').practice.topics.flatMap((t) => t.questionIds));
+  const topicIds = topic
+    ? new Set(topics.find((item) => item.id === topic)!.questionIds)
+    : undefined;
   const matches = questions.filter(
     (q) =>
       (scope === 'history' || active.has(q.id)) &&
+      (!requestedIds || requestedIds.has(q.id)) &&
+      (!topicIds || topicIds.has(q.id)) &&
       (!unit || q.unitId === unit) &&
       (!difficulty || q.difficulty === difficulty) &&
       (!type || q.type === type) &&
       (!search || `${q.stem}${q.title}`.includes(search)),
   );
+  const pageCount = Math.max(1, Math.ceil(matches.length / size));
+  const currentPage = Math.min(requestedPage, pageCount);
+  const items = paginated ? matches.slice((currentPage - 1) * size, currentPage * size) : matches;
   return c.json(
-    envelope({ items: matches.map(publicQuestion), total: matches.length }, c.get('requestId')),
+    envelope(
+      {
+        items: items.map(publicQuestion),
+        total: matches.length,
+        ...(paginated ? { page: currentPage, pageSize: size, pageCount } : {}),
+      },
+      c.get('requestId'),
+    ),
   );
 });
 app.get('/api/v1/questions/:id', (c) => {

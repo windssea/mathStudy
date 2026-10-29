@@ -71,6 +71,8 @@ it('explains an actual fence misconception, replays steps and supports an enlarg
   fireEvent.click(screen.getByRole('button', { name: '下一步' }));
   expect(screen.getByText('长 = 32 − 6 × 2 = 20 米')).toBeTruthy();
   fireEvent.click(screen.getByRole('button', { name: '下一步' }));
+  fireEvent.click(screen.getByRole('button', { name: '下一步' }));
+  fireEvent.click(screen.getByRole('button', { name: '下一步' }));
   fireEvent.click(screen.getByRole('button', { name: '易错对照' }));
   expect(screen.queryByText('正确的想法：不是，只是另外三边')).toBeNull();
   fireEvent.click(screen.getByRole('button', { name: '是，先算 32 ÷ 2' }));

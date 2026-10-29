@@ -3,6 +3,8 @@ export { perimeterSteps, areaSteps, type GeometryStep } from './geometry';
 export {
   methodStories,
   methodStory,
+  methodQuestionSubskills,
+  methodSubskillStories,
   type MethodStory,
   type MethodFrame,
   type MethodNode,

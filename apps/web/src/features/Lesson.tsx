@@ -14,6 +14,7 @@ import LargeNumberLessonPlayer from '../components/LargeNumberLessonPlayer';
 import QuestionDeck from '../components/QuestionDeck';
 import SplitWorkspace from '../components/layout/SplitWorkspace';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '../components/ui/tabs';
+import { LessonNarrationTarget } from '../components/LessonNarration';
 
 export default function LessonPage() {
   const { editionId, lessonId } = useParams();
@@ -52,6 +53,7 @@ function LessonContent({
   const [explored, setExplored] = useState(false);
   const [attempted, setAttempted] = useState<string[]>([]);
   const [index, setIndex] = useState(0);
+  const [narrationTarget, setNarrationTarget] = useState<HTMLDivElement | null>(null);
   const onExplored = useCallback((done: boolean) => setExplored(done), []);
   const onAttempt = (id: string) => setAttempted((a) => (a.includes(id) ? a : [...a, id]));
   const node = book.catalog.find((n) => n.id === lesson.unitId)!;
@@ -132,56 +134,59 @@ function LessonContent({
           hidden={tab !== 'explore'}
           className="lesson-explore"
         >
-          <SplitWorkspace
-            initialSize={65}
-            primaryLabel="交互演示"
-            secondaryLabel="本课要点"
-            className="lesson-split"
-            primary={player}
-            secondary={
-              <aside className="lesson-notes pane-scroll" tabIndex={0}>
-                <div className="pane-label">
-                  <Icon name="Lightbulb" size={17} />
-                  本课要点
-                </div>
-                <section className="lesson-knowledge" aria-label="本课知识说明">
-                  {lesson.concepts.map((c) => (
-                    <div key={c.title}>
-                      <h3>{c.title}</h3>
-                      <p>{c.text}</p>
-                    </div>
-                  ))}
-                </section>
-                <div className="learning-checklist">
-                  <div data-done={explored}>
-                    <Icon name={explored ? 'CheckCircle2' : 'Play'} size={18} />
-                    <span>完成演示</span>
+          <LessonNarrationTarget.Provider value={narrationTarget}>
+            <SplitWorkspace
+              initialSize={65}
+              primaryLabel="交互演示"
+              secondaryLabel="本课要点"
+              className="lesson-split"
+              primary={player}
+              secondary={
+                <aside className="lesson-notes pane-scroll" tabIndex={0}>
+                  <div className="lesson-current-step" ref={setNarrationTarget} />
+                  <div className="pane-label">
+                    <Icon name="Lightbulb" size={17} />
+                    本课要点
                   </div>
-                  <div data-done={attempted.length >= questions.length}>
-                    <Icon
-                      name={attempted.length >= questions.length ? 'CheckCircle2' : 'NotebookPen'}
-                      size={18}
-                    />
-                    <span>本课练习</span>
-                    <b>
-                      {attempted.length}/{questions.length}
-                    </b>
-                  </div>
-                </div>
-                {deeper.length > 0 && (
-                  <details className="lesson-more">
-                    <summary>进一步练习</summary>
-                    {deeper.map((q) => (
-                      <Link key={q.id} className="text-link" to={`/questions/${q.id}`}>
-                        {q.title}
-                        <Icon name="ArrowRight" size={16} />
-                      </Link>
+                  <section className="lesson-knowledge" aria-label="本课知识说明">
+                    {lesson.concepts.map((c) => (
+                      <details key={c.title}>
+                        <summary>{c.title}</summary>
+                        <p>{c.text}</p>
+                      </details>
                     ))}
-                  </details>
-                )}
-              </aside>
-            }
-          />
+                  </section>
+                  <div className="learning-checklist">
+                    <div data-done={explored}>
+                      <Icon name={explored ? 'CheckCircle2' : 'Play'} size={18} />
+                      <span>完成演示</span>
+                    </div>
+                    <div data-done={attempted.length >= questions.length}>
+                      <Icon
+                        name={attempted.length >= questions.length ? 'CheckCircle2' : 'NotebookPen'}
+                        size={18}
+                      />
+                      <span>本课练习</span>
+                      <b>
+                        {attempted.length}/{questions.length}
+                      </b>
+                    </div>
+                  </div>
+                  {deeper.length > 0 && (
+                    <details className="lesson-more">
+                      <summary>进一步练习</summary>
+                      {deeper.map((q) => (
+                        <Link key={q.id} className="text-link" to={`/questions/${q.id}`}>
+                          {q.title}
+                          <Icon name="ArrowRight" size={16} />
+                        </Link>
+                      ))}
+                    </details>
+                  )}
+                </aside>
+              }
+            />
+          </LessonNarrationTarget.Provider>
         </TabsContent>
         <TabsContent
           value="practice"

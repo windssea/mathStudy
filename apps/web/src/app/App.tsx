@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { BrowserRouter, Link, NavLink, Route, Routes, useLocation } from 'react-router-dom';
 import { DataContext, type HomeData } from './course';
 import { useRemote } from '../lib/api';
@@ -18,6 +18,7 @@ function Shell() {
   useEffect(() => startLearningSync(), []);
   const remote = useRemote<HomeData>('/home');
   const location = useLocation();
+  const mainRef = useRef<HTMLElement>(null);
   const [menu, setMenu] = useState(false);
   useEffect(() => {
     setMenu(false);
@@ -39,6 +40,20 @@ function Shell() {
           : location.pathname.startsWith('/books')
             ? '课程目录'
             : '练习';
+  useEffect(() => {
+    const main = mainRef.current;
+    main?.focus({ preventScroll: true });
+    document.title = `${title} · 数趣`;
+    const updateTitle = () => {
+      const heading = main?.querySelector('h1')?.textContent?.trim();
+      if (heading) document.title = `${heading} · 数趣`;
+    };
+    updateTitle();
+    const observer = new MutationObserver(updateTitle);
+    if (main) observer.observe(main, { childList: true, subtree: true, characterData: true });
+    return () => observer.disconnect();
+  }, [location.pathname, title]);
+  const accountTarget = `/account?${new URLSearchParams({ returnTo: `${location.pathname}${location.search}${location.hash}` })}`;
   return (
     <>
       <a className="skip-link" href="#main">
@@ -123,14 +138,18 @@ function Shell() {
                     : '云端已同步'
                 : '当前设备学习'}
             </span>
-            <Link className="account-link" to="/account">
+            <Link
+              className="account-link"
+              to={location.pathname === '/account' ? '/account' : accountTarget}
+            >
               {account.user ? account.user.name : '登录同步'}
             </Link>
           </div>
         </header>
         <main
           id="main"
-          className={`main-content ${lesson ? 'lesson-main' : ''} ${focused ? 'focus-main' : ''}`}
+          ref={mainRef}
+          className={`main-content ${lesson ? 'lesson-main' : ''} ${focused ? 'focus-main' : ''} ${location.pathname === '/questions' ? 'bank-main' : ''}`}
           tabIndex={-1}
         >
           {remote.loading ? (

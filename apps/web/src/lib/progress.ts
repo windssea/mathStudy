@@ -12,6 +12,7 @@ import {
   type SyncResult,
 } from '@mathstudy/contracts';
 import { ApiError, request } from './api';
+import { clearPracticeDrafts } from './practice-drafts';
 
 type Scope = {
   id: string;
@@ -405,6 +406,7 @@ export async function refreshAccount() {
     const result = await request<{ user: PublicUser | null; available: boolean }>('/account');
     if (revision !== sessionRequest) return;
     const changed = account.user?.id !== result.user?.id;
+    if (changed) clearPracticeDrafts();
     account = {
       ...account,
       user: result.user,
@@ -467,6 +469,7 @@ export async function signOut() {
   });
   if (!response.ok) throw new Error('退出未成功，请连接网络后重试。');
   ++sessionRequest;
+  clearPracticeDrafts();
   account = { user: null, ready: true, syncing: false, pending: 0, error: '', available: true };
   current = load('guest');
   notify();

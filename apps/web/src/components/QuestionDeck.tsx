@@ -9,11 +9,13 @@ export default function QuestionDeck({
   onAttempt,
   onResult,
   topics = [],
+  draftScope,
 }: {
   items: QuestionPublic[];
   index: number;
   onAttempt?: (id: string) => void;
   topics?: PracticeTopic[];
+  draftScope?: string;
   onResult?: (id: string, status: 'correct' | 'incorrect' | 'revealed', assisted: boolean) => void;
 }) {
   const [visited, setVisited] = useState([index]);
@@ -29,6 +31,7 @@ export default function QuestionDeck({
                 headingLevel={2}
                 onAttempt={onAttempt}
                 method={topics.find((topic) => items[i].topicIds?.includes(topic.id))}
+                draftScope={draftScope}
                 onResult={(status, assisted) => onResult?.(items[i].id, status, assisted)}
               />
             </section>

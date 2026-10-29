@@ -1,5 +1,6 @@
 import { Button } from './ui/button';
 import StepControls from './StepControls';
+import LessonNarration from './LessonNarration';
 import { useEffect, useId, useState } from 'react';
 import type { ArithmeticDemo } from '@mathstudy/contracts';
 import {
@@ -126,20 +127,23 @@ export default function ArithmeticLessonPlayer({
         </div>
         <span className="source-label">{scene.source}</span>
       </div>
-      <label className="arithmetic-selector" htmlFor={`${id}-example`}>
-        选择演示例题
-        <select
-          id={`${id}-example`}
-          value={exampleId}
-          onChange={(event) => chooseExample(event.target.value)}
-        >
-          {examples.map((item) => (
-            <option key={item.id} value={item.id}>
-              {item.title}
-            </option>
-          ))}
-        </select>
-      </label>
+      <details className="lesson-parameters">
+        <summary>调整例题</summary>
+        <label className="arithmetic-selector" htmlFor={`${id}-example`}>
+          选择演示例题
+          <select
+            id={`${id}-example`}
+            value={exampleId}
+            onChange={(event) => chooseExample(event.target.value)}
+          >
+            {examples.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.title}
+              </option>
+            ))}
+          </select>
+        </label>
+      </details>
       <div className="arithmetic-stage">
         <h3>{stageTitle}</h3>
         {problem && (
@@ -294,9 +298,12 @@ export default function ArithmeticLessonPlayer({
             </ul>
           </div>
         )}
-        <div className="arithmetic-reason" aria-live="polite" role="status">
-          {feedback || currentReason}
-        </div>
+        <LessonNarration>
+          <div className="arithmetic-reason" aria-live="polite" role="status">
+            <strong>{stageTitle}</strong>
+            <p>{feedback || currentReason}</p>
+          </div>
+        </LessonNarration>
         {demo.kind === 'nestedBrackets' && (
           <details className="bracket-comparison">
             <summary>对照：加一个中括号，为什么结果从4变成100？</summary>

@@ -1,4 +1,5 @@
 import StepControls from './StepControls';
+import LessonNarration from './LessonNarration';
 import { useEffect, useId, useState } from 'react';
 import type { QuantityDemo } from '@mathstudy/contracts';
 import {
@@ -15,7 +16,7 @@ const classmates = travelComparison([
   { name: '小红', distance: 240, time: 4 },
   { name: '小刚', distance: 240, time: 3 },
 ]);
-const palette = ['#3563e9', '#c38b2c', '#4c9679'];
+const palette = ['var(--sky)', 'var(--sun)', 'var(--success)'];
 export default function QuantityLessonPlayer({
   demo,
   onExplored,
@@ -202,126 +203,129 @@ export default function QuantityLessonPlayer({
           <Icon name={staticMode ? 'Play' : 'List'} size={15} />
         </button>
       </div>
-      <div className="quantity-controls">
-        {demo.kind === 'shopping' && (
-          <label>
-            教材情境
-            <select
-              aria-label="购物情境"
-              onChange={(e) => {
-                const pen = e.target.value === 'pen';
-                setUnitValue(pen ? 8 : 2);
-                setCount(pen ? 2 : 5);
-                reset();
-              }}
-              defaultValue="pen"
-            >
-              <option value="pen">钢笔：8元/支，买2支</option>
-              <option value="notebook">练习本：2元/本，买5本</option>
-            </select>
-          </label>
-        )}
-        {demo.kind === 'journey' && (
-          <label>
-            行进情境
-            <select
-              aria-label="行进情境"
-              value={scenario}
-              onChange={(e) => changeScenario(e.target.value as typeof scenario)}
-            >
-              <option value="walk">步行：米/分与分钟</option>
-              <option value="car">行车：千米/时与小时</option>
-              <option value="compare">教材：三位同学谁走得快</option>
-            </select>
-          </label>
-        )}
-        {isProblem && (
-          <label>
-            解决哪一个问题
-            <select
-              aria-label="应用题情境"
-              value={problem}
-              onChange={(e) => {
-                setProblem(e.target.value as typeof problem);
-                setSelected([]);
-                reset();
-              }}
-            >
-              <option value="purchase">购物：先求单价，再算找零</option>
-              <option value="return">往返：路程相同，速度不同</option>
-            </select>
-          </label>
-        )}
-        {!isProblem && !compare && (
-          <>
-            <NumberRange
-              id={`${id}-unit`}
-              label={names[0]}
-              value={unitValue}
-              min={demo.kind === 'journey' ? 10 : 1}
-              max={demo.kind === 'equalGroups' ? 8 : demo.kind === 'journey' ? 100 : 20}
-              step={demo.kind === 'journey' ? 10 : 1}
-              suffix={units[0]}
-              onChange={(v) => update(setUnitValue, v)}
-            />
-            <NumberRange
-              id={`${id}-count`}
-              label={names[1]}
-              value={count}
-              min={1}
-              max={demo.kind === 'equalGroups' ? 6 : demo.kind === 'journey' ? 8 : 12}
-              suffix={units[1]}
-              onChange={(v) => update(setCount, v)}
-            />
-          </>
-        )}
-      </div>
-      {!compare && !isProblem && (
-        <div className="quantity-unknowns" role="group" aria-label="选择要求的量">
-          {(['total', 'unit', 'count'] as const).map((value) => (
-            <button
-              key={value}
-              aria-pressed={unknown === value}
-              onClick={() => {
-                setUnknown(value);
-                reset();
-              }}
-            >
-              求{names[value === 'unit' ? 0 : value === 'count' ? 1 : 2]}
-            </button>
-          ))}
-        </div>
-      )}
-      {isProblem && (
-        <div className="quantity-conditions">
-          <p>
-            <b>先挑出计算需要的条件</b>，再跟着步骤整理。
-          </p>
-          <div role="group" aria-label="选择有用条件">
-            {conditions.map((text, i) => (
-              <button
-                key={text}
-                aria-pressed={selected.includes(i)}
-                onClick={() =>
-                  setSelected((list) =>
-                    list.includes(i) ? list.filter((v) => v !== i) : [...list, i],
-                  )
-                }
+      <details className="lesson-parameters">
+        <summary>调整情境与已知量</summary>
+        <div className="quantity-controls">
+          {demo.kind === 'shopping' && (
+            <label>
+              教材情境
+              <select
+                aria-label="购物情境"
+                onChange={(e) => {
+                  const pen = e.target.value === 'pen';
+                  setUnitValue(pen ? 8 : 2);
+                  setCount(pen ? 2 : 5);
+                  reset();
+                }}
+                defaultValue="pen"
               >
-                {selected.includes(i) ? '已选：' : ''}
-                {text}
+                <option value="pen">钢笔：8元/支，买2支</option>
+                <option value="notebook">练习本：2元/本，买5本</option>
+              </select>
+            </label>
+          )}
+          {demo.kind === 'journey' && (
+            <label>
+              行进情境
+              <select
+                aria-label="行进情境"
+                value={scenario}
+                onChange={(e) => changeScenario(e.target.value as typeof scenario)}
+              >
+                <option value="walk">步行：米/分与分钟</option>
+                <option value="car">行车：千米/时与小时</option>
+                <option value="compare">教材：三位同学谁走得快</option>
+              </select>
+            </label>
+          )}
+          {isProblem && (
+            <label>
+              解决哪一个问题
+              <select
+                aria-label="应用题情境"
+                value={problem}
+                onChange={(e) => {
+                  setProblem(e.target.value as typeof problem);
+                  setSelected([]);
+                  reset();
+                }}
+              >
+                <option value="purchase">购物：先求单价，再算找零</option>
+                <option value="return">往返：路程相同，速度不同</option>
+              </select>
+            </label>
+          )}
+          {!isProblem && !compare && (
+            <>
+              <NumberRange
+                id={`${id}-unit`}
+                label={names[0]}
+                value={unitValue}
+                min={demo.kind === 'journey' ? 10 : 1}
+                max={demo.kind === 'equalGroups' ? 8 : demo.kind === 'journey' ? 100 : 20}
+                step={demo.kind === 'journey' ? 10 : 1}
+                suffix={units[0]}
+                onChange={(v) => update(setUnitValue, v)}
+              />
+              <NumberRange
+                id={`${id}-count`}
+                label={names[1]}
+                value={count}
+                min={1}
+                max={demo.kind === 'equalGroups' ? 6 : demo.kind === 'journey' ? 8 : 12}
+                suffix={units[1]}
+                onChange={(v) => update(setCount, v)}
+              />
+            </>
+          )}
+        </div>
+        {!compare && !isProblem && (
+          <div className="quantity-unknowns" role="group" aria-label="选择要求的量">
+            {(['total', 'unit', 'count'] as const).map((value) => (
+              <button
+                key={value}
+                aria-pressed={unknown === value}
+                onClick={() => {
+                  setUnknown(value);
+                  reset();
+                }}
+              >
+                求{names[value === 'unit' ? 0 : value === 'count' ? 1 : 2]}
               </button>
             ))}
           </div>
-          <p role="status">
-            {selected.length
-              ? selectionCorrect
-                ? '选对了：这些条件可以连成完整的数量关系。'
-                : '再对照问题看看：是否漏掉关键条件，或选了无关信息？'
-              : '每个条件都可以点选，也可以取消。'}
-          </p>
-        </div>
-      )}
+        )}
+        {isProblem && (
+          <div className="quantity-conditions">
+            <p>
+              <b>先挑出计算需要的条件</b>，再跟着步骤整理。
+            </p>
+            <div role="group" aria-label="选择有用条件">
+              {conditions.map((text, i) => (
+                <button
+                  key={text}
+                  aria-pressed={selected.includes(i)}
+                  onClick={() =>
+                    setSelected((list) =>
+                      list.includes(i) ? list.filter((v) => v !== i) : [...list, i],
+                    )
+                  }
+                >
+                  {selected.includes(i) ? '已选：' : ''}
+                  {text}
+                </button>
+              ))}
+            </div>
+            <p role="status">
+              {selected.length
+                ? selectionCorrect
+                  ? '选对了：这些条件可以连成完整的数量关系。'
+                  : '再对照问题看看：是否漏掉关键条件，或选了无关信息？'
+                : '每个条件都可以点选，也可以取消。'}
+            </p>
+          </div>
+        )}
+      </details>
       {staticMode ? (
         <ol className="quantity-static">
           {frames.map((frame, i) => (
@@ -399,13 +403,15 @@ export default function QuantityLessonPlayer({
               </div>
             )}
           </div>
-          <div className="narration" aria-live="polite">
-            <span className="narration-step">{step + 1}</span>
-            <div>
-              <strong>{current.title}</strong>
-              <p>{current.text}</p>
+          <LessonNarration>
+            <div className="narration" aria-live="polite">
+              <span className="narration-step">{step + 1}</span>
+              <div>
+                <strong>{current.title}</strong>
+                <p>{current.text}</p>
+              </div>
             </div>
-          </div>
+          </LessonNarration>
           <StepControls
             step={step}
             last={frames.length - 1}
@@ -499,7 +505,7 @@ function JourneyDrawing({
       <text className="quantity-svg-title" x="320" y="27" textAnchor="middle">
         每一段代表相同的一个单位时间
       </text>
-      <line x1="60" y1="110" x2="580" y2="110" stroke="#aab7ce" strokeWidth="3" />
+      <line x1="60" y1="110" x2="580" y2="110" stroke="var(--input)" strokeWidth="3" />
       {Array.from({ length: count }, (_, i) => (
         <g key={i}>
           <rect
@@ -507,7 +513,7 @@ function JourneyDrawing({
             y="80"
             width={(unitValue / 800) * 520}
             height="30"
-            fill={i < reached ? '#3563e9' : '#e8eef9'}
+            fill={i < reached ? 'var(--sky)' : 'var(--sky-soft)'}
             stroke="white"
           />
           <line
@@ -515,19 +521,19 @@ function JourneyDrawing({
             x2={x((i + 1) * unitValue)}
             y1="76"
             y2="115"
-            stroke="#7e8a9d"
+            stroke="var(--muted)"
           />
         </g>
       ))}
       {[0, 200, 400, 600, 800].map((v) => (
         <g key={v}>
-          <line x1={x(v)} x2={x(v)} y1="118" y2="125" stroke="#7e8a9d" />
+          <line x1={x(v)} x2={x(v)} y1="118" y2="125" stroke="var(--muted)" />
           <text x={x(v)} y="147" textAnchor="middle">
             {v}
           </text>
         </g>
       ))}
-      <circle cx={x(reached * unitValue)} cy="64" r="9" fill="#4c9679" />
+      <circle cx={x(reached * unitValue)} cy="64" r="9" fill="var(--success)" />
       <text className="quantity-svg-summary" x="320" y="183" textAnchor="middle">
         已行进 {reached * unitValue} {suffix} · 路线刻度不会随速度改变
       </text>
@@ -551,7 +557,7 @@ function ComparisonDrawing({ frame }: { frame: QuantityFrame }) {
               <text x="17" y={y + 5}>
                 {trip.name}
               </text>
-              <line x1="75" x2="580" y1={y} y2={y} stroke="#dce4f1" strokeWidth="12" />
+              <line x1="75" x2="580" y1={y} y2={y} stroke="var(--border)" strokeWidth="12" />
               <line
                 x1="75"
                 x2={75 + (distance / 320) * 505}
@@ -619,8 +625,8 @@ function ProblemDrawing({ problem, step }: { problem: 'purchase' | 'return'; ste
                 y={38 + row * 100}
                 width="500"
                 height="32"
-                fill={step >= row + 1 ? '#dce7ff' : '#eef2f8'}
-                stroke="#9daac0"
+                fill={step >= row + 1 ? 'var(--sky-soft)' : 'var(--muted-surface)'}
+                stroke="var(--input)"
               />
               {Array.from({ length: segments }, (_, i) => (
                 <g key={i}>
@@ -629,7 +635,7 @@ function ProblemDrawing({ problem, step }: { problem: 'purchase' | 'return'; ste
                     x2={85 + (500 * i) / segments}
                     y1={38 + row * 100}
                     y2={70 + row * 100}
-                    stroke="#3563e9"
+                    stroke="var(--sky)"
                   />
                   <text
                     x={85 + (500 * (i + 0.5)) / segments}
@@ -693,8 +699,8 @@ function ProblemDrawing({ problem, step }: { problem: 'purchase' | 'return'; ste
         <text x="320" y="27" textAnchor="middle">
           带来的70元
         </text>
-        <rect x="60" y="45" width="520" height="40" fill="#e8eef9" stroke="#aab7ce" />
-        {step >= 2 && <rect x="60" y="45" width={(520 * 48) / 70} height="40" fill="#3563e9" />}
+        <rect x="60" y="45" width="520" height="40" fill="var(--sky-soft)" stroke="var(--input)" />
+        {step >= 2 && <rect x="60" y="45" width={(520 * 48) / 70} height="40" fill="var(--sky)" />}
         <text x="220" y="112" textAnchor="middle">
           用去：{step >= 2 ? '48元' : '?'}
         </text>

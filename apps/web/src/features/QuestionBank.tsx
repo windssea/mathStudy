@@ -1,54 +1,82 @@
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
-import { Link, useParams, useSearchParams } from 'react-router-dom';
-import { useState } from 'react';
-import type { QuestionPublic, PracticeTopic } from '@mathstudy/contracts';
+import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import type { QuestionPublic, PracticeTopic, PracticeCatalog } from '@mathstudy/contracts';
 import { difficultyLabels, typeLabels } from '@mathstudy/contracts';
 import { useCourse } from '../app/course';
 import { useRemote } from '../lib/api';
 import { useProgress } from '../lib/progress';
+import { answerStatus } from '../lib/answer-status';
+import { safeReturnTo } from '../lib/navigation';
 import { Icon, Loading, ErrorState } from '../components/ui';
+import { GridFigureView } from '../components/GridExercise';
 import QuestionRunner from '../components/QuestionRunner';
+
+type BankResult = {
+  items: QuestionPublic[];
+  total: number;
+  page?: number;
+  pageCount?: number;
+  topics?: PracticeTopic[];
+};
 
 export default function QuestionBank() {
   const { questionId } = useParams();
   const [params, setParams] = useSearchParams();
+  const location = useLocation();
   const { textbook: book } = useCourse();
   const [search, setSearch] = useState(params.get('search') ?? '');
+  const searchParam = params.get('search') ?? '';
+  useEffect(() => setSearch(searchParam), [searchParam]);
   const progress = useProgress();
-  const unit = params.get('unit') ?? '',
-    difficulty = params.get('difficulty') ?? '',
-    type = params.get('type') ?? '';
-  const apiParams = new URLSearchParams();
-  if (unit) apiParams.set('unit', unit);
-  if (difficulty) apiParams.set('difficulty', difficulty);
-  if (type) apiParams.set('type', type);
-  if (params.get('search')) apiParams.set('search', params.get('search')!);
-  const remote = useRemote<{ items: QuestionPublic[]; total: number; topics?: PracticeTopic[] }>(
-    `/questions${questionId ? `/${questionId}` : `?${apiParams.toString()}`}`,
+  const unit = params.get('unit') ?? '';
+  const difficulty = params.get('difficulty') ?? '';
+  const type = params.get('type') ?? '';
+  const topic = params.get('topic') ?? '';
+  const apiParams = new URLSearchParams({ page: params.get('page') ?? '1', pageSize: '12' });
+  for (const [key, value] of Object.entries({
+    unit,
+    difficulty,
+    type,
+    topic,
+    search: searchParam,
+  })) {
+    if (value) apiParams.set(key, value);
+  }
+  const remote = useRemote<BankResult>(
+    `/questions${questionId ? `/${questionId}` : `?${apiParams}`}`,
   );
-  const question = remote.data?.items.find((q) => q.id === questionId);
+  const catalog = useRemote<PracticeCatalog>(questionId ? null : '/practice');
   function filter(key: string, value: string) {
     setParams((previous) => {
       const next = new URLSearchParams(previous);
       next.delete('page');
+      next.delete('preview');
+      if (key === 'unit') next.delete('topic');
       if (value) next.set(key, value);
       else next.delete(key);
       return next;
     });
   }
-  const pageCount = Math.max(1, Math.ceil((remote.data?.total ?? 0) / 12));
-  const page = Math.min(pageCount, Math.max(1, Math.trunc(Number(params.get('page'))) || 1));
+  const question = remote.data?.items.find((q) => q.id === questionId);
+  const pageCount = remote.data?.pageCount ?? 1;
+  const page = remote.data?.page ?? 1;
+  const selected =
+    remote.data?.items.find((q) => q.id === params.get('preview')) ?? remote.data?.items[0];
   if (questionId) {
     if (remote.loading) return <Loading />;
     if (!question || remote.error) return <ErrorState message={remote.error ?? '没有找到这道题'} />;
     const unitNode = book.catalog.find((n) => n.id === question.unitId);
+    const fallback = `/questions?unit=${question.unitId}`;
+    const origin = safeReturnTo(params.get('returnTo'), fallback);
+    const back = /^\/(?:questions|records)(?:[?#]|$)/.test(origin) ? origin : fallback;
     return (
       <div className="question-detail-page">
         <header className="question-detail-header">
-          <Link to={`/questions?unit=${question.unitId}`} className="back-link">
+          <Link to={back} className="back-link">
             <Icon name="ArrowLeft" size={16} />
-            返回本单元题库
+            {back.startsWith('/records') ? '返回记录' : '返回题库'}
           </Link>
           <p className="question-unit-label">{unitNode?.title}</p>
         </header>
@@ -57,37 +85,54 @@ export default function QuestionBank() {
             key={question.id}
             question={question}
             standalone
-            method={remote.data?.topics?.find((topic) => question.topicIds?.includes(topic.id))}
+            method={remote.data?.topics?.find((t) => question.topicIds?.includes(t.id))}
           />
         </div>
       </div>
     );
   }
+  function changePage(nextPage: number) {
+    setParams((previous) => {
+      const next = new URLSearchParams(previous);
+      next.set('page', String(nextPage));
+      next.delete('preview');
+      return next;
+    });
+  }
+  const openParams = new URLSearchParams({ returnTo: `${location.pathname}${location.search}` });
   return (
-    <>
+    <div className="bank-page">
       <div className="page-heading">
-        <div>
-          <h1>全部题目</h1>
-        </div>
+        <h1>全部题目</h1>
       </div>
-      <section className="bank-filters panel">
-        <div className="unit-filter" role="group" aria-label="按单元筛选">
-          <button className={!unit ? 'active' : ''} onClick={() => filter('unit', '')}>
-            全部单元
-          </button>
-          {book.catalog
-            .filter((n) => n.kind === 'unit')
-            .map((n, i) => (
-              <button
-                className={unit === n.id ? 'active' : ''}
-                onClick={() => filter('unit', n.id)}
-                key={n.id}
-              >
-                第{['一', '二', '三', '四', '五', '六'][i]}单元
-              </button>
-            ))}
-        </div>
+      <section className="bank-filters panel" aria-label="筛选题目">
         <div className="bank-filter-row">
+          <label>
+            单元
+            <select value={unit} onChange={(e) => filter('unit', e.target.value)}>
+              <option value="">全部单元</option>
+              {book.catalog
+                .filter((n) => n.kind === 'unit')
+                .map((n) => (
+                  <option value={n.id} key={n.id}>
+                    {n.title}
+                  </option>
+                ))}
+            </select>
+          </label>
+          <label>
+            解题类型
+            <select value={topic} onChange={(e) => filter('topic', e.target.value)}>
+              <option value="">全部类型</option>
+              {catalog.data?.topics
+                .filter((t) => !unit || t.unitId === unit)
+                .map((t) => (
+                  <option value={t.id} key={t.id}>
+                    {t.title}
+                  </option>
+                ))}
+            </select>
+          </label>
           <label>
             难度
             <select value={difficulty} onChange={(e) => filter('difficulty', e.target.value)}>
@@ -100,9 +145,9 @@ export default function QuestionBank() {
             </select>
           </label>
           <label>
-            题型
+            作答形式
             <select value={type} onChange={(e) => filter('type', e.target.value)}>
-              <option value="">全部题型</option>
+              <option value="">全部形式</option>
               {Object.entries(typeLabels).map(([k, v]) => (
                 <option value={k} key={k}>
                   {v}
@@ -114,132 +159,130 @@ export default function QuestionBank() {
             className="bank-search"
             onSubmit={(e) => {
               e.preventDefault();
-              filter('search', search);
+              filter('search', search.trim());
             }}
           >
             <label className="search-box">
               <Icon name="Search" size={18} />
               <Input
                 aria-label="搜索题目"
-                placeholder="搜索题目或知识点"
+                placeholder="搜索题目"
                 maxLength={100}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
             </label>
-            <Button variant="outline" className="button secondary" type="submit">
+            <Button variant="outline" type="submit">
               搜索
             </Button>
           </form>
         </div>
       </section>
-      <div className="bank-result-heading">
-        <span>
-          共 <b>{remote.data?.total ?? '…'}</b> 道题
-        </span>
-      </div>
       {remote.loading ? (
         <Loading />
       ) : remote.error ? (
         <ErrorState message={remote.error} retry={remote.retry} />
+      ) : !remote.data?.total ? (
+        <div className="empty-state">
+          <Icon name="Search" size={32} />
+          <h2>这个组合暂时没有题目</h2>
+          <p>放宽难度或解题类型，再试一次。</p>
+          <Button
+            variant="outline"
+            onClick={() => {
+              setParams({});
+              setSearch('');
+            }}
+          >
+            重置筛选
+          </Button>
+        </div>
       ) : (
-        <>
-          <div className="question-grid">
-            {remote.data?.items.slice((page - 1) * 12, page * 12).map((q) => (
-              <Link className="question-card panel" to={`/questions/${q.id}`} key={q.id}>
-                <div className="question-meta">
-                  <span className={`chip difficulty-${q.difficulty}`}>
-                    {difficultyLabels[q.difficulty]}
-                  </span>
-                  <span className="question-type">{typeLabels[q.type]}</span>
-                  {progress.answers[q.id] && (
-                    <span className="question-done">
-                      <Icon
-                        name={progress.answers[q.id].correct ? 'CheckCircle2' : 'RotateCcw'}
-                        size={17}
-                      />
-                      {progress.answers[q.id].correct ? '已做对' : '已尝试'}
+        <div className="bank-workspace">
+          <section className="bank-list-pane panel" aria-label="题目列表">
+            <div className="bank-result-heading">共 {remote.data.total} 道题 · 选择题目预览</div>
+            <div className="bank-question-list">
+              {remote.data.items.map((q) => (
+                <button
+                  key={q.id}
+                  className="bank-question-row"
+                  aria-pressed={selected?.id === q.id}
+                  onClick={() =>
+                    setParams(
+                      (previous) => {
+                        const next = new URLSearchParams(previous);
+                        next.set('preview', q.id);
+                        return next;
+                      },
+                      { replace: true },
+                    )
+                  }
+                >
+                  <span className="question-meta">
+                    <span className={`chip difficulty-${q.difficulty}`}>
+                      {difficultyLabels[q.difficulty]}
                     </span>
-                  )}
-                </div>
-                <h2>{q.title}</h2>
-                <p>{q.stem}</p>
-                <div className="question-card-bottom">
-                  <span>
-                    {q.hasVisual ? (
-                      <>
-                        <Icon name="Shapes" size={15} />
-                        可视化讲解
-                      </>
-                    ) : (
-                      <>
-                        <Icon name="ListChecks" size={15} />
-                        思路与解析
-                      </>
+                    <span>{typeLabels[q.type]}</span>
+                    {progress.answers[q.id] && (
+                      <span className="question-done">
+                        {answerStatus(
+                          progress.answers[q.id],
+                          progress.history.find((attempt) => attempt.questionId === q.id),
+                        )}
+                      </span>
                     )}
                   </span>
-                  <span>
-                    开始练习
-                    <Icon name="ArrowRight" size={16} />
-                  </span>
-                </div>
-              </Link>
-            ))}
-          </div>
-          {pageCount > 1 && (
+                  <strong>{q.title}</strong>
+                  <span className="bank-row-stem">{q.stem}</span>
+                </button>
+              ))}
+            </div>
             <nav className="bank-pagination" aria-label="题库分页">
-              <Button
-                variant="outline"
-                className="button secondary"
-                disabled={page <= 1}
-                onClick={() =>
-                  setParams((p) => {
-                    const n = new URLSearchParams(p);
-                    n.set('page', String(page - 1));
-                    return n;
-                  })
-                }
-              >
-                上一页
+              <Button variant="outline" disabled={page <= 1} onClick={() => changePage(page - 1)}>
+                上一组
               </Button>
               <span>
-                第 {page} / {pageCount} 页 · 每页12题
+                {page} / {pageCount}
               </span>
               <Button
                 variant="outline"
-                className="button secondary"
                 disabled={page >= pageCount}
-                onClick={() =>
-                  setParams((p) => {
-                    const n = new URLSearchParams(p);
-                    n.set('page', String(page + 1));
-                    return n;
-                  })
-                }
+                onClick={() => changePage(page + 1)}
               >
-                下一页
+                下一组
               </Button>
             </nav>
+          </section>
+          {selected && (
+            <section className="bank-preview-pane panel" aria-label="题目预览">
+              <div className="bank-preview-content">
+                <div className="question-meta">
+                  <span className={`chip difficulty-${selected.difficulty}`}>
+                    {difficultyLabels[selected.difficulty]}
+                  </span>
+                  <span>{typeLabels[selected.type]}</span>
+                </div>
+                <h2>{selected.title}</h2>
+                {selected.stem !== selected.title && (
+                  <p className="question-stem">{selected.stem}</p>
+                )}
+                {selected.promptImage && (
+                  <img
+                    className="question-diagram"
+                    src={selected.promptImage.src}
+                    alt={selected.promptImage.alt}
+                  />
+                )}
+                {selected.figure && <GridFigureView figure={selected.figure} />}
+              </div>
+              <Link className="button primary" to={`/questions/${selected.id}?${openParams}`}>
+                开始练习
+                <Icon name="ArrowRight" size={18} />
+              </Link>
+            </section>
           )}
-          {remote.data?.total === 0 && (
-            <div className="empty-state">
-              <Icon name="Search" size={32} />
-              <h2>这个组合暂时没有题目</h2>
-              <p>试着放宽难度或题型筛选。</p>
-              <Button
-                variant="outline"
-                className="button secondary"
-                onClick={() => {
-                  setParams({});
-                  setSearch('');
-                }}
-              >
-                重置筛选
-              </Button>
-            </div>
-          )}
-        </>
+        </div>
       )}
-    </>
+    </div>
   );
 }

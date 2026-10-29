@@ -169,8 +169,9 @@ it('connects the homepage, catalog, first lesson, and visual question explanatio
   fireEvent.change(screen.getByRole('combobox', { name: '难度' }), {
     target: { value: 'challenge' },
   });
-  await waitFor(() => expect(document.querySelectorAll('a.question-card').length).toBe(12));
-  fireEvent.click(screen.getByRole('link', { name: /剪去一角，面积怎么变/ }));
+  await waitFor(() => expect(document.querySelectorAll('.bank-question-row').length).toBe(12));
+  fireEvent.click(screen.getByRole('button', { name: /剪去一角，面积怎么变/ }));
+  fireEvent.click(screen.getByRole('link', { name: '开始练习' }));
   fireEvent.click(await screen.findByRole('button', { name: '解析' }));
   await screen.findByRole('img', { name: /完整面积减去剪去的部分/ });
   fireEvent.click(screen.getByRole('button', { name: '下一步' }));
@@ -208,11 +209,12 @@ it('connects unit two exploration, bank grading, and the activity through the sh
   );
   fireEvent.click(screen.getByRole('link', { name: '进入本单元题库' }));
   await screen.findByRole('heading', { name: '全部题目' });
-  await waitFor(() => expect(document.querySelectorAll('a.question-card')).toHaveLength(12));
+  await waitFor(() => expect(document.querySelectorAll('.bank-question-row')).toHaveLength(12));
   fireEvent.change(screen.getByRole('combobox', { name: '难度' }), {
     target: { value: 'challenge' },
   });
-  fireEvent.click(await screen.findByRole('link', { name: /同面积的最短周长/ }));
+  fireEvent.click(await screen.findByRole('button', { name: /同面积的最短周长/ }));
+  fireEvent.click(screen.getByRole('link', { name: '开始练习' }));
   fireEvent.click(await screen.findByRole('button', { name: '解析' }));
   const image = await screen.findByRole('img', { name: /36个单位方格/ });
   fireEvent.click(screen.getByRole('button', { name: '下一步' }));

@@ -62,13 +62,15 @@ export default function TopicMethod({
   title,
   guide,
   active = true,
+  questionId,
 }: {
   topicId: string;
   title: string;
   guide: TopicGuide;
   active?: boolean;
+  questionId?: string;
 }) {
-  const story = methodStory(topicId);
+  const story = methodStory(topicId, questionId);
   return (
     <Popover.Root>
       <section className="topic-method" aria-label={`${title}方法卡`}>
@@ -87,7 +89,13 @@ export default function TopicMethod({
             {story?.prompt ?? guide.recognize}
           </p>
         </header>
-        <MethodDemonstration key={topicId} topicId={topicId} title={title} active={active} />
+        <MethodDemonstration
+          key={`${topicId}:${questionId ?? ''}`}
+          topicId={topicId}
+          questionId={questionId}
+          title={title}
+          active={active}
+        />
         <Popover.Portal>
           <Popover.Content
             className="method-notes-body pane-scroll"

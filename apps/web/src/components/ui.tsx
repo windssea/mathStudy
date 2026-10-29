@@ -109,6 +109,9 @@ export function ErrorState({ message, retry }: { message: string; retry?: () => 
           重新加载
         </Button>
       )}
+      <a className="button secondary" href="/">
+        回到练习
+      </a>
     </div>
   );
 }

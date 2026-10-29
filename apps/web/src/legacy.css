@@ -2289,7 +2289,6 @@ select {
 }
 .arithmetic-reason {
   min-height: 68px;
-  border-left: 3px solid var(--blue);
   line-height: 1.85;
   margin-top: 18px;
 }
@@ -2821,7 +2820,6 @@ h1,
 }
 .lesson-knowledge {
   margin-bottom: 18px;
-  border-left: 3px solid var(--blue);
 }
 .lesson-knowledge > h2 {
   grid-column: 1 / -1;

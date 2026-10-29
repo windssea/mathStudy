@@ -16,7 +16,6 @@ export default function Catalog() {
   useEffect(() => {
     if (location.hash) {
       setExpanded(location.hash.slice(1));
-      document.getElementById(location.hash.slice(1))?.scrollIntoView({ block: 'center' });
     }
   }, [location.hash]);
   if (editionId !== book.id) return <ErrorState message="未找到这本教材。" />;
@@ -70,7 +69,7 @@ export default function Catalog() {
       <div className="catalog-workbench collection-layout">
         <aside className="collection-nav" aria-label="课程单元">
           <h2>单元目录</h2>
-          {nodes.map((n, i) => (
+          {nodes.map((n) => (
             <button
               id={n.id}
               key={n.id}
@@ -78,8 +77,11 @@ export default function Catalog() {
               aria-pressed={selected?.id === n.id}
               onClick={() => setExpanded(n.id)}
             >
-              <span className="unit-index" data-tone={i % 4}>
-                {n.kind === 'unit' ? i + 1 : <Icon name="Shapes" size={15} />}
+              <span
+                className="unit-index"
+                data-tone={n.kind === 'unit' ? (Number(n.id.slice(1)) - 1) % 4 : 0}
+              >
+                {n.kind === 'unit' ? Number(n.id.slice(1)) : <Icon name="Shapes" size={15} />}
               </span>
               <span>{n.title}</span>
               <Icon name="ChevronRight" size={15} />
@@ -99,6 +101,18 @@ export default function Catalog() {
                 <h2>{selected.title}</h2>
                 <span>{selected.lessons.length} 个课节</span>
               </div>
+              {selected.kind === 'unit' && !selected.lessons.some((l) => l.available) && (
+                <div className="catalog-available-actions">
+                  <p>课程演示正在准备，先学方法或做练习。</p>
+                  <Link className="button secondary" to={`/?unit=${selected.id}&view=methods`}>
+                    学本单元方法
+                  </Link>
+                  <Link className="button primary" to={`/?unit=${selected.id}`}>
+                    选题型练习
+                    <Icon name="ArrowRight" size={16} />
+                  </Link>
+                </div>
+              )}
               <div className="catalog-lessons">
                 {selected.lessons.map((l, index) =>
                   l.available ? (

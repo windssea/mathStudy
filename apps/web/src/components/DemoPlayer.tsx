@@ -1,4 +1,5 @@
 import StepControls from './StepControls';
+import LessonNarration from './LessonNarration';
 import { useEffect, useMemo, useState } from 'react';
 import type { DivisionDemo } from '@mathstudy/contracts';
 import { divide, trialQuotient } from '@mathstudy/math-core';
@@ -159,27 +160,30 @@ export default function DemoPlayer({
         </button>
       </div>
       {demo.kind !== 'chain' && (
-        <div className="demo-options">
-          <label>
-            换一道例题
-            <select
-              aria-label="选择演示例题"
-              value={example}
-              onChange={(e) => changeExample(e.target.value)}
-            >
-              {[
-                ...new Set([
-                  `${demo.dividend},${demo.divisor}`,
-                  ...presets.map((p) => p.join(',')),
-                ]),
-              ].map((p) => (
-                <option key={p} value={p}>
-                  {p.replace(',', ' ÷ ')}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
+        <details className="lesson-parameters">
+          <summary>调整例题</summary>
+          <div className="demo-options">
+            <label>
+              换一道例题
+              <select
+                aria-label="选择演示例题"
+                value={example}
+                onChange={(e) => changeExample(e.target.value)}
+              >
+                {[
+                  ...new Set([
+                    `${demo.dividend},${demo.divisor}`,
+                    ...presets.map((p) => p.join(',')),
+                  ]),
+                ].map((p) => (
+                  <option key={p} value={p}>
+                    {p.replace(',', ' ÷ ')}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+        </details>
       )}
       {staticMode ? (
         <ol className="static-steps">
@@ -334,13 +338,15 @@ export default function DemoPlayer({
               <LongDivisionView n={n} d={d} frame={current} columns={division.columns} />
             )}
           </div>
-          <div className="narration" aria-live="polite">
-            <span className="narration-step">{step + 1}</span>
-            <div>
-              <strong>{current.title}</strong>
-              <p>{current.text}</p>
+          <LessonNarration>
+            <div className="narration" aria-live="polite">
+              <span className="narration-step">{step + 1}</span>
+              <div>
+                <strong>{current.title}</strong>
+                <p>{current.text}</p>
+              </div>
             </div>
-          </div>
+          </LessonNarration>
           <StepControls
             step={step}
             last={frames.length - 1}
@@ -413,7 +419,7 @@ function LongDivisionView({
       <path
         d={`M164 130 Q174 114 173 84 H${x(digits.length - 1) + 28}`}
         fill="none"
-        stroke="#25314d"
+        stroke="var(--diagram-ink)"
         strokeWidth="2"
       />
       <text x="130" y="124" textAnchor="end">
@@ -434,33 +440,33 @@ function LongDivisionView({
         return (
           <g key={i}>
             {qVisible && (
-              <text x={x(c.column)} y="70" fill="#3563e9">
+              <text x={x(c.column)} y="70" fill="var(--sky)">
                 {c.digit}
               </text>
             )}
             {mVisible && (
               <>
-                {digitText(c.product, c.column, y, '#7483a1')}
+                {digitText(c.product, c.column, y, 'var(--muted)')}
                 <line
                   x1={x(Math.max(0, c.column - String(c.product).length + 1)) - 18}
                   y1={y + 10}
                   x2={x(c.column) + 22}
                   y2={y + 10}
-                  stroke="#9daac0"
+                  stroke="var(--input)"
                 />
               </>
             )}
             {sVisible && (
               <>
-                {digitText(c.remainder, c.column, y + 47, '#3563e9')}
+                {digitText(c.remainder, c.column, y + 47, 'var(--sky)')}
                 {c.broughtDigit !== undefined && (previous || phaseRank >= 4) && (
                   <>
-                    <text x={x(c.column + 1)} y={y + 47} fill="#d08b1f">
+                    <text x={x(c.column + 1)} y={y + 47} fill="var(--sun)">
                       {c.broughtDigit}
                     </text>
                     <path
                       d={`M${x(c.column + 1) + 10} ${i === 0 ? 136 : y - 30}v${i === 0 ? 42 : 50}`}
-                      stroke="#d08b1f"
+                      stroke="var(--sun)"
                       strokeDasharray="3 4"
                       fill="none"
                     />

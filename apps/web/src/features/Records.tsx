@@ -1,35 +1,77 @@
 import { Button } from '../components/ui/button';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useCourse } from '../app/course';
 import { useRemote } from '../lib/api';
 import { useProgress, useAccount, progressMessage, synchronize } from '../lib/progress';
-import type { QuestionPublic } from '@mathstudy/contracts';
+import type { QuestionPublic, PracticeCatalog } from '@mathstudy/contracts';
+import { independentlyMastered } from '../lib/answer-status';
 import { Icon, Loading, ErrorState } from '../components/ui';
 
 export default function Records() {
   const { textbook: book } = useCourse(),
     progress = useProgress();
-  const remote = useRemote<{ items: QuestionPublic[] }>('/questions?scope=history');
   const attempted = Object.entries(progress.answers);
   const account = useAccount();
-  const [reviewFilter, setReviewFilter] = useState<'pending' | 'resolved' | 'all'>('pending');
-  const independent = attempted.filter(([, a]) => a.independentCorrect).length;
+  const [params, setParams] = useSearchParams();
+  const reviewFilter =
+    params.get('review') === 'resolved'
+      ? 'resolved'
+      : params.get('review') === 'all'
+        ? 'all'
+        : 'pending';
+  const parsePage = (key: string) => Math.max(0, Math.trunc(Number(params.get(key))) || 0);
+  const reviewPage = parsePage('reviewPage');
+  const historyPage = parsePage('historyPage');
+  function setPage(key: string, value: number) {
+    setParams((previous) => {
+      const next = new URLSearchParams(previous);
+      next.set(key, String(value));
+      return next;
+    });
+  }
+  const detailQuery = new URLSearchParams({
+    returnTo: `/records${params.size ? `?${params}` : ''}`,
+  });
+  const independent = attempted.filter(([, a]) => independentlyMastered(a)).length;
   const notebook = attempted.filter(([, a]) => a.everWrong || a.needsReview);
-  const review = notebook.filter(
-    ([, a]) =>
-      reviewFilter === 'all' || (reviewFilter === 'pending' ? a.needsReview : !a.needsReview),
+  const review = notebook
+    .filter(
+      ([, a]) =>
+        reviewFilter === 'all' || (reviewFilter === 'pending' ? a.needsReview : !a.needsReview),
+    )
+    .sort((a, b) => b[1].date.localeCompare(a[1].date));
+  const reviewIndex = Math.min(reviewPage, Math.max(0, Math.ceil(review.length / 20) - 1));
+  const historyIndex = Math.min(
+    historyPage,
+    Math.max(0, Math.ceil(progress.history.length / 10) - 1),
   );
+  const shownReview = review.slice(reviewIndex * 20, (reviewIndex + 1) * 20);
+  const shownHistory = progress.history.slice(historyIndex * 10, (historyIndex + 1) * 10);
+  const neededIds = [
+    ...new Set([...shownReview.map(([id]) => id), ...shownHistory.map((a) => a.questionId)]),
+  ].sort();
+  const remote = useRemote<{ items: QuestionPublic[] }>(
+    `/questions?scope=history&ids=${encodeURIComponent(neededIds.join(','))}`,
+  );
+  const catalog = useRemote<PracticeCatalog>('/practice');
+  const questionMap = new Map(remote.data?.items.map((q) => [q.id, q]));
+  const reviewGroups =
+    catalog.data?.topics
+      .map((topic) => ({
+        topic,
+        count: topic.questionIds.filter((id) => progress.answers[id]?.needsReview).length,
+      }))
+      .filter((group) => group.count > 0)
+      .sort((a, b) => b.count - a.count) ?? [];
   return (
     <>
       <div className="page-heading">
         <div>
           <h1>练习记录</h1>
-          <p>{progressMessage()}</p>
         </div>
       </div>
       <div className="records-sync-bar">
-        <Link className="text-link" to="/account">
+        <Link className="text-link" to={`/account?${detailQuery}`}>
           {account.user ? `${account.user.name} · 账号与同步` : '登录，跨设备同步记录'}
           <Icon name="ArrowRight" size={16} />
         </Link>
@@ -64,6 +106,26 @@ export default function Records() {
             <Icon name="RotateCcw" />
             错题与复习
           </h2>
+          {reviewFilter === 'pending' && reviewGroups.length > 0 && (
+            <div className="review-topic-list" aria-label="按题型复习">
+              {reviewGroups.slice(0, 4).map(({ topic, count }) => (
+                <Link
+                  className="review-topic-row"
+                  to={`/practice/topics/${topic.id}?review=1&fresh=1&${detailQuery}`}
+                  key={topic.id}
+                >
+                  <span>
+                    <strong>{topic.title}</strong>
+                    <small>{count} 题待复习</small>
+                  </span>
+                  <span>
+                    复习这组
+                    <Icon name="ArrowRight" size={17} />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          )}
           <div className="notebook-filters" role="group" aria-label="错题状态">
             {(
               [
@@ -75,7 +137,14 @@ export default function Records() {
               <button
                 key={value}
                 aria-pressed={reviewFilter === value}
-                onClick={() => setReviewFilter(value)}
+                onClick={() => {
+                  setParams((previous) => {
+                    const next = new URLSearchParams(previous);
+                    next.set('review', value);
+                    next.delete('reviewPage');
+                    return next;
+                  });
+                }}
               >
                 {label}
               </button>
@@ -86,10 +155,10 @@ export default function Records() {
           ) : remote.error ? (
             <ErrorState message={remote.error} retry={remote.retry} />
           ) : review.length ? (
-            review.map(([id, a]) => {
-              const q = remote.data?.items.find((item) => item.id === id);
+            shownReview.map(([id, a]) => {
+              const q = questionMap.get(id);
               return q ? (
-                <Link className="record-row" key={id} to={`/questions/${id}`}>
+                <Link className="record-row" key={id} to={`/questions/${id}?${detailQuery}`}>
                   <Icon name="Lightbulb" />
                   <span>
                     {q.title}
@@ -116,6 +185,27 @@ export default function Records() {
                 <Icon name="ArrowRight" size={16} />
               </Link>
             </div>
+          )}
+          {review.length > 20 && (
+            <nav className="history-pagination" aria-label="复习列表分页">
+              <Button
+                variant="outline"
+                disabled={reviewIndex === 0}
+                onClick={() => setPage('reviewPage', reviewIndex - 1)}
+              >
+                上一组
+              </Button>
+              <span>
+                {reviewIndex + 1} / {Math.ceil(review.length / 20)}
+              </span>
+              <Button
+                variant="outline"
+                disabled={(reviewIndex + 1) * 20 >= review.length}
+                onClick={() => setPage('reviewPage', reviewIndex + 1)}
+              >
+                下一组
+              </Button>
+            </nav>
           )}
         </section>
         <details className="panel records-panel lesson-records">
@@ -152,21 +242,17 @@ export default function Records() {
           <Icon name="ListChecks" />
           最近答题记录
         </h2>
-        <p className="account-note">
-          显示最近 100 条作答；“本机导入”表示旧版没有保留原始答案的历史结论。
-        </p>
         {progress.history.length ? (
           <ol>
-            {progress.history.map((a) => {
-              const q = remote.data?.items.find((q) => q.id === a.questionId);
+            {shownHistory.map((a) => {
+              const q = questionMap.get(a.questionId);
               return (
                 <li key={a.id}>
-                  <Link to={`/questions/${a.questionId}`}>
+                  <Link to={`/questions/${a.questionId}?${detailQuery}`}>
                     <div>
                       <strong>{q?.title ?? a.questionId}</strong>
                       <span className={`chip ${a.correct ? 'blue' : 'neutral'}`}>
-                        {a.correct ? '答对' : '待订正'}
-                        {a.assisted ? ' · 用过提示' : ''}
+                        {a.correct ? (a.assisted ? '借助方法答对' : '独立答对') : '待订正'}
                       </span>
                     </div>
                     <p>
@@ -184,12 +270,7 @@ export default function Records() {
                                 .join('，') ?? Object.values(a.answers).join('，'))}
                     </p>
                     <small>
-                      {new Date(a.date).toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })} ·{' '}
-                      {a.source === 'verified'
-                        ? '服务端已判分'
-                        : a.source === 'imported'
-                          ? '本机导入'
-                          : '本机记录'}
+                      {new Date(a.date).toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })}
                     </small>
                   </Link>
                 </li>
@@ -202,6 +283,31 @@ export default function Records() {
             <p>提交答案后显示记录。</p>
           </div>
         )}
+        {progress.history.length > 10 && (
+          <nav className="history-pagination" aria-label="答题历史分页">
+            <Button
+              variant="outline"
+              disabled={historyIndex === 0}
+              onClick={() => setPage('historyPage', historyIndex - 1)}
+            >
+              上一组
+            </Button>
+            <span>
+              {historyIndex + 1} / {Math.ceil(progress.history.length / 10)}
+            </span>
+            <Button
+              variant="outline"
+              disabled={(historyIndex + 1) * 10 >= progress.history.length}
+              onClick={() => setPage('historyPage', historyIndex + 1)}
+            >
+              下一组
+            </Button>
+          </nav>
+        )}
+        <details className="account-note">
+          <summary>记录与同步说明</summary>
+          <p>{progressMessage()}。保留最近 100 次作答，历史导入条目可能没有原始答案。</p>
+        </details>
       </section>
     </>
   );
