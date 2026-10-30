@@ -13,7 +13,12 @@ import { afterEach, expect, it, vi } from 'vitest';
 import { practice, publicQuestion, questions } from '@mathstudy/content';
 import { methodStory } from '@mathstudy/animation-engine';
 import QuestionRunner from '../apps/web/src/components/QuestionRunner';
-import { clearPracticeDrafts, writeDraft } from '../apps/web/src/lib/practice-drafts';
+import {
+  clearPracticeDrafts,
+  questionDraftSchema,
+  readDraft,
+  writeDraft,
+} from '../apps/web/src/lib/practice-drafts';
 import { currentLearningOwner, useProgress } from '../apps/web/src/lib/progress';
 import { app } from '../apps/web/worker';
 
@@ -21,6 +26,9 @@ const topic = practice.topics.find((item) => item.id === 'u1-mental')!;
 const source = questions.find((item) => item.id === topic.questionIds[0])!;
 const question = publicQuestion(source);
 const storyboard = methodStory(topic.id, question.id)!;
+const ageSource = questions.find((item) => item.id === 'full-p06-s3-q2')!;
+const ageQuestion = publicQuestion(ageSource);
+const ageTopic = practice.topics.find((item) => item.id === 'u1-units')!;
 afterEach(() => {
   cleanup();
   clearPracticeDrafts();
@@ -101,6 +109,76 @@ it('immediately mounts the method when restoring a draft whose active view is me
   expect(view.container.querySelectorAll('svg.method-diagram')).toHaveLength(1);
   expect(progress.result.current.answers[question.id]).toBe(before);
 });
+
+it('shows read-only original choices beside the question while the inline method is open', () => {
+  render(<QuestionRunner question={ageQuestion} method={ageTopic} />);
+  const reading = screen.getByRole('region', { name: '题目内容' });
+  expect(within(reading).queryByRole('list', { name: '题目选项' })).toBeNull();
+  const chosen = screen.getAllByRole('radio')[0] as HTMLInputElement;
+  fireEvent.click(chosen);
+  fireEvent.keyDown(screen.getByRole('tab', { name: '方法' }), { key: 'Enter' });
+  const choices = within(reading).getByRole('list', { name: '题目选项' });
+  expect(
+    within(choices)
+      .getAllByRole('listitem')
+      .map((item) => item.textContent),
+  ).toEqual(ageQuestion.options);
+  expect(within(reading).queryByRole('radio')).toBeNull();
+  expect(
+    choices.querySelector('[aria-selected], [aria-checked], .selected, .is-picked'),
+  ).toBeNull();
+  fireEvent.keyDown(screen.getByRole('tab', { name: '作答' }), { key: 'Enter' });
+  expect(within(reading).queryByRole('list', { name: '题目选项' })).toBeNull();
+  expect(chosen.checked).toBe(true);
+});
+
+it.each([false, true])(
+  'shows complete neutral choices in the focused reference without changing the MCQ draft (figure: %s)',
+  async (withFigure) => {
+    const figure = questions.find((item) => item.id === 'full-p01-s3-q1-3')!.promptImage!;
+    const referenced = {
+      ...ageQuestion,
+      ...(withFigure ? { promptImage: figure } : {}),
+    };
+    render(<QuestionRunner question={referenced} method={ageTopic} />);
+    const chosen = screen.getAllByRole('radio')[0] as HTMLInputElement;
+    expect(chosen.value).not.toBe(ageSource.expected.value);
+    fireEvent.click(chosen);
+    const owner = currentLearningOwner();
+    const draftId = `question:${ageQuestion.id}`;
+    const before = readDraft(owner, draftId, questionDraftSchema)!.answers;
+    expect(before).toEqual({ value: chosen.value });
+    fireEvent.keyDown(screen.getByRole('tab', { name: '方法' }), { key: 'Enter' });
+    fireEvent.click(screen.getByRole('button', { name: '放大演示' }));
+    const dialog = await screen.findByRole('dialog');
+    expect(within(dialog).queryByRole('list', { name: '题目选项' })).toBeNull();
+    fireEvent.click(within(dialog).getByRole('button', { name: '查看当前题目' }));
+    const reference = within(dialog).getByRole('region', { name: '当前题目参照' });
+    expect(within(reference).getByText(ageQuestion.stem)).toBeTruthy();
+    const choices = within(reference).getByRole('list', { name: '题目选项' });
+    expect(
+      within(choices)
+        .getAllByRole('listitem')
+        .map((item) => item.textContent),
+    ).toEqual(['540秒', '540时', '540日', '540周']);
+    expect(reference.querySelector('input, button, [role="radio"], [role="option"]')).toBeNull();
+    expect(
+      reference.querySelector(
+        '[aria-selected], [aria-checked], [data-correct], .selected, .is-picked',
+      ),
+    ).toBeNull();
+    expect(within(reference).queryByText(/正确答案|答案是|已选/)).toBeNull();
+    if (withFigure) expect(within(reference).getByRole('img', { name: figure.alt })).toBeTruthy();
+    else expect(within(reference).queryByRole('img')).toBeNull();
+    expect(readDraft(owner, draftId, questionDraftSchema)!.answers).toEqual(before);
+    fireEvent.click(within(dialog).getByRole('button', { name: '分步图解' }));
+    expect(within(dialog).queryByRole('list', { name: '题目选项' })).toBeNull();
+    fireEvent.click(within(dialog).getByRole('button', { name: '收起演示' }));
+    fireEvent.keyDown(screen.getByRole('tab', { name: '作答' }), { key: 'Enter' });
+    expect(chosen.checked).toBe(true);
+    expect(readDraft(owner, draftId, questionDraftSchema)!.answers).toEqual(before);
+  },
+);
 
 it.each([
   { paneWidth: 420, canvasHeight: 250 },

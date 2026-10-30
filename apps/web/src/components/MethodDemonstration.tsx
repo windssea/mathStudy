@@ -4,9 +4,11 @@ import { Dialog } from 'radix-ui';
 import { Button } from './ui/button';
 import { Icon } from './ui';
 import MethodDiagram from './MethodDiagram';
+import QuestionReferenceChoices from './QuestionReferenceChoices';
 
 export interface MethodQuestionReference {
   stem: string;
+  options?: readonly string[];
   figure?: ReactNode;
 }
 
@@ -413,10 +415,15 @@ export default function MethodDemonstration({
             </div>
             {supportView === 'question' && questionReference && (
               <section
-                className={`method-question-support ${questionReference.figure ? '' : 'is-text-only'}`}
+                className={`method-question-support ${questionReference.figure ? '' : 'is-text-only'} ${questionReference.options?.length ? 'has-options' : ''}`}
                 aria-label="当前题目参照"
               >
-                <p>{questionReference.stem}</p>
+                <div className="method-reference-copy pane-scroll">
+                  <p>{questionReference.stem}</p>
+                  {questionReference.options && (
+                    <QuestionReferenceChoices options={questionReference.options} />
+                  )}
+                </div>
                 {questionReference.figure && (
                   <div className="method-reference-figure">{questionReference.figure}</div>
                 )}

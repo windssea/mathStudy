@@ -18,6 +18,7 @@ import { Icon } from './ui';
 import VisualExplanation from './VisualExplanation';
 import { GridEditor, GridFigureView, initialDrawing } from './GridExercise';
 import TopicMethod from './TopicMethod';
+import QuestionReferenceChoices from './QuestionReferenceChoices';
 import { questionDraftSchema, readDraft, writeDraft } from '../lib/practice-drafts';
 
 function initialAnswers(q: QuestionPublic): Record<string, string> {
@@ -190,6 +191,9 @@ export default function QuestionRunner({
               {q.title}
             </Heading>
             {!repeatsTitle && <p className="question-stem">{q.stem}</p>}
+            {(view === 'method' || view === 'explanation') && q.options && (
+              <QuestionReferenceChoices options={q.options} />
+            )}
             {q.promptImage && (
               <img className="question-diagram" src={q.promptImage.src} alt={q.promptImage.alt} />
             )}
@@ -435,6 +439,7 @@ export default function QuestionRunner({
                   }}
                   questionReference={{
                     stem: q.stem,
+                    options: q.options,
                     figure:
                       q.promptImage || q.figure ? (
                         <>

@@ -9,6 +9,9 @@ import { budgetQuestionSubskills, budgetSubskillStories } from './method-budget-
 import { cutQuestionSubskills, cutSubskillStories } from './method-cut-subskills';
 import { extraQuestionSubskills, extraSubskillStories } from './method-extra-subskills';
 import { priorityQuestionSubskills, prioritySubskillStories } from './method-priority-subskills';
+import { round2U34QuestionSubskills, round2U34SubskillStories } from './method-round2-u34';
+import { round2U56QuestionSubskills, round2U56SubskillStories } from './method-round2-u56';
+import { round2U12QuestionSubskills, round2U12SubskillStories } from './method-round2-u12';
 import type { MethodStory } from './method-primitives';
 export type {
   MethodTone,
@@ -18,19 +21,34 @@ export type {
   MethodStory,
 } from './method-primitives';
 
-export const methodQuestionSubskills: Record<string, Record<string, string>> = {
-  ...remainderQuestionSubskills,
-  ...extraQuestionSubskills,
-  ...priorityQuestionSubskills,
-  'u4-budget': budgetQuestionSubskills,
-  'u2-cut': cutQuestionSubskills,
-};
+type QuestionSubskillMap = Record<string, Record<string, string>>;
+
+function mergeQuestionSubskills(...sources: QuestionSubskillMap[]): QuestionSubskillMap {
+  const result: QuestionSubskillMap = {};
+  for (const source of sources)
+    for (const [topic, questions] of Object.entries(source))
+      result[topic] = { ...result[topic], ...questions };
+  return result;
+}
+
+export const methodQuestionSubskills = mergeQuestionSubskills(
+  remainderQuestionSubskills,
+  extraQuestionSubskills,
+  priorityQuestionSubskills,
+  { 'u4-budget': budgetQuestionSubskills, 'u2-cut': cutQuestionSubskills },
+  round2U34QuestionSubskills,
+  round2U56QuestionSubskills,
+  round2U12QuestionSubskills,
+);
 export const methodSubskillStories: Record<string, MethodStory> = {
   ...remainderSubskillStories,
   ...budgetSubskillStories,
   ...cutSubskillStories,
   ...extraSubskillStories,
   ...prioritySubskillStories,
+  ...round2U34SubskillStories,
+  ...round2U56SubskillStories,
+  ...round2U12SubskillStories,
 };
 
 export const methodStories: Record<string, MethodStory> = {
