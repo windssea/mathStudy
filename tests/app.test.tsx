@@ -44,16 +44,18 @@ it('keeps a new reasoning exercise focused until its explanation is requested', 
   render(<App />);
   await screen.findByRole('heading', { name: '除数看错了，怎样还原', level: 1 });
   expect(screen.queryByRole('img')).toBeNull();
+  expect(screen.queryByRole('figure')).toBeNull();
   fireEvent.change(screen.getByLabelText('你的答案'), { target: { value: '1' } });
   fireEvent.click(screen.getByRole('button', { name: '核对答案' }));
   await screen.findByText('答对了。');
   expect(screen.queryByRole('img')).toBeNull();
   fireEvent.click(screen.getByRole('button', { name: '展开解析' }));
-  expect(screen.getByRole('img').getAttribute('aria-label')).toContain('737');
+  expect(screen.getByRole('figure').getAttribute('aria-label')).toContain('737');
   fireEvent.click(screen.getByRole('button', { name: '下一步' }));
-  expect(screen.getByRole('img').textContent).toContain('46×16＝736');
+  expect(screen.getByRole('figure').textContent).toContain('46×16＝736');
   fireEvent.click(screen.getByRole('button', { name: '收起解析' }));
   expect(screen.queryByRole('img')).toBeNull();
+  expect(screen.queryByRole('figure')).toBeNull();
 }, 15000);
 it('connects fifth-unit reading exploration, fill-in/choice grading and completion', async () => {
   window.history.replaceState({}, '', '/books/sj-math-g4-upper-2026-v1/lessons/U05-L02');
@@ -137,6 +139,15 @@ it('connects third-unit exploration, existing exercises and course completion', 
   });
   fireEvent.submit(screen.getByRole('article').querySelector('form')!);
   await waitFor(() => expect(screen.getAllByText('答对了。')).toHaveLength(3));
+  fireEvent.click(screen.getByRole('button', { name: '下一题' }));
+  fireEvent.click(screen.getByLabelText(/每分钟行70米/));
+  fireEvent.submit(screen.getByRole('article').querySelector('form')!);
+  await waitFor(() => expect(screen.getAllByText('答对了。')).toHaveLength(4));
+  fireEvent.click(screen.getByRole('button', { name: '下一题' }));
+  fireEvent.change(screen.getByRole('textbox', { name: '速度' }), { target: { value: '70' } });
+  fireEvent.change(screen.getByRole('textbox', { name: '需要' }), { target: { value: '8' } });
+  fireEvent.submit(screen.getByRole('article').querySelector('form')!);
+  await waitFor(() => expect(screen.getAllByText('答对了。')).toHaveLength(5));
   fireEvent.click(screen.getByRole('button', { name: '完成本课' }));
   expect(screen.getByRole('link', { name: '继续下一课' }).getAttribute('href')).toContain(
     'U03-L04',

@@ -237,7 +237,7 @@ it('keeps every challenge diagram local, complete and free of source bitmaps', (
 });
 it('keeps old topic deep links and filter counts valid without publishing general categories', async () => {
   for (const [id, count] of [
-    ['u3-general', 36],
+    ['u3-general', 42],
     ['u4-general', 37],
     ['u5-general', 45],
   ] as const) {

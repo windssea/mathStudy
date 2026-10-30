@@ -3,6 +3,7 @@ import { useState } from 'react';
 import type { Visual } from '@mathstudy/contracts';
 import { Icon } from './ui';
 import ReasoningDrawing from './ReasoningDrawing';
+import QuantityReasoningDiagram from './QuantityReasoningDiagram';
 import {
   CornerCutDrawing,
   ComparisonDrawing,
@@ -218,20 +219,29 @@ export default function VisualExplanation({
         </span>
       </div>
       {!hideTitle && <h4>{visual.title}</h4>}
-      <svg
-        viewBox={
-          visual.kind === 'reasoning'
-            ? `0 0 720 ${height}`
-            : visual.kind === 'rectangle'
-              ? '100 0 300 310'
-              : '0 0 500 310'
-        }
-        className={visual.kind === 'rectangle' ? 'corner-visual' : undefined}
-        role="img"
-        aria-label={`${visual.title}。${visual.captions[step]}`}
-      >
-        {drawing}
-      </svg>
+      {stage && (stage.kind === 'table' || stage.kind === 'bars') ? (
+        <figure
+          className="quantity-reasoning-figure"
+          aria-label={`${visual.title}。${visual.captions[step]}`}
+        >
+          <QuantityReasoningDiagram stage={stage} />
+        </figure>
+      ) : (
+        <svg
+          viewBox={
+            visual.kind === 'reasoning'
+              ? `0 0 720 ${height}`
+              : visual.kind === 'rectangle'
+                ? '100 0 300 310'
+                : '0 0 500 310'
+          }
+          className={visual.kind === 'rectangle' ? 'corner-visual' : undefined}
+          role="img"
+          aria-label={`${visual.title}。${visual.captions[step]}`}
+        >
+          {drawing}
+        </svg>
+      )}
       {(visual.kind === 'perimeterComparison' || visual.kind === 'areaComparison') && (
         <ComparisonTable kind={visual.kind} value={v[0]} step={step} />
       )}

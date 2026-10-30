@@ -73,8 +73,9 @@ describe('learning UI and subscriptions', () => {
     (q) => {
       const v = q.explanation.visual!;
       render(<VisualExplanation visual={v} />);
+      const diagram = () => screen.queryByRole('figure') ?? screen.getByRole('img');
       for (let i = 0; i < v.captions.length; i++) {
-        expect(screen.getByRole('img').getAttribute('aria-label')).toContain(v.captions[i]);
+        expect(diagram().getAttribute('aria-label')).toContain(v.captions[i]);
         if (i < v.captions.length - 1)
           fireEvent.click(screen.getByRole('button', { name: '下一步' }));
       }
@@ -82,7 +83,7 @@ describe('learning UI and subscriptions', () => {
         true,
       );
       fireEvent.click(screen.getByRole('button', { name: '上一步' }));
-      expect(screen.getByRole('img').getAttribute('aria-label')).toContain(v.captions.at(-2));
+      expect(diagram().getAttribute('aria-label')).toContain(v.captions.at(-2));
     },
   );
 });

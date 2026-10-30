@@ -1,5 +1,6 @@
 import StepControls from './StepControls';
 import LessonNarration from './LessonNarration';
+import QuantityRelationGuide from './QuantityRelationGuide';
 import { useEffect, useId, useState } from 'react';
 import type { QuantityDemo } from '@mathstudy/contracts';
 import {
@@ -172,6 +173,10 @@ export default function QuantityLessonPlayer({
     setter(value);
     reset();
   };
+  const changeUnknown = (value: UnknownQuantity) => {
+    setUnknown(value);
+    reset();
+  };
   function changeScenario(value: typeof scenario) {
     setScenario(value);
     setUnitValue(value === 'car' ? 60 : 70);
@@ -279,22 +284,6 @@ export default function QuantityLessonPlayer({
             </>
           )}
         </div>
-        {!compare && !isProblem && (
-          <div className="quantity-unknowns" role="group" aria-label="选择要求的量">
-            {(['total', 'unit', 'count'] as const).map((value) => (
-              <button
-                key={value}
-                aria-pressed={unknown === value}
-                onClick={() => {
-                  setUnknown(value);
-                  reset();
-                }}
-              >
-                求{names[value === 'unit' ? 0 : value === 'count' ? 1 : 2]}
-              </button>
-            ))}
-          </div>
-        )}
         {isProblem && (
           <div className="quantity-conditions">
             <p>
@@ -326,6 +315,19 @@ export default function QuantityLessonPlayer({
           </div>
         )}
       </details>
+      {!compare && !isProblem && (
+        <div className="quantity-unknowns" role="group" aria-label="选择要求的量">
+          {(['total', 'unit', 'count'] as const).map((value) => (
+            <button
+              key={value}
+              aria-pressed={unknown === value}
+              onClick={() => changeUnknown(value)}
+            >
+              求{names[value === 'unit' ? 0 : value === 'count' ? 1 : 2]}
+            </button>
+          ))}
+        </div>
+      )}
       {staticMode ? (
         <ol className="quantity-static">
           {frames.map((frame, i) => (
@@ -338,23 +340,34 @@ export default function QuantityLessonPlayer({
       ) : (
         <>
           <div className="quantity-stage">
-            {!isProblem && !compare && (
-              <div className="quantity-facts">
-                {names.map((name, i) => (
-                  <div key={name}>
-                    <span>{name}</span>
-                    <strong>
-                      {finalValue(i)}
-                      <small>{units[i]}</small>
-                    </strong>
-                  </div>
-                ))}
-              </div>
-            )}
+            {!isProblem &&
+              !compare &&
+              context !== 'journey' &&
+              !(context === 'groups' && unknown !== 'total') && (
+                <div className="quantity-facts">
+                  {names.map((name, i) => (
+                    <div key={name}>
+                      <span>{name}</span>
+                      <strong>
+                        {finalValue(i)}
+                        <small>{units[i]}</small>
+                      </strong>
+                    </div>
+                  ))}
+                </div>
+              )}
             {compare ? (
               <ComparisonDrawing frame={current} />
             ) : isProblem ? (
               <ProblemDrawing problem={problem} step={step} />
+            ) : context === 'groups' && unknown !== 'total' ? (
+              <DivisionMeaningDrawing
+                unitValue={unitValue}
+                count={count}
+                unknown={unknown}
+                grouped={step >= 2}
+                reveal={current.reveal}
+              />
             ) : context === 'journey' ? (
               <JourneyDrawing
                 unitValue={unitValue}
@@ -395,11 +408,21 @@ export default function QuantityLessonPlayer({
                 ))}
               </div>
             )}
-            {!isProblem && !compare && (
+            {!isProblem && !compare && !(context === 'groups' && unknown !== 'total') && (
               <div className="quantity-equation">
-                {current.reveal
-                  ? relation.equations[unknown]
-                  : `${names[2]} = ${names[0]} × ${names[1]}`}
+                {unknown === 'total' && current.groups > 0 && (
+                  <span className="quantity-addition" aria-label="相同加数的和">
+                    {Array.from({ length: Math.min(current.groups, count) }, () => unitValue).join(
+                      '＋',
+                    )}
+                    ＝{Math.min(current.groups, count) * unitValue}
+                  </span>
+                )}
+                <span>
+                  {current.reveal
+                    ? relation.equations[unknown]
+                    : `${names[2]} = ${names[0]} × ${names[1]}`}
+                </span>
               </div>
             )}
           </div>
@@ -411,6 +434,16 @@ export default function QuantityLessonPlayer({
                 <p>{current.text}</p>
               </div>
             </div>
+            {!isProblem && !compare && (
+              <QuantityRelationGuide
+                context={context}
+                unitValue={unitValue}
+                count={count}
+                perHour={scenario === 'car'}
+                unknown={unknown}
+                onUnknown={changeUnknown}
+              />
+            )}
           </LessonNarration>
           <StepControls
             step={step}
@@ -442,6 +475,72 @@ export default function QuantityLessonPlayer({
             : '每一份都同样多。先说清每个数表示什么，再写出算式和单位。'}
       </p>
     </section>
+  );
+}
+function DivisionMeaningDrawing({
+  unitValue,
+  count,
+  unknown,
+  grouped,
+  reveal,
+}: {
+  unitValue: number;
+  count: number;
+  unknown: 'unit' | 'count';
+  grouped: boolean;
+  reveal: boolean;
+}) {
+  const total = unitValue * count;
+  const height = count <= 3 ? 150 : 225;
+  return (
+    <svg
+      className="quantity-svg quantity-division"
+      viewBox={`0 0 450 ${height}`}
+      role="img"
+      aria-label={
+        grouped
+          ? `${total}人，${unknown === 'unit' ? `平均分成${count}组，求每组人数` : `每组${unitValue}人，求组数`}`
+          : `共${total}人，还没有分组`
+      }
+    >
+      <text x="225" y="28" textAnchor="middle">
+        {unknown === 'unit' ? `平均分成${count}组，每组几人？` : `每组${unitValue}人，可以分几组？`}
+      </text>
+      {Array.from({ length: count }, (_, group) => {
+        const x = 5 + (group % 3) * 150,
+          y = 42 + Math.floor(group / 3) * 75;
+        return (
+          <g key={group}>
+            {grouped && (
+              <rect
+                x={x}
+                y={y}
+                width="140"
+                height="65"
+                rx="10"
+                fill="var(--sky-soft)"
+                stroke="var(--sky)"
+                strokeWidth="2"
+              />
+            )}
+            {Array.from({ length: unitValue }, (_, person) => (
+              <circle
+                key={person}
+                cx={x + 24 + (person % 4) * 31}
+                cy={y + 23 + Math.floor(person / 4) * 23}
+                r="7"
+                fill="var(--primary)"
+              />
+            ))}
+          </g>
+        );
+      })}
+      <text x="225" y={height - 12} textAnchor="middle">
+        {grouped
+          ? `${total}÷${unknown === 'unit' ? count : unitValue}＝${reveal ? (unknown === 'unit' ? `${unitValue}（人）` : `${count}（组）`) : '？'}`
+          : `共${total}人；下一步，圈出每一组`}
+      </text>
+    </svg>
   );
 }
 function NumberRange({
@@ -494,24 +593,24 @@ function JourneyDrawing({
   suffix: string;
 }) {
   const reached = Math.min(groups, count),
-    x = (distance: number) => 60 + (distance / 800) * 520;
+    x = (distance: number) => 40 + (distance / 800) * 320;
   return (
     <svg
-      className="quantity-svg"
-      viewBox="0 0 640 200"
+      className="quantity-svg quantity-route"
+      viewBox="0 0 400 200"
       role="img"
       aria-label={`同尺度路线0到800${suffix}，每段${unitValue}${suffix}，已行进${reached}段，共${reached * unitValue}${suffix}`}
     >
-      <text className="quantity-svg-title" x="320" y="27" textAnchor="middle">
-        每一段代表相同的一个单位时间
+      <text className="quantity-svg-title" x="200" y="27" textAnchor="middle">
+        每段代表1{suffix === '米' ? '分钟' : '小时'}
       </text>
-      <line x1="60" y1="110" x2="580" y2="110" stroke="var(--input)" strokeWidth="3" />
+      <line x1="40" y1="110" x2="360" y2="110" stroke="var(--input)" strokeWidth="3" />
       {Array.from({ length: count }, (_, i) => (
         <g key={i}>
           <rect
             x={x(i * unitValue)}
             y="80"
-            width={(unitValue / 800) * 520}
+            width={(unitValue / 800) * 320}
             height="30"
             fill={i < reached ? 'var(--sky)' : 'var(--sky-soft)'}
             stroke="white"
@@ -534,8 +633,8 @@ function JourneyDrawing({
         </g>
       ))}
       <circle cx={x(reached * unitValue)} cy="64" r="9" fill="var(--success)" />
-      <text className="quantity-svg-summary" x="320" y="183" textAnchor="middle">
-        已行进 {reached * unitValue} {suffix} · 路线刻度不会随速度改变
+      <text className="quantity-svg-summary" x="200" y="183" textAnchor="middle">
+        已行进 {reached * unitValue} {suffix}
       </text>
     </svg>
   );

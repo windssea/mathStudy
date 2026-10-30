@@ -47,11 +47,11 @@ assert.ok(!JSON.stringify(lesson).includes('"expected"'));
 for (const id of ['U03-L01', 'U03-L02', 'U03-L03', 'U03-L04']) {
   const third = await api(`/textbooks/${editionId}/lessons/${id}`);
   assert.equal((third.lesson as { id: string }).id, id);
-  assert.equal((third.questions as unknown[]).length, 3);
+  assert.equal((third.questions as unknown[]).length, id === 'U03-L04' ? 3 : 5);
   assert.ok(!JSON.stringify(third).includes('"expected"'));
 }
 const thirdBank = await api('/questions?unit=U03');
-assert.equal(thirdBank.total, 36);
+assert.equal(thirdBank.total, 42);
 for (const id of ['U04-L01', 'U04-L02', 'U04-L03']) {
   const fourth = await api(`/textbooks/${editionId}/lessons/${id}`);
   assert.equal((fourth.lesson as { id: string }).id, id);
@@ -76,6 +76,21 @@ const thirdGrade = await api('/questions/u3-07/check', {
   body: JSON.stringify({ answers: { value: '80' } }),
 });
 assert.equal(thirdGrade.correct, true);
+for (const [id, answers] of [
+  ['equal-addends', { value: '1' }],
+  ['two-divisions', { people: '4', groups: '3' }],
+  ['price-reading', { value: '2' }],
+  ['price-inverse', { price: '8', count: '3' }],
+  ['speed-reading', { value: '0' }],
+  ['speed-inverse', { speed: '70', time: '8' }],
+] as const) {
+  const result = await api(`/questions/concept-u3-${id}/check`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Origin: origin.origin },
+    body: JSON.stringify({ answers }),
+  });
+  assert.equal(result.correct, true, `concept-u3-${id}`);
+}
 for (let index = 1; index <= 7; index++) {
   const id = `U05-L0${index}`,
     fifth = await api(`/textbooks/${editionId}/lessons/${id}`);
@@ -192,7 +207,7 @@ assert.equal(vector.status, 200);
 assert.match(vector.headers.get('content-type') ?? '', /image\/svg\+xml/);
 assert.doesNotMatch(await vector.text(), /<image|data:image|<script/);
 const history = await api('/questions?scope=history');
-assert.equal(history.total, 884);
+assert.equal(history.total, 890);
 assert.ok((history.items as { id: string }[]).some((q) => q.id === 'p15-draw'));
 const deepLink = await fetch(new URL(`/books/${editionId}/lessons/U05-L05`, origin), {
   signal: AbortSignal.timeout(15000),

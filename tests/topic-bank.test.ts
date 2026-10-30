@@ -5,7 +5,7 @@ import { app } from '../apps/web/worker';
 
 it('classifies usable questions without selected duplicates or incomplete source material', () => {
   const ids = new Set(practice.topics.flatMap((t) => t.questionIds));
-  expect(ids.size).toBe(725);
+  expect(ids.size).toBe(731);
   expect(ids.has('full-p15-s1-q2')).toBe(true);
   expect(ids.has('full-p16-s4-q3-1')).toBe(false);
   const keys = new Set<string>();
@@ -49,7 +49,7 @@ it('keeps old question deep links usable while preventing paper browsing and sca
   expect(data.items[0].id).toBe('p15-draw');
   expect(data.items[0]).not.toHaveProperty('sources');
   const { data: history } = await (await app.request('/api/v1/questions?scope=history')).json();
-  expect(history.items).toHaveLength(884);
+  expect(history.items).toHaveLength(890);
   expect(history.items.some((q: { id: string }) => q.id === 'p15-draw')).toBe(true);
   expect((await app.request('/api/v1/practice/papers/P15')).status).toBe(404);
   expect((await app.request('/papers/P15/1.webp')).status).toBe(404);

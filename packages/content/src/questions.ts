@@ -8,6 +8,7 @@ import teachingTopicMap from '../../../content/practice/teaching-topic-map.json'
 import type { Question, QuestionType, Difficulty, Visual } from '@mathstudy/contracts';
 import { unit2Questions, unit2VisualOverrides } from './unit2-questions';
 import { depthQuestions } from './depth-questions';
+import { unit3ConceptQuestions } from './unit3-concept-questions';
 
 type Spec = {
   id: string;
@@ -941,6 +942,7 @@ export const questions: Question[] = [
   ...baseQuestions,
   ...unit2Questions,
   ...depthQuestions,
+  ...unit3ConceptQuestions,
   ...unit345Data.map((q) => questionSchema.parse(q)),
   ...teachingQuestions.map((q) => questionSchema.parse(q)),
   ...collectedData.map((q) => questionSchema.parse(q)),

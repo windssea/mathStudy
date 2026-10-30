@@ -69,7 +69,7 @@ describe('public course and grading API', () => {
     expect(r.status).toBe(200);
     const b = await r.json();
     expect(b.data.textbook.id).toBe('sj-math-g4-upper-2026-v1');
-    expect(b.data.questionCount).toBe(884);
+    expect(b.data.questionCount).toBe(890);
     expect(b.data.availableLessons).toBe(27);
     expect(b.requestId).toBeTruthy();
   });

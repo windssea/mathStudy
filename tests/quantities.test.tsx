@@ -59,7 +59,7 @@ describe('multiplicative quantity relationships', () => {
     expect(done).toHaveBeenLastCalledWith(false);
     fireEvent.click(screen.getByRole('button', { name: '求每组人数' }));
     fireEvent.change(screen.getByRole('slider', { name: '演示步骤' }), { target: { value: 3 } });
-    expect(screen.getByText('12 ÷ 3 = 4')).toBeTruthy();
+    expect(screen.getByText('12÷3＝4（人）')).toBeTruthy();
     fireEvent.change(screen.getByRole('slider', { name: '组数' }), { target: { value: 5 } });
     expect(done).toHaveBeenLastCalledWith(false);
     expect(screen.getByRole('slider', { name: '演示步骤' }).getAttribute('value')).toBe('0');
