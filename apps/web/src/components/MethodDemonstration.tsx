@@ -21,14 +21,21 @@ export default function MethodDemonstration({
   const [mistake, setMistake] = useState(false);
   const [transfer, setTransfer] = useState(false);
   const [choice, setChoice] = useState<string>();
+  const [showError, setShowError] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const expandTrigger = useRef<HTMLButtonElement>(null);
+  const inlineReviewFocus = useRef<HTMLButtonElement>(null);
+  const dialogReviewFocus = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (mistake && active) (expanded ? dialogReviewFocus : inlineReviewFocus).current?.focus();
+  }, [choice, transfer, expanded, mistake, active]);
   useEffect(() => {
     setStep(0);
     setMistake(false);
     setTransfer(false);
     setChoice(undefined);
+    setShowError(false);
     setPlaying(false);
     setExpanded(false);
   }, [topicId, questionId]);
@@ -52,10 +59,12 @@ export default function MethodDemonstration({
     setStep(n);
     setMistake(false);
     setTransfer(false);
+    setShowError(false);
     setPlaying(false);
   };
   // TopicMethod is keyed by topic ID: the current step and mistake answer reset on topic change.
   const check = transfer && story.transfer ? story.transfer : story.mistake;
+  const showingWrong = mistake && !!choice && showError && !!check.wrongNodes;
   const content = (inDialog: boolean) => (
     <div className={`method-demonstration ${expanded ? 'is-expanded' : ''}`}>
       <div className="demo-topline">
@@ -96,10 +105,15 @@ export default function MethodDemonstration({
       <div className={`demo-stage pane-scroll ${mistake ? 'is-mistake' : ''}`}>
         <div className="demo-visual">
           <MethodDiagram
-            nodes={mistake ? check.nodes : current.nodes}
-            label={mistake ? check.question : current.title}
+            nodes={mistake ? (showingWrong ? check.wrongNodes! : check.nodes) : current.nodes}
+            label={mistake ? `${showingWrong ? '错误示范：' : ''}${check.question}` : current.title}
           />
           <div className="diagram-key" aria-label="图例">
+            {mistake && choice && check.wrongNodes && (
+              <strong className={showingWrong ? 'key-error' : 'key-focus'}>
+                {showingWrong ? '错误示范' : '订正后的图'}
+              </strong>
+            )}
             <span className="key-known">已知</span>
             <span className="key-focus">本步</span>
             {mistake && <span className="key-error">错误 / 不计入</span>}
@@ -107,51 +121,79 @@ export default function MethodDemonstration({
           </div>
         </div>
         <div className="demo-reason" aria-live="polite" aria-atomic="true">
-          <h4>{mistake ? check.question : current.title}</h4>
+          {(!mistake || !choice) && <h4>{mistake ? check.question : current.title}</h4>}
           {mistake ? (
             <>
-              <div className="mistake-options" role="group" aria-label="易错判断">
-                {/* Position alternates deterministically: the right answer is not always the second choice. */}
-                {(topicId.length % 2 ? [check.right, check.wrong] : [check.wrong, check.right]).map(
-                  (option) => (
+              {!choice ? (
+                <div className="mistake-options" role="group" aria-label="易错判断">
+                  {/* Position alternates deterministically: the right answer is not always the second choice. */}
+                  {(topicId.length % 2
+                    ? [check.right, check.wrong]
+                    : [check.wrong, check.right]
+                  ).map((option, optionIndex) => (
                     <Button
+                      ref={
+                        optionIndex === 0
+                          ? inDialog
+                            ? dialogReviewFocus
+                            : inlineReviewFocus
+                          : undefined
+                      }
                       type="button"
                       variant="outline"
                       key={option}
                       className={choice === option ? 'is-picked' : ''}
                       aria-pressed={choice === option}
-                      onClick={() => setChoice(option)}
+                      onClick={() => {
+                        setChoice(option);
+                        setShowError(option === check.wrong);
+                      }}
                     >
                       {option}
                     </Button>
-                  ),
-                )}
-              </div>
-              {choice && (
-                <div
-                  className={`mistake-feedback ${choice === check.right ? 'is-correct' : 'try-again'}`}
-                  role="status"
-                >
-                  <strong>
-                    {choice === check.right ? '对，关键就在这里' : '再看图，换个角度想'}
-                  </strong>
-                  <p>{check.why}</p>
-                  {choice !== check.right && <p>正确的想法：{check.right}</p>}
+                  ))}
                 </div>
-              )}
-              {choice && story.transfer && !transfer && (
-                <div className="method-transfer">
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      setTransfer(true);
-                      setChoice(undefined);
-                    }}
+              ) : (
+                <>
+                  <div
+                    className={`mistake-feedback ${choice === check.right ? 'is-correct' : 'try-again'}`}
+                    role="status"
                   >
-                    换一组数试试
-                    <Icon name="ArrowRight" size={18} />
-                  </Button>
-                </div>
+                    <strong>{choice === check.right ? '判断正确' : '看图找原因'}</strong>
+                    <p>{check.why}</p>
+                    <span className="sr-only">你选了：{choice}</span>
+                  </div>
+                  <div className="mistake-choice-summary">
+                    <Button
+                      ref={
+                        check.wrongNodes
+                          ? undefined
+                          : inDialog
+                            ? dialogReviewFocus
+                            : inlineReviewFocus
+                      }
+                      variant="ghost"
+                      onClick={() => {
+                        setChoice(undefined);
+                        setShowError(false);
+                      }}
+                    >
+                      重选
+                    </Button>
+                    {check.wrongNodes && (
+                      <Button
+                        ref={inDialog ? dialogReviewFocus : inlineReviewFocus}
+                        className="method-correction-toggle"
+                        variant="outline"
+                        aria-pressed={!showingWrong}
+                        onClick={() => setShowError(!showingWrong)}
+                      >
+                        <Icon name={showingWrong ? 'ArrowRight' : 'RotateCcw'} size={18} />
+                        {showingWrong ? '看图订正' : '对照错法'}
+                      </Button>
+                    )}
+                  </div>
+                </>
               )}
             </>
           ) : (
@@ -189,10 +231,14 @@ export default function MethodDemonstration({
           {playing ? '暂停' : '播放'}
         </Button>
         <Button
-          variant={mistake ? 'outline' : 'default'}
+          variant={mistake && !(choice && story.transfer && !transfer) ? 'outline' : 'default'}
           onClick={() => {
             setPlaying(false);
-            if (mistake) {
+            if (mistake && choice && story.transfer && !transfer) {
+              setTransfer(true);
+              setChoice(undefined);
+              setShowError(false);
+            } else if (mistake) {
               go(0);
               setChoice(undefined);
             } else if (step < story.frames.length - 1) go(step + 1);
@@ -203,7 +249,13 @@ export default function MethodDemonstration({
             }
           }}
         >
-          {mistake ? '重看图解' : step === story.frames.length - 1 ? '易错对照' : '下一步'}
+          {mistake
+            ? choice && story.transfer && !transfer
+              ? '换一组数试试'
+              : '重看图解'
+            : step === story.frames.length - 1
+              ? '易错对照'
+              : '下一步'}
           <Icon name={mistake ? 'RotateCcw' : 'ArrowRight'} size={18} />
         </Button>
       </div>

@@ -77,12 +77,15 @@ it('explains an actual fence misconception, replays steps and supports an enlarg
   expect(screen.queryByText('正确的想法：不是，只是另外三边')).toBeNull();
   fireEvent.click(screen.getByRole('button', { name: '是，先算 32 ÷ 2' }));
   expect(screen.getByRole('status').textContent).toContain('靠墙的一边没有用围栏');
+  fireEvent.click(screen.getByRole('button', { name: '看图订正' }));
+  expect(screen.getByText('订正后的图')).toBeTruthy();
+  fireEvent.click(screen.getByRole('button', { name: '重选' }));
   fireEvent.click(screen.getByRole('button', { name: '不是，只是另外三边' }));
-  expect(screen.getByRole('status').textContent).toContain('对，关键就在这里');
+  expect(screen.getByRole('status').textContent).toContain('判断正确');
   fireEvent.click(screen.getByRole('button', { name: '放大演示' }));
   expect(await screen.findByRole('dialog')).toBeTruthy();
   fireEvent.keyDown(screen.getByRole('dialog'), { key: 'Escape', code: 'Escape' });
   await vi.waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
-  fireEvent.click(screen.getByRole('button', { name: '重看图解' }));
+  fireEvent.click(screen.getByRole('button', { name: /^第1步：/ }));
   expect(screen.getByRole('img', { name: '先划掉不用围的那一边' })).toBeTruthy();
 });

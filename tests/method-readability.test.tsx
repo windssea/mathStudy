@@ -54,3 +54,27 @@ it('moves a long label out of a narrow mathematical segment instead of shrinking
     container.querySelector('[data-node-label="余下 1 个"] text')?.getAttribute('font-size'),
   ).toBe('18');
 });
+
+it('keeps single place-value digits inside their slots on a tablet-sized canvas', () => {
+  vi.spyOn(SVGSVGElement.prototype, 'getBoundingClientRect').mockReturnValue({
+    x: 0,
+    y: 0,
+    width: 200,
+    height: 125,
+    top: 0,
+    right: 200,
+    bottom: 125,
+    left: 0,
+    toJSON: () => ({}),
+  });
+  const { container } = render(
+    <MethodDiagram
+      label="数位表"
+      nodes={[{ kind: 'rect', x: 32, y: 70, w: 38, h: 70, tone: 'focus', label: '8' }]}
+    />,
+  );
+  expect(screen.queryByRole('list', { name: '分块标注' })).toBeNull();
+  const digit = container.querySelector('[data-node-label="8"] text')!;
+  expect(digit.textContent).toBe('8');
+  expect(Number(digit.getAttribute('font-size')) * 0.5).toBeGreaterThanOrEqual(18);
+});

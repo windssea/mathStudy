@@ -141,7 +141,7 @@ describe('navigation and local recovery', () => {
     fireEvent.submit(submit.closest('form')!);
     const error = await screen.findByRole('alert');
     expect(error.closest('form')).toBeTruthy();
-    expect(document.activeElement).toBe(error);
+    await waitFor(() => expect(document.activeElement).toBe(error));
     expect(screen.getByRole('link', { name: '继续练习' }).getAttribute('href')).toBe(
       '/questions?unit=U04',
     );

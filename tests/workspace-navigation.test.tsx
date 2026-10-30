@@ -55,3 +55,22 @@ it('shows the current lesson reason beside its drawing and updates it with the s
   expect(within(reason).getByText('先看一份和几份')).toBeTruthy();
   expect(screen.getByRole('img', { name: /已展示1份/ })).toBeTruthy();
 });
+
+it('keeps the method workspace and selects the new unit first topic when changing the compact unit selector', async () => {
+  open('/?unit=U06&view=methods&method=u6-written');
+  await screen.findByRole('region', { name: '三位数乘两位数方法卡' });
+  fireEvent.change(screen.getByRole('combobox', { name: '选择方法单元' }), {
+    target: { value: 'U03' },
+  });
+  await screen.findByRole('region', { name: '乘除关系与未知量方法卡' });
+  const params = new URLSearchParams(window.location.search);
+  expect(params.get('unit')).toBe('U03');
+  expect(params.get('view')).toBe('methods');
+  expect(params.get('method')).toBe('u3-inverse');
+  expect((screen.getByRole('combobox', { name: '题型方法' }) as HTMLSelectElement).value).toBe(
+    'u3-inverse',
+  );
+  expect(screen.getByRole('link', { name: '练这类题' }).getAttribute('href')).toBe(
+    '/practice/topics/u3-inverse',
+  );
+}, 15000);

@@ -53,6 +53,23 @@ export default function Home() {
       return next;
     });
   }
+  function chooseUnit(value: string) {
+    if (view !== 'methods') {
+      filter('unit', value);
+      return;
+    }
+    const first = remote.data?.topics.find(
+      (topic) => (!value || topic.unitId === value) && topic.questionIds.length,
+    );
+    setParams((previous) => {
+      const next = new URLSearchParams(previous);
+      next.set('unit', value);
+      next.set('view', 'methods');
+      if (first) next.set('method', first.id);
+      else next.delete('method');
+      return next;
+    });
+  }
   return (
     <div className={`home-page ${view === 'methods' ? 'is-teaching' : ''}`}>
       <div className={view === 'methods' ? 'sr-only' : 'practice-page-head'}>
@@ -66,7 +83,7 @@ export default function Home() {
             <button
               className={unit === n.id ? 'selected' : ''}
               aria-pressed={unit === n.id}
-              onClick={() => filter('unit', n.id)}
+              onClick={() => chooseUnit(n.id)}
               key={n.id}
             >
               <span className="unit-index" data-tone={i % 4}>
@@ -79,7 +96,7 @@ export default function Home() {
           <button
             className={!unit ? 'selected all-units' : 'all-units'}
             aria-pressed={!unit}
-            onClick={() => filter('unit', '')}
+            onClick={() => chooseUnit('')}
           >
             <Icon name="Grid2X2" size={18} />
             <span>全部单元</span>
@@ -156,6 +173,29 @@ export default function Home() {
               </TabsList>
               {view === 'methods' && selectedTopic?.guide && (
                 <>
+                  <label className="method-unit-picker">
+                    <span className="sr-only">选择方法单元</span>
+                    <select
+                      aria-label="选择方法单元"
+                      value={unit}
+                      onChange={(e) => chooseUnit(e.target.value)}
+                    >
+                      <option value="">全部单元</option>
+                      {units.map((n, i) => (
+                        <option
+                          value={n.id}
+                          key={n.id}
+                          disabled={
+                            !remote.data?.topics.some(
+                              (topic) => topic.unitId === n.id && topic.questionIds.length,
+                            )
+                          }
+                        >
+                          第{i + 1}单元
+                        </option>
+                      ))}
+                    </select>
+                  </label>
                   <label className="method-topic-picker">
                     <span className="sr-only">题型方法</span>
                     <select value={selectedTopic.id} onChange={(e) => showMethod(e.target.value)}>

@@ -45,7 +45,9 @@ export default function MethodDiagram({ nodes, label }: { nodes: MethodNode[]; l
         const size = font(22, node.label && /^\d+(?:\.\d+)?$/.test(node.label) ? 18 : 16);
         const lines = node.label ? wrapLabel(node.label, Math.max(1, node.w - 12), size) : [];
         const external =
-          !!node.label && (node.w < size + 12 || lines.length * size * 1.2 > node.h - 8);
+          !!node.label &&
+          (lines.some((line) => textWidth(line, size) > node.w - 8) ||
+            lines.length * size * 1.2 > node.h - 8);
         const key = externalLabels.length + 1;
         if (external) externalLabels.push({ index: key, label: node.label!, tone: className });
         return (

@@ -63,6 +63,7 @@ export default function QuestionRunner({
   const [explanation, setExplanation] = useState<Explanation | undefined>(draft?.explanation);
   const [revealed, setRevealed] = useState(draft?.revealed ?? false);
   const [view, setView] = useState<string>(draft?.view ?? 'answer');
+  const [methodVisited, setMethodVisited] = useState(draft?.view === 'method');
   const details = view === 'explanation';
   const setDetails = (expanded: boolean) => {
     if (expanded) markHelp();
@@ -199,6 +200,7 @@ export default function QuestionRunner({
             className="answer-workspace"
             value={view}
             onValueChange={(value) => {
+              if (value === 'method') setMethodVisited(true);
               if (value === 'method' || value === 'explanation') markHelp();
               setView(value);
             }}
@@ -408,7 +410,7 @@ export default function QuestionRunner({
                 </div>
               </form>
             </TabsContent>
-            {method?.guide && (
+            {method?.guide && methodVisited && (
               <TabsContent
                 value="method"
                 forceMount

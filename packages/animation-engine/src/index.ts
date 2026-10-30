@@ -7,6 +7,7 @@ export {
   methodSubskillStories,
   type MethodStory,
   type MethodFrame,
+  type MethodCheck,
   type MethodNode,
 } from './methods';
 
