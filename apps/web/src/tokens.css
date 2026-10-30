@@ -38,6 +38,7 @@
   --note-surface: #f9f7eb;
   --diagram-background: #f3f7fc;
   --diagram-ink: #283e61;
+  --diagram-outline: #637c70;
   --radius: 0.75rem;
   --radius-panel: 1rem;
   --sidebar-width: 204px;
@@ -89,4 +90,5 @@
   --note-surface: #2a3024;
   --diagram-background: #202f2c;
   --diagram-ink: #dcece5;
+  --diagram-outline: #91b09d;
 }

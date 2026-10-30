@@ -186,7 +186,7 @@ const findDivisor = story(
       grouping(7, 25, 10),
     ),
   ],
-  '求每份量，185 能直接除以 7 吗？',
+  '185个分成7个完整份后剩10个，求每份量能直接用185÷7吗？',
   '能，余数不用管',
   '不能，先减去剩下的 10',
   '185 中有 10 个不属于这 7 个完整份。先拿走余数，再把完整份的总量平均分。',
@@ -208,6 +208,7 @@ sameQuantity.transfer!.wrongNodes = [
   ]).flat(),
   text(200, 232, '每份应有45个，不是1个', 'error', 20),
 ];
+largestRemainder.mistake.nodes = grouping(7, 14, 13);
 largestRemainder.mistake.wrongNodes = grouping(7, 14, 14).map(
   (node): MethodNode =>
     node.kind === 'dot'

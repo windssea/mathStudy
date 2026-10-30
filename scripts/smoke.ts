@@ -101,14 +101,18 @@ for (const [questionId, value] of [
     true,
   );
 }
-const registration = await fetch(new URL('/api/auth/sign-up/email', origin), {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json', Origin: origin.origin },
-  body: '{}',
-  signal: AbortSignal.timeout(15000),
-});
-assert.equal(registration.status, 403);
-await registration.arrayBuffer();
+for (const route of ['sign-up/email', 'sign-in/email']) {
+  const closedAuth = await fetch(new URL(`/api/auth/${route}`, origin), {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Origin: origin.origin },
+    body: '{}',
+    signal: AbortSignal.timeout(15000),
+  });
+  assert.equal(closedAuth.status, 403, route);
+  assert.equal(((await closedAuth.json()) as { code: string }).code, 'REGISTRATION_CLOSED');
+  // Rejections must leave the connection usable for the next ordinary request.
+  assert.equal((await api('/health')).status, 'ok');
+}
 const bank = await api('/questions?unit=U02');
 assert.equal(bank.total, 209);
 const grade = await api('/questions/u2-08/check', {

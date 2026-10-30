@@ -26,7 +26,7 @@ const dot = (x: number, y: number, tone: MethodTone = 'known'): MethodNode => ({
   tone,
 });
 const note = (nodes: MethodNode[], value: string, tone: MethodTone = 'error'): MethodNode[] => [
-  ...nodes.filter((node) => node.kind !== 'text' || node.y < 230),
+  ...nodes.filter((node) => node.kind !== 'text' || node.y < 210),
   text(200, 240, value, tone, 20),
 ];
 const errorOn = (nodes: MethodNode[], selected: (node: MethodNode) => boolean): MethodNode[] =>
@@ -333,31 +333,43 @@ function cutCorner(a: number, b: number, c: number, d: number, stage: number): M
     .map(({ i, removed }) =>
       rect(x + (i % a) * s, y + Math.floor(i / a) * s, s, s, removed ? 'error' : 'known'),
     );
-  const outline = [
-    [x, y, x1, y],
-    [x1, y, x1, y1],
-    [x1, y1, right, y1],
-    [right, y1, right, bottom],
-    [right, bottom, x, bottom],
-    [x, bottom, x, y],
-  ];
+  const outline =
+    stage === 0
+      ? [
+          [x, y, right, y],
+          [right, y, right, bottom],
+          [right, bottom, x, bottom],
+          [x, bottom, x, y],
+        ]
+      : [
+          [x, y, x1, y],
+          [x1, y, x1, y1],
+          [x1, y1, right, y1],
+          [right, y1, right, bottom],
+          [right, bottom, x, bottom],
+          [x, bottom, x, y],
+        ];
   return [
     ...nodes,
     ...outline
       .filter((_, i) => stage !== 3 || (i !== 1 && i !== 2))
-      .map(([a1, b1, a2, b2], i) => line(a1, b1, a2, b2, i === 1 || i === 2 ? 'focus' : 'known')),
-    ...(stage === 0 || stage >= 2
+      .map(([a1, b1, a2, b2], i) =>
+        line(a1, b1, a2, b2, stage === 2 && (i === 1 || i === 2) ? 'focus' : 'known'),
+      ),
+    ...(stage >= 2
       ? [line(x1, y, right, y, 'error', true), line(right, y, right, y1, 'error', true)]
       : []),
     text(200, 26, `${a}×${b}，角上剪${c}×${d}`, 'known', 20),
     text(
       200,
       234,
-      stage === 3
-        ? '× 只减旧边，忘了新边'
-        : stage >= 2
-          ? `少${c}+${d}，也多${c}+${d}`
-          : `留下${a * b - c * d}格`,
+      stage === 0
+        ? `${a * b}格，红色${c * d}格将剪去`
+        : stage === 3
+          ? '× 只减旧边，忘了新边'
+          : stage >= 2
+            ? `少${c}+${d}，也多${c}+${d}`
+            : `留下${a * b - c * d}格`,
       stage === 3 ? 'error' : 'focus',
       21,
     ),
@@ -471,12 +483,37 @@ function comparePlots(stage: number, wrong = false): MethodNode[] {
     ),
     text(95, 30, '10×4', 'known', 20),
     text(302, 30, '7×7', 'focus', 20),
-    text(95, 184, '40格', 'known', 22),
-    text(302, 184, wrong ? '× 也说40格' : '49格', wrong ? 'error' : 'focus', 22),
+    ...[
+      { x: 20, y: 70, w: 150, h: 60 },
+      { x: 250, y: 47, w: 105, h: 105 },
+    ].flatMap((p) =>
+      [
+        [p.x, p.y, p.x + p.w, p.y],
+        [p.x + p.w, p.y, p.x + p.w, p.y + p.h],
+        [p.x + p.w, p.y + p.h, p.x, p.y + p.h],
+        [p.x, p.y + p.h, p.x, p.y],
+      ].map(([x1, y1, x2, y2]) => line(x1, y1, x2, y2, stage === 0 ? 'focus' : 'known')),
+    ),
+    text(95, 184, stage === 0 ? '周长28米' : '40格', 'known', 22),
+    text(
+      302,
+      184,
+      wrong ? '× 也说40格' : stage === 0 ? '周长28米' : stage === 1 ? '面积待数' : '49格',
+      wrong ? 'error' : stage < 2 ? 'quiet' : 'focus',
+      22,
+    ),
     text(
       200,
       236,
-      wrong ? '右边多出的9格没有被数上' : stage > 2 ? '左边40格，右边还多9格' : '两边周长同为28米',
+      wrong
+        ? '右边多出的9格没有被数上'
+        : stage > 2
+          ? '左边40格，右边还多9格'
+          : stage === 2
+            ? '40格和49格，面积不同'
+            : stage === 1
+              ? '先数左图，再数右图'
+              : '同样长的绳子，围出不同形状',
       wrong ? 'error' : 'known',
       20,
     ),
@@ -562,7 +599,7 @@ unit12Stories['u2-fence'] = story(
       fenceModel(20, 6, 3),
     ),
   ],
-  '这里的 32 米是长方形完整周长吗？',
+  '长边靠墙，宽6米，三边围栏共32米。这32米是完整周长吗？',
   '是，先算 32 ÷ 2',
   '不是，只是另外三边',
   '靠墙的一边没有用围栏，32 里只有一条长、两条宽。',
@@ -792,7 +829,7 @@ teach(
     ),
   ],
   {
-    question: '试商5，乘积140没有超过172，就可以停了吗？',
+    question: '172÷28试商5，乘积140没有超过172，就可以停了吗？',
     wrong: '可以，乘积没超就行',
     right: '不行，余下32还能再分28',
     why: '不超过总数只是第一项检查。余数还够一份，说明商仍偏小。',
@@ -887,7 +924,11 @@ teach(
       '换回分钟，核对总量',
       '7个小时各有60分，仍是420分。换单位改变数值，不改变这段时间。',
       '7 × 60 = 420分',
-      [...hourBoxes(7), text(200, 212, '7时和420分是同一段时间', 'focus', 20)],
+      hourBoxes(7).map((node) =>
+        node.kind === 'text' && node.y === 231
+          ? { ...node, text: '7时 = 420分，同一段时间', tone: 'focus' }
+          : node,
+      ),
     ),
   ],
   {
@@ -951,7 +992,7 @@ teach(
     ),
   ],
   {
-    question: '还原被除数时，错商16应配哪个除数？',
+    question: '除数32看成23，错得商16余5。还原被除数时，商16应配哪个除数？',
     wrong: '正确除数32，算32×16+5',
     right: '错除数23，算23×16+5',
     why: '16份是按每份23得到的。改用32却保留16份，总数会变成517，不再是原来的数。',
@@ -1059,7 +1100,7 @@ teach(
     ),
   ],
   {
-    question: '同一根木条锯成8段，为什么不是锯8次？',
+    question: '一根木条锯成8段，每次只锯一根、不叠放，为什么不是锯8次？',
     wrong: '8段就有8个切口',
     right: '只有7个内部切口，两端不锯',
     why: '段和切口不是同一个对象。两头已经是端点，每锯一次只增加一段。',
@@ -1188,7 +1229,7 @@ teach(
     ),
   ],
   {
-    question: '给这个画框配一整块玻璃，应测量什么？',
+    question: '长7厘米、宽4厘米的画框，配一整块玻璃，应测量什么？',
     wrong: '周长22厘米，沿外边量',
     right: '面积28平方厘米，铺满里面',
     why: '玻璃覆盖的是框内的面。框条才沿边界，不能用一圈线代替整块玻璃。',
@@ -1488,7 +1529,7 @@ teach(
     ),
   ],
   {
-    question: '这个角剪掉后，周长能只减去4+3吗？',
+    question: '12厘米×8厘米的纸，从角上剪去4厘米×3厘米，周长能只减去4+3吗？',
     wrong: '能，只看少掉的两段边',
     right: '不能，还要加上新露出的4和3',
     why: '剪纸改变了边界。旧边少7厘米，新边也增加7厘米，所以这例周长仍是40。',
@@ -1644,7 +1685,7 @@ teach(
     ),
   ],
   {
-    question: '两种方案都用28米绳子，能直接说面积相等吗？',
+    question: '10米×4米与7米×7米都用28米围绳，能直接说面积相等吗？',
     wrong: '能，绳子一样长，面积也一样',
     right: '不能，40格与49格不同',
     why: '绳子固定的是外边长度。长宽搭配变了，里面可铺的单位方格数也会改变。',

@@ -1,7 +1,8 @@
 import type { TopicGuide, UnitTeaching } from '@mathstudy/contracts';
 import { Icon } from './ui';
 import { methodStory } from '@mathstudy/animation-engine';
-import MethodDemonstration from './MethodDemonstration';
+import MethodDemonstration, { type MethodQuestionReference } from './MethodDemonstration';
+import MethodNotesContent from './MethodNotesContent';
 import { Popover } from 'radix-ui';
 import { Button } from './ui/button';
 
@@ -63,12 +64,16 @@ export default function TopicMethod({
   guide,
   active = true,
   questionId,
+  questionReference,
+  onReturnToAnswer,
 }: {
   topicId: string;
   title: string;
   guide: TopicGuide;
   active?: boolean;
   questionId?: string;
+  questionReference?: MethodQuestionReference;
+  onReturnToAnswer?: () => void;
 }) {
   const story = methodStory(topicId, questionId);
   return (
@@ -84,10 +89,7 @@ export default function TopicMethod({
               </Button>
             </Popover.Trigger>
           </div>
-          <p>
-            <span className="method-example-label">例题</span>
-            {story?.prompt ?? guide.recognize}
-          </p>
+          {!story && <p>{guide.recognize}</p>}
         </header>
         <MethodDemonstration
           key={`${topicId}:${questionId ?? ''}`}
@@ -95,6 +97,9 @@ export default function TopicMethod({
           questionId={questionId}
           title={title}
           active={active}
+          questionReference={questionReference}
+          onReturnToAnswer={onReturnToAnswer}
+          notes={<MethodNotesContent guide={guide} story={story} />}
         />
         <Popover.Portal>
           <Popover.Content
@@ -113,47 +118,7 @@ export default function TopicMethod({
                 </Button>
               </Popover.Close>
             </h4>
-            <ol className="method-steps">
-              {guide.steps.map((step, i) => (
-                <li key={step.title}>
-                  <span aria-hidden="true">{i + 1}</span>
-                  <div>
-                    <h4>{step.title}</h4>
-                    <p>{step.detail}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-            {!story && (
-              <details className="method-example">
-                <summary>
-                  <Icon name="BookOpen" size={17} />
-                  看一道例题
-                  <Icon name="ChevronDown" size={16} />
-                </summary>
-                <p className="method-example-prompt">{guide.example.prompt}</p>
-                <ol>
-                  {guide.example.steps.map((step) => (
-                    <li key={step}>{step}</li>
-                  ))}
-                </ol>
-                <p className="method-example-answer">{guide.example.answer}</p>
-              </details>
-            )}
-            <div className="method-pitfall">
-              <Icon name="Flag" size={17} />
-              <p>
-                <b>容易错在</b>
-                {guide.pitfall}
-              </p>
-            </div>
-            <div className="method-self-check">
-              <Icon name="CheckCircle2" size={17} />
-              <p>
-                <b>做完检查</b>
-                {guide.selfCheck}
-              </p>
-            </div>
+            <MethodNotesContent guide={guide} story={story} />
           </Popover.Content>
         </Popover.Portal>
       </section>

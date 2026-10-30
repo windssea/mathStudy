@@ -62,11 +62,15 @@ app.onError((error, c) => {
   );
 });
 app.on(['GET', 'POST'], '/api/auth/*', async (c) => {
-  if (['/api/auth/sign-up/email', '/api/auth/sign-in/email'].includes(c.req.path))
+  if (['/api/auth/sign-up/email', '/api/auth/sign-in/email'].includes(c.req.path)) {
+    // The size limit has already run. Consume the bounded body before rejecting:
+    // an unread POST can break the next request on the local workerd connection.
+    await c.req.arrayBuffer();
     return c.json(
       { code: 'REGISTRATION_CLOSED', message: '仅支持内置账号登录，不开放注册。' },
       403,
     );
+  }
   if (!['/api/auth/sign-in/username', '/api/auth/sign-out'].includes(c.req.path))
     return c.json({ error: { code: 'NOT_FOUND', message: '接口不存在。' } }, 404);
   if (!c.env?.DB || !c.env.AUTH_SECRET)

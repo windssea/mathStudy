@@ -145,6 +145,9 @@ function roundLine(
             20,
           ),
         ]),
+    ...(value < midpoint && midpoint - value < 2
+      ? [text(200, 244, `距中点还差${midpoint - value}`, 'warm', 18)]
+      : []),
   ];
 }
 function roundingRange(wrong = false): MethodNode[] {
@@ -170,12 +173,13 @@ function codeStrip(
     ? year + shelf.padStart(2, '0') + serial.padStart(3, '0')
     : year + shelf + serial;
   const source = broken ? year + shelf + serial : code;
+  const unpacked = !padded && !broken;
   const nodes: MethodNode[] = [
     text(103, 35, '年份', 'known', 20),
-    text(259, 35, '书架', 'warm', 20),
-    text(346, 35, '序号', 'focus', 20),
+    text(unpacked ? 228 : 220, 35, '书架', 'warm', 20),
+    text(unpacked ? 328 : 318, 35, '序号', 'focus', 20),
   ];
-  if (!padded && !broken) {
+  if (unpacked) {
     return [
       ...nodes,
       rect(25, 84, 156, 65, 'known', year),
@@ -324,11 +328,38 @@ function shiftTiles(base: string, shift: number, complete: boolean): MethodNode[
     ),
   ];
 }
+function writtenProduct(n: number, tens: number, ones: number): MethodNode[] {
+  const values = [n * ones, n * tens * 10, n * (tens * 10 + ones)];
+  const labels = [`${ones}份`, `${tens * 10}份`, '合计'];
+  const columns = String(values[2]).length;
+  const width = 244 / columns;
+  return [
+    text(200, 24, '同一数位上下对齐', 'focus', 21),
+    ...Array.from({ length: columns }, (_, i) =>
+      text(132 + width * (i + 0.5), 51, units[columns - i - 1], 'quiet', 18),
+    ),
+    ...values.flatMap((value, row) => [
+      text(67, 87 + row * 63, labels[row], row === 1 ? 'focus' : 'known', 20),
+      ...[...String(value).padStart(columns, ' ')].map((digit, column) =>
+        rect(
+          132 + width * column,
+          59 + row * 63,
+          width - 3,
+          43,
+          row === 1 ? 'focus' : 'known',
+          digit.trim() || undefined,
+          !digit.trim(),
+        ),
+      ),
+    ]),
+    line(132, 174, 376, 174, 'known'),
+  ];
+}
 function convolution(n: number): MethodNode[] {
   const count = Array.from({ length: n * 2 - 1 }, (_, i) => Math.min(i + 1, n, n * 2 - 1 - i));
   const width = 332 / count.length;
   return [
-    text(200, 27, '每点为1×1', 'known', 20),
+    text(200, 27, '每点为一次1×1，同列同数位', 'known', 20),
     ...Array.from(
       { length: n * n },
       (_, i): MethodNode => ({
@@ -342,6 +373,7 @@ function convolution(n: number): MethodNode[] {
       line(34 + (i + 0.5) * width, 160, 34 + (i + 0.5) * width, 183, 'quiet'),
       rect(34 + i * width, 187, width - 4, 40, 'focus', String(value)),
     ]),
+    text(200, 247, '左侧高位，最右是个位', 'quiet', 18),
   ];
 }
 function carryColumn(
@@ -541,7 +573,7 @@ export const unit56Stories: Record<string, MethodStory> = {
     [
       frame(
         '先看两种计数单位',
-        '8块都是千万，6块都是万。相同数字只有位置确定后，才知道表示多少。',
+        '8表示8个千万，6表示6个万。数字放在对应数位，才表示这些数量。',
         '8个千万，6个万',
         [
           rect(45, 65, 128, 76, 'known', '8'),
@@ -688,7 +720,7 @@ export const unit56Stories: Record<string, MethodStory> = {
       ),
     ],
     check(
-      '003578是这六个数字组成的最小六位数吗？',
+      '用0、0、3、5、7、8各一次，003578是最小六位数吗？',
       '是，先放0最小',
       '不是，最小六位数是300578',
       '普通整数前面的0不占最高位，003578实际是四位数3578。必须先放最小的非零数字3。',
@@ -837,7 +869,7 @@ export const unit56Stories: Record<string, MethodStory> = {
       ),
     ],
     check(
-      '202803007里的补位0可以随意删去吗？',
+      '年份4位、架号2位、序号3位，编号202803007里的补位0能删吗？',
       '可以，普通整数前面的0可省',
       '不可以，编码按固定长度分段',
       '编码的0承担定位作用，不是在比较普通整数大小。删去0，后面的信息会越过分界。',
@@ -845,7 +877,7 @@ export const unit56Stories: Record<string, MethodStory> = {
       codeStrip('2028', '3', '7', true, true),
     ),
     check(
-      '同样按4位年份、2位架号、3位序号，2030年12号架第4本的编号是？',
+      '按4位年份、2位架号、3位序号，2030年12号架第4本的编号是？',
       '2030124',
       '203012004',
       '第4本要占三位，写004。2030124只有七位，无法按4、2、3位完整拆分。',
@@ -879,6 +911,12 @@ export const unit56Stories: Record<string, MethodStory> = {
         '总份数仍是24，每份仍是213。积5112对应整块，不漏掉十位那一块。',
         '213 × 24 = 5112',
         areaProduct(213, 2, 4, 3),
+      ),
+      frame(
+        '竖式中也要按数位对齐',
+        '426表示426个十，所以写成4260，6在十位。与852相加时，个位对个位、十位对十位。',
+        '852 + 4260 = 5112',
+        writtenProduct(213, 2, 4),
       ),
     ],
     check(
@@ -993,7 +1031,7 @@ export const unit56Stories: Record<string, MethodStory> = {
       ),
     ],
     check(
-      '计算器若显示7334，只因接近7200，就能认定对吗？',
+      '计算器显示306 × 24 = 7334，只因接近估算7200，就能认定对吗？',
       '能，估算接近就行',
       '不能，精确积应是7344',
       '300×24是7200，还要补6×24=144，合成7344。7334同样接近，但少了10。',
@@ -1024,7 +1062,7 @@ export const unit56Stories: Record<string, MethodStory> = {
     [
       frame(
         '把同位的1×1合起来',
-        '每个点表示一个1×1，同一列的点属于同一个数位。2行形成1、2、1个点。',
+        '每个点表示一次1×1，最右一列是个位，往左数位依次升高。同列合成1、2、1。',
         '11 × 11 = 121',
         convolution(2),
       ),
@@ -1099,7 +1137,7 @@ export const unit56Stories: Record<string, MethodStory> = {
       ),
     ],
     check(
-      '补回漏算部分，应算204 × (30 − 3)还是204 × (3 − 2)？',
+      '204 × 32错算成204 × 2 + 204 × 3，应补回哪部分？',
       '204 × (3 − 2)',
       '204 × (30 − 3)',
       '十位本应乘30，却只乘3，少了27份。补1份仍然缺26份，与个位的2没有这种差值关系。',
@@ -1157,7 +1195,11 @@ export const unit56Stories: Record<string, MethodStory> = {
       '224元',
       '先算200×24=4800，再减24件各多算的1元，实际花4776元。5000−4776=224元。',
       budgetBar(5000, 4776),
-      itemRefunds(24, 1, 2, true),
+      [
+        ...itemRefunds(24, 1, 2, true),
+        text(261, 72, '错付4799元', 'error', 20),
+        text(261, 101, '只剩201元', 'error', 20),
+      ],
     ),
   ),
 };

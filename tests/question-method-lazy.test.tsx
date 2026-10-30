@@ -1,5 +1,14 @@
 // @vitest-environment jsdom
-import { cleanup, fireEvent, render, renderHook, screen, waitFor } from '@testing-library/react';
+import {
+  act,
+  cleanup,
+  fireEvent,
+  render,
+  renderHook,
+  screen,
+  waitFor,
+  within,
+} from '@testing-library/react';
 import { afterEach, expect, it, vi } from 'vitest';
 import { practice, publicQuestion, questions } from '@mathstudy/content';
 import { methodStory } from '@mathstudy/animation-engine';
@@ -27,6 +36,19 @@ it('leaves unopened methods unmounted and records no assistance for simply displ
   expect(view.container.querySelector('.topic-method')).toBeNull();
   expect(view.container.querySelector('svg.method-diagram')).toBeNull();
   expect(progress.result.current.answers[question.id]).toBe(before);
+});
+
+it('does not activate assistance when keyboard focus reaches the method tab', () => {
+  const progress = renderHook(useProgress);
+  const before = progress.result.current.answers[question.id];
+  const view = render(<QuestionRunner question={question} method={topic} />);
+  const method = screen.getByRole('tab', { name: '方法' });
+  act(() => method.focus());
+  expect(method.getAttribute('aria-selected')).toBe('false');
+  expect(view.container.querySelector('.topic-method')).toBeNull();
+  expect(progress.result.current.answers[question.id]).toBe(before);
+  fireEvent.keyDown(method, { key: 'Enter' });
+  expect(screen.getByRole('img', { name: storyboard.frames[0].title })).toBeTruthy();
 });
 it('mounts a method once, preserves its step and answer across tab switches, and marks the submitted answer assisted', async () => {
   const submissions: { assisted: boolean; answers: Record<string, string> }[] = [];
@@ -79,3 +101,78 @@ it('immediately mounts the method when restoring a draft whose active view is me
   expect(view.container.querySelectorAll('svg.method-diagram')).toHaveLength(1);
   expect(progress.result.current.answers[question.id]).toBe(before);
 });
+
+it.each([
+  { paneWidth: 420, canvasHeight: 250 },
+  { paneWidth: 700, canvasHeight: 120 },
+])(
+  'uses a readable focus view for $paneWidth px panes / $canvasHeight px drawings and restores answer and step',
+  async ({ paneWidth, canvasHeight }) => {
+    const observers: (() => void)[] = [];
+    const originalMeasure = HTMLElement.prototype.getBoundingClientRect;
+    vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (
+      this: HTMLElement,
+    ) {
+      return this.classList.contains('method-demo-shell')
+        ? { ...originalMeasure.call(this), width: paneWidth, height: 500 }
+        : originalMeasure.call(this);
+    });
+    vi.spyOn(SVGSVGElement.prototype, 'getBoundingClientRect').mockReturnValue({
+      x: 0,
+      y: 0,
+      width: 350,
+      height: canvasHeight,
+      top: 0,
+      bottom: canvasHeight,
+      left: 0,
+      right: 350,
+      toJSON: () => ({}),
+    });
+    vi.stubGlobal(
+      'ResizeObserver',
+      class {
+        connected = true;
+        constructor(private callback: () => void) {}
+        observe(element: Element) {
+          if (element.classList.contains('method-demo-shell'))
+            observers.push(() => {
+              if (this.connected) this.callback();
+            });
+        }
+        unobserve() {}
+        disconnect() {
+          this.connected = false;
+        }
+      },
+    );
+    render(<QuestionRunner question={question} method={topic} />);
+    const field = question.fields.find((item) => item.fixedValue === undefined)!;
+    fireEvent.change(screen.getByLabelText(field.label), { target: { value: '123' } });
+    fireEvent.keyDown(screen.getByRole('tab', { name: '方法' }), { key: 'Enter' });
+    act(() => observers.forEach((notify) => notify()));
+    const dialog = await screen.findByRole('dialog');
+    fireEvent.click(within(dialog).getByRole('button', { name: '方法要点与自查' }));
+    const notes = within(dialog).getByRole('region', { name: '方法要点与自查' });
+    expect(within(notes).getByText(storyboard.frames[0].why)).toBeTruthy();
+    fireEvent.click(within(dialog).getByText('查看当前题目'));
+    expect(within(dialog).getByRole('region', { name: '当前题目参照' }).textContent).toContain(
+      question.stem,
+    );
+    expect(within(dialog).queryByRole('img')).toBeNull();
+    fireEvent.click(within(dialog).getByRole('button', { name: '分步图解' }));
+    fireEvent.click(within(dialog).getByRole('button', { name: '下一步' }));
+    fireEvent.keyDown(dialog, { key: 'Escape', code: 'Escape' });
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).toBeNull();
+      expect(document.activeElement).toBe(screen.getByRole('tab', { name: '作答' }));
+    });
+    expect((screen.getByLabelText(field.label) as HTMLInputElement).value).toBe('123');
+    fireEvent.keyDown(screen.getByRole('tab', { name: '方法' }), { key: 'Enter' });
+    act(() => observers.forEach((notify) => notify()));
+    const reopened = await screen.findByRole('dialog');
+    expect(within(reopened).getByRole('img', { name: storyboard.frames[1].title })).toBeTruthy();
+    fireEvent.click(within(reopened).getByRole('button', { name: '返回作答' }));
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+    expect((screen.getByLabelText(field.label) as HTMLInputElement).value).toBe('123');
+  },
+);

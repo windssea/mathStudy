@@ -56,7 +56,8 @@ it('checks a new wall orientation after explaining the original mistake', () => 
   expect(screen.queryByRole('button', { name: '换一组数试试' })).toBeNull();
   fireEvent.click(screen.getByRole('button', { name: '不是，只是另外三边' }));
   fireEvent.click(screen.getByRole('button', { name: '换一组数试试' }));
-  expect(screen.getByRole('img', { name: /换个靠墙方向/ })).toBeTruthy();
+  expect(screen.queryByRole('img')).toBeNull();
+  expect(screen.getByText(/换个靠墙方向/)).toBeTruthy();
   expect(screen.queryByRole('status')).toBeNull();
   fireEvent.click(screen.getByRole('button', { name: '28 米：10 + 10 + 8' }));
   expect(screen.getByRole('status').textContent).toContain('不能照抄');

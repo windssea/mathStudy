@@ -197,6 +197,8 @@ function bookPacks(
   packs: number,
   loose: number,
   wrongDiscount = false,
+  pricing = { pack: 30, single: 11 },
+  firstPackOnly = false,
 ): MethodNode[] {
   const count = packSize * packs + loose,
     width = 352 / count;
@@ -204,7 +206,11 @@ function bookPacks(
     text(
       200,
       28,
-      wrongDiscount ? '错法：不足一包，也套整包单价' : '虚线框内才是完整的一包',
+      firstPackOnly
+        ? '先看左边一包，其余暂不分组'
+        : wrongDiscount
+          ? '错法：散本也套用整包单价'
+          : '左侧整包，右侧散买',
       wrongDiscount ? 'error' : 'known',
       21,
     ),
@@ -214,13 +220,19 @@ function bookPacks(
         83,
         width - 8,
         56,
-        wrongDiscount && i >= packs * packSize ? 'error' : 'known',
+        firstPackOnly
+          ? i < packSize
+            ? 'focus'
+            : 'quiet'
+          : wrongDiscount && i >= packs * packSize
+            ? 'error'
+            : 'known',
       ),
     ),
-    ...Array.from({ length: packs }, (_, i) =>
+    ...Array.from({ length: firstPackOnly ? 1 : packs }, (_, i) =>
       rect(24 + i * packSize * width, 72, packSize * width - 3, 78, 'focus', undefined, true),
     ),
-    ...(loose
+    ...(loose && !firstPackOnly
       ? [
           rect(
             24 + packs * packSize * width,
@@ -233,15 +245,25 @@ function bookPacks(
           ),
         ]
       : []),
-    text(200, 198, `${packs} 包 × ${packSize} 本 + 散买 ${loose} 本`, 'focus', 21),
+    text(
+      200,
+      198,
+      firstPackOnly
+        ? `左边一包：${packSize}本，${pricing.pack}元`
+        : `${packs} 包 × ${packSize} 本 + 散买 ${loose} 本`,
+      'focus',
+      21,
+    ),
     text(
       200,
       235,
-      loose
-        ? wrongDiscount
-          ? `剩下 ${loose} 本不够 ${packSize} 本`
-          : '散买部分按单本价计算'
-        : '每包都是完整的一组',
+      firstPackOnly
+        ? `每本均价 ${pricing.pack}÷${packSize}＝${pricing.pack / packSize}元`
+        : loose
+          ? wrongDiscount
+            ? `散本错按${pricing.pack / packSize}元，少算${loose * (pricing.single - pricing.pack / packSize)}元`
+            : `整包${pricing.pack}元；散本${pricing.single}元/本`
+          : '每包都是完整的一组',
       wrongDiscount ? 'error' : 'quiet',
       20,
     ),
@@ -412,8 +434,8 @@ function wrongOrder(): MethodNode[] {
     text(200, 64, '96 ÷ 4 × 3 − 18', 'known', 25),
     rect(122, 84, 155, 50, 'error', '先算 4 × 3'),
     line(200, 134, 200, 160, 'error'),
-    rect(93, 160, 215, 48, 'error', '变成先除以 12'),
-    text(200, 242, '4 和 3 被错误合成了除数', 'error', 20),
+    rect(93, 160, 215, 48, 'error', '先除以 12，得 8'),
+    text(200, 242, '减18前：原来72，错法8', 'error', 20),
   ];
 }
 function bracketWhole(wrong = false): MethodNode[] {
@@ -533,7 +555,9 @@ function fleets(stage: number): MethodNode[] {
   ];
 }
 function capacity(seats: number, people: number, fee: number): MethodNode[] {
-  const columns = 9;
+  const columns = 10,
+    x = (index: number) => 47 + (index % columns) * 34,
+    y = (index: number) => 58 + Math.floor(index / columns) * 23;
   return [
     text(
       200,
@@ -542,19 +566,16 @@ function capacity(seats: number, people: number, fee: number): MethodNode[] {
       seats < people ? 'error' : 'focus',
       21,
     ),
-    ...Array.from({ length: people }, (_, i) =>
-      dot(
-        47 + (i % columns) * 38,
-        58 + Math.floor(i / columns) * 23,
-        i < seats ? 'known' : 'error',
-      ),
+    ...Array.from({ length: people }, (_, i) => dot(x(i), y(i), i < seats ? 'known' : 'error')),
+    ...Array.from({ length: Math.max(0, seats - people) }, (_, i) =>
+      rect(x(people + i) - 8, y(people + i) - 8, 16, 16, 'quiet', undefined, true),
     ),
     text(
       200,
       240,
       seats < people
         ? `${people - seats} 人没有座位，不能选`
-        : `都能坐下，还空 ${seats - people} 座`,
+        : `都能坐下；空框是余下 ${seats - people} 座`,
       seats < people ? 'error' : 'focus',
       21,
     ),
@@ -587,7 +608,7 @@ unit34Stories['u3-inverse'] = lesson(
     ),
   ],
   check(
-    '改成 18 行，每行还放 30 人，可以吗？',
+    '同一队人原来12行，每行30人。改排18行，每行仍放30人，可以吗？',
     '可以，只增加行数',
     '不可以，总人数会变多',
     '18 行每行 30 人会成为 540 人，比原来多 180 人。重排不能凭空增加人数。',
@@ -634,7 +655,7 @@ unit34Stories['u3-shopping'] = lesson(
     ),
   ],
   check(
-    '把 4 本和 3 支合起来，一起乘 12，可以吗？',
+    '买4本本子，每本12元；3支笔，每支5元。把7件一起乘12求总价，可以吗？',
     '可以，都是买了东西',
     '不能，笔和本子的单价不同',
     '笔每支只要5元。把三支笔也乘12，会把每支笔多算7元。',
@@ -673,7 +694,7 @@ unit34Stories['u3-compare'] = lesson(
       '优惠只给完整的一包',
       '一包有 3 本，30 元平均每本 10 元。单买一本仍要 11 元。',
       '30 ÷ 3 = 10 元/本',
-      bookPacks(3, 1, 1),
+      bookPacks(3, 2, 2, false, { pack: 30, single: 11 }, true),
     ),
     frame(
       '把 8 本按整包和散本分开',
@@ -695,7 +716,7 @@ unit34Stories['u3-compare'] = lesson(
     ),
   ],
   check(
-    '能按每本 10 元直接买 8 本吗？',
+    '每包3本、整包30元，散买每本11元。正好买8本，能都按每本10元算吗？',
     '能，一共 80 元',
     '不能，优惠价按整包出售',
     '只有完整三本包享受优惠。剩下两本每本11元，不能按10元算。',
@@ -707,8 +728,8 @@ unit34Stories['u3-compare'] = lesson(
     '10×9＝90元',
     '2×36＋2×10＝92元',
     '10本只能买两个整包，余下两本要单买。不能把不足一包的两本也按9元算。',
-    bookPacks(4, 2, 2),
-    bookPacks(4, 2, 2, true),
+    bookPacks(4, 2, 2, false, { pack: 36, single: 10 }),
+    bookPacks(4, 2, 2, true, { pack: 36, single: 10 }),
   ),
 );
 unit34Stories['u3-speed'] = lesson(
@@ -740,7 +761,7 @@ unit34Stories['u3-speed'] = lesson(
     ),
   ],
   check(
-    '70 的完整含义是什么？',
+    '12分钟走840米，840÷12=70。这里的70表示什么？',
     '12 分钟的总路程是 70 米',
     '每 1 分钟走 70 米，单位米/分',
     '70对应一格一分钟，不是12格的总路程。原来12分钟的总路程仍是840米。',
@@ -785,7 +806,7 @@ unit34Stories['u3-journey'] = lesson(
     ),
   ],
   check(
-    '求往返和休息的总时间，要算休息吗？',
+    '去程3时，回程2时，共休息1时。求全程经过的时间，要算休息吗？',
     '不用，休息没有增加路程',
     '要，休息也经过了时间',
     '总时间包含在路上和停下来的时间。漏掉一小时休息，会把6小时错写成5小时。',
@@ -824,7 +845,7 @@ unit34Stories['u3-conditions'] = lesson(
     ),
   ],
   check(
-    '12−9算出的3，能当作少用的箱数吗？',
+    '同一批水果原来40箱，每箱9千克；改成每箱12千克。12−9算出的3，能当作少用的箱数吗？',
     '能，少用3箱',
     '不能，3表示每箱多装3千克',
     '12与9的单位是千克，差也是千克。少几箱要比较40箱和30箱。',
@@ -871,10 +892,10 @@ unit34Stories['u4-order'] = lesson(
     ),
   ],
   check(
-    '能先把中间的4×3算成12吗？',
+    '计算96÷4×3−18，能先把中间的4×3算成12吗？',
     '能，先乘后除',
     '不能，乘除同级，从左往右',
-    '把4和3合成12，就把96的除数改变了。原式先把96除以4，再把所得结果乘3。',
+    '原式先得24，再取3倍是72。先算4×3会变成96÷12=8，改变了原来的分组。',
     operationTree(0),
     wrongOrder(),
   ),
@@ -972,7 +993,7 @@ unit34Stories['u4-model'] = lesson(
     ),
   ],
   check(
-    '除以书的单价12，应该作用在哪一段钱上？',
+    '有500元，先买4件用品，每件35元；余款买每本12元的书。除以12应作用在哪段钱上？',
     '作用在用品费35×4上',
     '作用在余款500−35×4上',
     '已花的钱不能再次买书。括号应圈住余款，再用这整个余款除以书价。',
@@ -1017,7 +1038,7 @@ unit34Stories['u4-steps'] = lesson(
     ),
   ],
   check(
-    '题目有“还剩”，求原来一定要减法吗？',
+    '绳子用去6段，每段9米，还剩17米。求原长，见到“还剩”就要减法吗？',
     '一定，见“剩下”就减',
     '不一定，求原来要把用去的加回',
     '用去的与剩下的是原长的两个部分。它们之间的差，不是原来的完整长度。',
@@ -1067,7 +1088,7 @@ unit34Stories['u4-budget'] = lesson(
     ),
   ],
   check(
-    '三辆小车420元最便宜，能选吗？',
+    '63人租车，小车每辆16座、140元。三辆小车共420元，能选这个方案吗？',
     '能，只选总价最低的',
     '不能，48座坐不下63人',
     '三辆小车少15个座位。先满足人数和车辆限制，再比较可行方案的费用。',

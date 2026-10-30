@@ -44,5 +44,25 @@ it('keeps a correct answer correct while inspecting the alternative wrong model'
   fireEvent.click(screen.getByRole('button', { name: story.mistake.wrong }));
   fireEvent.click(screen.getByRole('button', { name: '换一组数试试' }));
   expect(screen.queryByRole('status')).toBeNull();
+  expect(screen.queryByRole('img')).toBeNull();
+  expect(screen.getByText(story.transfer!.question)).toBeTruthy();
+  expect(screen.queryByText(story.prompt)).toBeNull();
+  fireEvent.click(screen.getByRole('button', { name: story.transfer!.right }));
   expect(screen.getByRole('img').textContent).toContain('45');
+});
+
+it('withholds the conclusion graph until a choice and hides it again on reselect', () => {
+  const story = openCheck();
+  expect(screen.queryByRole('img')).toBeNull();
+  expect(screen.getByText(story.mistake.question)).toBeTruthy();
+  const question = screen.getByText(story.mistake.question);
+  expect(screen.getByRole('group', { name: '易错判断' }).getAttribute('aria-describedby')).toBe(
+    question.id,
+  );
+  expect(screen.queryByText(story.prompt)).toBeNull();
+  fireEvent.click(screen.getByRole('button', { name: story.mistake.right }));
+  expect(screen.getByRole('img')).toBeTruthy();
+  fireEvent.click(screen.getByRole('button', { name: '重选' }));
+  expect(screen.queryByRole('img')).toBeNull();
+  expect(document.activeElement?.closest('.mistake-options')).toBeTruthy();
 });

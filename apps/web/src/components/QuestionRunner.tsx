@@ -46,6 +46,7 @@ export default function QuestionRunner({
   onAttempt?: (id: string) => void;
 }) {
   const formId = useId();
+  const answerTrigger = useRef<HTMLButtonElement>(null);
   const [owner] = useState(currentLearningOwner);
   const draftId = `${draftScope}:${q.id}`;
   const [draft] = useState(() => readDraft(owner, draftId, questionDraftSchema));
@@ -198,6 +199,7 @@ export default function QuestionRunner({
         secondary={
           <Tabs
             className="answer-workspace"
+            activationMode="manual"
             value={view}
             onValueChange={(value) => {
               if (value === 'method') setMethodVisited(true);
@@ -207,7 +209,9 @@ export default function QuestionRunner({
           >
             <div className="answer-tabbar">
               <TabsList aria-label="作答、方法与解析">
-                <TabsTrigger value="answer">作答</TabsTrigger>
+                <TabsTrigger ref={answerTrigger} value="answer">
+                  作答
+                </TabsTrigger>
                 {method?.guide && <TabsTrigger value="method">方法</TabsTrigger>}
                 <TabsTrigger value="explanation" disabled={!explanation}>
                   思路
@@ -425,6 +429,26 @@ export default function QuestionRunner({
                   title={method.title}
                   guide={method.guide}
                   active={view === 'method'}
+                  onReturnToAnswer={() => {
+                    setView('answer');
+                    window.setTimeout(() => answerTrigger.current?.focus(), 0);
+                  }}
+                  questionReference={{
+                    stem: q.stem,
+                    figure:
+                      q.promptImage || q.figure ? (
+                        <>
+                          {q.promptImage && (
+                            <img
+                              className="question-diagram"
+                              src={q.promptImage.src}
+                              alt={q.promptImage.alt}
+                            />
+                          )}
+                          {q.figure && <GridFigureView figure={q.figure} />}
+                        </>
+                      ) : undefined,
+                  }}
                 />
               </TabsContent>
             )}

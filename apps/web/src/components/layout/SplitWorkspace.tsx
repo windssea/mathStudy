@@ -27,7 +27,7 @@ export default function SplitWorkspace({
   useEffect(() => {
     const group = groupRef.current;
     if (!group) return;
-    const media = window.matchMedia?.('(min-width: 1000px)');
+    const media = window.matchMedia?.('(min-width: 768px)');
     const adjust = () => {
       if (focusSecondary && (media?.matches ?? true)) {
         if (!previousLayout.current) {

@@ -3,6 +3,32 @@ import { app } from '../apps/web/worker';
 import { questions, lessons } from '@mathstudy/content';
 const base = '/api/v1';
 describe('public course and grading API', () => {
+  it.each(['sign-up/email', 'sign-in/email'])(
+    'consumes the bounded %s body before rejecting the closed route',
+    async (route) => {
+      const request = new Request(`http://localhost/api/auth/${route}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Content-Length': '2' },
+        body: '{}',
+      });
+      const response = await app.request(request);
+      expect(response.status).toBe(403);
+      expect((await response.json()).code).toBe('REGISTRATION_CLOSED');
+      expect(request.bodyUsed).toBe(true);
+      expect((await app.request(`${base}/home`)).status).toBe(200);
+    },
+  );
+  it('rejects oversized closed-route bodies before buffering them', async () => {
+    const request = new Request('http://localhost/api/auth/sign-up/email', {
+      method: 'POST',
+      headers: { 'Content-Length': String(160 * 1024 + 1) },
+      body: 'x'.repeat(160 * 1024 + 1),
+    });
+    const response = await app.request(request);
+    expect(response.status).toBe(413);
+    expect((await response.json()).error.code).toBe('TOO_LARGE');
+    expect(request.bodyUsed).toBe(false);
+  });
   it('opens all seven fifth-unit lessons and covers every bank question with no private grading keys', async () => {
     const ids = new Set<string>();
     const fifth = lessons.filter((item) => item.unitId === 'U05');

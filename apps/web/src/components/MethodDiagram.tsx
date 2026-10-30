@@ -8,11 +8,12 @@ const textWidth = (value: string, size: number) =>
 function wrapLabel(value: string, width: number, size: number) {
   const lines: string[] = [];
   let line = '';
-  for (const character of value) {
-    if (line && textWidth(line + character, size) > width) {
+  // A number is one mathematical label: never turn 1206 into "12" above "06".
+  for (const token of value.match(/\d+(?:\.\d+)?|[^\d]/gu) ?? []) {
+    if (line && textWidth(line + token, size) > width) {
       lines.push(line);
-      line = character;
-    } else line += character;
+      line = token;
+    } else line += token;
   }
   if (line) lines.push(line);
   return lines;
@@ -37,7 +38,15 @@ export default function MethodDiagram({ nodes, label }: { nodes: MethodNode[]; l
     return () => observer.disconnect();
   }, []);
   const font = (size = 22, minimum = 16) => Math.max(size, minimum / scale);
-  const externalLabels: { index: number; label: string; tone: string }[] = [];
+  const externalLabels: {
+    index: number;
+    label: string;
+    tone: string;
+    x: number;
+    y: number;
+    anchorX: number;
+    anchorY: number;
+  }[] = [];
   const shapes = nodes.map((node, i) => {
     const className = `diagram-${node.tone}`;
     switch (node.kind) {
@@ -49,7 +58,16 @@ export default function MethodDiagram({ nodes, label }: { nodes: MethodNode[]; l
           (lines.some((line) => textWidth(line, size) > node.w - 8) ||
             lines.length * size * 1.2 > node.h - 8);
         const key = externalLabels.length + 1;
-        if (external) externalLabels.push({ index: key, label: node.label!, tone: className });
+        if (external)
+          externalLabels.push({
+            index: key,
+            label: node.label!,
+            tone: className,
+            x: node.x + node.w / 2,
+            y: node.y - 8 / scale,
+            anchorX: node.x + node.w / 2,
+            anchorY: node.y,
+          });
         return (
           <g key={i} className={className} data-node-label={node.label}>
             <rect
@@ -60,31 +78,21 @@ export default function MethodDiagram({ nodes, label }: { nodes: MethodNode[]; l
               rx={5}
               strokeDasharray={node.dashed ? '7 5' : undefined}
             />
-            {node.label &&
-              (external ? (
-                <text
-                  x={node.x + node.w / 2}
-                  y={node.y - 8 / scale}
-                  fontSize={font(18)}
-                  className="diagram-label-marker"
-                >
-                  {key}
-                </text>
-              ) : (
-                <text
-                  x={node.x + node.w / 2}
-                  y={node.y + node.h / 2 - ((lines.length - 1) * size * 1.2) / 2}
-                  dominantBaseline="central"
-                  fontSize={size}
-                  className="diagram-rect-label"
-                >
-                  {lines.map((line, j) => (
-                    <tspan key={j} x={node.x + node.w / 2} dy={j ? size * 1.2 : 0}>
-                      {line}
-                    </tspan>
-                  ))}
-                </text>
-              ))}
+            {node.label && !external && (
+              <text
+                x={node.x + node.w / 2}
+                y={node.y + node.h / 2 - ((lines.length - 1) * size * 1.2) / 2}
+                dominantBaseline="central"
+                fontSize={size}
+                className="diagram-rect-label"
+              >
+                {lines.map((line, j) => (
+                  <tspan key={j} x={node.x + node.w / 2} dy={j ? size * 1.2 : 0}>
+                    {line}
+                  </tspan>
+                ))}
+              </text>
+            )}
           </g>
         );
       }
@@ -120,6 +128,21 @@ export default function MethodDiagram({ nodes, label }: { nodes: MethodNode[]; l
         return <circle key={i} className={className} cx={node.x} cy={node.y} r={6} />;
     }
   });
+  // Tiny adjacent quantities still need distinct keys. Spread keys in the same row
+  // and connect each one to its original segment without changing mathematical scale.
+  const markerRows: (typeof externalLabels)[] = [];
+  for (const marker of externalLabels) {
+    const row = markerRows.find((items) => Math.abs(items[0].y - marker.y) < 22 / scale);
+    if (row) row.push(marker);
+    else markerRows.push([marker]);
+  }
+  for (const row of markerRows) {
+    row.sort((a, b) => a.x - b.x);
+    for (let i = 1; i < row.length; i++) row[i].x = Math.max(row[i].x, row[i - 1].x + 26 / scale);
+    row[row.length - 1].x = Math.min(row[row.length - 1].x, 390 - 9 / scale);
+    for (let i = row.length - 2; i >= 0; i--)
+      row[i].x = Math.min(row[i].x, row[i + 1].x - 26 / scale);
+  }
   return (
     <div className="method-diagram-wrap">
       <svg
@@ -143,6 +166,22 @@ export default function MethodDiagram({ nodes, label }: { nodes: MethodNode[]; l
             .join('；')}
         </desc>
         {shapes}
+        {externalLabels.map((item) => (
+          <g key={item.index} className={item.tone}>
+            {Math.abs(item.x - item.anchorX) > 4 && (
+              <line
+                className="diagram-label-leader"
+                x1={item.x}
+                y1={item.y + 4 / scale}
+                x2={item.anchorX}
+                y2={item.anchorY}
+              />
+            )}
+            <text x={item.x} y={item.y} fontSize={font(18)} className="diagram-label-marker">
+              {item.index}
+            </text>
+          </g>
+        ))}
       </svg>
       {externalLabels.length > 0 && (
         <ol className="diagram-labels" aria-label="分块标注">

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { methodStory, type MethodNode } from '@mathstudy/animation-engine';
+import { methodStory, methodSubskillStories, type MethodNode } from '@mathstudy/animation-engine';
 import { practice } from '@mathstudy/content';
 
 function checkCanvas(nodes: MethodNode[], context: string) {
@@ -51,6 +51,29 @@ describe('complete topic teaching loop', () => {
         checkCanvas(frame.nodes, `${topic.id}:step${index + 1}`);
       if (story.transfer!.wrongNodes)
         checkCanvas(story.transfer!.wrongNodes!, `${topic.id}:transfer-wrong`);
+    },
+  );
+});
+
+describe('matched subskill teaching loop', () => {
+  it.each(Object.entries(methodSubskillStories))(
+    '%s keeps examples, repairs and transfer on the readable canvas',
+    (id, story) => {
+      expect(story.frames.length).toBeGreaterThanOrEqual(3);
+      expect(new Set(story.frames.map((frame) => JSON.stringify(frame.nodes))).size).toBe(
+        story.frames.length,
+      );
+      for (const [index, frame] of story.frames.entries())
+        checkCanvas(frame.nodes, `${id}:${index}`);
+      expect(story.transfer).toBeDefined();
+      for (const check of [story.mistake, story.transfer!]) {
+        expect(check.wrong).not.toBe(check.right);
+        expect(check.why.length).toBeGreaterThan(10);
+        expect(check.wrongNodes).toBeDefined();
+        expect(check.wrongNodes).not.toEqual(check.nodes);
+        checkCanvas(check.nodes, `${id}:correct`);
+        checkCanvas(check.wrongNodes!, `${id}:wrong`);
+      }
     },
   );
 });

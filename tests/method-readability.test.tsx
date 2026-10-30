@@ -50,9 +50,26 @@ it('moves a long label out of a narrow mathematical segment instead of shrinking
   );
   expect(screen.getByRole('list', { name: '分块标注' }).textContent).toContain('余下 1 个');
   expect(container.querySelector('.diagram-label-marker')?.textContent).toBe('1');
+  expect(container.querySelector('.diagram-label-marker')?.getAttribute('font-size')).toBe('18');
+});
+
+it('separates neighboring tiny-segment keys without distorting their quantities', () => {
+  const { container } = render(
+    <MethodDiagram
+      label="估算后仍需核对差额"
+      nodes={[
+        { kind: 'rect', x: 365, y: 90, w: 7, h: 60, tone: 'error', label: '误补134' },
+        { kind: 'rect', x: 373, y: 90, w: 1, h: 60, tone: 'error', label: '漏10' },
+      ]}
+    />,
+  );
+  const keys = [...container.querySelectorAll('.diagram-label-marker')];
+  expect(keys.map((key) => key.textContent)).toEqual(['1', '2']);
   expect(
-    container.querySelector('[data-node-label="余下 1 个"] text')?.getAttribute('font-size'),
-  ).toBe('18');
+    Number(keys[1].getAttribute('x')) - Number(keys[0].getAttribute('x')),
+  ).toBeGreaterThanOrEqual(26);
+  expect(container.querySelector('[data-node-label="漏10"] rect')?.getAttribute('width')).toBe('1');
+  expect(container.querySelector('.diagram-label-leader')).toBeTruthy();
 });
 
 it('keeps single place-value digits inside their slots on a tablet-sized canvas', () => {
@@ -77,4 +94,15 @@ it('keeps single place-value digits inside their slots on a tablet-sized canvas'
   const digit = container.querySelector('[data-node-label="8"] text')!;
   expect(digit.textContent).toBe('8');
   expect(Number(digit.getAttribute('font-size')) * 0.5).toBeGreaterThanOrEqual(18);
+});
+
+it('keeps a multi-digit quantity whole instead of wrapping it into different numbers', () => {
+  const { container } = render(
+    <MethodDiagram
+      label="补上1206"
+      nodes={[{ kind: 'rect', x: 300, y: 80, w: 45, h: 120, tone: 'known', label: '1206' }]}
+    />,
+  );
+  expect(screen.getByRole('list', { name: '分块标注' }).textContent).toContain('1206');
+  expect(container.querySelector('[data-node-label="1206"] tspan')).toBeNull();
 });
